@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Github, Play, Box, Gamepad2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { ArrowUpRight, Play, Gamepad2 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
 import streetRush from "../assets/street-rush.png";
@@ -60,129 +60,197 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ project }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const videoRef = useRef(null);
-  const cardRef = useRef(null);
+const ProjectCard = ({ project, onHoverChange }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 15, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["10.5deg", "-10.5deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-10.5deg", "10.5deg"]);
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePos({ x, y });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setMousePos({ x: 0, y: 0 });
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
+    mouseX.set(0);
+    mouseY.set(0);
+    onHoverChange?.(false);
   };
+
+  const linkIcon = project.category === "Video"
+    ? <Play size={18} fill="currentColor" />
+    : project.isRoblox
+    ? <Gamepad2 size={18} />
+    : <ArrowUpRight size={18} />;
+
+  const actionText = !project.link
+    ? "No Live Demo"
+    : project.category === "Video"
+    ? "Watch Video"
+    : project.category === "Game"
+    ? "Play Game"
+    : "View Project";
 
   return (
     <motion.div
-      ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
+      onMouseEnter={() => onHoverChange?.(true)}
       onMouseLeave={handleMouseLeave}
-      animate={isHovered ? {
-        rotateY: mousePos.x * 20,
-        rotateX: -mousePos.y * 20,
-        y: -10,
-        scale: 1.02,
-      } : { rotateY: 0, rotateX: 0, y: 0, scale: 1 }}
-      style={{ perspective: 1000 }}
-      className="group relative bg-white rounded-[2rem] overflow-hidden border border-dark/5 shadow-sm hover:shadow-2xl transition-shadow duration-500"
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
+      className="group relative h-[380px] w-[240px] sm:h-[420px] sm:w-[280px] rounded-2xl shadow-xl"
     >
-      <div className="aspect-[4/3] overflow-hidden relative">
-        {/* Category Badge */}
-        <div className="absolute top-6 left-6 z-20">
-          <span className="px-4 py-1.5 rounded-full bg-dark/80 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 shadow-xl">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Image Thumbnail */}
-        <img 
-          src={project.image} 
+      <div
+        style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }}
+        className="absolute inset-3 rounded-xl overflow-hidden"
+      >
+        <img
+          src={project.image}
           alt={project.title}
-          className={`w-full h-full object-cover transition-all duration-1000 ease-out ${isHovered ? 'scale-110 blur-[2px] brightness-50' : 'scale-100'}`}
+          className="absolute inset-0 h-full w-full object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/80" />
 
-        {/* Video Preview */}
-        {project.video && (
-          <video
-            ref={videoRef}
-            src={project.video}
-            muted
-            loop
-            playsInline
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isHovered ? 'opacity-40' : 'opacity-0'}`}
-          />
-        )}
-        
-        {/* Overlay Content (Links) */}
-        <div className={`absolute inset-0 flex items-center justify-center gap-4 transition-all duration-500 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {project.link && (
-            <motion.a
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-2xl bg-white text-dark flex items-center justify-center shadow-2xl hover:bg-primary hover:text-white transition-colors group/btn"
+        <div className="relative flex h-full flex-col justify-between p-4 text-white">
+          <div className="flex items-start justify-between">
+            <span
+              style={{ transform: "translateZ(30px)" }}
+              className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em]"
             >
-              {project.category === "Video" ? <Play size={24} fill="currentColor" /> : project.isRoblox ? <Gamepad2 size={24} /> : project.category === "3D" ? <Box size={24} /> : <ExternalLink size={24} />}
-            </motion.a>
-          )}
-          {project.github && (
-            <motion.a 
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              href={project.github} 
-              className="w-14 h-14 rounded-2xl bg-white text-dark flex items-center justify-center shadow-2xl hover:bg-primary hover:text-white transition-colors"
-            >
-              <Github size={24} />
-            </motion.a>
-          )}
-        </div>
-      </div>
+              {project.category}
+            </span>
+            {project.link && (
+              <motion.a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, rotate: "8deg" }}
+                whileTap={{ scale: 0.9 }}
+                aria-label={`Open ${project.title}`}
+                style={{ transform: "translateZ(50px)" }}
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-colors hover:bg-primary"
+              >
+                {linkIcon}
+              </motion.a>
+            )}
+          </div>
 
-      <div className="p-8 relative bg-white">
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tech.map((t, idx) => (
-            <motion.span 
-              key={t}
-              initial={{ opacity: 0, x: -10 }}
-              animate={isHovered ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              className="text-[9px] font-black uppercase tracking-widest text-dark/40 bg-off-white px-3 py-1.5 rounded-lg border border-dark/5 group-hover:border-primary/20 group-hover:text-primary transition-colors"
+          <div>
+            <div
+              style={{ transform: "translateZ(30px)" }}
+              className="mb-3 flex flex-wrap gap-1.5"
             >
-              {t}
-            </motion.span>
-          ))}
-        </div>
-        <h3 className="text-2xl font-black tracking-tight group-hover:text-primary transition-colors leading-tight">
-          {project.title}
-        </h3>
-        
-        {/* Decorative arrow that appears on hover */}
-        <div className={`absolute bottom-8 right-8 transition-all duration-500 ${isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
-          <ExternalLink size={20} className="text-primary" />
+              {project.tech.map((t) => (
+                <span
+                  key={t}
+                  className="text-[9px] font-bold uppercase tracking-widest text-white/70 bg-white/10 px-2 py-1 rounded-md"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+            <h3 style={{ transform: "translateZ(40px)" }} className="text-lg font-black leading-tight mb-3">
+              {project.title}
+            </h3>
+            <div
+              style={{ transform: "translateZ(30px)" }}
+              className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md group-hover:bg-primary transition-colors"
+            >
+              {actionText}
+            </div>
+          </div>
         </div>
       </div>
     </motion.div>
+  );
+};
+
+function useResponsiveRadius(desktop, mobile) {
+  const [radius, setRadius] = useState(desktop);
+
+  useEffect(() => {
+    const update = () => setRadius(window.innerWidth < 768 ? mobile : desktop);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [desktop, mobile]);
+
+  return radius;
+}
+
+const RadialItem = ({ project, x, y, rotationAngle, isActive, onHoverChange }) => {
+  return (
+    <li
+      className="absolute top-1/2 left-1/2"
+      style={{
+        zIndex: isActive ? 20 : 10,
+        transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rotationAngle}deg)`,
+      }}
+    >
+      {/* Cancels this item's static spoke angle so the card itself is upright. */}
+      <div style={{ transform: `rotate(${-rotationAngle}deg)` }}>
+        {/* Cancels the wheel's spin via a same-duration CSS animation - pure CSS
+            keeps this in lockstep with the wheel, and pauses with it on
+            :hover (see index.css) with zero JS timing involved. */}
+        <div className="wheel-counter-spin">
+          <motion.div
+            animate={{ scale: isActive ? 1.15 : 1, y: isActive ? -20 : 0 }}
+          >
+            <ProjectCard project={project} onHoverChange={onHoverChange} />
+          </motion.div>
+        </div>
+      </div>
+    </li>
+  );
+};
+
+const RadialProjectGallery = ({ projects }) => {
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const radius = useResponsiveRadius(340, 160);
+  const count = projects.length;
+
+  if (count === 0) return null;
+
+  return (
+    <div
+      className="relative h-[420px] sm:h-[520px] overflow-hidden"
+      style={{
+        maskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
+        WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
+      }}
+    >
+      {/* Wheel pauses on :hover natively (index.css) - no JS pause/resume timing to get wrong. */}
+      <ul
+        className="wheel-spin absolute left-1/2 -translate-x-1/2 m-0 p-0 list-none"
+        style={{
+          width: radius * 2,
+          height: radius * 2,
+          bottom: -(radius * 2 * 0.55),
+        }}
+      >
+        {projects.map((project, index) => {
+          const angle = (index / count) * 2 * Math.PI;
+          const x = radius * Math.cos(angle);
+          const y = radius * Math.sin(angle);
+          const rotationAngle = (angle * 180) / Math.PI + 90;
+
+          return (
+            <RadialItem
+              key={project.id}
+              project={project}
+              x={x}
+              y={y}
+              rotationAngle={rotationAngle}
+              isActive={hoveredIndex === index}
+              onHoverChange={(hovered) => setHoveredIndex(hovered ? index : null)}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 
@@ -210,7 +278,7 @@ const Projects = () => {
               Portfolio <span className="text-primary">Showcase</span>
             </h2>
             <p className="text-dark/50 max-w-md font-medium">
-              A curated selection of my work across web development, video editing, 3D modeling, and game design. Hover over cards to see a preview.
+              A curated selection of my work across web development, video editing, 3D modeling, and game design. Hover a card to pause and take a closer look.
             </p>
           </motion.div>
 
@@ -231,11 +299,7 @@ const Projects = () => {
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <RadialProjectGallery projects={filteredProjects} />
       </div>
     </motion.section>
   );
