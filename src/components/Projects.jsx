@@ -5,6 +5,7 @@ import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
 import streetRush from "../assets/street-rush.png";
 import gunungGede from "../assets/image-1784710274754.webp";
+import studentLife from "../assets/student-life.jpg";
 
 const projects = [
   {
@@ -16,6 +17,16 @@ const projects = [
     tech: ["Laravel", "Bootstrap"],
     link: null,
     github: null
+  },
+  {
+    id: 7,
+    title: "Student Life",
+    category: "Web",
+    image: studentLife,
+    video: null,
+    tech: ["React", "TypeScript", "Supabase"],
+    link: "https://ferrelhd.github.io/Student-Life/",
+    github: "https://github.com/FerrelHD/Student-Life"
   },
   {
     id: 2,
