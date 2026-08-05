@@ -114,7 +114,8 @@ const ProjectCard = ({ project, onHoverChange }) => {
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
       className="group relative h-[380px] w-[240px] sm:h-[420px] sm:w-[280px] rounded-2xl shadow-xl"
     >
-      <div
+      <CardWrapper
+        href={project.link}
         style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }}
         className="absolute inset-3 rounded-xl overflow-hidden"
       >
@@ -134,18 +135,14 @@ const ProjectCard = ({ project, onHoverChange }) => {
               {project.category}
             </span>
             {project.link && (
-              <motion.a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
+              <motion.span
                 whileHover={{ scale: 1.1, rotate: "8deg" }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={`Open ${project.title}`}
+                aria-hidden="true"
                 style={{ transform: "translateZ(50px)" }}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-colors hover:bg-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-colors group-hover:bg-primary"
               >
                 {linkIcon}
-              </motion.a>
+              </motion.span>
             )}
           </div>
 
@@ -174,10 +171,19 @@ const ProjectCard = ({ project, onHoverChange }) => {
             </div>
           </div>
         </div>
-      </div>
+      </CardWrapper>
     </motion.div>
   );
 };
+
+const CardWrapper = ({ href, children, ...props }) =>
+  href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+      {children}
+    </a>
+  ) : (
+    <div {...props}>{children}</div>
+  );
 
 function useResponsiveRadius(desktop, mobile) {
   const [radius, setRadius] = useState(desktop);
