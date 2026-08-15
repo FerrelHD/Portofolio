@@ -60,17 +60,17 @@ const Navbar = () => {
       }}
       className="fixed top-0 left-0 right-0 z-50 border-b"
     >
-      <div className="container mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center">
+      <div className="container mx-auto px-6 flex items-center justify-between">
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-2xl font-display font-bold tracking-tighter justify-self-start"
+          className="text-xl sm:text-2xl font-display font-bold tracking-tighter"
         >
           FERREL RASHAD<span className="text-primary">.</span>
         </motion.a>
 
-        <div className="hidden md:flex space-x-8 justify-self-center">
+        <div className="hidden md:flex space-x-8">
           {navLinks.map((link, i) => (
             <motion.a
               key={link.name}
@@ -87,7 +87,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-4 justify-self-end">
+        <div className="flex items-center gap-4">
           <motion.a
             href="#contact"
             initial={{ opacity: 0, x: 20 }}
@@ -100,7 +100,7 @@ const Navbar = () => {
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="md:hidden"
+            className="md:hidden p-1 text-dark"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -113,21 +113,28 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden overflow-hidden bg-white border-t border-dark/5"
+            className="md:hidden overflow-hidden bg-white border-t border-dark/5 shadow-lg"
           >
-            <div className="container mx-auto px-6 py-6 flex flex-col gap-5">
+            <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`text-sm font-medium uppercase tracking-widest ${
-                    activeId === link.id ? "text-primary" : ""
+                  className={`text-sm font-bold uppercase tracking-widest py-1 ${
+                    activeId === link.id ? "text-primary" : "text-dark/80"
                   }`}
                 >
                   {link.name}
                 </a>
               ))}
+              <a
+                href="#contact"
+                onClick={() => setIsOpen(false)}
+                className="mt-2 text-center bg-dark text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-primary transition-colors"
+              >
+                Hire Me
+              </a>
             </div>
           </motion.div>
         )}

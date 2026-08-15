@@ -112,7 +112,7 @@ const ProjectCard = ({ project, onHoverChange }) => {
       onMouseEnter={() => onHoverChange?.(true)}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
-      className="group relative h-[380px] w-[240px] sm:h-[420px] sm:w-[280px] rounded-2xl shadow-xl"
+      className="group relative h-[380px] w-full max-w-[280px] sm:h-[420px] rounded-2xl shadow-xl"
     >
       <CardWrapper
         href={project.link}
@@ -233,7 +233,7 @@ const RadialProjectGallery = ({ projects }) => {
 
   return (
     <div
-      className="relative h-[420px] sm:h-[520px] overflow-hidden"
+      className="relative h-[420px] sm:h-[520px] overflow-hidden hidden md:block"
       style={{
         maskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
         WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
@@ -271,6 +271,20 @@ const RadialProjectGallery = ({ projects }) => {
   );
 };
 
+const MobileProjectGallery = ({ projects }) => {
+  if (projects.length === 0) return null;
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center md:hidden">
+      {projects.map((project) => (
+        <div key={project.id} className="w-full flex justify-center">
+          <ProjectCard project={project} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const Projects = () => {
   const [filter, setFilter] = useState("All");
   const categories = ["All", "Web", "Video", "Game"];
@@ -286,16 +300,16 @@ const Projects = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="py-24 bg-white"
+      className="py-16 md:py-24 bg-white"
     >
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-6 md:gap-8">
           <motion.div variants={fadeUp}>
-            <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
               Portfolio <span className="text-primary">Showcase</span>
             </h2>
-            <p className="text-dark/50 max-w-md font-medium">
-              A curated selection of my work across web development, video editing, 3D modeling, and game design. Hover a card to pause and take a closer look.
+            <p className="text-dark/50 max-w-md font-medium text-sm sm:text-base">
+              A curated selection of my work across web development, video editing, 3D modeling, and game design.
             </p>
           </motion.div>
 
@@ -304,7 +318,7 @@ const Projects = () => {
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+                className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
                   filter === cat 
                     ? "bg-dark text-white" 
                     : "bg-off-white text-dark/40 hover:bg-dark/5"
@@ -317,6 +331,7 @@ const Projects = () => {
         </div>
 
         <RadialProjectGallery projects={filteredProjects} />
+        <MobileProjectGallery projects={filteredProjects} />
       </div>
     </motion.section>
   );

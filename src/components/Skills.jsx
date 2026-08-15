@@ -44,38 +44,38 @@ const Skills = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="py-24 bg-off-white"
+      className="py-16 md:py-24 bg-off-white"
     >
-      <div className="container mx-auto px-6">
-        <motion.div variants={fadeUp} className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter uppercase">
+      <div className="container mx-auto px-4 sm:px-6">
+        <motion.div variants={fadeUp} className="text-center mb-10 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
             Technical <span className="text-primary">Arsenal</span>
           </h2>
-          <p className="text-dark/50 max-w-lg mx-auto font-medium">
+          <p className="text-dark/50 max-w-lg mx-auto font-medium text-sm sm:text-base">
             A comprehensive overview of my technical skills and proficiency in various creative and technical fields.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
           {skillCategories.map((cat, i) => (
             <motion.div
               key={cat.title}
               variants={fadeUp}
-              className="bg-white p-10 rounded-3xl shadow-xl shadow-dark/5 border border-dark/5"
+              className="bg-white p-6 sm:p-8 md:p-10 rounded-3xl shadow-xl shadow-dark/5 border border-dark/5"
             >
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+              <div className="flex items-center gap-4 mb-6 sm:mb-8">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
                   {cat.icon}
                 </div>
-                <h3 className="text-2xl font-bold uppercase tracking-tight">{cat.title}</h3>
+                <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight">{cat.title}</h3>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 {cat.skills.map((skill, index) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-sm font-bold uppercase tracking-widest text-dark/60">{skill.name}</span>
-                      <span className="text-sm font-black text-primary">{skill.level}%</span>
+                      <span className="text-xs sm:text-sm font-bold uppercase tracking-wider sm:tracking-widest text-dark/60">{skill.name}</span>
+                      <span className="text-xs sm:text-sm font-black text-primary">{skill.level}%</span>
                     </div>
                     <div className="h-2 w-full bg-off-white rounded-full overflow-hidden">
                       <motion.div

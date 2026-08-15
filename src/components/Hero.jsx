@@ -18,7 +18,7 @@ const Hero = () => {
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16"
     >
       {/* Watermark Background */}
       <div className="watermark-text">
@@ -30,16 +30,16 @@ const Hero = () => {
            style={{ backgroundImage: 'radial-gradient(#0F172A 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
-          <motion.div variants={fadeUp} className="mb-6">
+          <motion.div variants={fadeUp} className="mb-4 sm:mb-6">
             <span className="inline-block py-1 px-4 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase">
               Ferrel Rashad Akeyla
             </span>
           </motion.div>
 
           <motion.h1 
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tighter flex flex-col items-center"
+            className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 sm:mb-8 leading-[0.9] tracking-tighter flex flex-col items-center"
           >
             <div className="overflow-hidden px-4 -mx-4 py-1 -my-1">
               <motion.span variants={slideUp} className="inline-block">DIGITAL</motion.span>
@@ -51,16 +51,16 @@ const Hero = () => {
 
           <motion.p 
             variants={fadeUp}
-            className="text-lg md:text-xl text-dark/60 mb-12 max-w-2xl mx-auto font-medium"
+            className="text-base sm:text-lg md:text-xl text-dark/60 mb-8 sm:mb-12 max-w-2xl mx-auto font-medium px-2"
           >
             Full Stack Web Developer, Video Editor, 3D Modeler, and Game Developer building immersive digital experiences.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-6">
-            <a href="#projects" className="bg-dark text-white px-8 py-4 rounded-xl font-bold hover:bg-primary transition-all hover:scale-105 active:scale-95 shadow-xl shadow-dark/10">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto">
+            <a href="#projects" className="bg-dark text-white px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:bg-primary transition-all hover:scale-105 active:scale-95 shadow-xl shadow-dark/10 text-center">
               View My Work
             </a>
-            <a href="/cv.pdf" className="bg-white border-2 border-dark/5 px-8 py-4 rounded-xl font-bold hover:border-primary transition-all hover:scale-105 active:scale-95">
+            <a href="/cv.pdf" className="bg-white border-2 border-dark/5 px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:border-primary transition-all hover:scale-105 active:scale-95 text-center">
               Download CV
             </a>
           </motion.div>
