@@ -112,7 +112,7 @@ const ProjectCard = ({ project, onHoverChange }) => {
       onMouseEnter={() => onHoverChange?.(true)}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
-      className="group relative h-[380px] w-full max-w-[280px] sm:h-[420px] rounded-2xl shadow-xl"
+      className="group relative h-[380px] w-[240px] sm:h-[420px] sm:w-[280px] rounded-2xl shadow-xl"
     >
       <CardWrapper
         href={project.link}
