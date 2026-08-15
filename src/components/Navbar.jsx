@@ -60,7 +60,7 @@ const Navbar = () => {
       }}
       className="fixed top-0 left-0 right-0 z-50 border-b"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto px-6 relative flex items-center justify-between">
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
@@ -70,7 +70,7 @@ const Navbar = () => {
           FERREL RASHAD<span className="text-primary">.</span>
         </motion.a>
 
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8">
           {navLinks.map((link, i) => (
             <motion.a
               key={link.name}
