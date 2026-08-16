@@ -131,7 +131,7 @@ const ProjectCard = ({ project }) => {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className="group relative h-[380px] w-full sm:h-[420px] rounded-2xl bg-transparent shadow-2xl border border-dark/10 overflow-hidden"
+        className="group relative h-[360px] sm:h-[420px] w-full max-w-[340px] sm:max-w-none rounded-2xl bg-transparent shadow-2xl border border-dark/10 overflow-hidden"
       >
         <CardWrapper
           href={project.link}
