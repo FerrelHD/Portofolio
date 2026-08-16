@@ -21,12 +21,12 @@ const Contact = () => {
       className="py-16 md:py-24 bg-dark text-white overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-20 items-center">
-          <div className="z-10 lg:pr-8">
-            <motion.h2 variants={fadeUp} className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 sm:mb-8 leading-[0.9] tracking-tighter uppercase">
-              Let's build <br /> <span className="text-primary italic">something</span> <br /> together
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-20 items-start">
+          <div className="z-10 w-full">
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-black mb-6 sm:mb-8 leading-none tracking-tighter uppercase break-words">
+              Let's build <br className="hidden sm:inline" /> <span className="text-primary italic">something</span> <br className="hidden sm:inline" /> together
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-white/50 text-base sm:text-lg mb-8 sm:mb-12 max-w-md">
+            <motion.p variants={fadeUp} className="text-white/50 text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-md">
               Have a project in mind? Or just want to say hi? Feel free to reach out. I'm always open to new opportunities.
             </motion.p>
 
