@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, Play, Gamepad2 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
@@ -72,6 +72,30 @@ const projects = [
 ];
 
 const ProjectCard = ({ project }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 15, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["10.5deg", "-10.5deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-10.5deg", "10.5deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const { width, height, left, top } = rect;
+    const xPct = (e.clientX - left) / width - 0.5;
+    const yPct = (e.clientY - top) / height - 0.5;
+    mouseX.set(xPct);
+    mouseY.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   const linkIcon = project.category === "Video"
     ? <Play size={18} fill="currentColor" />
     : project.isRoblox
@@ -87,64 +111,86 @@ const ProjectCard = ({ project }) => {
     : "View Project";
 
   return (
-    <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3 }}
-      className="group relative h-[380px] w-full sm:h-[420px] rounded-2xl shadow-xl overflow-hidden"
-    >
-      <CardWrapper
-        href={project.link}
-        className="absolute inset-0 rounded-2xl overflow-hidden block"
+    <div style={{ perspective: "1000px" }} className="w-full flex justify-center">
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+        }}
+        className="group relative h-[380px] w-full sm:h-[420px] rounded-2xl bg-transparent shadow-2xl border border-dark/10 overflow-hidden"
       >
-        <img
-          src={project.image}
-          alt={project.title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/90" />
+        <CardWrapper
+          href={project.link}
+          style={{
+            transform: "translateZ(30px)",
+            transformStyle: "preserve-3d",
+          }}
+          className="absolute inset-0 rounded-2xl overflow-hidden block"
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            className="absolute inset-0 h-full w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-b from-black/30 via-transparent to-black/90" />
 
-        <div className="relative flex h-full flex-col justify-between p-5 text-white z-10">
-          <div className="flex items-start justify-between">
-            <span
-              className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em]"
-            >
-              {project.category}
-            </span>
-            {project.link && (
+          <div className="relative flex h-full flex-col justify-between rounded-2xl p-5 text-white z-10">
+            <div className="flex items-start justify-between">
               <span
-                aria-hidden="true"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all group-hover:bg-primary group-hover:scale-110"
+                style={{ transform: "translateZ(40px)" }}
+                className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em]"
               >
-                {linkIcon}
+                {project.category}
               </span>
-            )}
-          </div>
-
-          <div>
-            <div
-              className="mb-3 flex flex-wrap gap-1.5"
-            >
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-2.5 py-1 rounded-md backdrop-blur-sm"
+              {project.link && (
+                <motion.span
+                  whileHover={{ scale: 1.1, rotate: "2.5deg" }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label={`View ${project.title}`}
+                  style={{ transform: "translateZ(60px)" }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-1 ring-inset ring-white/30 transition-colors hover:bg-white/30"
                 >
-                  {t}
-                </span>
-              ))}
+                  {linkIcon}
+                </motion.span>
+              )}
             </div>
-            <h3 className="text-xl font-black leading-tight mb-3 group-hover:text-primary transition-colors">
-              {project.title}
-            </h3>
-            <div
-              className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/15 backdrop-blur-md group-hover:bg-primary transition-colors"
-            >
-              {actionText}
+
+            <div>
+              <div
+                style={{ transform: "translateZ(30px)" }}
+                className="mb-3 flex flex-wrap gap-1.5"
+              >
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-2.5 py-1 rounded-md backdrop-blur-sm"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <h3
+                style={{ transform: "translateZ(50px)" }}
+                className="text-xl font-black leading-tight mb-3 group-hover:text-primary transition-colors"
+              >
+                {project.title}
+              </h3>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ transform: "translateZ(40px)" }}
+                className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md ring-1 ring-inset ring-white/20 hover:bg-white/20 transition-colors"
+              >
+                {actionText}
+              </motion.div>
             </div>
           </div>
-        </div>
-      </CardWrapper>
-    </motion.div>
+        </CardWrapper>
+      </motion.div>
+    </div>
   );
 };
 
