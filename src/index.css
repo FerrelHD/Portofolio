@@ -42,27 +42,4 @@
   @apply bg-primary/20 hover:bg-primary/40 rounded-full transition-colors;
 }
 
-/* Radial project gallery: wheel spins, each card counter-spins to stay upright. */
-@keyframes wheel-spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes wheel-spin-reverse {
-  to { transform: rotate(-360deg); }
-}
-.wheel-spin {
-  animation: wheel-spin 40s linear infinite;
-}
-.wheel-spin:hover {
-  animation-play-state: paused;
-}
-.wheel-counter-spin {
-  animation: wheel-spin-reverse 40s linear infinite;
-}
-.wheel-spin:hover .wheel-counter-spin {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .wheel-spin, .wheel-counter-spin {
-    animation: none;
-  }
-}
+

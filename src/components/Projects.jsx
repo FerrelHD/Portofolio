@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowUpRight, Play, Gamepad2 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
@@ -71,27 +71,7 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ project, onHoverChange }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 15, stiffness: 150 };
-  const springX = useSpring(mouseX, springConfig);
-  const springY = useSpring(mouseY, springConfig);
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["10.5deg", "-10.5deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-10.5deg", "10.5deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-    mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-    onHoverChange?.(false);
-  };
-
+const ProjectCard = ({ project }) => {
   const linkIcon = project.category === "Video"
     ? <Play size={18} fill="currentColor" />
     : project.isRoblox
@@ -108,64 +88,56 @@ const ProjectCard = ({ project, onHoverChange }) => {
 
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => onHoverChange?.(true)}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
-      className="group relative h-[380px] w-[240px] sm:h-[420px] sm:w-[280px] rounded-2xl shadow-xl"
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3 }}
+      className="group relative h-[380px] w-full sm:h-[420px] rounded-2xl shadow-xl overflow-hidden"
     >
       <CardWrapper
         href={project.link}
-        style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }}
-        className="absolute inset-3 rounded-xl overflow-hidden"
+        className="absolute inset-0 rounded-2xl overflow-hidden block"
       >
         <img
           src={project.image}
           alt={project.title}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/90" />
 
-        <div className="relative flex h-full flex-col justify-between p-4 text-white">
+        <div className="relative flex h-full flex-col justify-between p-5 text-white z-10">
           <div className="flex items-start justify-between">
             <span
-              style={{ transform: "translateZ(30px)" }}
               className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em]"
             >
               {project.category}
             </span>
             {project.link && (
-              <motion.span
-                whileHover={{ scale: 1.1, rotate: "8deg" }}
+              <span
                 aria-hidden="true"
-                style={{ transform: "translateZ(50px)" }}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-colors group-hover:bg-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm transition-all group-hover:bg-primary group-hover:scale-110"
               >
                 {linkIcon}
-              </motion.span>
+              </span>
             )}
           </div>
 
           <div>
             <div
-              style={{ transform: "translateZ(30px)" }}
               className="mb-3 flex flex-wrap gap-1.5"
             >
               {project.tech.map((t) => (
                 <span
                   key={t}
-                  className="text-[9px] font-bold uppercase tracking-widest text-white/70 bg-white/10 px-2 py-1 rounded-md"
+                  className="text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-2.5 py-1 rounded-md backdrop-blur-sm"
                 >
                   {t}
                 </span>
               ))}
             </div>
-            <h3 style={{ transform: "translateZ(40px)" }} className="text-lg font-black leading-tight mb-3">
+            <h3 className="text-xl font-black leading-tight mb-3 group-hover:text-primary transition-colors">
               {project.title}
             </h3>
             <div
-              style={{ transform: "translateZ(30px)" }}
-              className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md group-hover:bg-primary transition-colors"
+              className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/15 backdrop-blur-md group-hover:bg-primary transition-colors"
             >
               {actionText}
             </div>
@@ -184,106 +156,6 @@ const CardWrapper = ({ href, children, ...props }) =>
   ) : (
     <div {...props}>{children}</div>
   );
-
-function useResponsiveRadius(desktop, mobile) {
-  const [radius, setRadius] = useState(desktop);
-
-  useEffect(() => {
-    const update = () => setRadius(window.innerWidth < 768 ? mobile : desktop);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [desktop, mobile]);
-
-  return radius;
-}
-
-const RadialItem = ({ project, x, y, rotationAngle, isActive, onHoverChange }) => {
-  return (
-    <li
-      className="absolute top-1/2 left-1/2"
-      style={{
-        zIndex: isActive ? 20 : 10,
-        transform: `translate(-50%, -50%) translate(${x}px, ${y}px) rotate(${rotationAngle}deg)`,
-      }}
-    >
-      {/* Cancels this item's static spoke angle so the card itself is upright. */}
-      <div style={{ transform: `rotate(${-rotationAngle}deg)` }}>
-        {/* Cancels the wheel's spin via a same-duration CSS animation - pure CSS
-            keeps this in lockstep with the wheel, and pauses with it on
-            :hover (see index.css) with zero JS timing involved. */}
-        <div className="wheel-counter-spin">
-          <motion.div
-            animate={{ scale: isActive ? 1.15 : 1, y: isActive ? -20 : 0 }}
-          >
-            <ProjectCard project={project} onHoverChange={onHoverChange} />
-          </motion.div>
-        </div>
-      </div>
-    </li>
-  );
-};
-
-const RadialProjectGallery = ({ projects }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const radius = useResponsiveRadius(340, 160);
-  const count = projects.length;
-
-  if (count === 0) return null;
-
-  return (
-    <div
-      className="relative h-[420px] sm:h-[520px] overflow-hidden hidden md:block"
-      style={{
-        maskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
-        WebkitMaskImage: "linear-gradient(to top, transparent 0%, black 35%, black 100%)",
-      }}
-    >
-      {/* Wheel pauses on :hover natively (index.css) - no JS pause/resume timing to get wrong. */}
-      <ul
-        className="wheel-spin absolute left-1/2 -translate-x-1/2 m-0 p-0 list-none"
-        style={{
-          width: radius * 2,
-          height: radius * 2,
-          bottom: -(radius * 2 * 0.55),
-        }}
-      >
-        {projects.map((project, index) => {
-          const angle = (index / count) * 2 * Math.PI;
-          const x = radius * Math.cos(angle);
-          const y = radius * Math.sin(angle);
-          const rotationAngle = (angle * 180) / Math.PI + 90;
-
-          return (
-            <RadialItem
-              key={project.id}
-              project={project}
-              x={x}
-              y={y}
-              rotationAngle={rotationAngle}
-              isActive={hoveredIndex === index}
-              onHoverChange={(hovered) => setHoveredIndex(hovered ? index : null)}
-            />
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
-
-const MobileProjectGallery = ({ projects }) => {
-  if (projects.length === 0) return null;
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center md:hidden">
-      {projects.map((project) => (
-        <div key={project.id} className="w-full flex justify-center">
-          <ProjectCard project={project} />
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const Projects = () => {
   const [filter, setFilter] = useState("All");
@@ -330,8 +202,13 @@ const Projects = () => {
           </motion.div>
         </div>
 
-        <RadialProjectGallery projects={filteredProjects} />
-        <MobileProjectGallery projects={filteredProjects} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredProjects.map((project) => (
+            <motion.div key={project.id} variants={fadeUp}>
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.section>
   );
