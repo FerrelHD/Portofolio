@@ -3,11 +3,22 @@ import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from
 import { ArrowUpRight, Play, Gamepad2 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
+import fersyaShop from "../assets/fersya-shop.png";
 import streetRush from "../assets/street-rush.png";
 import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.jpg";
 
 const projects = [
+  {
+    id: 8,
+    title: "Fersya Shop",
+    category: "Web",
+    image: fersyaShop,
+    video: null,
+    tech: ["Laravel", "Filament", "Tailwind"],
+    link: "https://github.com/FerrelHD/Fersya-Shop",
+    github: "https://github.com/FerrelHD/Fersya-Shop"
+  },
   {
     id: 1,
     title: "Finesser Shop",
