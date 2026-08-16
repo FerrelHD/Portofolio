@@ -60,7 +60,13 @@ const Hero = () => {
             <a href="#projects" className="bg-dark text-white px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:bg-primary transition-all hover:scale-105 active:scale-95 shadow-xl shadow-dark/10 text-center">
               View My Work
             </a>
-            <a href="/cv.pdf" className="bg-white border-2 border-dark/5 px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:border-primary transition-all hover:scale-105 active:scale-95 text-center">
+            <a
+              href={`${import.meta.env.BASE_URL}cv.pdf`}
+              download="CV_Ferrel_Rashad_Akeyla.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white border-2 border-dark/5 px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:border-primary transition-all hover:scale-105 active:scale-95 text-center"
+            >
               Download CV
             </a>
           </motion.div>
