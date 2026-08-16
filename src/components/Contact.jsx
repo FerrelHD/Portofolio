@@ -21,9 +21,9 @@ const Contact = () => {
       className="py-16 md:py-24 bg-dark text-white overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-20 items-start">
-          <div className="z-10 w-full">
-            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-black mb-6 sm:mb-8 leading-none tracking-tighter uppercase break-words">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 lg:gap-12 xl:gap-20 items-start">
+          <div className="z-10 w-full min-w-0">
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black mb-6 sm:mb-8 leading-tight tracking-tight uppercase break-words">
               Let's build <br className="hidden sm:inline" /> <span className="text-primary italic">something</span> <br className="hidden sm:inline" /> together
             </motion.h2>
             <motion.p variants={fadeUp} className="text-white/50 text-sm sm:text-base md:text-lg mb-8 sm:mb-12 max-w-md">
