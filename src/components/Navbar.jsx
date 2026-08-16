@@ -65,12 +65,12 @@ const Navbar = () => {
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-xl sm:text-2xl font-display font-bold tracking-tighter"
+          className="text-lg sm:text-xl lg:text-2xl font-display font-bold tracking-tighter shrink-0"
         >
           FERREL RASHAD<span className="text-primary">.</span>
         </motion.a>
 
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8">
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 space-x-6 xl:space-x-8">
           {navLinks.map((link, i) => (
             <motion.a
               key={link.name}
@@ -78,7 +78,7 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className={`text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest ${
+              className={`text-xs xl:text-sm font-medium hover:text-primary transition-colors uppercase tracking-widest ${
                 activeId === link.id ? "text-primary" : ""
               }`}
             >
@@ -92,7 +92,7 @@ const Navbar = () => {
             href="#contact"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="hidden sm:inline-block bg-dark text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-primary transition-colors"
+            className="hidden sm:inline-block bg-dark text-white px-5 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-medium hover:bg-primary transition-colors"
           >
             Hire Me
           </motion.a>
@@ -100,7 +100,7 @@ const Navbar = () => {
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="md:hidden p-1 text-dark"
+            className="lg:hidden p-1 text-dark"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -113,7 +113,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden overflow-hidden bg-white border-t border-dark/5 shadow-lg"
+            className="lg:hidden overflow-hidden bg-white border-t border-dark/5 shadow-lg"
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navLinks.map((link) => (
