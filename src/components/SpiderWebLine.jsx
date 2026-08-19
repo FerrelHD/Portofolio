@@ -1,19 +1,22 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 const SpiderWebLine = () => {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
 
-  // Track global scroll position
+  // Track global scroll position across the page
   const { scrollYProgress } = useScroll();
 
-  // Smooth scroll spring physics for natural thread movement
+  // Smooth scroll spring physics for natural fluid thread movement
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 25,
+    stiffness: 80,
+    damping: 20,
     restDelta: 0.001,
   });
+
+  // Ensure 8% of the web line is ALREADY drawn at top of Hero (scroll 0)
+  const pathLengthValue = useTransform(smoothProgress, [0, 1], [0.08, 1]);
 
   useEffect(() => {
     // Check system prefers-reduced-motion & body class toggle
@@ -35,21 +38,25 @@ const SpiderWebLine = () => {
     };
   }, []);
 
+  // Continuous Catenary Bezier Path through sections (Hero -> About -> Services -> Projects -> Skills -> Contact)
+  const pathData =
+    "M 880 160 C 420 520, 60 780, 150 1150 C 240 1520, 920 1780, 850 2150 C 780 2520, 80 2850, 150 3250 C 220 3650, 920 3950, 850 4350 C 780 4650, 200 4880, 500 4970";
+
   return (
     <div
-      className="absolute inset-0 pointer-events-none z-0 w-full h-full overflow-hidden"
+      className="absolute inset-0 pointer-events-none z-[12] w-full h-full overflow-hidden"
       aria-hidden="true"
     >
       <svg
         className="w-full h-full"
-        viewBox="0 0 1000 4200"
+        viewBox="0 0 1000 5000"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Subtle Spider Neon Glow */}
-          <filter id="spider-web-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
+          {/* Intense Spider Cyan Glow Filter */}
+          <filter id="spider-web-glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -57,32 +64,33 @@ const SpiderWebLine = () => {
           </filter>
         </defs>
 
-        {/* Outer Soft Glow Line */}
+        {/* Thick Outer Cyan Glow Layer */}
         <motion.path
-          d="M 880 120 C 450 420, 80 680, 160 960 C 240 1240, 880 1420, 820 1720 C 760 2020, 120 2280, 180 2620 C 240 2960, 920 3180, 840 3480 C 760 3780, 220 3980, 500 4150"
+          d={pathData}
           fill="none"
           stroke="#00F0FF"
-          strokeWidth="3.5"
-          strokeOpacity="0.25"
+          strokeWidth="6"
+          strokeOpacity="0.45"
           vectorEffect="non-scaling-stroke"
           filter="url(#spider-web-glow)"
           style={{
-            pathLength: isReducedMotion ? 1 : smoothProgress,
+            pathLength: isReducedMotion ? 1 : pathLengthValue,
           }}
         />
 
-        {/* Primary Crisp Web Line */}
+        {/* Primary Bright White-Cyan Spider Web Thread */}
         <motion.path
           id="single-spider-web"
-          d="M 880 120 C 450 420, 80 680, 160 960 C 240 1240, 880 1420, 820 1720 C 760 2020, 120 2280, 180 2620 C 240 2960, 920 3180, 840 3480 C 760 3780, 220 3980, 500 4150"
+          d={pathData}
           fill="none"
-          stroke="#00F0FF"
-          strokeWidth="1.8"
-          strokeDasharray="6 2"
+          stroke="#E0FFFF"
+          strokeWidth="2.8"
+          strokeDasharray="10 4"
+          strokeOpacity="0.95"
           vectorEffect="non-scaling-stroke"
           filter="url(#spider-web-glow)"
           style={{
-            pathLength: isReducedMotion ? 1 : smoothProgress,
+            pathLength: isReducedMotion ? 1 : pathLengthValue,
           }}
         />
       </svg>
