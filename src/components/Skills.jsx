@@ -291,12 +291,12 @@ const Skills = () => {
                               className="fun-fact-tooltip absolute z-30 top-full left-0 right-0 mt-2 bg-spider-yellow text-spider-black comic-chip p-3 pop-shadow-sm pointer-events-none"
                             >
                               <div className="fun-fact-caret absolute -top-2 left-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[8px] border-b-spider-black" />
-                              <p className="text-[11px] font-bold italic leading-tight">
-                                <span className="font-black not-italic text-[10px] tracking-wider uppercase bg-spider-black text-spider-yellow px-1.5 py-0.5 mr-1.5 comic-chip">
+                              <div className="text-[11px] font-bold italic leading-snug">
+                                <span className="block font-black not-italic text-[10px] tracking-wider uppercase bg-spider-black text-spider-yellow px-1.5 py-0.5 mb-1.5 comic-chip w-fit">
                                   💡 FUN FACT
                                 </span>
                                 {skill.fact}
-                              </p>
+                              </div>
                             </motion.div>
                           )}
                         </AnimatePresence>
