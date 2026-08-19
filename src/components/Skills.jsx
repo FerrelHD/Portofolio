@@ -183,7 +183,7 @@ const Skills = () => {
               className="relative group"
             >
               <div
-                className="comic-panel overflow-hidden relative"
+                className="comic-panel relative"
                 style={{ borderRadius: "3px" }}
               >
                 {/* TOP ACCENT HEADER BAR */}
