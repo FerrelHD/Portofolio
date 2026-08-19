@@ -3,43 +3,1055 @@
 @theme {
   --font-display: "Syne", sans-serif;
   --font-body: "DM Sans", sans-serif;
-  
-  --color-primary: #0EA5E9;
-  --color-secondary: #0284C7;
-  --color-dark: #0F172A;
-  --color-off-white: #F8FAFC;
+
+  /* COMIC POP ART PALETTE */
+  --color-spider-red: #FF1E26;
+  --color-spider-blue: #165DFF;
+  --color-spider-yellow: #FFD500;
+  --color-spider-black: #0A0A0A;
+
+  --color-comic-surface: #141414;
+  --color-comic-panel: #1E1E24;
+  --color-comic-ink: #F0EDE3;
+  --color-comic-halftone: #2A2A35;
+  --color-pop-magenta: #FF4081;
+
+  --color-ink-stroke: #0A0A0A;
+  --color-glow-red: rgba(255, 30, 38, 0.4);
+  --color-glow-blue: rgba(22, 93, 255, 0.4);
+
+  /* Utility tokens */
+  --color-primary: var(--color-spider-red);
+  --color-secondary: var(--color-spider-blue);
+  --color-accent: var(--color-spider-yellow);
+  --color-dark: var(--color-spider-black);
+  --color-off-white: var(--color-comic-ink);
 }
+
+/* ============================================ */
+/* ============ @layer BASE STYLES ============ */
+/* ============================================ */
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply font-body text-dark bg-white overflow-x-hidden;
+    font-family: var(--font-body);
+    color: var(--color-comic-ink);
+    background-color: var(--color-comic-surface);
+    overflow-x: hidden;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    font-family: var(--font-display);
+    font-weight: 900;
+  }
+
+  /* Smooth scrollbar — base layer */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--color-comic-surface);
+    border-left: 2px solid var(--color-ink-stroke);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-spider-red), var(--color-spider-blue));
+    border-left: 2px solid var(--color-ink-stroke);
+    border-right: 2px solid var(--color-ink-stroke);
   }
 }
 
-/* Custom styles for the watermark effect */
-.watermark-text {
-  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-display font-black text-dark/5 pointer-events-none select-none whitespace-nowrap z-0 uppercase;
+/* ================================================= */
+/* ============ @layer UTILITIES CUSTOM ============ */
+/* ================================================= */
+/* SEMUA custom className HARUS di sini agar Tailwind
+   v4 @tailwindcss/vite plugin TIDAK menolak sebagai
+   "unknown utility class" pada saat build (strict).
+   ================================================= */
+
+@layer utilities {
+
+  /* ===== Comic Ink Text Stroke ===== */
+  .comic-stroke {
+    -webkit-text-stroke: 2px var(--color-ink-stroke);
+    paint-order: stroke fill;
+  }
+  .comic-stroke-thin {
+    -webkit-text-stroke: 1px var(--color-ink-stroke);
+    paint-order: stroke fill;
+  }
+
+  /* ===== Pop Art 3D Drop Shadow ===== */
+  .pop-shadow-red {
+    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke), 0 0 40px var(--color-glow-red);
+  }
+  .pop-shadow-blue {
+    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke), 0 0 40px var(--color-glow-blue);
+  }
+  .pop-shadow-yellow {
+    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke);
+  }
+  .pop-shadow-sm {
+    box-shadow: 3px 3px 0px 0px var(--color-ink-stroke);
+  }
+  .pop-shadow-active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0px 0px var(--color-ink-stroke);
+  }
+
+  /* ===== Comic Panel / Chip / Caption Border ===== */
+  .comic-panel {
+    border: 3px solid var(--color-ink-stroke);
+    background-color: var(--color-comic-panel);
+  }
+  .comic-chip {
+    border: 2px solid var(--color-ink-stroke);
+  }
+  .comic-caption {
+    border: 2px solid var(--color-spider-yellow);
+    background-color: rgba(255, 213, 0, 0.06);
+  }
+
+  /* ===== Halftone Dot Pattern Overlay ===== */
+  .halftone-overlay {
+    background-image: radial-gradient(circle, var(--color-comic-halftone) 1.2px, transparent 1.2px);
+    background-size: 8px 8px;
+  }
+  .halftone-overlay-sm {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  /* ===== Scanline Effect ===== */
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ===== Comic Speech Bubble (category badge) ===== */
+  .speech-bubble {
+    position: relative;
+  }
+  .speech-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 16px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid currentColor;
+    filter: drop-shadow(0 1px 0 var(--color-ink-stroke));
+  }
+
+  /* ===== Burst / Spider-Signal Conic Background ===== */
+  .burst-bg {
+    background:
+      conic-gradient(from 0deg at 50% 50%,
+        var(--color-spider-yellow) 0deg, transparent 20deg,
+        var(--color-spider-yellow) 40deg, transparent 60deg,
+        var(--color-spider-yellow) 80deg, transparent 100deg,
+        var(--color-spider-yellow) 120deg, transparent 140deg,
+        var(--color-spider-yellow) 160deg, transparent 180deg,
+        var(--color-spider-yellow) 200deg, transparent 220deg,
+        var(--color-spider-yellow) 240deg, transparent 260deg,
+        var(--color-spider-yellow) 280deg, transparent 300deg,
+        var(--color-spider-yellow) 320deg, transparent 340deg,
+        var(--color-spider-yellow) 360deg);
+  }
+
+  /* =============================================== */
+  /* === SECRET IDENTITY REVEAL MECHANIC (OPSI A) === */
+  /* =============================================== */
+
+  .identity-wrapper {
+    position: relative;
+    perspective: 1000px;
+  }
+
+  /* Layer 1: Base (real photo) */
+  .identity-photo-base {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Suit triangle pieces shared */
+  .suit-piece {
+    position: absolute;
+    z-index: 5;
+    transition: all 0.55s cubic-bezier(0.7, 0, 0.3, 1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Top-Left Triangle → fly TL -25%/-25% rotate -10 */
+  .suit-piece-tl {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    transform-origin: top left;
+  }
+  .group:hover .suit-piece-tl {
+    transform: translate(-25%, -25%) rotate(-10deg);
+    opacity: 0.2;
+  }
+
+  /* Top-Right Triangle → fly TR +25%/-25% rotate +10 */
+  .suit-piece-tr {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    transform-origin: top right;
+  }
+  .group:hover .suit-piece-tr {
+    transform: translate(25%, -25%) rotate(10deg);
+    opacity: 0.2;
+  }
+
+  /* Bottom-Left Triangle → fly BL -25%/+25% rotate +10 */
+  .suit-piece-bl {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    transform-origin: bottom left;
+  }
+  .group:hover .suit-piece-bl {
+    transform: translate(-25%, 25%) rotate(10deg);
+    opacity: 0.2;
+  }
+
+  /* Bottom-Right Triangle → fly BR +25%/+25% rotate -10 */
+  .suit-piece-br {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    transform-origin: bottom right;
+  }
+  .group:hover .suit-piece-br {
+    transform: translate(25%, 25%) rotate(-10deg);
+    opacity: 0.2;
+  }
+
+  /* Yellow diagonal slash overlay wipe */
+  .identity-slash {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    background: linear-gradient(135deg,
+      transparent 45%,
+      var(--color-spider-yellow) 49%,
+      #fff 50%,
+      var(--color-spider-yellow) 51%,
+      transparent 55%);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all 0.35s cubic-bezier(0.7, 0, 0.3, 1);
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+  .group:hover .identity-slash {
+    opacity: 1;
+    transform: translateX(100%);
+  }
+
+  /* Identity label swap animation */
+  .identity-label {
+    transition: all 0.35s ease;
+  }
+  .label-idle {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .label-active {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .group:hover .label-idle {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  .group:hover .label-active {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+
+  /* Glow ring when revealed */
+  .identity-glow-ring {
+    position: absolute;
+    inset: -4px;
+    z-index: 0;
+    border: 3px solid var(--color-spider-red);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    box-shadow: 0 0 30px var(--color-glow-red), inset 0 0 30px var(--color-glow-red);
+  }
+  .group:hover .identity-glow-ring {
+    opacity: 1;
+  }
+
+  /* =============================================== */
+  /* === WATERMARK TEXT (Amazing Spider-Dev 3LINES) === */
+  /* === NOT using @apply comic-stroke (cross    === */
+  /* === layer @apply rejected by TW v4 strict)  === */
+  /* =============================================== */
+  .watermark-text {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    transform: translateY(-50%);
+    font-size: clamp(5rem, 11vw, 10rem);
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: color-mix(in srgb, var(--color-comic-ink) 4%, transparent);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px var(--color-ink-stroke);
+    paint-order: stroke fill;
+    line-height: 0.9;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  /* =============================================== */
+
+  /* Blink animation for CLASSIFIED badge */
+  .blink-soft {
+    animation: blink 1.6s ease-in-out infinite;
+  }
+
+  /* Spider-sense pulse glow for submit button */
+  .spider-sense {
+    animation: spider-pulse 2.4s ease-in-out infinite;
+  }
+
+  /* =============================================== */
+  /* === BATCH 1: SKIP-TO-CONTENT LINK           === */
+  /* =============================================== */
+  .skip-link {
+    position: fixed;
+    top: -100px;
+    left: 16px;
+    z-index: 100;
+    background: var(--color-spider-yellow);
+    color: var(--color-spider-black);
+    border: 3px solid var(--color-ink-stroke);
+    box-shadow: 4px 4px 0 0 var(--color-ink-stroke);
+    padding: 12px 20px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: top 0.25s ease;
+  }
+  .skip-link:focus {
+    top: 16px;
+    outline: none;
+  }
+
+  /* =============================================== */
+  /* === BATCH 1: INPUT ERROR STATE (FORM)       === */
+  /* =============================================== */
+  .input-error {
+    border-color: var(--color-spider-red) !important;
+    box-shadow: 0 0 0 2px var(--color-glow-red) !important;
+    animation: shake 0.4s ease-in-out 1;
+  }
+
+  /* =============================================== */
+  /* === BATCH 1: SUCCESS POPUP MODAL            === */
+  /* =============================================== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10, 10, 10, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-panel {
+    position: relative;
+    max-width: 460px;
+    width: 100%;
+    border: 4px solid var(--color-ink-stroke);
+    box-shadow: 8px 8px 0 0 var(--color-ink-stroke), 0 0 60px var(--color-glow-red);
+    background: var(--color-comic-panel);
+    overflow: hidden;
+  }
+  .modal-halftone {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.25;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 14px;
+    border: 1.5px solid var(--color-ink-stroke);
+  }
+
+  /* =============================================== */
+  /* === BATCH 1: BACK-TO-TOP WEB SHOOTER        === */
+  /* =============================================== */
+  .web-shooter-btn {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 90;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-spider-blue);
+    border: 3px solid var(--color-ink-stroke);
+    box-shadow: 4px 4px 0 0 var(--color-ink-stroke), 0 0 20px var(--color-glow-blue);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .web-shooter-btn:hover {
+    background: var(--color-spider-yellow);
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke), 0 0 30px var(--color-glow-red);
+    transform: translate(2px, 2px);
+  }
+  .web-shooter-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 var(--color-ink-stroke);
+  }
+  .web-tooltip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    background: var(--color-spider-black);
+    border: 2px solid var(--color-ink-stroke);
+    color: var(--color-comic-ink);
+    padding: 6px 10px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .web-shooter-btn:hover .web-tooltip {
+    opacity: 1;
+  }
+  .web-line {
+    position: fixed;
+    right: 48px;
+    bottom: 48px;
+    width: 4px;
+    height: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(240,237,227,0.2));
+    border: 1.5px solid var(--color-ink-stroke);
+    z-index: 89;
+    transform-origin: bottom right;
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  /* =============================================== */
+  /* === BATCH 2: SPIDER-SENSE TINGLING MODE      === */
+  /* =============================================== */
+  .spider-sense-active::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 150;
+    border: 6px solid var(--color-spider-red);
+    animation: sense-flash 0.35s ease-in-out 6;
+    box-shadow: inset 0 0 60px var(--color-glow-red);
+  }
+  .spider-sense-active::after {
+    content: "⚠ SPIDER-SENSE TINGLING...";
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 151;
+    background: var(--color-spider-red);
+    border: 3px solid var(--color-ink-stroke);
+    box-shadow: 4px 4px 0 0 var(--color-ink-stroke);
+    color: var(--color-comic-ink);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    padding: 10px 18px;
+    text-transform: uppercase;
+    animation: sense-badge-bounce 0.4s ease-in-out 6;
+  }
+
+  /* =============================================== */
+  /* === BATCH 2: COPY TO CLIPBOARD BADGE         === */
+  /* =============================================== */
+  .copy-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--color-spider-yellow);
+    border: 2px solid var(--color-ink-stroke);
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+    color: var(--color-spider-black);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    z-index: 10;
+  }
+
+  /* =============================================== */
+  /* === BATCH 2: NAVBAR THWIP BADGE              === */
+  /* =============================================== */
+  .thwip-badge {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-spider-yellow);
+    border: 2px solid var(--color-ink-stroke);
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+    color: var(--color-spider-black);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 10px;
+    font-style: italic;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    z-index: 60;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* =============================================== */
+  /* === BATCH 2: PAGE LOADER NEXT ISSUE          === */
+  /* =============================================== */
+  .page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: var(--color-spider-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+  .page-loader-inner {
+    position: relative;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+  }
+  .page-loader-halftone {
+    position: absolute;
+    inset: 0;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+  .loader-progress-track {
+    position: relative;
+    width: 100%;
+    height: 22px;
+    background: var(--color-comic-panel);
+    border: 3px solid var(--color-ink-stroke);
+    box-shadow: 4px 4px 0 0 var(--color-ink-stroke);
+    overflow: hidden;
+  }
+  .loader-progress-fill {
+    position: absolute;
+    inset: 0;
+    right: auto;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-spider-red), var(--color-spider-yellow));
+    border-right: 3px solid var(--color-ink-stroke);
+  }
+  /* Jagged notch effect on fill */
+  .loader-progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(10,10,10,0.5) 3px, rgba(10,10,10,0.5) 6px);
+  }
+
+  /* =============================================== */
+  /* === BATCH 2: SHORTCUTS HELP POPUP (? KEY)    === */
+  /* =============================================== */
+  .shortcuts-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 16px;
+  }
+  .kbd-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 30px;
+    padding: 0 10px;
+    background: var(--color-comic-panel);
+    border: 2px solid var(--color-ink-stroke);
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+    color: var(--color-comic-ink);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
 }
 
-/* Smooth scrollbar */
-::-webkit-scrollbar {
+/* =============================================== */
+/* ============ GLOBAL KEYFRAMES ================ */
+/* =============================================== */
+/* (Boleh di luar @layer karena bukan utility class) */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes spider-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--color-glow-red); }
+  50% { box-shadow: 0 0 30px 8px var(--color-glow-red); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(6px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+  90% { transform: translateX(2px); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
+}
+
+@keyframes sense-flash {
+  0%, 100% { opacity: 0.55; border-color: var(--color-spider-red); }
+  50% { opacity: 1; border-color: var(--color-spider-yellow); }
+}
+
+@keyframes sense-badge-bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -8px) rotate(-1deg); }
+}
+
+/* =============================================== */
+/* === SPIDEY TRACKER INTERFACE (PROJECTS)      === */
+/* =============================================== */
+
+@keyframes tracker-flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.85; }
+  20% { opacity: 0.95; }
+  30% { opacity: 0.7; }
+  40% { opacity: 1; }
+}
+
+@keyframes tracker-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+@keyframes tracker-radar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes tracker-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.tracker-frame {
+  position: relative;
+  background: linear-gradient(180deg, #0a1628 0%, #0d1f3c 100%);
+  border: 4px solid var(--color-spider-blue);
+  box-shadow:
+    0 0 0 2px var(--color-ink-stroke),
+    0 0 0 6px #0a2463,
+    inset 0 0 0 2px #0a2463,
+    0 0 60px rgba(22, 93, 255, 0.25);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tracker-frame-on {
+  animation: tracker-flicker 0.6s ease-out 1;
+  box-shadow:
+    0 0 0 2px var(--color-ink-stroke),
+    0 0 0 6px #0a2463,
+    inset 0 0 0 2px #0a2463,
+    0 0 80px rgba(22, 93, 255, 0.5);
+}
+
+.tracker-bar {
+  background: linear-gradient(180deg, #165DFF 0%, #0a2463 100%);
+  border-bottom: 3px solid var(--color-ink-stroke);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tracker-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 2px solid var(--color-ink-stroke);
+}
+
+.tracker-status-online {
+  background: #00ff88;
+  box-shadow: 0 0 8px #00ff88;
+  animation: tracker-blink 1.4s ease-in-out infinite;
+}
+
+.tracker-status-offline {
+  background: #555;
+}
+
+.tracker-inner-display {
+  position: relative;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(22, 93, 255, 0.04) 0px,
+      rgba(22, 93, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    linear-gradient(180deg, rgba(10,22,40,0.95) 0%, rgba(13,31,60,0.95) 100%);
+  min-height: 400px;
+}
+
+.tracker-inner-display::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(22, 93, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 93, 255, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tracker-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(22, 93, 255, 0.08) 50%,
+    transparent 100%
+  );
+  height: 30%;
+  animation: tracker-scanline 5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tracker-open-btn {
+  background: linear-gradient(180deg, #165DFF 0%, #0a2463 100%);
+  border: 3px solid var(--color-ink-stroke);
+  color: var(--color-comic-ink);
+  padding: 20px 48px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 0 var(--color-ink-stroke), 0 0 30px rgba(22, 93, 255, 0.5);
+  transition: all 0.15s ease;
+}
+
+.tracker-open-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--color-ink-stroke), 0 0 50px rgba(22, 93, 255, 0.7);
+  background: linear-gradient(180deg, var(--color-spider-yellow) 0%, #c4a800 100%);
+  color: var(--color-spider-black);
+}
+
+.tracker-open-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--color-ink-stroke);
+}
+
+.tracker-radar {
+  width: 70px;
+  height: 70px;
+  border-radius: 9999px;
+  border: 3px solid var(--color-ink-stroke);
+  background: radial-gradient(circle, rgba(0,255,136,0.12) 0%, transparent 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.tracker-radar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: conic-gradient(from 0deg, rgba(0,255,136,0.6) 0deg, transparent 60deg);
+  animation: tracker-radar 2.4s linear infinite;
+}
+
+.tracker-radar::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border-radius: 9999px;
+  border: 1px dashed rgba(0,255,136,0.4);
+}
+
+.tracker-card {
+  border: 3px solid var(--color-ink-stroke);
+  background: #0a1628;
+  box-shadow: 3px 3px 0 0 #0a2463;
+  transition: all 0.25s ease;
+}
+
+.tracker-card:hover {
+  box-shadow: 3px 3px 0 0 var(--color-spider-yellow), 0 0 30px rgba(22, 93, 255, 0.4);
+  transform: translate(-1px, -1px);
+}
+
+.tracker-pin {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  border: 3px solid var(--color-ink-stroke);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.tracker-footer {
+  background: linear-gradient(180deg, #0a2463 0%, #081a42 100%);
+  border-top: 3px solid var(--color-ink-stroke);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-comic-ink);
+}
+
+.tracker-close-btn {
+  background: var(--color-spider-red);
+  border: 2px solid var(--color-ink-stroke);
+  color: var(--color-comic-ink);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 900;
+  box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+  transition: all 0.12s ease;
+}
+
+.tracker-close-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 var(--color-ink-stroke);
+  background: var(--color-spider-yellow);
+  color: var(--color-spider-black);
+}
+
+/* =============================================== */
+/* ============ REDUCE MOTION FALLBACKS ========= */
+/* =============================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Matikan semua animasi global */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+  }
+  @keyframes spider-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+  }
+  @keyframes confetti-fall {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes sense-flash {
+    0%, 100% { opacity: 0; }
+  }
+  @keyframes sense-badge-bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =============================================== */
+/* === BATCH 3 & 4: CUSTOM CURSOR & REDUCE MOTION == */
+/* =============================================== */
+
+@media (pointer: fine) {
+  html[data-custom-cursor="1"],
+  html[data-custom-cursor="1"] * {
+    cursor: none !important;
+  }
+}
+
+.cursor-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+  background-color: var(--color-spider-red);
+  border: 1.5px solid var(--color-ink-stroke);
+  border-radius: 9999px;
+  z-index: 10000;
+  transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-off-white;
+.cursor-reticle {
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  margin-left: -11px;
+  background-color: var(--color-spider-yellow);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 213, 0, 0.8);
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-primary/20 hover:bg-primary/40 rounded-full transition-colors;
+.cursor-reticle-crosshair {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.cursor-reticle-crosshair .line-v {
+  position: absolute;
+  width: 1.5px;
+  height: 100%;
+  background-color: var(--color-spider-black);
+}
+
+.cursor-reticle-crosshair .line-h {
+  position: absolute;
+  height: 1.5px;
+  width: 100%;
+  background-color: var(--color-spider-black);
+}
+
+.cursor-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  margin-left: -18px;
+  color: var(--color-comic-ink);
+  z-index: 9999;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.cursor-ring-active {
+  color: var(--color-spider-yellow);
+  transform: scale(1.18);
+}
+
+.cursor-lock-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-spider-black);
+  color: var(--color-spider-yellow);
+  border: 1.5px solid var(--color-ink-stroke);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 9px;
+  font-style: italic;
+  letter-spacing: 0.16em;
+  padding: 2px 6px;
+  z-index: 10001;
+  box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+  white-space: nowrap;
+}
+
+/* Global Body Reduce Motion Override (Opsi A) */
+body.user-reduce-motion,
+body.user-reduce-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
 

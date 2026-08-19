@@ -1,12 +1,28 @@
-import React, { useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Play, Gamepad2 } from "lucide-react";
+"use client";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  ArrowUpRight,
+  Play,
+  Gamepad2,
+  Radio,
+  MapPin,
+  X,
+  Signal,
+} from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import finesserShop from "../assets/Shop.png";
 import fersyaShop from "../assets/fersya-shop.png";
 import streetRush from "../assets/street-rush.png";
 import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.jpg";
+import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";
 
 const projects = [
   {
@@ -17,7 +33,8 @@ const projects = [
     video: null,
     tech: ["Laravel", "Filament", "Tailwind"],
     link: "https://github.com/FerrelHD/Fersya-Shop",
-    github: "https://github.com/FerrelHD/Fersya-Shop"
+    github: "https://github.com/FerrelHD/Fersya-Shop",
+    sfx: "ZAP!",
   },
   {
     id: 1,
@@ -27,7 +44,8 @@ const projects = [
     video: null,
     tech: ["Laravel", "Bootstrap"],
     link: null,
-    github: null
+    github: null,
+    sfx: "BAM!",
   },
   {
     id: 7,
@@ -37,7 +55,8 @@ const projects = [
     video: null,
     tech: ["React", "TypeScript", "Supabase"],
     link: "https://ferrelhd.github.io/Student-Life/",
-    github: "https://github.com/FerrelHD/Student-Life"
+    github: "https://github.com/FerrelHD/Student-Life",
+    sfx: "WHAM!",
   },
   {
     id: 2,
@@ -47,156 +66,232 @@ const projects = [
     video: null,
     tech: ["Unity", "C#"],
     link: "https://github.com/FerrelHD/Street-Rush-Unity",
-    github: null
+    github: null,
+    sfx: "VROOOM!",
   },
   {
     id: 3,
     title: "Trouble - Frank Ocean",
     category: "Video",
     image: "https://img.youtube.com/vi/WMrnRucy0qs/maxresdefault.jpg",
-    video: "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4",
+    video: null,
     tech: ["Vegas Pro 18"],
     link: "https://youtu.be/WMrnRucy0qs?si=AUsYV0JtfbiurBRP",
-    github: null
+    github: null,
+    sfx: "SHWIP!",
   },
   {
     id: 4,
     title: "Gunung Gede Via Gunung Putri",
     category: "Game",
     image: gunungGede,
-    video: "https://assets.mixkit.co/videos/preview/mixkit-person-playing-a-first-person-shooter-video-game-close-up-34533-large.mp4",
+    video: null,
     tech: ["Luau", "Roblox Studio"],
     link: "https://www.roblox.com/games/125712163693709/Mount-Gede-Via-Gunung-Putri",
     github: null,
-    isRoblox: true
+    isRoblox: true,
+    sfx: "THWIP!",
   },
   {
     id: 6,
     title: "New Tank - Playboy Carti AMV",
     category: "Video",
     image: "https://img.youtube.com/vi/-3f378UHMZE/maxresdefault.jpg",
-    video: "https://assets.mixkit.co/videos/preview/mixkit-creative-workspace-with-computer-and-plants-close-up-1731-large.mp4",
+    video: null,
     tech: ["Vegas Pro 18"],
     link: "https://youtu.be/-3f378UHMZE?si=n5UXtmRgw1766rHe",
-    github: null
-  }
+    github: null,
+    sfx: "KABOOM!",
+  },
 ];
 
-const ProjectCard = ({ project }) => {
+const CATEGORY_COLORS = {
+  Web: { bg: "bg-spider-blue", text: "text-comic-ink", pin: "#165DFF" },
+  Video: { bg: "bg-spider-yellow", text: "text-spider-black", pin: "#FFD500" },
+  Game: { bg: "bg-spider-red", text: "text-comic-ink", pin: "#FF1E26" },
+};
+
+const CATEGORY_ICONS = {
+  Web: <Signal size={12} strokeWidth={2.5} />,
+  Video: <Play size={12} fill="currentColor" strokeWidth={2.5} />,
+  Game: <MapPin size={12} strokeWidth={2.5} />,
+};
+
+const ProjectCard = ({ project, onHover }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   const springConfig = { damping: 15, stiffness: 150 };
   const springX = useSpring(mouseX, springConfig);
   const springY = useSpring(mouseY, springConfig);
-
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["10.5deg", "-10.5deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-10.5deg", "10.5deg"]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["9deg", "-9deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-9deg", "9deg"]);
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const { width, height, left, top } = rect;
-    const xPct = (e.clientX - left) / width - 0.5;
-    const yPct = (e.clientY - top) / height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
+    mouseX.set((e.clientX - left) / width - 0.5);
+    mouseY.set((e.clientY - top) / height - 0.5);
+    onHover && onHover(project.title);
   };
-
   const handleMouseLeave = () => {
     mouseX.set(0);
     mouseY.set(0);
+    onHover && onHover(null);
   };
 
-  const linkIcon = project.category === "Video"
-    ? <Play size={18} fill="currentColor" />
-    : project.isRoblox
-    ? <Gamepad2 size={18} />
-    : <ArrowUpRight size={18} />;
+  const linkIcon =
+    project.category === "Video" ? (
+      <Play size={16} fill="currentColor" strokeWidth={2.5} />
+    ) : project.isRoblox ? (
+      <Gamepad2 size={16} strokeWidth={2.5} />
+    ) : (
+      <ArrowUpRight size={16} strokeWidth={2.5} />
+    );
 
   const actionText = !project.link
     ? "No Live Demo"
     : project.category === "Video"
     ? "Watch Video"
     : project.category === "Game"
-    ? "Play Game"
-    : "View Project";
+    ? "Play Mission"
+    : "View Mission";
+
+  const catColor = CATEGORY_COLORS[project.category] || CATEGORY_COLORS.Web;
 
   return (
-    <div style={{ perspective: "1000px" }} className="w-full flex justify-center">
+    <div style={{ perspective: "1000px" }} className="w-full flex justify-center p-2">
       <motion.div
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        className="group relative h-[360px] sm:h-[420px] w-full max-w-[340px] sm:max-w-none rounded-2xl bg-transparent shadow-2xl border border-dark/10 overflow-hidden"
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="group relative h-[360px] sm:h-[430px] w-full max-w-[360px] sm:max-w-none tracker-card rounded-sm"
       >
         <CardWrapper
           href={project.link}
-          style={{
-            transform: "translateZ(30px)",
-            transformStyle: "preserve-3d",
-          }}
-          className="absolute inset-0 rounded-2xl overflow-hidden block"
+          style={{ transformStyle: "preserve-3d" }}
+          className="absolute inset-0 block w-full h-full"
         >
-          <img
-            src={project.image}
-            alt={project.title}
-            className="absolute inset-0 h-full w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 h-full w-full rounded-2xl bg-gradient-to-b from-black/30 via-transparent to-black/90" />
+          {/* TRACKER PIN MARKER */}
+          <div
+            className="tracker-pin"
+            style={{
+              backgroundColor: catColor.pin,
+              boxShadow: `0 0 12px ${catColor.pin}`,
+            }}
+          >
+            {CATEGORY_ICONS[project.category] || <MapPin size={12} />}
+          </div>
 
-          <div className="relative flex h-full flex-col justify-between rounded-2xl p-5 text-white z-10">
-            <div className="flex items-start justify-between">
+          {/* SFX BUBBLE ON HOVER */}
+          {project.sfx && (
+            <div
+              className="sfx-bubble absolute top-3 right-14 z-[20] pointer-events-none scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 ease-out origin-bottom-left"
+              style={{ transform: "translateZ(75px) rotate(-6deg)" }}
+            >
+              <span className="inline-block bg-spider-yellow text-spider-black comic-chip px-2.5 py-1 text-[10px] sm:text-[11px] font-black italic tracking-widest uppercase pop-shadow-sm">
+                {project.sfx}
+              </span>
+            </div>
+          )}
+
+          <div
+            className="w-full h-full relative overflow-hidden"
+            style={{ borderRadius: "2px" }}
+          >
+            {/* IMAGE */}
+            <img
+              src={project.image}
+              alt={project.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+
+            {/* DARK GRADIENT OVERLAY */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.05) 40%, rgba(10,10,10,0.95) 100%)",
+              }}
+            />
+
+            {/* HALFTONE DOT OVERLAY */}
+            <div
+              className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none"
+              aria-hidden="true"
+            >
+              <div className="w-full h-full halftone-overlay-sm" />
+            </div>
+
+            {/* INNER BORDERS */}
+            <div
+              className="absolute inset-2 border-[1.5px] border-spider-black/70 pointer-events-none z-[7]"
+              style={{ borderRadius: "1px" }}
+            />
+
+            {/* TOP-LEFT: SPEECH BUBBLE CATEGORY BADGE */}
+            <div
+              className="absolute top-4 left-4 z-[10]"
+              style={{ transform: "translateZ(40px)" }}
+            >
               <span
-                style={{ transform: "translateZ(40px)" }}
-                className="px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-black uppercase tracking-[0.2em]"
+                className={`speech-bubble inline-block ${catColor.bg} ${catColor.text} comic-chip px-3.5 py-1.5 text-[10px] font-black tracking-[0.2em] uppercase`}
               >
                 {project.category}
               </span>
-              {project.link && (
-                <motion.span
-                  whileHover={{ scale: 1.1, rotate: "2.5deg" }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label={`View ${project.title}`}
-                  style={{ transform: "translateZ(60px)" }}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm ring-1 ring-inset ring-white/30 transition-colors hover:bg-white/30"
-                >
-                  {linkIcon}
-                </motion.span>
-              )}
             </div>
 
-            <div>
-              <div
-                style={{ transform: "translateZ(30px)" }}
-                className="mb-3 flex flex-wrap gap-1.5"
+            {/* TOP-RIGHT: LINK ICON */}
+            {project.link && (
+              <motion.span
+                whileHover={{ scale: 1.12, rotate: "3deg" }}
+                whileTap={{ scale: 0.92 }}
+                aria-label={`View ${project.title}`}
+                className="absolute top-4 right-4 z-[10] flex h-9 w-9 items-center justify-center comic-chip bg-spider-black text-comic-ink hover:bg-spider-yellow hover:text-spider-black transition-colors"
+                style={{ transform: "translateZ(60px)" }}
               >
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[9px] font-bold uppercase tracking-widest text-white/80 bg-white/15 px-2.5 py-1 rounded-md backdrop-blur-sm"
-                  >
-                    {t}
-                  </span>
-                ))}
+                {linkIcon}
+              </motion.span>
+            )}
+
+            {/* BOTTOM CONTENT ZONE */}
+            <div
+              className="relative flex h-full flex-col justify-between p-5 sm:p-6 z-10 text-comic-ink"
+              style={{ borderRadius: "inherit" }}
+            >
+              <div />
+
+              <div style={{ transform: "translateZ(30px)" }}>
+                {/* TECH STACK CHIPS */}
+                <div className="mb-3 sm:mb-4 flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/90 bg-spider-black/70 backdrop-blur-sm px-2.5 py-1 comic-chip"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* PROJECT TITLE */}
+                <h3 className="text-xl sm:text-2xl font-black leading-[1.05] mb-4 comic-stroke-thin group-hover:text-spider-yellow transition-colors tracking-tight">
+                  {project.title}
+                </h3>
+
+                {/* ACTION BUTTON */}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{ transform: "translateZ(40px)" }}
+                  className={`w-full py-3 text-center text-[10px] font-black uppercase tracking-[0.2em] comic-chip transition-colors ${
+                    project.link
+                      ? "bg-spider-red text-comic-ink hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
+                      : "bg-comic-panel text-comic-ink/50 cursor-not-allowed"
+                  }`}
+                >
+                  {actionText}
+                </motion.div>
               </div>
-              <h3
-                style={{ transform: "translateZ(50px)" }}
-                className="text-xl font-black leading-tight mb-3 group-hover:text-primary transition-colors"
-              >
-                {project.title}
-              </h3>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                style={{ transform: "translateZ(40px)" }}
-                className="w-full rounded-lg py-2.5 text-center text-xs font-bold uppercase tracking-widest bg-white/10 backdrop-blur-md ring-1 ring-inset ring-white/20 hover:bg-white/20 transition-colors"
-              >
-                {actionText}
-              </motion.div>
             </div>
           </div>
         </CardWrapper>
@@ -215,65 +310,237 @@ const CardWrapper = ({ href, children, ...props }) =>
   );
 
 const Projects = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState("All");
+  const [hovered, setHovered] = useState(null);
+  const [justOpened, setJustOpened] = useState(false);
+  const audioRef = useRef(null);
   const categories = ["All", "Web", "Video", "Game"];
 
-  const filteredProjects = filter === "All" 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+  const filteredProjects =
+    filter === "All" ? projects : projects.filter((p) => p.category === filter);
+
+  const playSfx = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.volume = 0.6;
+      audioRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleOpen = () => {
+    playSfx();
+    setIsOpen(true);
+    setJustOpened(true);
+    setTimeout(() => setJustOpened(false), 600);
+  };
+
+  const handleClose = () => {
+    playSfx();
+    setIsOpen(false);
+  };
+
+  const activeCount = filteredProjects.length;
 
   return (
-    <motion.section 
-      id="projects" 
+    <motion.section
+      id="projects"
       variants={staggerContainer}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      className="py-16 md:py-24 bg-white"
+      viewport={{ once: true, amount: 0.1 }}
+      className="py-16 md:py-28 relative overflow-hidden bg-comic-surface"
     >
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-16 gap-6 md:gap-8">
-          <motion.div variants={fadeUp}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
-              Portfolio <span className="text-primary">Showcase</span>
-            </h2>
-            <p className="text-dark/50 max-w-md font-medium text-sm sm:text-base">
-              A curated selection of my work across web development, video editing, 3D modeling, and game design.
-            </p>
-          </motion.div>
+      <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
-          <motion.div variants={fadeUp} className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
-                  filter === cat 
-                    ? "bg-dark text-white" 
-                    : "bg-off-white text-dark/40 hover:bg-dark/5"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+      {/* Background decoration */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        aria-hidden="true"
+      >
+        <div className="w-full h-full halftone-overlay-sm" />
+      </div>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(ellipse 45% 25% at 15% 10%, rgba(22,93,255,0.08) 0%, transparent 70%), radial-gradient(ellipse 45% 25% at 85% 90%, rgba(255,30,38,0.08) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6 md:gap-8">
+          <motion.div variants={fadeUp}>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
+              Mission{" "}
+              <span className="text-spider-blue comic-stroke drop-shadow-[3px_3px_0_var(--color-ink-stroke)]">
+                Archives
+              </span>
+            </h2>
+            <p className="text-comic-ink/50 max-w-md font-medium text-sm sm:text-base">
+              Curated missions across web development, video editing, 3D modeling, and game design.
+            </p>
           </motion.div>
         </div>
 
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25 }}
+        {/* SPIDEY TRACKER FRAME */}
+        <motion.div
+          variants={fadeUp}
+          className={`tracker-frame ${justOpened ? "tracker-frame-on" : ""}`}
+        >
+          {/* TOP BAR */}
+          <div className="tracker-bar">
+            <div className="flex items-center gap-3 min-w-0">
+              <Radio size={18} strokeWidth={2.5} className="text-spider-yellow flex-shrink-0" />
+              <span className="font-black text-[11px] sm:text-xs tracking-[0.18em] uppercase text-comic-ink truncate">
+                Mission Archives Tracker
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:block font-black text-[10px] tracking-[0.18em] uppercase text-comic-ink/80">
+                {isOpen ? `Active: ${activeCount}` : "Terminal Locked"}
+              </span>
+              <div
+                className={`tracker-status-dot ${
+                  isOpen ? "tracker-status-online" : "tracker-status-offline"
+                }`}
+              />
+              <span
+                className={`font-black text-[10px] tracking-[0.18em] uppercase ${
+                  isOpen ? "text-spider-yellow" : "text-comic-ink/50"
+                }`}
               >
-                <ProjectCard project={project} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                {isOpen ? "ONLINE" : "OFFLINE"}
+              </span>
+            </div>
+          </div>
+
+          {/* INNER DISPLAY */}
+          <div className="tracker-inner-display p-4 sm:p-6 md:p-10">
+            {isOpen && <div className="tracker-sweep" />}
+
+            <AnimatePresence mode="wait">
+              {!isOpen ? (
+                /* STATE: OFFLINE — Open Button + Spidey menunjuk tombol */
+                <motion.div
+                  key="offline"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.35 }}
+                  className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 py-16 sm:py-24 relative z-10"
+                >
+                  <div className="flex flex-col items-center gap-8">
+                    <div className="tracker-radar" />
+                    <div className="text-center max-w-md">
+                      <p className="text-comic-ink/60 text-xs sm:text-sm font-black uppercase tracking-[0.2em] mb-3">
+                        Terminal Status: Locked
+                      </p>
+                      <p className="text-comic-ink/40 text-[11px] sm:text-xs mb-8 tracking-wide">
+                        Masukkan kunci akses untuk menampilkan arsip misi aktif
+                      </p>
+                      <button
+                        onClick={handleOpen}
+                        className="tracker-open-btn"
+                      >
+                        Activate Tracker
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                /* STATE: ONLINE — Filter + Project Cards + Spidey pojok kiri atas */
+                <motion.div
+                  key="online"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative z-10"
+                >
+                  {/* Filter Chips */}
+                  <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-8 md:mb-10 justify-center">
+                    {categories.map((cat) => {
+                      const isActive = filter === cat;
+                      return (
+                        <button
+                          key={cat}
+                          onClick={() => setFilter(cat)}
+                          className={`px-4 sm:px-5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-black uppercase tracking-[0.18em] comic-chip transition-all ${
+                            isActive
+                              ? "bg-spider-yellow text-spider-black pop-shadow-sm hover:pop-shadow-active"
+                              : "bg-transparent text-comic-ink/60 hover:bg-spider-blue/20 hover:text-comic-ink border-spider-blue/40"
+                          }`}
+                          style={
+                            !isActive
+                              ? { borderColor: "rgba(22,93,255,0.4)" }
+                              : undefined
+                          }
+                        >
+                          {cat}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* PROJECT GRID */}
+                  <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
+                    <AnimatePresence mode="popLayout">
+                      {filteredProjects.map((project, idx) => (
+                        <motion.div
+                          key={project.id}
+                          layout
+                          initial={{ opacity: 0, scale: 0.9, y: 12 }}
+                          animate={{
+                            opacity: 1,
+                            scale: 1,
+                            y: 0,
+                            transition: { delay: idx * 0.06 },
+                          }}
+                          exit={{ opacity: 0, scale: 0.9, y: -8 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <ProjectCard
+                            project={project}
+                            onHover={setHovered}
+                          />
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* FOOTER BAR */}
+          <div className="tracker-footer">
+            <div className="flex items-center gap-3 min-w-0 flex-1">
+              <Radio
+                size={14}
+                strokeWidth={2.5}
+                className={isOpen ? "text-spider-yellow" : "text-comic-ink/30"}
+              />
+              <span className="truncate">
+                {!isOpen
+                  ? "SELECTED: None — Awaiting activation"
+                  : hovered
+                  ? `LOCKED: ${hovered}`
+                  : `Scanning ${activeCount} mission signatures...`}
+              </span>
+            </div>
+            {isOpen && (
+              <button
+                onClick={handleClose}
+                className="tracker-close-btn flex-shrink-0"
+                title="Close Tracker"
+              >
+                <X size={16} strokeWidth={3} />
+              </button>
+            )}
+          </div>
         </motion.div>
       </div>
     </motion.section>

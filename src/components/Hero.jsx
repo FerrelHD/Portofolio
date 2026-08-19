@@ -1,119 +1,226 @@
+"use client";
 import React from "react";
-import { motion } from "framer-motion";
-import { Github, Code2, Briefcase, Zap, Cpu } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Github, Code2, Zap, Gamepad2, Download, FolderKanban } from "lucide-react";
 import { fadeUp, slideUp, staggerContainer } from "../lib/animation";
 
 const Hero = () => {
-  const floatingAnimation = {
-    y: [0, -15, 0],
-    transition: {
-      duration: 4,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  };
+  const reduce = useReducedMotion();
+  const floatingAnim = reduce
+    ? false
+    : {
+        y: [0, -14, 0],
+        transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+      };
 
   return (
-    <motion.section 
+    <motion.section
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-16 scanlines"
     >
-      {/* Watermark Background */}
-      <div className="watermark-text">
-        RASHAD
+      {/* Watermark Background (Amazing Spider-Dev — 3 lines) */}
+      <div className="watermark-text whitespace-pre-line text-center leading-[0.9]">
+        AMAZING
+        <br />
+        SPIDER
+        <br />
+        DEV
       </div>
 
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 z-[-1] opacity-[0.03]" 
-           style={{ backgroundImage: 'radial-gradient(#0F172A 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-      </div>
+      {/* Large Halftone Gradient Overlay */}
+      <div
+        className="absolute inset-0 z-[-1] opacity-60"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 60% at 15% 10%, rgba(255,30,38,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 70% at 90% 90%, rgba(22,93,255,0.22) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,213,0,0.05) 0%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Fine grid halftone dot pattern */}
+      <div
+        className="absolute inset-0 z-[-1] opacity-[0.07]"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(240,237,227,1) 1.5px, transparent 1.5px)",
+          backgroundSize: "10px 10px",
+        }}
+      />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <motion.div variants={fadeUp} className="mb-4 sm:mb-6">
-            <span className="inline-block py-1 px-4 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase">
-              Ferrel Rashad Akeyla
+        <div className="text-center max-w-5xl mx-auto">
+          {/* EYEBROW — Comic Issue Chip (max 1 per 3 sections rule = ONLY hero has eyebrow) */}
+          <motion.div variants={fadeUp} className="mb-5 sm:mb-7">
+            <span className="inline-block py-1.5 px-5 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
+              Comic Issue #001 — Origin of the Digital Creator
             </span>
           </motion.div>
 
-          <motion.h1 
-            className="text-4xl sm:text-7xl md:text-8xl lg:text-9xl font-black mb-6 sm:mb-8 leading-[0.9] tracking-tighter flex flex-col items-center"
+          {/* HEADLINE — Comic Ink Stroke Style (2 lines, FLUID RESPONSIVE via clamp) */}
+          <motion.h1
+            className="w-full max-w-[90vw] sm:max-w-[85vw] lg:max-w-[1000px] mx-auto font-black mb-6 sm:mb-8 leading-[0.92] flex flex-col items-center"
           >
-            <div className="overflow-hidden px-4 -mx-4 py-1 -my-1">
-              <motion.span variants={slideUp} className="inline-block">DIGITAL</motion.span>
+            <div className="w-full py-1 -my-1 flex justify-center px-[0.3em]">
+              <motion.span
+                variants={slideUp}
+                className="inline-block text-comic-ink comic-stroke text-balance"
+                style={{
+                  fontSize:
+                    "clamp(2rem, min(7vw, 7.5vh), 5rem)",
+                  letterSpacing:
+                    "clamp(-0.015em, -0.008vw, 0em)",
+                  textShadow:
+                    "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
+                  WebkitTextStroke:
+                    "clamp(1.2px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                }}
+              >
+                YOUR NEIGHBORHOOD
+              </motion.span>
             </div>
-            <div className="overflow-hidden px-4 -mx-4 py-1 -my-1">
-              <motion.span variants={slideUp} className="text-primary italic inline-block">CREATOR</motion.span>
+            <div className="w-full py-1 -my-1 flex justify-center mt-[clamp(2px,0.6vw,8px)] px-[0.3em]">
+              <motion.span
+                variants={slideUp}
+                className="inline-block text-spider-red comic-stroke italic text-balance"
+                style={{
+                  fontSize:
+                    "clamp(2.2rem, min(8.5vw, 9vh), 6rem)",
+                  letterSpacing:
+                    "clamp(-0.015em, -0.008vw, 0em)",
+                  textShadow:
+                    "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
+                  WebkitTextStroke:
+                    "clamp(1.2px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                }}
+              >
+                DIGITAL CREATOR
+              </motion.span>
             </div>
           </motion.h1>
 
-          <motion.p 
+          {/* SUBTITLE (≤ 20 words) */}
+          <motion.p
             variants={fadeUp}
-            className="text-base sm:text-lg md:text-xl text-dark/60 mb-8 sm:mb-12 max-w-2xl mx-auto font-medium px-2"
+            className="text-sm sm:text-base md:text-lg text-comic-ink/70 mb-8 sm:mb-12 max-w-2xl mx-auto font-medium px-2 leading-relaxed"
           >
-            Full Stack Web Developer, Video Editor, 3D Modeler, and Game Developer building immersive digital experiences.
+            Full Stack Web Developer, Video Editor, 3D Modeler, and Game Developer
+            crafting immersive digital experiences with cinematic flair.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto">
-            <a href="#projects" className="bg-dark text-white px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:bg-primary transition-all hover:scale-105 active:scale-95 shadow-xl shadow-dark/10 text-center">
-              View My Work
+          {/* CTA BUTTONS (Comic Pop 3D Shadow) */}
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
+          >
+            <a
+              href="#projects"
+              className="group bg-spider-red comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-sm font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-red hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
+            >
+              <FolderKanban size={18} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
+              View Missions
             </a>
             <a
               href={`${import.meta.env.BASE_URL}cv.pdf`}
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white border-2 border-dark/5 px-8 py-3.5 sm:py-4 rounded-xl font-bold hover:border-primary transition-all hover:scale-105 active:scale-95 text-center"
+              className="group bg-spider-blue comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-sm font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-blue hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
             >
-              Download CV
+              <Download size={18} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
+              Download Dossier
             </a>
           </motion.div>
         </div>
 
-        {/* Floating Info Cards */}
+        {/* FLOATING POP BADGES — Comic Chip Style */}
         <motion.div
-          animate={floatingAnimation}
-          className="absolute top-[15%] right-[5%] hidden xl:block"
+          animate={floatingAnim}
+          className="absolute top-[14%] right-[4%] hidden xl:block"
         >
-          <div className="bg-white p-4 rounded-2xl shadow-2xl border border-dark/5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-              <Code2 size={24} />
+          <div className="bg-spider-red comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
+            <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
+              <Code2 size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-xs text-dark/40 font-bold uppercase tracking-wider">Web Dev</p>
-              <p className="font-bold">Full Stack</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
+                Web Craft
+              </p>
+              <p className="font-black text-sm">Full Stack</p>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 1 } }}
-          className="absolute bottom-[15%] left-[2%] hidden xl:block"
+          animate={
+            reduce
+              ? false
+              : {
+                  ...floatingAnim,
+                  transition: { ...floatingAnim.transition, delay: 1.1 },
+                }
+          }
+          className="absolute bottom-[18%] left-[2%] hidden xl:block"
         >
-          <div className="bg-white p-4 rounded-2xl shadow-2xl border border-dark/5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
-              <Zap size={24} />
+          <div className="bg-spider-blue comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
+            <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
+              <Zap size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-xs text-dark/40 font-bold uppercase tracking-wider">Creative</p>
-              <p className="font-bold">Video & 3D</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
+                Multiverse
+              </p>
+              <p className="font-black text-sm">Video & 3D</p>
             </div>
           </div>
         </motion.div>
 
         <motion.div
-          animate={{ ...floatingAnimation, transition: { ...floatingAnimation.transition, delay: 2 } }}
-          className="absolute bottom-[25%] right-[2%] hidden xl:block"
+          animate={
+            reduce
+              ? false
+              : {
+                  ...floatingAnim,
+                  transition: { ...floatingAnim.transition, delay: 2.2 },
+                }
+          }
+          className="absolute bottom-[28%] right-[2%] hidden xl:block"
         >
-          <div className="bg-white p-4 rounded-2xl shadow-2xl border border-dark/5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-dark/5 flex items-center justify-center text-dark">
-              <Cpu size={24} />
+          <div className="bg-spider-yellow comic-chip p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3.5">
+            <div className="w-10 h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
+              <Gamepad2 size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <p className="text-xs text-dark/40 font-bold uppercase tracking-wider">Gaming</p>
-              <p className="font-bold">Game Dev</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-spider-black/70">
+                Arcade
+              </p>
+              <p className="font-black text-sm">Game Dev</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          animate={
+            reduce
+              ? false
+              : {
+                  ...floatingAnim,
+                  transition: { ...floatingAnim.transition, delay: 0.6 },
+                }
+          }
+          className="absolute top-[22%] left-[4%] hidden xl:block"
+        >
+          <div className="bg-comic-panel comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
+            <div className="w-10 h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red">
+              <Github size={20} strokeWidth={2.5} />
+            </div>
+            <div>
+              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/60">
+                Open Source
+              </p>
+              <p className="font-black text-sm">@FerrelHD</p>
             </div>
           </div>
         </motion.div>
