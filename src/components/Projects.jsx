@@ -182,10 +182,10 @@ const ProjectCard = ({ project, onHover }) => {
             {CATEGORY_ICONS[project.category] || <MapPin size={12} />}
           </div>
 
-          {/* SFX BUBBLE ON HOVER */}
+          {/* SFX BUBBLE ON HOVER & TAP */}
           {project.sfx && (
             <div
-              className="sfx-bubble absolute top-3 right-14 z-[20] pointer-events-none scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-200 ease-out origin-bottom-left"
+              className="sfx-bubble absolute top-3 right-14 z-[20] pointer-events-none scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 group-active:scale-100 group-active:opacity-100 transition-all duration-200 ease-out origin-bottom-left"
               style={{ transform: "translateZ(75px) rotate(-6deg)" }}
             >
               <span className="inline-block bg-spider-yellow text-spider-black comic-chip px-2.5 py-1 text-[10px] sm:text-[11px] font-black italic tracking-widest uppercase pop-shadow-sm">

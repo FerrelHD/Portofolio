@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Services from "./components/Services";
 import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
@@ -11,6 +12,7 @@ import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
+import ComicCursor from "./components/ComicCursor";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -74,6 +76,7 @@ function App() {
 
   return (
     <div className="relative">
+      <ComicCursor />
       <ScrollFX />
       <PageLoader />
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
@@ -85,6 +88,7 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Services />
         <Projects />
         <Skills />
         <Contact />

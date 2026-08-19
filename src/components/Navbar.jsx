@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "fra
 import { Menu, X } from "lucide-react";
 import MotionToggle from "./MotionToggle";
 
-const SECTION_IDS = ["about", "projects", "skills", "contact"];
+const SECTION_IDS = ["about", "services", "projects", "skills", "contact"];
 
 const Navbar = () => {
   const { scrollY } = useScroll();
@@ -75,6 +75,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "About", href: "#about", id: "about" },
+    { name: "Services", href: "#services", id: "services" },
     { name: "Works", href: "#projects", id: "projects" },
     { name: "Skills", href: "#skills", id: "skills" },
     { name: "Contact", href: "#contact", id: "contact" },
