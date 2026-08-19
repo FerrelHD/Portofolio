@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import MotionToggle from "./MotionToggle";
+import AudioPlayer from "./AudioPlayer";
 
 const SECTION_IDS = ["about", "services", "projects", "skills", "contact"];
 
@@ -143,8 +144,12 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* RIGHT: Motion Toggle + CTA + Mobile Burger */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        {/* RIGHT: Motion Toggle + Audio Player + CTA + Mobile Burger */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          <div className="hidden md:block">
+            <AudioPlayer />
+          </div>
+
           <div className="hidden sm:block">
             <MotionToggle />
           </div>
@@ -211,7 +216,8 @@ const Navbar = () => {
                 Swing Into Action
               </a>
 
-              <div className="relative z-10 mt-2">
+              <div className="relative z-10 mt-2 flex flex-col gap-2">
+                <AudioPlayer isMobile={true} />
                 <MotionToggle isMobile={true} />
               </div>
             </div>
