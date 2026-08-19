@@ -12,7 +12,6 @@ import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
-import ComicCursor from "./components/ComicCursor";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -76,7 +75,6 @@ function App() {
 
   return (
     <div className="relative">
-      <ComicCursor />
       <ScrollFX />
       <PageLoader />
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
