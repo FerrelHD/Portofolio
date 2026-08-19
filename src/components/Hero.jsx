@@ -6,11 +6,42 @@ import { fadeUp, slideUp, staggerContainer } from "../lib/animation";
 
 const Hero = () => {
   const reduce = useReducedMotion();
-  const floatingAnim = reduce
-    ? false
+
+  // Multi-axis organic floating keyframe animations
+  const floatAnim1 = reduce
+    ? {}
     : {
-        y: [0, -14, 0],
-        transition: { duration: 4.5, repeat: Infinity, ease: "easeInOut" },
+        x: [0, 22, -18, 12, 0],
+        y: [0, -28, 16, -22, 0],
+        rotate: [0, 5, -4, 3, 0],
+        transition: { duration: 8.5, repeat: Infinity, ease: "easeInOut" },
+      };
+
+  const floatAnim2 = reduce
+    ? {}
+    : {
+        x: [0, -26, 18, -12, 0],
+        y: [0, 22, -32, 18, 0],
+        rotate: [0, -6, 4, -2, 0],
+        transition: { duration: 9.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+      };
+
+  const floatAnim3 = reduce
+    ? {}
+    : {
+        x: [0, 20, -24, 15, 0],
+        y: [0, -32, 22, -18, 0],
+        rotate: [0, 4, -5, 3, 0],
+        transition: { duration: 8.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 },
+      };
+
+  const floatAnim4 = reduce
+    ? {}
+    : {
+        x: [0, -22, 28, -16, 0],
+        y: [0, 24, -20, 26, 0],
+        rotate: [0, -5, 6, -3, 0],
+        transition: { duration: 9.2, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
       };
 
   return (
@@ -50,7 +81,76 @@ const Hero = () => {
         }}
       />
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+      {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Organic Floating Paths */}
+      <motion.div
+        animate={floatAnim1}
+        className="absolute top-[8%] right-[1.5%] lg:right-[2.5%] xl:right-[4%] z-[5] hidden lg:block"
+      >
+        <div className="bg-spider-red comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5 select-none">
+          <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
+            <Code2 size={20} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
+              Web Craft
+            </p>
+            <p className="font-black text-sm">Full Stack</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={floatAnim2}
+        className="absolute top-[16%] left-[1.5%] lg:left-[2.5%] xl:left-[4%] z-[5] hidden lg:block"
+      >
+        <div className="bg-comic-panel comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5 select-none">
+          <div className="w-10 h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red">
+            <Github size={20} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/60">
+              Open Source
+            </p>
+            <p className="font-black text-sm">@FerrelHD</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={floatAnim3}
+        className="absolute bottom-[12%] left-[1.5%] lg:left-[2.5%] xl:left-[4%] z-[5] hidden lg:block"
+      >
+        <div className="bg-spider-blue comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5 select-none">
+          <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
+            <Zap size={20} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
+              Multiverse
+            </p>
+            <p className="font-black text-sm">Video & 3D</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={floatAnim4}
+        className="absolute bottom-[20%] right-[1.5%] lg:right-[2.5%] xl:right-[4%] z-[5] hidden lg:block"
+      >
+        <div className="bg-spider-yellow comic-chip p-3 sm:p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3.5 select-none">
+          <div className="w-10 h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
+            <Gamepad2 size={20} strokeWidth={2.5} />
+          </div>
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-spider-black/70">
+              Arcade
+            </p>
+            <p className="font-black text-sm">Game Dev</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="container mx-auto px-4 sm:px-6 relative z-20">
         <div className="text-center max-w-5xl mx-auto">
           {/* EYEBROW — Comic Issue Chip */}
           <motion.div variants={fadeUp} className="mb-4 sm:mb-7 flex justify-center px-2">
@@ -129,62 +229,62 @@ const Hero = () => {
               Download Dossier
             </a>
           </motion.div>
-        </div>
 
-          {/* FEATURE BADGES STRIP (Responsive & Never Overlaps Text) */}
+          {/* MOBILE FEATURE STRIP (< lg displays) */}
           <motion.div
             variants={fadeUp}
-            className="mt-10 sm:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto px-2"
+            className="mt-10 grid grid-cols-2 gap-3 max-w-md mx-auto px-2 lg:hidden"
           >
-            <div className="bg-spider-red comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
-                <Code2 size={18} strokeWidth={2.5} />
+            <div className="bg-spider-red comic-chip p-2.5 pop-shadow-sm text-comic-ink flex items-center gap-2.5">
+              <div className="w-7 h-7 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
+                <Code2 size={16} strokeWidth={2.5} />
               </div>
               <div className="text-left">
-                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
+                <p className="text-[8px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
                   Web Craft
                 </p>
-                <p className="font-black text-xs sm:text-sm">Full Stack</p>
+                <p className="font-black text-xs">Full Stack</p>
               </div>
             </div>
 
-            <div className="bg-comic-panel comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red shrink-0">
-                <Github size={18} strokeWidth={2.5} />
+            <div className="bg-comic-panel comic-chip p-2.5 pop-shadow-sm text-comic-ink flex items-center gap-2.5">
+              <div className="w-7 h-7 bg-comic-surface comic-chip flex items-center justify-center text-spider-red shrink-0">
+                <Github size={16} strokeWidth={2.5} />
               </div>
               <div className="text-left">
-                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/60">
+                <p className="text-[8px] font-black uppercase tracking-[0.18em] text-comic-ink/60">
                   Open Source
                 </p>
-                <p className="font-black text-xs sm:text-sm">@FerrelHD</p>
+                <p className="font-black text-xs">@FerrelHD</p>
               </div>
             </div>
 
-            <div className="bg-spider-blue comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
-                <Zap size={18} strokeWidth={2.5} />
+            <div className="bg-spider-blue comic-chip p-2.5 pop-shadow-sm text-comic-ink flex items-center gap-2.5">
+              <div className="w-7 h-7 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
+                <Zap size={16} strokeWidth={2.5} />
               </div>
               <div className="text-left">
-                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
+                <p className="text-[8px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
                   Multiverse
                 </p>
-                <p className="font-black text-xs sm:text-sm">Video & 3D</p>
+                <p className="font-black text-xs">Video & 3D</p>
               </div>
             </div>
 
-            <div className="bg-spider-yellow comic-chip p-3 sm:p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink shrink-0">
-                <Gamepad2 size={18} strokeWidth={2.5} />
+            <div className="bg-spider-yellow comic-chip p-2.5 pop-shadow-sm text-spider-black flex items-center gap-2.5">
+              <div className="w-7 h-7 bg-spider-red comic-chip flex items-center justify-center text-comic-ink shrink-0">
+                <Gamepad2 size={16} strokeWidth={2.5} />
               </div>
               <div className="text-left">
-                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-spider-black/70">
+                <p className="text-[8px] font-black uppercase tracking-[0.18em] text-spider-black/70">
                   Arcade
                 </p>
-                <p className="font-black text-xs sm:text-sm">Game Dev</p>
+                <p className="font-black text-xs">Game Dev</p>
               </div>
             </div>
           </motion.div>
         </div>
+      </div>
     </motion.section>
   );
 };
