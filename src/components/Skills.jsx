@@ -235,7 +235,7 @@ const Skills = () => {
                     return (
                       <div
                         key={skill.name}
-                        className="relative z-10 cursor-pointer group/bar"
+                        className={`relative cursor-pointer group/bar ${isOpen ? 'z-[50]' : 'z-10'}`}
                         onClick={() => handleBarClick(factKey)}
                         data-cursor="target"
                         data-cursor-label="FACT!"
