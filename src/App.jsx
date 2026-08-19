@@ -10,7 +10,6 @@ import AnimeBackground from "./components/AnimeBackground";
 import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
-import ComicCursor from "./components/ComicCursor";
 import ScrollFX from "./components/ScrollFX";
 
 function App() {
@@ -75,7 +74,6 @@ function App() {
 
   return (
     <div className="relative">
-      <ComicCursor />
       <ScrollFX />
       <PageLoader />
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
