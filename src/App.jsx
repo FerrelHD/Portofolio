@@ -13,6 +13,7 @@ import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
 import AudioPlayer from "./components/AudioPlayer";
+import SmoothScroll from "./components/SmoothScroll";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -76,6 +77,7 @@ function App() {
 
   return (
     <div className="relative">
+      <SmoothScroll />
       <ScrollFX />
       <PageLoader />
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />

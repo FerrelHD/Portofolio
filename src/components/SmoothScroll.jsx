@@ -1,0 +1,60 @@
+"use client";
+import { useEffect } from "react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+
+const SmoothScroll = () => {
+  useEffect(() => {
+    // Skip smooth scroll if reduced motion is enabled
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const bodyReduced = document.body.classList.contains("user-reduce-motion");
+
+    if (prefersReduced || bodyReduced) return;
+
+    const lenis = new Lenis({
+      duration: 1.25,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Ultra-smooth exponential ease-out
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.5,
+    });
+
+    let rafId;
+
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
+
+    // Smoothly scroll for all internal anchor links (#hero, #about, #projects, etc.)
+    const handleAnchorClick = (e) => {
+      const anchor = e.target.closest("a[href^='#']");
+      if (anchor) {
+        const targetId = anchor.getAttribute("href");
+        if (targetId && targetId !== "#") {
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            lenis.scrollTo(targetEl, { offset: -60 });
+          }
+        }
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      document.removeEventListener("click", handleAnchorClick);
+      lenis.destroy();
+    };
+  }, []);
+
+  return null;
+};
+
+export default SmoothScroll;
