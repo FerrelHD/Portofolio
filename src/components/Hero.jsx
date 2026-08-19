@@ -52,48 +52,44 @@ const Hero = () => {
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
-          {/* EYEBROW — Comic Issue Chip (max 1 per 3 sections rule = ONLY hero has eyebrow) */}
+          {/* EYEBROW — Comic Issue Chip */}
           <motion.div variants={fadeUp} className="mb-5 sm:mb-7">
-            <span className="inline-block py-1.5 px-5 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
+            <span className="inline-block py-1.5 px-4 sm:px-5 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.12em] sm:tracking-[0.22em] uppercase pop-shadow-sm max-w-full text-balance">
               Comic Issue #001 — Origin of the Digital Creator
             </span>
           </motion.div>
 
-          {/* HEADLINE — Comic Ink Stroke Style (2 lines, FLUID RESPONSIVE via clamp) */}
+          {/* HEADLINE — Comic Ink Stroke Style */}
           <motion.h1
-            className="w-full max-w-[90vw] sm:max-w-[85vw] lg:max-w-[1000px] mx-auto font-black mb-6 sm:mb-8 leading-[0.92] flex flex-col items-center"
+            className="w-full max-w-full sm:max-w-[85vw] lg:max-w-[1000px] mx-auto font-black mb-6 sm:mb-8 leading-[0.95] flex flex-col items-center"
           >
-            <div className="w-full py-1 -my-1 flex justify-center px-[0.3em]">
+            <div className="w-full py-1 -my-1 flex justify-center px-1">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-comic-ink comic-stroke text-balance"
+                className="inline-block text-comic-ink comic-stroke text-balance tracking-tight sm:tracking-normal"
                 style={{
                   fontSize:
-                    "clamp(2rem, min(7vw, 7.5vh), 5rem)",
-                  letterSpacing:
-                    "clamp(-0.015em, -0.008vw, 0em)",
+                    "clamp(1.15rem, 5.8vw, 5rem)",
                   textShadow:
                     "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
                   WebkitTextStroke:
-                    "clamp(1.2px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                    "clamp(1px, 0.18vw, 2.5px) var(--color-ink-stroke)",
                 }}
               >
                 YOUR NEIGHBORHOOD
               </motion.span>
             </div>
-            <div className="w-full py-1 -my-1 flex justify-center mt-[clamp(2px,0.6vw,8px)] px-[0.3em]">
+            <div className="w-full py-1 -my-1 flex justify-center mt-[clamp(2px,0.6vw,8px)] px-1">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-spider-red comic-stroke italic text-balance"
+                className="inline-block text-spider-red comic-stroke italic text-balance tracking-tight sm:tracking-normal"
                 style={{
                   fontSize:
-                    "clamp(2.2rem, min(8.5vw, 9vh), 6rem)",
-                  letterSpacing:
-                    "clamp(-0.015em, -0.008vw, 0em)",
+                    "clamp(1.4rem, 7.2vw, 6rem)",
                   textShadow:
                     "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
                   WebkitTextStroke:
-                    "clamp(1.2px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                    "clamp(1px, 0.18vw, 2.5px) var(--color-ink-stroke)",
                 }}
               >
                 DIGITAL CREATOR
