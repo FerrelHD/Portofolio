@@ -53,8 +53,8 @@ const Hero = () => {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
           {/* EYEBROW — Comic Issue Chip */}
-          <motion.div variants={fadeUp} className="mb-5 sm:mb-7">
-            <span className="inline-block py-1.5 px-4 sm:px-5 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.12em] sm:tracking-[0.22em] uppercase pop-shadow-sm max-w-full text-balance">
+          <motion.div variants={fadeUp} className="mb-4 sm:mb-7 flex justify-center px-2">
+            <span className="inline-block py-1 px-3 sm:py-1.5 sm:px-5 bg-spider-yellow comic-chip text-spider-black text-[9px] xs:text-[10px] sm:text-xs font-black tracking-[0.08em] sm:tracking-[0.22em] uppercase pop-shadow-sm max-w-[92vw] sm:max-w-none text-balance leading-tight sm:leading-normal">
               Comic Issue #001 — Origin of the Digital Creator
             </span>
           </motion.div>
@@ -131,10 +131,10 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* FLOATING POP BADGES — Comic Chip Style */}
+        {/* FLOATING POP BADGES — Positioned at far outer edges on 2xl screens to avoid covering text */}
         <motion.div
           animate={floatingAnim}
-          className="absolute top-[14%] right-[4%] hidden xl:block"
+          className="absolute top-[8%] right-[2%] hidden 2xl:block"
         >
           <div className="bg-spider-red comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
             <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -158,7 +158,7 @@ const Hero = () => {
                   transition: { ...floatingAnim.transition, delay: 1.1 },
                 }
           }
-          className="absolute bottom-[18%] left-[2%] hidden xl:block"
+          className="absolute bottom-[10%] left-[2%] hidden 2xl:block"
         >
           <div className="bg-spider-blue comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
             <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -182,7 +182,7 @@ const Hero = () => {
                   transition: { ...floatingAnim.transition, delay: 2.2 },
                 }
           }
-          className="absolute bottom-[28%] right-[2%] hidden xl:block"
+          className="absolute bottom-[10%] right-[2%] hidden 2xl:block"
         >
           <div className="bg-spider-yellow comic-chip p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3.5">
             <div className="w-10 h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
@@ -206,7 +206,7 @@ const Hero = () => {
                   transition: { ...floatingAnim.transition, delay: 0.6 },
                 }
           }
-          className="absolute top-[22%] left-[4%] hidden xl:block"
+          className="absolute top-[8%] left-[2%] hidden 2xl:block"
         >
           <div className="bg-comic-panel comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
             <div className="w-10 h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red">
