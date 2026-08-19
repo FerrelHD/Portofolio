@@ -131,96 +131,60 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* FLOATING POP BADGES — Positioned at far outer edges on 2xl screens to avoid covering text */}
-        <motion.div
-          animate={floatingAnim}
-          className="absolute top-[8%] right-[2%] hidden 2xl:block"
-        >
-          <div className="bg-spider-red comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
-            <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
-              <Code2 size={20} strokeWidth={2.5} />
+          {/* FEATURE BADGES STRIP (Responsive & Never Overlaps Text) */}
+          <motion.div
+            variants={fadeUp}
+            className="mt-10 sm:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto px-2"
+          >
+            <div className="bg-spider-red comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
+                <Code2 size={18} strokeWidth={2.5} />
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
+                  Web Craft
+                </p>
+                <p className="font-black text-xs sm:text-sm">Full Stack</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
-                Web Craft
-              </p>
-              <p className="font-black text-sm">Full Stack</p>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          animate={
-            reduce
-              ? false
-              : {
-                  ...floatingAnim,
-                  transition: { ...floatingAnim.transition, delay: 1.1 },
-                }
-          }
-          className="absolute bottom-[10%] left-[2%] hidden 2xl:block"
-        >
-          <div className="bg-spider-blue comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
-            <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
-              <Zap size={20} strokeWidth={2.5} />
+            <div className="bg-comic-panel comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red shrink-0">
+                <Github size={18} strokeWidth={2.5} />
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/60">
+                  Open Source
+                </p>
+                <p className="font-black text-xs sm:text-sm">@FerrelHD</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
-                Multiverse
-              </p>
-              <p className="font-black text-sm">Video & 3D</p>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          animate={
-            reduce
-              ? false
-              : {
-                  ...floatingAnim,
-                  transition: { ...floatingAnim.transition, delay: 2.2 },
-                }
-          }
-          className="absolute bottom-[10%] right-[2%] hidden 2xl:block"
-        >
-          <div className="bg-spider-yellow comic-chip p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3.5">
-            <div className="w-10 h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
-              <Gamepad2 size={20} strokeWidth={2.5} />
+            <div className="bg-spider-blue comic-chip p-3 sm:p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black shrink-0">
+                <Zap size={18} strokeWidth={2.5} />
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/80">
+                  Multiverse
+                </p>
+                <p className="font-black text-xs sm:text-sm">Video & 3D</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-spider-black/70">
-                Arcade
-              </p>
-              <p className="font-black text-sm">Game Dev</p>
-            </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          animate={
-            reduce
-              ? false
-              : {
-                  ...floatingAnim,
-                  transition: { ...floatingAnim.transition, delay: 0.6 },
-                }
-          }
-          className="absolute top-[8%] left-[2%] hidden 2xl:block"
-        >
-          <div className="bg-comic-panel comic-chip p-3.5 pop-shadow-sm text-comic-ink flex items-center gap-3.5">
-            <div className="w-10 h-10 bg-comic-surface comic-chip flex items-center justify-center text-spider-red">
-              <Github size={20} strokeWidth={2.5} />
+            <div className="bg-spider-yellow comic-chip p-3 sm:p-3.5 pop-shadow-sm text-spider-black flex items-center gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-spider-red comic-chip flex items-center justify-center text-comic-ink shrink-0">
+                <Gamepad2 size={18} strokeWidth={2.5} />
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-spider-black/70">
+                  Arcade
+                </p>
+                <p className="font-black text-xs sm:text-sm">Game Dev</p>
+              </div>
             </div>
-            <div>
-              <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/60">
-                Open Source
-              </p>
-              <p className="font-black text-sm">@FerrelHD</p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
     </motion.section>
   );
 };
