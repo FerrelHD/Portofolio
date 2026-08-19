@@ -12,6 +12,7 @@ import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
+import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -92,6 +93,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <AudioPlayer />
       <BackToTop />
     </div>
   );
