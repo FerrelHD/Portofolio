@@ -13,7 +13,6 @@ import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
 import AudioPlayer from "./components/AudioPlayer";
-import SpiderWebLine from "./components/SpiderWebLine";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -84,7 +83,6 @@ function App() {
         Skip to Story!
       </a>
       <AnimeBackground />
-      <SpiderWebLine />
       <Navbar />
       <main>
         <Hero />
