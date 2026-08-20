@@ -12,10 +12,9 @@ import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
-import AudioPlayer from "./components/AudioPlayer";
 import SmoothScroll from "./components/SmoothScroll";
 import CommandPalette from "./components/CommandPalette";
-import SuitSelector from "./components/SuitSelector";
+import SpiderGadgetDrawer from "./components/SpiderGadgetDrawer";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -124,11 +123,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-      {/* FLOATING SPIDER CONTROL DOCK */}
-      <div className="fixed bottom-5 left-4 sm:bottom-6 sm:left-6 z-40 flex items-center gap-2">
-        <SuitSelector />
-        <AudioPlayer />
-      </div>
+      <SpiderGadgetDrawer />
       <BackToTop />
     </div>
   );
