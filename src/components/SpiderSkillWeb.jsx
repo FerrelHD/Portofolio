@@ -414,7 +414,10 @@ const SpiderSkillWeb = () => {
                     height={isSelected ? "22" : "18"}
                     preserveAspectRatio="xMidYMid meet"
                     className="transition-all duration-200"
-                    style={{ mixBlendMode: "screen" }}
+                    style={{
+                      mixBlendMode: "screen",
+                      filter: node.id === "unity" ? "invert(1)" : "none",
+                    }}
                   />
                 </g>
 
@@ -474,7 +477,10 @@ const SpiderSkillWeb = () => {
                     src={selectedSkill.iconImg}
                     alt={selectedSkill.name}
                     className="w-full h-full object-contain"
-                    style={{ mixBlendMode: "screen" }}
+                    style={{
+                      mixBlendMode: "screen",
+                      filter: selectedSkill.id === "unity" ? "invert(1)" : "none",
+                    }}
                   />
                 </div>
                 <div>

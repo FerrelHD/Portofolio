@@ -141,6 +141,7 @@ const Skills = () => {
                             src={skill.iconImg}
                             alt={skill.name}
                             className="w-5 h-5 object-contain"
+                            style={{ filter: skill.id === "unity" ? "invert(1)" : "none" }}
                           />
                           <span className="font-black text-sm text-white group-hover:text-spider-red transition-colors">
                             {skill.name}
