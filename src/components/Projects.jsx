@@ -19,9 +19,9 @@ import {
 import { fadeUp, staggerContainer } from "../lib/animation";
 import VideoModal from "./VideoModal";
 import ProjectBriefModal from "./ProjectBriefModal";
-import finesserShop from "../assets/Shop.png";
-import fersyaShop from "../assets/fersya-shop.png";
-import streetRush from "../assets/street-rush.png";
+import finesserShop from "../assets/Shop.webp";
+import fersyaShop from "../assets/fersya-shop.webp";
+import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.jpg";
 import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";

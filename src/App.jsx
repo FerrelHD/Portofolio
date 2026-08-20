@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -10,31 +10,33 @@ import Footer from "./components/Footer";
 import AnimeBackground from "./components/AnimeBackground";
 import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
-import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
 import SmoothScroll from "./components/SmoothScroll";
-import CommandPalette from "./components/CommandPalette";
 import SpiderGadgetDrawer from "./components/SpiderGadgetDrawer";
 import ComicActionFX from "./components/ComicActionFX";
 import AchievementToast from "./components/AchievementToast";
-import DailyBugleModal from "./components/DailyBugleModal";
-import SpideyBugHunter from "./components/SpideyBugHunter";
 import ComicTicker from "./components/ComicTicker";
 import { achievementManager } from "./lib/achievements";
 import { soundFX } from "./lib/soundFx";
+
+// Lazy Loaded Modal & Heavy Canvas Game Components (Code Splitting for Fast Initial Load)
+const DailyBugleModal = lazy(() => import("./components/DailyBugleModal"));
+const SpideyBugHunter = lazy(() => import("./components/SpideyBugHunter"));
+const ShortcutsModal = lazy(() => import("./components/ShortcutsModal"));
+const CommandPalette = lazy(() => import("./components/CommandPalette"));
 
 // Skill Real Asset Icons
 import reactIcon from "./assets/React-icon.svg.webp";
 import tailwindIcon from "./assets/tailwind.svg";
 import typescriptIcon from "./assets/typescript-logo-png-svg.webp";
 import nodejsIcon from "./assets/nodejs.webp";
-import videoEditIcon from "./assets/video editing icon2.jpg";
+import videoEditIcon from "./assets/video-editing-icon.webp";
 import framerIcon from "./assets/framer-motion-icon.png";
 import blenderIcon from "./assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "./assets/unityicon.png";
 import figmaIcon from "./assets/figma-logo-png-svg.webp";
 import sqlIcon from "./assets/sql icon 2.png";
-import aiAgentIcon from "./assets/ai agent icon 2.png";
+import aiAgentIcon from "./assets/ai-agent-icon.webp";
 import spiderEmblem from "./assets/spideyicon.png";
 
 const HERO_TICKER_ITEMS = [
@@ -218,18 +220,28 @@ function App() {
       {/* Global Interactive Overlays */}
       <ComicActionFX />
       <AchievementToast />
-      <DailyBugleModal isOpen={dailyBugleOpen} onClose={() => setDailyBugleOpen(false)} />
-      <SpideyBugHunter isOpen={bugHunterOpen} onClose={() => setBugHunterOpen(false)} />
 
-      {/* Existing Modals */}
-      <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
-      <CommandPalette
-        open={cmdOpen}
-        onClose={() => setCmdOpen(false)}
-        onOpenDailyBugle={() => setDailyBugleOpen(true)}
-        onOpenBugHunter={() => setBugHunterOpen(true)}
-        triggerSpiderSense={triggerSpiderSense}
-      />
+      {/* Lazy Loaded Interactive Overlays & Modals */}
+      <Suspense fallback={null}>
+        {dailyBugleOpen && (
+          <DailyBugleModal isOpen={dailyBugleOpen} onClose={() => setDailyBugleOpen(false)} />
+        )}
+        {bugHunterOpen && (
+          <SpideyBugHunter isOpen={bugHunterOpen} onClose={() => setBugHunterOpen(false)} />
+        )}
+        {shortcutsOpen && (
+          <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
+        )}
+        {cmdOpen && (
+          <CommandPalette
+            open={cmdOpen}
+            onClose={() => setCmdOpen(false)}
+            onOpenDailyBugle={() => setDailyBugleOpen(true)}
+            onOpenBugHunter={() => setBugHunterOpen(true)}
+            triggerSpiderSense={triggerSpiderSense}
+          />
+        )}
+      </Suspense>
 
       <a href="#about" className="skip-link">
         Skip to Story!

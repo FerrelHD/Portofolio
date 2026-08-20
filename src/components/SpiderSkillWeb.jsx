@@ -9,13 +9,13 @@ import reactIcon from "../assets/React-icon.svg.webp";
 import tailwindIcon from "../assets/tailwind.svg";
 import typescriptIcon from "../assets/typescript-logo-png-svg.webp";
 import nodejsIcon from "../assets/nodejs.webp";
-import videoEditIcon from "../assets/video editing icon2.jpg";
+import videoEditIcon from "../assets/video-editing-icon.webp";
 import framerIcon from "../assets/framer-motion-icon.png";
 import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "../assets/unityicon.png";
 import figmaIcon from "../assets/figma-logo-png-svg.webp";
 import sqlIcon from "../assets/sql icon 2.png";
-import aiAgentIcon from "../assets/ai agent icon 2.png";
+import aiAgentIcon from "../assets/ai-agent-icon.webp";
 import spiderEmblem from "../assets/spideyicon.png";
 
 /* =========================================================================
@@ -185,9 +185,11 @@ export const SKILLS_DATA = [
 const SpiderSkillWeb = () => {
   const [selectedSkill, setSelectedSkill] = useState(SKILLS_DATA[0]);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(true);
   const [time, setTime] = useState(0);
   const reqRef = useRef(null);
   const lastTimeRef = useRef(performance.now());
+  const containerRef = useRef(null);
 
   // Center coordinate
   const cx = 250;
@@ -199,20 +201,34 @@ const SpiderSkillWeb = () => {
     2: 180,
   };
 
-  // Continuous 60fps orbit animation loop
+  // IntersectionObserver: Pause animation loop when out of viewport to save CPU
   useEffect(() => {
+    if (!containerRef.current || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: "120px" }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Continuous 60fps orbit animation loop (ONLY runs when visible on screen and not paused)
+  useEffect(() => {
+    if (!isInView || isPaused) return;
+
+    lastTimeRef.current = performance.now();
     const animate = (now) => {
-      if (!isPaused) {
-        const dt = (now - lastTimeRef.current) / 1000;
-        setTime((prev) => prev + dt);
-      }
+      const dt = (now - lastTimeRef.current) / 1000;
+      setTime((prev) => prev + dt);
       lastTimeRef.current = now;
       reqRef.current = requestAnimationFrame(animate);
     };
 
     reqRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(reqRef.current);
-  }, [isPaused]);
+  }, [isInView, isPaused]);
 
   // Convert polar orbit position to cartesian
   const getNodePos = (node) => {
@@ -238,7 +254,10 @@ const SpiderSkillWeb = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 justify-center w-full max-w-6xl mx-auto px-2 sm:px-4">
+    <div
+      ref={containerRef}
+      className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
+    >
       {/* Interactive Web Constellation SVG with Orbital Motion */}
       <div
         className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[440px] lg:max-w-[500px] aspect-square flex items-center justify-center select-none touch-manipulation group/web"

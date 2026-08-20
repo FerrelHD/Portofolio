@@ -206,12 +206,12 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
 
   return (
     <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 select-none">
-      {/* Hidden Native Audio Element */}
+      {/* Hidden Native Audio Element (Deferred download to save 7.2MB bandwidth) */}
       <audio
         ref={audioRef}
         src={backsoundAudio}
         loop
-        preload="auto"
+        preload="none"
         onEnded={() => setIsPlaying(false)}
       />
 
