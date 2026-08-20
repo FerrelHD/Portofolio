@@ -23,6 +23,40 @@ import ComicTicker from "./components/ComicTicker";
 import { achievementManager } from "./lib/achievements";
 import { soundFX } from "./lib/soundFx";
 
+// Skill Real Asset Icons
+import reactIcon from "./assets/React-icon.svg.webp";
+import tailwindIcon from "./assets/tailwind.svg";
+import typescriptIcon from "./assets/typescript-logo-png-svg.webp";
+import nodejsIcon from "./assets/nodejs.webp";
+import videoEditIcon from "./assets/video editing icon2.jpg";
+import framerIcon from "./assets/framer-motion-icon.png";
+import blenderIcon from "./assets/Blender_logo_no_text.svg.webp";
+import unityIcon from "./assets/unityicon.png";
+import figmaIcon from "./assets/figma-logo-png-svg.webp";
+import sqlIcon from "./assets/sql icon 2.png";
+import aiAgentIcon from "./assets/ai agent icon 2.png";
+import spiderEmblem from "./assets/spideyicon.png";
+
+const HERO_TICKER_ITEMS = [
+  { text: "THE DAILY BUGLE: WHO IS THIS FULLSTACK HERO?", icon: spiderEmblem },
+  { text: "CRAFTING PRODUCTION-GRADE REACT & NEXT.JS APPS", icon: reactIcon },
+  { text: "CLEAN ARCHITECTURES & ROBUST TYPE-SAFETY", icon: typescriptIcon },
+  { text: "HIGH-PERFORMANCE BACKEND API PIPELINES", icon: nodejsIcon },
+  { text: "CINEMATIC PACING & VIRAL VIDEO PRODUCTION", icon: videoEditIcon },
+  { text: "60 FPS INTERACTIVE FLUID UI MOTION", icon: framerIcon },
+];
+
+const TECH_TICKER_ITEMS = [
+  { text: "REACT 19 & NEXT.JS FULLSTACK MASTERY", icon: reactIcon },
+  { text: "TAILWIND CSS STYLED TO PERFECTION", icon: tailwindIcon },
+  { text: "TYPESCRIPT PRODUCTION EXCELLENCE", icon: typescriptIcon },
+  { text: "3D BLENDER MULTIVERSE VISUAL ASSETS", icon: blenderIcon },
+  { text: "UNITY ARCADE COMBAT GAME SYSTEMS", icon: unityIcon },
+  { text: "FIGMA COMIC UI/UX SYSTEM ARCHITECTURE", icon: figmaIcon },
+  { text: "SCALABLE SQL & NOSQL DATA STRUCTURES", icon: sqlIcon },
+  { text: "NEXT-GEN AGENTIC AI WORKFLOWS", icon: aiAgentIcon },
+];
+
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
@@ -180,14 +214,7 @@ function App() {
       <main>
         <Hero />
         <ComicTicker
-          items={[
-            "📰 THE DAILY BUGLE: WHO IS THIS DEVELOPER?",
-            "🕷️ WEB-SLINGING FULLSTACK ENGINEER IN ACTION",
-            "⚡ CRAFTING ULTRA-FAST NEXT.JS & REACT APPS",
-            "💥 200 OK • ZERO PRODUCTION CRIMES",
-            "🕸️ THWIP! HIGH-PERFORMANCE CODE ARCHITECTURES",
-            "🚀 READY FOR MISSION-CRITICAL DEPLOYMENTS",
-          ]}
+          items={HERO_TICKER_ITEMS}
           rotate="-rotate-1"
           variant="daily-bugle"
         />
@@ -195,14 +222,7 @@ function App() {
         <Services />
         <Projects />
         <ComicTicker
-          items={[
-            "🔥 HIGH-PERFORMANCE TECH MATRIX LOADED",
-            "⚛️ REACT 19 & NEXT.JS MASTERED",
-            "🌊 TAILWIND CSS STYLED TO PERFECTION",
-            "🎮 60 FPS INTERACTIVE WEB & GAME SYSTEMS",
-            "🧊 3D BLENDER MULTIVERSE COMPUTING",
-            "🤖 MODERN AGENTIC DX ACTIVATED",
-          ]}
+          items={TECH_TICKER_ITEMS}
           rotate="rotate-1"
           reverse={true}
           variant="daily-bugle"

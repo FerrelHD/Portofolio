@@ -41,32 +41,48 @@ const ComicTicker = ({
           reverse ? "animate-comic-marquee-reverse" : "animate-comic-marquee"
         } items-center gap-6 sm:gap-8 flex`}
       >
-        {displayItems.map((item, index) => (
-          <div
-            key={`${item}-${index}`}
-            className="flex items-center gap-4 sm:gap-6 shrink-0"
-          >
-            <span
-              className={`font-black uppercase tracking-wider text-xs sm:text-sm md:text-base flex items-center gap-2 ${
-                isBugle ? "text-spider-black" : "text-white"
-              }`}
-            >
-              {item}
-            </span>
+        {displayItems.map((item, index) => {
+          const text = typeof item === "string" ? item : item.text;
+          const icon = typeof item === "object" ? item.icon : null;
 
-            {/* Comic Separator Badge */}
-            <span
-              className={`inline-flex items-center justify-center px-2 py-0.5 rounded text-[10px] sm:text-xs font-black uppercase tracking-widest border border-black shadow-[2px_2px_0_#000] shrink-0 ${
-                isBugle
-                  ? "bg-spider-red text-white"
-                  : "bg-spider-yellow text-spider-black"
-              }`}
+          return (
+            <div
+              key={`${text}-${index}`}
+              className="flex items-center gap-3 sm:gap-5 shrink-0"
             >
-              <Sparkles size={10} className="mr-1" />
-              <span>SPIDEY-DEV</span>
-            </span>
-          </div>
-        ))}
+              {icon && (
+                <div className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={icon}
+                    alt=""
+                    className="w-full h-full object-contain"
+                    style={{ mixBlendMode: isBugle ? "multiply" : "screen" }}
+                  />
+                </div>
+              )}
+
+              <span
+                className={`font-black uppercase tracking-wider text-xs sm:text-sm md:text-base flex items-center gap-2 ${
+                  isBugle ? "text-spider-black" : "text-white"
+                }`}
+              >
+                {text}
+              </span>
+
+              {/* Comic Separator Badge */}
+              <span
+                className={`inline-flex items-center justify-center px-2 py-0.5 rounded text-[10px] sm:text-xs font-black uppercase tracking-widest border border-black shadow-[2px_2px_0_#000] shrink-0 ${
+                  isBugle
+                    ? "bg-spider-red text-white"
+                    : "bg-spider-yellow text-spider-black"
+                }`}
+              >
+                <Sparkles size={10} className="mr-1" />
+                <span>SPIDEY-DEV</span>
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
