@@ -8,7 +8,6 @@ import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import AnimeBackground from "./components/AnimeBackground";
-import ScrollLine from "./components/ScrollLine";
 import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ShortcutsModal from "./components/ShortcutsModal";
@@ -86,9 +85,8 @@ function App() {
         Skip to Story!
       </a>
       <AnimeBackground />
-      <ScrollLine />
       <Navbar />
-      <main className="relative z-10">
+      <main>
         <Hero />
         <About />
         <Services />
