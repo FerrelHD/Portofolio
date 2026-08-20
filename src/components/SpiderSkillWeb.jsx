@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, Pause, Play } from "lucide-react";
+import { Sparkles, Zap } from "lucide-react";
 import { soundFX } from "../lib/soundFx";
 
 // Asset Imports for Real Brand Icons
@@ -248,21 +248,6 @@ const SpiderSkillWeb = () => {
         {/* Ambient Radial Web Halo Glow */}
         <div className="absolute inset-0 bg-spider-red/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Orbit Pause / Play Indicator Hint */}
-        <div className="absolute top-2 right-2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#121218]/90 border border-zinc-700/60 text-[10px] font-mono text-zinc-400 backdrop-blur-sm pointer-events-none shadow-md">
-          {isPaused ? (
-            <>
-              <Pause size={10} className="text-spider-yellow animate-pulse" />
-              <span className="text-spider-yellow font-bold uppercase">Orbit Frozen</span>
-            </>
-          ) : (
-            <>
-              <Play size={10} className="text-spider-red animate-pulse" />
-              <span className="text-zinc-300 font-bold uppercase">Orbit Active</span>
-            </>
-          )}
-        </div>
-
         <svg viewBox="0 0 500 500" className="w-full h-full drop-shadow-[0_0_35px_rgba(22,93,255,0.25)] overflow-visible">
           <defs>
             {/* Radial Web Center Glow */}
@@ -358,7 +343,7 @@ const SpiderSkillWeb = () => {
           })}
 
           {/* 4. CENTER HUB: SPIDER-MAN EMBLEM */}
-          <g transform={`translate(${cx}, ${cy})`} className="cursor-pointer" onClick={() => setIsPaused((p) => !p)}>
+          <g transform={`translate(${cx}, ${cy})`} className="pointer-events-none">
             {/* Outer Pulsing Neon Red Ring */}
             <circle r="25" fill="none" stroke="#FF1E26" strokeWidth="2" className="animate-ping opacity-40" />
             {/* Base Hub Button */}
@@ -516,7 +501,7 @@ const SpiderSkillWeb = () => {
 
               {/* Action hint */}
               <div className="mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                <span>Hover area to pause orbit • Click to select</span>
+                <span>Hover or click nodes on web matrix</span>
                 <span className="text-spider-blue font-bold">Node #{selectedSkill.id}</span>
               </div>
             </motion.div>
