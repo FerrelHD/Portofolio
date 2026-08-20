@@ -145,20 +145,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* RIGHT: Cmd+K + Motion Toggle + CTA + Mobile Burger */}
+        {/* RIGHT: Motion Toggle + CTA + Mobile Burger */}
         <div className="flex items-center gap-2 sm:gap-3">
-
-          <button
-            onClick={() => {
-              const evt = new KeyboardEvent("keydown", { key: "k", metaKey: true });
-              window.dispatchEvent(evt);
-            }}
-            className="hidden md:inline-flex items-center gap-1.5 bg-comic-panel border-2 border-comic-ink px-2.5 py-1 text-[10px] font-black uppercase text-comic-ink/80 comic-chip hover:bg-spider-yellow hover:text-spider-black transition-colors"
-          >
-            <Command size={11} strokeWidth={2.5} />
-            <span>K</span>
-          </button>
-
           <div className="hidden sm:block">
             <MotionToggle />
           </div>
