@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import backsoundAudio from "../assets/backsound.mp3";
 import spideyEmblem from "../assets/spideyicon.png";
+import spideyGif from "../assets/spidey.gif";
 import { achievementManager, ACHIEVEMENTS } from "../lib/achievements";
 import { soundFX } from "../lib/soundFx";
 
@@ -169,6 +170,41 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
         preload="auto"
         onEnded={() => setIsPlaying(false)}
       />
+
+      {/* ANIMATED SPIDEY PERCHED ON TOP OF BUTTON */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            key="perched-spidey"
+            initial={{ y: -60, opacity: 0, scale: 0.3 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{
+              y: -50,
+              opacity: 0,
+              scale: 0.2,
+              transition: { duration: 0.2, ease: "easeIn" },
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 420,
+              damping: 18,
+              mass: 0.8,
+            }}
+            onClick={() => {
+              setIsOpen(true);
+              soundFX.playThwip();
+            }}
+            className="absolute -top-11 left-0.5 sm:left-1 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+            title="Click Spidey to open Gadgets!"
+          >
+            <img
+              src={spideyGif}
+              alt="Perched Spider-Man"
+              className="w-12 h-12 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] filter"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* DOCK TOGGLE BUTTON (Floating Comic Tab) */}
       <button
