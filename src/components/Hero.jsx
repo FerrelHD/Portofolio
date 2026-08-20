@@ -168,18 +168,22 @@ const Hero = () => {
           >
             {/* 1. MARVEL-STYLE TOP PILL: SPIDER-DEV */}
             <motion.div variants={slideUp} className="mb-1.5 sm:mb-2">
-              <span className="inline-block bg-[#FF1E26] text-white px-2.5 py-0.5 sm:px-3 sm:py-0.5 border-[2px] border-black font-black text-[9px] sm:text-[10.5px] tracking-[0.22em] sm:tracking-[0.26em] uppercase shadow-[1.5px_1.5px_0_#000] rounded-sm">
+              <span
+                className="inline-block bg-[#FF1E26] text-white px-2.5 py-0.5 sm:px-3 sm:py-0.5 border-[2px] border-black font-black text-[9px] sm:text-[10.5px] tracking-[0.22em] sm:tracking-[0.26em] uppercase shadow-[1.5px_1.5px_0_#000] rounded-sm"
+                style={{ fontFamily: "'Outfit', 'Plus Jakarta Sans', sans-serif" }}
+              >
                 SPIDER-DEV
               </span>
             </motion.div>
 
-            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (Calibrated Responsive Scale) */}
+            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (Modern Sharp 'A' Glyph via Outfit) */}
             <div className="w-full flex justify-center px-1">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-[#FF1E26] italic uppercase whitespace-nowrap tracking-[0.01em]"
+                className="inline-block text-[#FF1E26] italic uppercase whitespace-nowrap tracking-[0.01em] font-black"
                 style={{
-                  fontSize: "clamp(1.6rem, 5.2vw, 4rem)",
+                  fontFamily: "'Outfit', 'Plus Jakarta Sans', sans-serif",
+                  fontSize: "clamp(1.65rem, 5.4vw, 4.1rem)",
                   lineHeight: 1.05,
                   WebkitTextStroke: "clamp(1px, 0.16vw, 2.2px) #000000",
                   textShadow:
@@ -196,6 +200,7 @@ const Hero = () => {
                 variants={slideUp}
                 className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.16em] sm:tracking-[0.22em] font-black text-[10px] sm:text-xs md:text-sm"
                 style={{
+                  fontFamily: "'Outfit', 'Plus Jakarta Sans', sans-serif",
                   textShadow:
                     "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1.5px 1.5px 0 #000",
                 }}
