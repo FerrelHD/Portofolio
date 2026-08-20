@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import backsoundAudio from "../assets/backsound.mp3";
 import spideyEmblem from "../assets/spideyicon.png";
-import spideyGif from "../assets/spidey.gif";
+import spideyGif from "../assets/spidey (2).gif";
 import { achievementManager, ACHIEVEMENTS } from "../lib/achievements";
 import { soundFX } from "../lib/soundFx";
 
@@ -194,7 +194,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
               setIsOpen(true);
               soundFX.playThwip();
             }}
-            className="absolute bottom-full mb-[-10px] sm:mb-[-12px] left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+            className="absolute bottom-full mb-[-2px] sm:mb-[-3px] left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
             title="Click Spidey to open Gadgets!"
           >
             <img
