@@ -3,6 +3,7 @@ import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Github, Code2, Zap, Gamepad2, Download, FolderKanban } from "lucide-react";
 import { fadeUp, slideUp, staggerContainer } from "../lib/animation";
+import ComicDoodleButton from "./ComicDoodleButton";
 
 const Hero = () => {
   const reduce = useReducedMotion();
@@ -208,24 +209,21 @@ const Hero = () => {
             crafting immersive digital experiences with cinematic flair.
           </motion.p>
 
-          {/* CTA BUTTONS (Comic Pop 3D Shadow) */}
+          {/* CTA BUTTONS (Comic Doodle Multi-Layer RGB Button) */}
           <motion.div
             variants={fadeUp}
-            className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
+            className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-7 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
           >
-            <a
+            <ComicDoodleButton
+              text="EXPLORE MISSIONS"
               href="#projects"
-              className="group bg-spider-red comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-sm font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-red hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
-            >
-              <FolderKanban size={18} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
-              View Missions
-            </a>
+            />
             <a
               href={`${import.meta.env.BASE_URL}cv.pdf`}
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-spider-blue comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-sm font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-blue hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
+              className="group bg-spider-blue comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-xl font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-blue hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
             >
               <Download size={18} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
               Download Dossier

@@ -1028,4 +1028,389 @@ body.user-reduce-motion * {
   animation-play-state: paused;
 }
 
+/* =============================================== */
+/* === COMIC DOODLE BUTTON STYLING & ANIMATIONS === */
+/* =============================================== */
+.comic-doodle-btn {
+  position: relative;
+  width: 250px;
+  height: 64px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  z-index: 10;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.comic-doodle-btn:hover {
+  animation: doodle-wobble 0.4s ease-in-out infinite alternate;
+}
+
+.comic-doodle-btn:active {
+  transform: scale(0.94) translateY(4px);
+}
+
+@keyframes doodle-wobble {
+  0% {
+    transform: rotate(-1.5deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(1.5deg) scale(1.02);
+  }
+}
+
+.doodle-bg {
+  position: absolute;
+  inset: 0;
+  background: #ffea00;
+  border: 3px solid #111;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  box-shadow:
+    4px 4px 0px #ff007f,
+    8px 8px 0px #00d4ff,
+    12px 12px 0px #111;
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.comic-doodle-btn:active .doodle-bg {
+  box-shadow:
+    2px 2px 0px #ff007f,
+    4px 4px 0px #00d4ff,
+    6px 6px 0px #111;
+}
+
+.doodle-shine {
+  position: absolute;
+  top: 7px;
+  left: 14px;
+  width: 40px;
+  height: 10px;
+  background: #fff;
+  border: 2px solid #111;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-4deg);
+  opacity: 0.9;
+  z-index: 2;
+  transition: all 0.3s;
+}
+
+.comic-doodle-btn:hover .doodle-shine {
+  transform: rotate(4deg) translateX(8px);
+  width: 28px;
+}
+
+.doodle-glow {
+  position: absolute;
+  bottom: -15px;
+  left: 10%;
+  width: 80%;
+  height: 20px;
+  z-index: 0;
+  background: transparent;
+  pointer-events: none;
+  box-shadow:
+    -40px 10px 0 -4px #ff007f,
+    -20px 15px 0 -2px #ffea00,
+    0px 10px 0 -4px #00d4ff,
+    20px 18px 0 -3px #ff5100,
+    40px 8px 0 -5px #ffea00;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.comic-doodle-btn:hover .doodle-glow {
+  opacity: 1;
+  animation: doodle-flame 0.3s steps(2) infinite alternate;
+}
+
+@keyframes doodle-flame {
+  0% {
+    box-shadow:
+      -40px 10px 0 -4px #ff007f,
+      -20px 15px 0 -2px #ffea00,
+      0px 10px 0 -4px #00d4ff,
+      20px 18px 0 -3px #ff5100,
+      40px 8px 0 -5px #ffea00;
+    transform: translateY(0);
+  }
+  100% {
+    box-shadow:
+      -35px 15px 0 -3px #ffea00,
+      -25px 8px 0 -5px #ff007f,
+      5px 15px 0 -2px #ff5100,
+      15px 10px 0 -4px #00d4ff,
+      35px 15px 0 -3px #ff007f;
+    transform: translateY(3px);
+  }
+}
+
+.doodle-wave {
+  position: absolute;
+  inset: -18px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.doodle-wave::before,
+.doodle-wave::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 16px;
+  background: #111;
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.doodle-wave::before {
+  top: -8px;
+  left: 20%;
+  transform: rotate(-30deg);
+}
+
+.doodle-wave::after {
+  top: -8px;
+  right: 20%;
+  transform: rotate(30deg);
+}
+
+.comic-doodle-btn:hover .doodle-wave::before {
+  animation: comic-pop-left 0.5s ease-out infinite;
+}
+
+.comic-doodle-btn:hover .doodle-wave::after {
+  animation: comic-pop-right 0.5s ease-out infinite 0.15s;
+}
+
+@keyframes comic-pop-left {
+  0% {
+    transform: rotate(-30deg) translateY(8px);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-30deg) translateY(-18px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes comic-pop-right {
+  0% {
+    transform: rotate(30deg) translateY(8px);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(30deg) translateY(-18px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.doodle-stars {
+  position: absolute;
+  inset: -15px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.doodle-stars .star-left,
+.doodle-stars .star-right {
+  position: absolute;
+  font-size: 18px;
+  color: #ff007f;
+  -webkit-text-stroke: 1px #111;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.doodle-stars .star-left {
+  top: 8px;
+  left: -18px;
+}
+
+.doodle-stars .star-right {
+  bottom: 8px;
+  right: -18px;
+  color: #00d4ff;
+}
+
+.comic-doodle-btn:hover .doodle-stars .star-left {
+  opacity: 1;
+  animation: float-star-1 1s ease-in-out infinite alternate;
+}
+
+.comic-doodle-btn:hover .doodle-stars .star-right {
+  opacity: 1;
+  animation: float-star-2 1s ease-in-out infinite alternate 0.3s;
+}
+
+@keyframes float-star-1 {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(-20deg);
+  }
+}
+
+@keyframes float-star-2 {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(20deg);
+  }
+}
+
+.doodle-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doodle-outline {
+  position: absolute;
+  bottom: 10px;
+  left: 15%;
+  right: 15%;
+  height: 4px;
+  background: #00d4ff;
+  border: 1.5px solid #111;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-1deg);
+  z-index: 1;
+}
+
+.comic-doodle-btn:hover .doodle-outline {
+  animation: scribble-line 0.2s steps(2) infinite alternate;
+}
+
+@keyframes scribble-line {
+  0% {
+    transform: rotate(-1deg) translateY(0);
+    background: #00d4ff;
+  }
+  100% {
+    transform: rotate(1deg) translateY(2px);
+    background: #ff007f;
+  }
+}
+
+.doodle-glyphs {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  font-family: "Outfit", "Impact", sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.doodle-text {
+  display: flex;
+  align-items: center;
+}
+
+.doodle-text [data-label] {
+  position: relative;
+  display: inline-block;
+  color: #111;
+  text-transform: uppercase;
+  text-shadow:
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff,
+    2px 2px 0 #ff007f;
+  transition: color 0.2s;
+}
+
+.comic-doodle-btn:hover .doodle-text [data-label] {
+  animation: doodle-bounce 1.5s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * 0.04s);
+  color: #fff;
+  text-shadow:
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111,
+    3px 3px 0 #111;
+}
+
+@keyframes doodle-bounce {
+  0% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(-3px) rotate(3deg);
+  }
+}
+
+.doodle-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 8px;
+}
+
+.doodle-icon-zap {
+  font-size: 20px;
+  color: #fff;
+  text-shadow:
+    2px 2px 0 #111,
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111;
+  transition: transform 0.2s;
+}
+
+.comic-doodle-btn:hover .doodle-icon-zap {
+  animation: doodle-zap 0.3s infinite alternate;
+}
+
+@keyframes doodle-zap {
+  0% {
+    transform: scale(1) rotate(-10deg);
+    color: #00d4ff;
+  }
+  100% {
+    transform: scale(1.2) rotate(10deg);
+    color: #ff007f;
+  }
+}
+
+.doodle-icon-check {
+  font-size: 22px;
+  color: #00ff66;
+  text-shadow:
+    2px 2px 0 #111,
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111;
+  animation: icon-stamp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes icon-stamp {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+}
+
+
 
