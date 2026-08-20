@@ -97,7 +97,18 @@ const SHARDS = [
 const SecretIdentityCard = () => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [dragProgress, setDragProgress] = useState(0);
   const cardRef = useRef(null);
+  const touchStartPos = useRef({ x: 0, y: 0 });
+  const isDragging = useRef(false);
+
+  const triggerHaptic = (ms = 35) => {
+    if (typeof window !== "undefined" && window.navigator && window.navigator.vibrate) {
+      try {
+        window.navigator.vibrate(ms);
+      } catch (_) {}
+    }
+  };
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -109,6 +120,7 @@ const SecretIdentityCard = () => {
 
   const handleMouseEnter = () => {
     setIsRevealed(true);
+    triggerHaptic(30);
     soundFX.playThwip();
   };
 
@@ -118,9 +130,60 @@ const SecretIdentityCard = () => {
     soundFX.playBeep(320);
   };
 
+  const handleTouchStart = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    touchStartPos.current = { x: touch.clientX, y: touch.clientY };
+    isDragging.current = false;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!cardRef.current || !e.touches || e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - touchStartPos.current.x;
+    const dy = touch.clientY - touchStartPos.current.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > 10) {
+      isDragging.current = true;
+      const rect = cardRef.current.getBoundingClientRect();
+      const normX = (touch.clientX - rect.left) / rect.width - 0.5;
+      const normY = (touch.clientY - rect.top) / rect.height - 0.5;
+      setTilt({ x: normX * 18, y: -normY * 18 });
+
+      // Hitung progress drag kanan/kiri
+      const progress = Math.min(Math.max(Math.abs(dx) / (rect.width * 0.35), 0), 1);
+      setDragProgress(progress);
+      if (progress > 0.15 && !isRevealed) {
+        setIsRevealed(true);
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (isDragging.current) {
+      if (dragProgress > 0.35 || isRevealed) {
+        setIsRevealed(true);
+        triggerHaptic(45);
+        soundFX.playThwip();
+      } else {
+        setIsRevealed(false);
+        triggerHaptic(20);
+        soundFX.playBeep(320);
+      }
+      setDragProgress(0);
+      setTilt({ x: 0, y: 0 });
+      isDragging.current = false;
+    } else {
+      // Single tap toggle
+      handleTap();
+    }
+  };
+
   const handleTap = () => {
     setIsRevealed((prev) => {
       const next = !prev;
+      triggerHaptic(next ? 40 : 25);
       if (next) soundFX.playThwip();
       else soundFX.playBeep(320);
       return next;
@@ -134,6 +197,9 @@ const SecretIdentityCard = () => {
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onClick={handleTap}
         animate={{
           rotateX: tilt.y,
@@ -290,7 +356,7 @@ const SecretIdentityCard = () => {
         {/* ===== BOTTOM LEFT CUE ===== */}
         <div className="absolute bottom-4 left-4 z-30">
           <p className="text-[8.5px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-white/90 drop-shadow-[0_1px_2px_#000]">
-            {isRevealed ? "[ IDENTITY UNLOCKED ]" : "[ HOVER / TAP TO UNMASK ]"}
+            {isRevealed ? "[ IDENTITY UNLOCKED ]" : "[ 🖐️ SWIPE / TAP TO UNMASK ]"}
           </p>
         </div>
       </motion.div>
