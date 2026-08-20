@@ -20,6 +20,12 @@ const SmoothScroll = () => {
       wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
       lerp: 0.08,
+      prevent: (node) =>
+        Boolean(
+          node.closest("[data-lenis-prevent]") ||
+          node.closest(".overflow-y-auto") ||
+          node.closest(".fixed")
+        ),
     });
 
     let rafId;

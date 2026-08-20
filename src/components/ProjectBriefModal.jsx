@@ -11,6 +11,8 @@ const ProjectBriefModal = ({ project, onClose }) => {
       <div
         className="fixed inset-0 z-[300] bg-spider-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto"
         onClick={onClose}
+        data-lenis-prevent
+        onWheel={(e) => e.stopPropagation()}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 20 }}
@@ -18,6 +20,7 @@ const ProjectBriefModal = ({ project, onClose }) => {
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           onClick={(e) => e.stopPropagation()}
           className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-comic-panel border-4 border-spider-black comic-chip pop-shadow-red my-auto overflow-hidden"
+          data-lenis-prevent
         >
           {/* STICKY HEADER BAR */}
           <div className="bg-spider-red border-b-4 border-spider-black px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0 sticky top-0 z-20">
@@ -35,7 +38,7 @@ const ProjectBriefModal = ({ project, onClose }) => {
           </div>
 
           {/* SCROLLABLE BODY CONTENT */}
-          <div className="p-4 sm:p-6 sm:p-8 space-y-4 sm:space-y-6 overflow-y-auto min-h-0 flex-1 touch-pan-y">
+          <div className="p-4 sm:p-6 sm:p-8 space-y-4 sm:space-y-6 overflow-y-auto min-h-0 flex-1 touch-pan-y" data-lenis-prevent>
             {/* Header info */}
             <div>
               <div className="flex items-center gap-2 mb-1">

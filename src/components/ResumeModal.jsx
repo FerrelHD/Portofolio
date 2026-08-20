@@ -16,6 +16,8 @@ const ResumeModal = ({ open, onClose }) => {
       <div
         className="fixed inset-0 z-[300] bg-spider-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
         onClick={onClose}
+        data-lenis-prevent
+        onWheel={(e) => e.stopPropagation()}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 20 }}
@@ -23,6 +25,7 @@ const ResumeModal = ({ open, onClose }) => {
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           onClick={(e) => e.stopPropagation()}
           className="relative w-full max-w-2xl max-h-[85vh] flex flex-col bg-comic-panel border-4 border-spider-black comic-chip pop-shadow-red overflow-hidden my-auto"
+          data-lenis-prevent
         >
           {/* STICKY HEADER BAR */}
           <div className="bg-spider-red border-b-4 border-spider-black px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shrink-0 sticky top-0 z-20">
@@ -40,7 +43,7 @@ const ResumeModal = ({ open, onClose }) => {
           </div>
 
           {/* SCROLLABLE BODY CONTENT */}
-          <div className="p-4 sm:p-6 sm:p-8 space-y-4 sm:space-y-6 overflow-y-auto flex-1">
+          <div className="p-4 sm:p-6 sm:p-8 space-y-4 sm:space-y-6 overflow-y-auto flex-1 min-h-0 touch-pan-y" data-lenis-prevent>
             <div>
               <span className="text-[10px] font-black text-spider-yellow uppercase tracking-widest">
                 Agent Clearance Level 05
