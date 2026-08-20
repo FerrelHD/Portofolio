@@ -209,7 +209,7 @@ const Hero = () => {
             crafting immersive digital experiences with cinematic flair.
           </motion.p>
 
-          {/* CTA BUTTONS (Comic Doodle Multi-Layer RGB Matching Buttons) */}
+          {/* CTA BUTTONS (Comic Doodle Multi-Layer Red & Blue Matching Buttons) */}
           <motion.div
             variants={fadeUp}
             className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-7 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
@@ -217,7 +217,7 @@ const Hero = () => {
             <ComicDoodleButton
               text="EXPLORE MISSIONS"
               href="#projects"
-              variant="yellow"
+              variant="red"
               icon="⚡"
             />
             <ComicDoodleButton
@@ -226,7 +226,7 @@ const Hero = () => {
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              variant="yellow"
+              variant="blue"
               icon="📥"
             />
           </motion.div>

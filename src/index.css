@@ -1460,6 +1460,54 @@ body.user-reduce-motion * {
   color: #FF1E26;
 }
 
+/* === RED / SPIDER-RED VARIANT === */
+.comic-doodle-red .doodle-bg {
+  background: #FF1E26;
+  box-shadow:
+    4px 4px 0px #FFD500,
+    8px 8px 0px #00d4ff,
+    12px 12px 0px #111;
+}
+
+.comic-doodle-red:active .doodle-bg {
+  box-shadow:
+    2px 2px 0px #FFD500,
+    4px 4px 0px #00d4ff,
+    6px 6px 0px #111;
+}
+
+.comic-doodle-red .doodle-outline {
+  background: #FFD500;
+}
+
+.comic-doodle-red .doodle-text [data-label] {
+  color: #FFFFFF;
+  text-shadow:
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111,
+    2px 2px 0 #FFD500;
+}
+
+.comic-doodle-red:hover .doodle-text [data-label] {
+  color: #FFD500;
+  text-shadow:
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111,
+    3px 3px 0 #111;
+}
+
+.comic-doodle-red .doodle-stars .star-left {
+  color: #FFD500;
+}
+
+.comic-doodle-red .doodle-stars .star-right {
+  color: #00d4ff;
+}
+
 /* === BLACK / DARK INK VARIANT === */
 .comic-doodle-black .doodle-bg {
   background: #111118;
