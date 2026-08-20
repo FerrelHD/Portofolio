@@ -6,11 +6,11 @@ import { achievementManager } from "../lib/achievements";
 const COMIC_WORDS = [
   { text: "POW!", bg: "#FF1E26", textCol: "#FFFFFF", rotate: -8 },
   { text: "THWIP!", bg: "#165DFF", textCol: "#FFFFFF", rotate: 10 },
-  { text: "BAM!", bg: "#FFD700", textCol: "#000000", rotate: -12 },
-  { text: "200 OK!", bg: "#00E676", textCol: "#000000", rotate: 6 },
+  { text: "BAM!", bg: "#E65100", textCol: "#FFFFFF", rotate: -12 },
+  { text: "200 OK!", bg: "#00897B", textCol: "#FFFFFF", rotate: 6 },
   { text: "CLEAN CODE!", bg: "#9C27B0", textCol: "#FFFFFF", rotate: -6 },
-  { text: "FIXED!", bg: "#FF5722", textCol: "#FFFFFF", rotate: 9 },
-  { text: "ZAP!", bg: "#00E5FF", textCol: "#000000", rotate: -10 },
+  { text: "FIXED!", bg: "#D81B60", textCol: "#FFFFFF", rotate: 9 },
+  { text: "ZAP!", bg: "#0288D1", textCol: "#FFFFFF", rotate: -10 },
 ];
 
 export const spawnComicBurst = (x, y, customText = null) => {
