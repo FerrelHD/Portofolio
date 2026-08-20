@@ -175,7 +175,7 @@ const Hero = () => {
               </span>
             </motion.div>
 
-            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (Solid & Bersih tanpa garis kotak) */}
+            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (True Outer Stroke 8-Arah + 3D Blue Bevel) */}
             <div className="w-full flex justify-center px-1">
               <motion.span
                 variants={slideUp}
@@ -184,7 +184,7 @@ const Hero = () => {
                   fontSize: "clamp(1.6rem, 5.2vw, 4rem)",
                   lineHeight: 1.05,
                   textShadow:
-                    "1px 2px 0 #165DFF, 2px 3.5px 0 #165DFF, 2.5px 5px 0 #0C38A8, 3px 6.5px 0 #000000, 4px 8px 8px rgba(0,0,0,0.45)",
+                    "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
                 }}
               >
                 DIGITAL CREATOR
