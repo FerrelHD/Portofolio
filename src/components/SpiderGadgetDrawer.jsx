@@ -160,7 +160,7 @@ const SpiderGadgetDrawer = () => {
         <img
           src={spideyEmblem}
           alt="Spider Emblem"
-          className="w-7 h-7 object-contain group-hover:scale-110 transition-transform drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+          className="w-7 h-7 object-contain mix-blend-multiply group-hover:scale-110 transition-transform"
         />
       </button>
 
