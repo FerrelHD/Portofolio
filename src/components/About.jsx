@@ -55,145 +55,233 @@ const AnimatedCounter = ({ target, suffix = "" }) => {
   );
 };
 
+const SHARDS = [
+  {
+    id: "tl-eye",
+    clip: "polygon(0 0, 62% 0, 38% 42%, 0 35%)",
+    exit: { x: "-32%", y: "-32%", rotate: -14, z: 40, opacity: 0.15 },
+    delay: 0,
+  },
+  {
+    id: "tr-eye",
+    clip: "polygon(62% 0, 100% 0, 100% 38%, 46% 28%)",
+    exit: { x: "32%", y: "-32%", rotate: 14, z: 45, opacity: 0.15 },
+    delay: 0.03,
+  },
+  {
+    id: "ml-web",
+    clip: "polygon(0 35%, 38% 42%, 44% 68%, 0 62%)",
+    exit: { x: "-42%", y: "-5%", rotate: -10, z: 30, opacity: 0.1 },
+    delay: 0.05,
+  },
+  {
+    id: "mr-web",
+    clip: "polygon(46% 28%, 100% 38%, 100% 68%, 52% 58%)",
+    exit: { x: "42%", y: "5%", rotate: 12, z: 35, opacity: 0.1 },
+    delay: 0.02,
+  },
+  {
+    id: "bl-chin",
+    clip: "polygon(0 62%, 44% 68%, 50% 100%, 0 100%)",
+    exit: { x: "-28%", y: "32%", rotate: 12, z: 40, opacity: 0.15 },
+    delay: 0.04,
+  },
+  {
+    id: "br-chin",
+    clip: "polygon(52% 58%, 100% 68%, 100% 100%, 50% 100%)",
+    exit: { x: "28%", y: "32%", rotate: -12, z: 42, opacity: 0.15 },
+    delay: 0.01,
+  },
+];
+
 const SecretIdentityCard = () => {
-  // Mobile tap-to-toggle (tidak ada hover di mobile)
-  const [revealed, setRevealed] = useState(false);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: x * 18, y: -y * 18 });
+  };
+
+  const handleMouseEnter = () => {
+    setIsRevealed(true);
+    soundFX.playThwip();
+  };
+
+  const handleMouseLeave = () => {
+    setIsRevealed(false);
+    setTilt({ x: 0, y: 0 });
+    soundFX.playBeep(320);
+  };
+
+  const handleTap = () => {
+    setIsRevealed((prev) => {
+      const next = !prev;
+      if (next) soundFX.playThwip();
+      else soundFX.playBeep(320);
+      return next;
+    });
+  };
 
   return (
-    <div
-      className={`group relative w-full aspect-[4/5] comic-panel overflow-hidden cursor-pointer select-none ${
-        revealed ? "force-reveal" : ""
-      }`}
-      style={{ borderRadius: "4px" }}
-      onClick={() => setRevealed((r) => !r)}
-      onTouchEnd={(e) => {
-        e.preventDefault();
-        setRevealed((r) => !r);
-      }}
-    >
-      {/* HANGING SPIDEY (Attached right at the top frame border) */}
-      <div className="absolute top-0 right-5 z-30 pointer-events-none">
-        <HangingSpidey />
-      </div>
+    <div style={{ perspective: 1000 }} className="w-full">
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleTap}
+        animate={{
+          rotateX: tilt.y,
+          rotateY: tilt.x,
+          scale: isRevealed ? 1.02 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        className="group relative w-full aspect-[4/5] comic-panel overflow-hidden cursor-pointer select-none border-3 sm:border-4 border-black rounded-xl shadow-[8px_8px_0_#000] hover:shadow-[12px_12px_0_#FF1E26] transition-shadow duration-300"
+      >
+        {/* HANGING SPIDEY (Attached right at top right) */}
+        <div className="absolute top-0 right-5 z-40 pointer-events-none">
+          <HangingSpidey />
+        </div>
 
-      {/* GLOW RING SAAT DI-HOVER / TER-REVEAL */}
-      <div className="identity-glow-ring" style={{ borderRadius: "4px" }} />
-
-      {/* LAYER 1 (BASE): FOTO ASLI FERREL */}
-      <div className="identity-photo-base w-full h-full">
-        <img
-          src={FERREL_PORTRAIT_URL}
-          alt="Ferrel Rashad Akeyla - Secret Identity"
-          className="w-full h-full object-cover grayscale contrast-110"
-          onError={(e) => {
-            // Fallback jika file ferrel-portrait.jpg belum ada
-            e.currentTarget.src =
-              "https://picsum.photos/seed/ferrel-rashad-portrait/800/1000";
-          }}
-        />
-        {/* Inner vignette + subtle halftone di atas foto */}
+        {/* GLOW ENERGY BORDER ON REVEAL */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className={`absolute inset-0 z-30 pointer-events-none border-2 border-spider-yellow transition-opacity duration-300 ${
+            isRevealed ? "opacity-100 shadow-[inset_0_0_20px_rgba(255,213,0,0.5)]" : "opacity-0"
+          }`}
+        />
+
+        {/* LAYER 1: BASE PHOTO (Ferrel's Portrait) */}
+        <div className="absolute inset-0 z-10 w-full h-full bg-black">
+          <img
+            src={FERREL_PORTRAIT_URL}
+            alt="Ferrel Rashad Akeyla - Secret Identity"
+            className="w-full h-full object-cover grayscale contrast-115 transition-transform duration-500 group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://picsum.photos/seed/ferrel-rashad-portrait/800/1000";
+            }}
+          />
+
+          {/* Vignette overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(10,10,10,0.6) 100%)",
+            }}
+          />
+
+          {/* Spider-Verse Chromatic Glitch lines */}
+          <div
+            className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
+              isRevealed ? "opacity-30 mix-blend-color-dodge bg-gradient-to-r from-cyan-500 via-transparent to-red-500" : "opacity-0"
+            }`}
+          />
+        </div>
+
+        {/* LAYER 2: 6 DYNAMIC 3D SPIDER-VERSE SHARDS */}
+        {SHARDS.map((shard) => (
+          <motion.div
+            key={shard.id}
+            initial={false}
+            animate={
+              isRevealed
+                ? shard.exit
+                : { x: "0%", y: "0%", rotate: 0, z: 0, opacity: 1 }
+            }
+            transition={{
+              type: "spring",
+              stiffness: 220,
+              damping: 18,
+              delay: shard.delay,
+            }}
+            className="absolute inset-0 z-20 w-full h-full pointer-events-none"
+            style={{
+              clipPath: shard.clip,
+              backgroundImage: `url(${SPIDER_SUIT_URL})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: isRevealed
+                ? "drop-shadow(0 0 12px rgba(255,213,0,0.85)) drop-shadow(-3px 0 0 #00F0FF) drop-shadow(3px 0 0 #FF1E26)"
+                : "none",
+            }}
+          />
+        ))}
+
+        {/* LAYER 3: DIAGONAL YELLOW LASER SLASH WIPE */}
+        <motion.div
+          initial={false}
+          animate={{
+            x: isRevealed ? "150%" : "-150%",
+            opacity: isRevealed ? 1 : 0,
+          }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          className="absolute inset-0 z-25 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 40%, transparent 50%, rgba(10,10,10,0.35) 100%)",
+              "linear-gradient(135deg, transparent 40%, #FFD500 48%, #FFFFFF 50%, #FFD500 52%, transparent 60%)",
+            mixBlendMode: "overlay",
           }}
         />
-      </div>
 
-      {/* LAYER 2: DIAGONAL YELLOW SLASH WIPE */}
-      <div className="identity-slash" style={{ borderRadius: "inherit" }} />
-
-      {/* LAYER 3: 4 TRIANGULAR SUIT PIECES (Diagonal Slash — Opsi A) */}
-      {/* Top-Left Triangle */}
-      <div
-        className="suit-piece suit-piece-tl"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Top-Right Triangle */}
-      <div
-        className="suit-piece suit-piece-tr"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Bottom-Left Triangle */}
-      <div
-        className="suit-piece suit-piece-bl"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Bottom-Right Triangle */}
-      <div
-        className="suit-piece suit-piece-br"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-
-      {/* HALFTONE OVERLAY di seluruh card */}
-      <div
-        className="absolute inset-0 z-[8] pointer-events-none opacity-30 mix-blend-overlay"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay-sm" />
-      </div>
-
-      {/* ===== TOP LEFT BADGE — Identity Label Swap ===== */}
-      <div className="absolute top-4 left-4 z-[10] overflow-hidden h-[38px]">
-        {/* IDLE state badge: SPIDER-MAN */}
-        <div className="identity-label label-idle">
-          <span className="inline-block bg-spider-red comic-chip text-comic-ink px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
-            Spider-Man
-          </span>
+        {/* HALFTONE OVERLAY */}
+        <div
+          className="absolute inset-0 z-25 pointer-events-none opacity-25 mix-blend-overlay"
+          aria-hidden="true"
+        >
+          <div className="w-full h-full halftone-overlay-sm" />
         </div>
-        {/* REVEAL state badge: FERREL */}
-        <div className="identity-label label-active">
-          <span className="inline-block bg-spider-blue comic-chip text-comic-ink px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
-            Ferrel Rashad
-          </span>
-        </div>
-      </div>
 
-      {/* ===== BOTTOM RIGHT BADGE — Classified / Revealed ===== */}
-      <div className="absolute bottom-4 right-4 z-[10] overflow-hidden h-[38px]">
-        {/* IDLE: CLASSIFIED */}
-        <div className="identity-label label-idle">
-          <span className="inline-block bg-spider-yellow comic-chip text-spider-black px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase blink-soft">
-            Classified
-          </span>
+        {/* ===== TOP LEFT BADGE: Identity Flip Badge ===== */}
+        <div className="absolute top-4 left-4 z-30 overflow-hidden h-[34px]">
+          <motion.div
+            animate={{ y: isRevealed ? -34 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+          >
+            <div className="h-[34px] flex items-center">
+              <span className="bg-spider-red text-white border-2 border-black px-3 py-1 text-[9.5px] sm:text-[10px] font-black tracking-[0.2em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+                SPIDER-HERO
+              </span>
+            </div>
+            <div className="h-[34px] flex items-center">
+              <span className="bg-spider-blue text-white border-2 border-black px-3 py-1 text-[9.5px] sm:text-[10px] font-black tracking-[0.2em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+                FERREL RASHAD
+              </span>
+            </div>
+          </motion.div>
         </div>
-        {/* REVEAL: IDENTITY REVEALED */}
-        <div className="identity-label label-active">
-          <span className="inline-block bg-comic-ink comic-chip text-spider-black px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
-            Identity Revealed
-          </span>
+
+        {/* ===== BOTTOM RIGHT BADGE: Status Dossier ===== */}
+        <div className="absolute bottom-4 right-4 z-30 overflow-hidden h-[34px]">
+          <motion.div
+            animate={{ y: isRevealed ? -34 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+          >
+            <div className="h-[34px] flex items-center">
+              <span className="bg-spider-yellow text-spider-black border-2 border-black px-2.5 py-1 text-[9px] sm:text-[9.5px] font-black tracking-[0.18em] uppercase rounded-md shadow-[2px_2px_0_#000] blink-soft">
+                CLASSIFIED
+              </span>
+            </div>
+            <div className="h-[34px] flex items-center">
+              <span className="bg-emerald-500 text-black border-2 border-black px-2.5 py-1 text-[9px] sm:text-[9.5px] font-black tracking-[0.18em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+                UNMASKED 100%
+              </span>
+            </div>
+          </motion.div>
         </div>
-      </div>
 
-      {/* ===== INSTRUCTION TEXT BELOW BADGE ===== */}
-      <div className="absolute bottom-4 left-4 z-[10]">
-        <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-comic-ink/80 comic-stroke-thin">
-          [ Hover / Tap to Unmask ]
-        </p>
-      </div>
-
-      {/* Mobile force-reveal CSS: jika state revealed=true, pakai style inline override */}
-      {revealed && (
-        <style>{`
-          .force-reveal .suit-piece-tl { transform: translate(-25%, -25%) rotate(-10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-tr { transform: translate(25%, -25%) rotate(10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-bl { transform: translate(-25%, 25%) rotate(10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-br { transform: translate(25%, 25%) rotate(-10deg); opacity: 0.2 !important; }
-          .force-reveal .identity-slash { opacity: 1; transform: translateX(100%) !important; }
-          .force-reveal .label-idle { opacity: 0; transform: translateY(-12px) !important; }
-          .force-reveal .label-active { opacity: 1; transform: translateY(-100%) !important; }
-          .force-reveal .identity-glow-ring { opacity: 1 !important; }
-        `}</style>
-      )}
+        {/* ===== BOTTOM LEFT CUE ===== */}
+        <div className="absolute bottom-4 left-4 z-30">
+          <p className="text-[8.5px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-white/90 drop-shadow-[0_1px_2px_#000]">
+            {isRevealed ? "[ IDENTITY UNLOCKED ]" : "[ HOVER / TAP TO UNMASK ]"}
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 };
