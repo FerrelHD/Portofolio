@@ -58,38 +58,38 @@ const AnimatedCounter = ({ target, suffix = "" }) => {
 const SHARDS = [
   {
     id: "tl-eye",
-    clip: "polygon(0 0, 62% 0, 38% 42%, 0 35%)",
-    exit: { x: "-32%", y: "-32%", rotate: -14, z: 40, opacity: 0.15 },
+    clip: "polygon(0 0, 50% 0, 50% 50%, 0 35%)",
+    exit: { x: "-35%", y: "-35%", rotate: -15, z: 45, opacity: 0.15 },
     delay: 0,
   },
   {
     id: "tr-eye",
-    clip: "polygon(62% 0, 100% 0, 100% 38%, 46% 28%)",
-    exit: { x: "32%", y: "-32%", rotate: 14, z: 45, opacity: 0.15 },
-    delay: 0.03,
-  },
-  {
-    id: "ml-web",
-    clip: "polygon(0 35%, 38% 42%, 44% 68%, 0 62%)",
-    exit: { x: "-42%", y: "-5%", rotate: -10, z: 30, opacity: 0.1 },
-    delay: 0.05,
-  },
-  {
-    id: "mr-web",
-    clip: "polygon(46% 28%, 100% 38%, 100% 68%, 52% 58%)",
-    exit: { x: "42%", y: "5%", rotate: 12, z: 35, opacity: 0.1 },
+    clip: "polygon(50% 0, 100% 0, 100% 35%, 50% 50%)",
+    exit: { x: "35%", y: "-35%", rotate: 15, z: 45, opacity: 0.15 },
     delay: 0.02,
   },
   {
-    id: "bl-chin",
-    clip: "polygon(0 62%, 44% 68%, 50% 100%, 0 100%)",
-    exit: { x: "-28%", y: "32%", rotate: 12, z: 40, opacity: 0.15 },
+    id: "ml-web",
+    clip: "polygon(0 35%, 50% 50%, 0 70%)",
+    exit: { x: "-45%", y: "0%", rotate: -10, z: 35, opacity: 0.1 },
     delay: 0.04,
   },
   {
+    id: "mr-web",
+    clip: "polygon(50% 50%, 100% 35%, 100% 70%)",
+    exit: { x: "45%", y: "0%", rotate: 10, z: 35, opacity: 0.1 },
+    delay: 0.03,
+  },
+  {
+    id: "bl-chin",
+    clip: "polygon(0 70%, 50% 50%, 50% 100%, 0 100%)",
+    exit: { x: "-30%", y: "35%", rotate: 12, z: 40, opacity: 0.15 },
+    delay: 0.05,
+  },
+  {
     id: "br-chin",
-    clip: "polygon(52% 58%, 100% 68%, 100% 100%, 50% 100%)",
-    exit: { x: "28%", y: "32%", rotate: -12, z: 42, opacity: 0.15 },
+    clip: "polygon(50% 50%, 100% 70%, 100% 100%, 50% 100%)",
+    exit: { x: "30%", y: "35%", rotate: -12, z: 40, opacity: 0.15 },
     delay: 0.01,
   },
 ];
@@ -212,6 +212,18 @@ const SecretIdentityCard = () => {
             }}
           />
         ))}
+
+        {/* SOLID IDLE COVER (Guarantees 100% seamless cover when idle with zero pixel gaps) */}
+        <motion.div
+          animate={{ opacity: isRevealed ? 0 : 1 }}
+          transition={{ duration: 0.15 }}
+          className="absolute inset-0 z-21 w-full h-full pointer-events-none"
+          style={{
+            backgroundImage: `url(${SPIDER_SUIT_URL})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
 
         {/* LAYER 3: DIAGONAL YELLOW LASER SLASH WIPE */}
         <motion.div
