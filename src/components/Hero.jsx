@@ -226,7 +226,7 @@ const Hero = () => {
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              variant="black"
+              variant="yellow"
               icon="📥"
             />
           </motion.div>
