@@ -162,37 +162,38 @@ const Hero = () => {
             </span>
           </motion.div>
 
-          {/* HEADLINE — Comic Ink Stroke Style */}
+          {/* HEADLINE — Dynamic 2-Row Comic Lockup */}
           <motion.h1
-            className="w-full max-w-full sm:max-w-[85vw] lg:max-w-[1000px] mx-auto font-black mb-6 sm:mb-8 leading-[0.95] flex flex-col items-center"
+            className="w-full max-w-5xl mx-auto font-black mb-6 sm:mb-8 leading-[1.08] flex flex-col items-center select-none"
           >
-            <div className="w-full py-1 -my-1 flex justify-center px-1">
+            {/* ROW 1: YOUR NEIGHBORHOOD (Crisp Comic White with Ink Stroke) */}
+            <div className="w-full flex justify-center px-2">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-comic-ink comic-stroke text-balance tracking-tight sm:tracking-normal"
+                className="inline-block text-comic-ink tracking-[0.04em] uppercase"
                 style={{
-                  fontSize:
-                    "clamp(1.15rem, 5.8vw, 5rem)",
+                  fontSize: "clamp(1.5rem, 5.2vw, 4.4rem)",
                   textShadow:
                     "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
                   WebkitTextStroke:
-                    "clamp(1px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                    "clamp(1px, 0.18vw, 2px) var(--color-ink-stroke)",
                 }}
               >
                 YOUR NEIGHBORHOOD
               </motion.span>
             </div>
-            <div className="w-full py-1 -my-1 flex justify-center mt-[clamp(2px,0.6vw,8px)] px-1">
+
+            {/* ROW 2: DIGITAL CREATOR (Giant Spider-Red 3D Italic Pop) */}
+            <div className="w-full flex justify-center mt-1 sm:mt-2 px-2">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-spider-red comic-stroke italic text-balance tracking-tight sm:tracking-normal"
+                className="inline-block text-spider-red italic tracking-[0.02em] uppercase"
                 style={{
-                  fontSize:
-                    "clamp(1.4rem, 7.2vw, 6rem)",
+                  fontSize: "clamp(2rem, 7.2vw, 6rem)",
                   textShadow:
-                    "min(3px, 0.35vw) min(3px, 0.35vw) 0px var(--color-ink-stroke)",
+                    "min(4px, 0.45vw) min(4px, 0.45vw) 0px #000, min(6px, 0.6vw) min(6px, 0.6vw) 0px #165DFF",
                   WebkitTextStroke:
-                    "clamp(1px, 0.18vw, 2.5px) var(--color-ink-stroke)",
+                    "clamp(1.5px, 0.22vw, 2.8px) #000",
                 }}
               >
                 DIGITAL CREATOR
