@@ -7,7 +7,7 @@ import { soundFX } from "../lib/soundFx";
 // Asset Imports for Real Brand Icons
 import reactIcon from "../assets/React-icon.svg.webp";
 import tailwindIcon from "../assets/tailwind.svg";
-import typescriptIcon from "../assets/typescript-svgrepo-com.svg";
+import typescriptIcon from "../assets/typescript-logo-png-svg.webp";
 import nodejsIcon from "../assets/nodejs.webp";
 import videoEditIcon from "../assets/video editing icon2.jpg";
 import framerIcon from "../assets/framer-motion-icon.png";
