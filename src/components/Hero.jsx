@@ -49,7 +49,7 @@ const Hero = () => {
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
-      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-16 scanlines"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12"
     >
       {/* Watermark Background (Amazing Spider-Dev — 3 lines) */}
       <div className="watermark-text whitespace-pre-line text-center leading-[0.9]">
@@ -60,12 +60,14 @@ const Hero = () => {
         DEV
       </div>
 
-      {/* Large Halftone Gradient Overlay */}
+      {/* Large Halftone Gradient Overlay with bottom fade mask */}
       <div
-        className="absolute inset-0 z-[-1] opacity-60"
+        className="absolute inset-0 z-[-1] opacity-60 pointer-events-none"
         style={{
           background:
             "radial-gradient(ellipse 70% 60% at 15% 10%, rgba(255,30,38,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 70% at 90% 90%, rgba(22,93,255,0.22) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,213,0,0.05) 0%, transparent 70%)",
+          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
         }}
         aria-hidden="true"
       />

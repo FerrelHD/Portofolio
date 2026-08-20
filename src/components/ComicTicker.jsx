@@ -19,7 +19,7 @@ const ComicTicker = ({
 
   return (
     <div
-      className={`relative w-full overflow-hidden py-3 sm:py-3.5 z-20 select-none my-6 sm:my-8 transition-transform duration-300 ${rotate} ${className} ${
+      className={`relative w-full overflow-hidden py-3 sm:py-3.5 z-20 select-none -my-3 sm:-my-5 transition-transform duration-300 ${rotate} ${className} ${
         isBugle
           ? "bg-spider-yellow border-y-3 sm:border-y-4 border-black shadow-[0_6px_0px_#000]"
           : "bg-[#14141C] border-y-3 sm:border-y-4 border-spider-red/80 shadow-[0_6px_0px_#FF1E26]"
