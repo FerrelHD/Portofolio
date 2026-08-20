@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { fadeUp, staggerContainer } from "../lib/animation";
+import HangingSpidey from "./HangingSpidey";
 
 /* ================================================================
    SECRET IDENTITY REVEAL CARD — OPSI A: DIAGONAL COMIC SLASH
@@ -242,11 +243,14 @@ const About = () => {
 
         {/* MAIN SPLIT LAYOUT: 40% Identity Card / 60% Origin Text */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-14 md:mb-20">
-          {/* LEFT — SECRET IDENTITY CARD */}
+          {/* LEFT — SECRET IDENTITY CARD WITH HANGING SPIDEY */}
           <motion.div
             variants={fadeUp}
-            className="lg:col-span-5 max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-32"
+            className="lg:col-span-5 max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-32 relative"
           >
+            <div className="absolute -top-24 right-6 z-20 hidden sm:block">
+              <HangingSpidey />
+            </div>
             <SecretIdentityCard />
             {/* Comic credit chip */}
             <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-[0.18em] uppercase text-comic-ink/60">

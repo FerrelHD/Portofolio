@@ -17,6 +17,7 @@ import {
   Signal,
 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
+import VideoModal from "./VideoModal";
 import finesserShop from "../assets/Shop.png";
 import fersyaShop from "../assets/fersya-shop.png";
 import streetRush from "../assets/street-rush.png";
@@ -117,7 +118,7 @@ const CATEGORY_ICONS = {
   Game: <MapPin size={12} strokeWidth={2.5} />,
 };
 
-const ProjectCard = ({ project, onHover }) => {
+const ProjectCard = ({ project, onHover, onSelectVideo }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springConfig = { damping: 15, stiffness: 150 };
@@ -167,6 +168,8 @@ const ProjectCard = ({ project, onHover }) => {
         className="group relative h-[360px] sm:h-[430px] w-full max-w-[360px] sm:max-w-none tracker-card rounded-sm"
       >
         <CardWrapper
+          project={project}
+          onSelectVideo={onSelectVideo}
           href={project.link}
           style={{ transformStyle: "preserve-3d" }}
           className="absolute inset-0 block w-full h-full"
@@ -300,9 +303,21 @@ const ProjectCard = ({ project, onHover }) => {
   );
 };
 
-const CardWrapper = ({ href, children, ...props }) =>
-  href ? (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+const CardWrapper = ({ project, onSelectVideo, children, ...props }) =>
+  project.category === "Video" ? (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.preventDefault();
+        onSelectVideo(project);
+      }}
+      className="absolute inset-0 block w-full h-full text-left cursor-pointer"
+      {...props}
+    >
+      {children}
+    </button>
+  ) : project.link ? (
+    <a href={project.link} target="_blank" rel="noopener noreferrer" {...props}>
       {children}
     </a>
   ) : (
@@ -314,6 +329,7 @@ const Projects = () => {
   const [filter, setFilter] = useState("All");
   const [hovered, setHovered] = useState(null);
   const [justOpened, setJustOpened] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(null);
   const audioRef = useRef(null);
   const categories = ["All", "Web", "Video", "Game"];
 
@@ -505,6 +521,7 @@ const Projects = () => {
                           <ProjectCard
                             project={project}
                             onHover={setHovered}
+                            onSelectVideo={setActiveVideo}
                           />
                         </motion.div>
                       ))}
@@ -543,6 +560,9 @@ const Projects = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* VIDEO MODAL PLAYER */}
+      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
     </motion.section>
   );
 };
