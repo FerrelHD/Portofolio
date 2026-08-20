@@ -97,9 +97,14 @@ const Services = () => {
           
           <motion.h2
             variants={fadeUp}
-            className="text-3xl sm:text-4xl md:text-5xl font-black text-comic-ink comic-stroke tracking-tight mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-comic-ink tracking-tight mb-4 select-none"
           >
-            WHAT I CAN BUILD FOR YOU
+            WHAT I CAN{" "}
+            <span className="text-spider-red italic relative inline-block px-1">
+              BUILD
+              <span className="absolute -bottom-1 left-0 right-0 h-1.5 bg-spider-red/80 rounded-full" />
+            </span>{" "}
+            FOR YOU
           </motion.h2>
 
           <motion.p
