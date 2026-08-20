@@ -18,6 +18,26 @@ const AudioPlayer = () => {
     }
   }, [volume, isMuted]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : "";
+      const editable =
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        (e.target && typeof e.target.isContentEditable === "boolean" && e.target.isContentEditable);
+
+      if (editable) return;
+
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "m" || e.key === "M")) {
+        setIsMuted((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
