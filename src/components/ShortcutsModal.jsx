@@ -7,6 +7,7 @@ const ShortcutsModal = ({ open, onClose }) => {
   if (!open) return null;
   const items = [
     { key: "S", label: "Trigger Spider-Sense Tingling", accent: "bg-spider-red" },
+    { key: "P", label: "Toggle Play / Pause BGM Song (Default 3% Volume)", accent: "bg-spider-red" },
     { key: "M", label: "Toggle Mute / Unmute Background Audio", accent: "bg-spider-yellow" },
     { key: "1-6", label: "Quick jump to sections (About, Projects, Contact)", accent: "bg-spider-blue" },
     { key: "?", label: "Show / hide this shortcuts panel", accent: "bg-spider-blue" },

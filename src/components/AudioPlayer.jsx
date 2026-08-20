@@ -8,7 +8,7 @@ const AudioPlayer = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.3);
+  const [volume, setVolume] = useState(0.03); // Fixed default volume 3%
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -29,14 +29,20 @@ const AudioPlayer = () => {
 
       if (editable) return;
 
+      // M = Mute / Unmute
       if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "m" || e.key === "M")) {
         setIsMuted((prev) => !prev);
+      }
+
+      // P = Play / Pause song
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "p" || e.key === "P")) {
+        togglePlay();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isPlaying]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
