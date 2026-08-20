@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
 import VideoModal from "./VideoModal";
+import ProjectBriefModal from "./ProjectBriefModal";
 import finesserShop from "../assets/Shop.png";
 import fersyaShop from "../assets/fersya-shop.png";
 import streetRush from "../assets/street-rush.png";
@@ -36,6 +37,15 @@ const projects = [
     link: "https://github.com/FerrelHD/Fersya-Shop",
     github: "https://github.com/FerrelHD/Fersya-Shop",
     sfx: "ZAP!",
+    brief: {
+      description: "E-commerce platform specializing in healthy foods, organic beverages, and body care products.",
+      role: "Full-Stack Web Developer",
+      highlights: [
+        "Built custom Filament admin panels for real-time stock management and order webhooks in Laravel 11.",
+        "Integrated responsive product showcase with tailored search and category filtering.",
+        "Designed mobile-first UI with custom Tailwind CSS utility tokens."
+      ]
+    }
   },
   {
     id: 1,
@@ -47,6 +57,15 @@ const projects = [
     link: null,
     github: null,
     sfx: "BAM!",
+    brief: {
+      description: "Digital asset storefront offering high-quality templates, graphics, and design resources.",
+      role: "Full-Stack Web Developer",
+      highlights: [
+        "Architected digital asset storefront with fast product browsing and instant downloads.",
+        "Structured Laravel backend data models for digital product licensing.",
+        "Implemented responsive UI layout using Bootstrap."
+      ]
+    }
   },
   {
     id: 7,
@@ -58,6 +77,15 @@ const projects = [
     link: "https://ferrelhd.github.io/Student-Life/",
     github: "https://github.com/FerrelHD/Student-Life",
     sfx: "WHAM!",
+    brief: {
+      description: "Web application for student productivity, task management, and academic schedule tracking.",
+      role: "Frontend Developer & UI Designer",
+      highlights: [
+        "Developed type-safe React 19 interface with TypeScript for seamless task tracking.",
+        "Connected real-time task sync and user authentication with Supabase backend.",
+        "Designed clean progress dashboard with interactive calendar widgets."
+      ]
+    }
   },
   {
     id: 2,
@@ -69,6 +97,15 @@ const projects = [
     link: "https://github.com/FerrelHD/Street-Rush-Unity",
     github: null,
     sfx: "VROOOM!",
+    brief: {
+      description: "Fast-paced 3D arcade runner game engineered with Unity and C# physics.",
+      role: "Game Developer & Physics Programmer",
+      highlights: [
+        "Optimized C# rigidbodies & obstacle spawner algorithms for mobile performance.",
+        "Maintained steady 60 FPS frame rate on mobile devices.",
+        "Programmed responsive player controls, score multipliers, and dynamic camera movement."
+      ]
+    }
   },
   {
     id: 3,
@@ -80,6 +117,15 @@ const projects = [
     link: "https://youtu.be/WMrnRucy0qs?si=AUsYV0JtfbiurBRP",
     github: null,
     sfx: "SHWIP!",
+    brief: {
+      description: "Cinematic anime music video edit synchronized with Frank Ocean's soundtrack.",
+      role: "Video Editor & Motion Designer",
+      highlights: [
+        "Precision audio-visual beat matching and rhythmic cut timing.",
+        "Custom speed ramping and motion blur transitions in Vegas Pro 18.",
+        "Tailored color grading for immersive anime atmosphere."
+      ]
+    }
   },
   {
     id: 4,
@@ -92,6 +138,15 @@ const projects = [
     github: null,
     isRoblox: true,
     sfx: "THWIP!",
+    brief: {
+      description: "Immersive 3D hiking simulation game in Roblox Studio recreating Mount Gede's trail.",
+      role: "Game Designer & Luau Programmer",
+      highlights: [
+        "Modelled realistic mountain terrain and atmospheric weather effects.",
+        "Programmed custom hiking stamina mechanics, checkpoints, and inventory system in Luau.",
+        "Published live on Roblox platform with active community player base."
+      ]
+    }
   },
   {
     id: 6,
@@ -103,6 +158,15 @@ const projects = [
     link: "https://youtu.be/-3f378UHMZE?si=n5UXtmRgw1766rHe",
     github: null,
     sfx: "KABOOM!",
+    brief: {
+      description: "High-tempo anime music video with aggressive rhythm cuts and stylized motion graphics.",
+      role: "Video Editor & Sound Designer",
+      highlights: [
+        "Fast-paced frame timing matched to Playboi Carti's vocal cadence.",
+        "Dynamic camera shakes, flash transitions, and custom sound design.",
+        "Rendered in full 1080p 60 FPS for maximum visual punch."
+      ]
+    }
   },
 ];
 
@@ -118,7 +182,7 @@ const CATEGORY_ICONS = {
   Game: <MapPin size={12} strokeWidth={2.5} />,
 };
 
-const ProjectCard = ({ project, onHover, onSelectVideo }) => {
+const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springConfig = { damping: 15, stiffness: 150 };
@@ -165,7 +229,7 @@ const ProjectCard = ({ project, onHover, onSelectVideo }) => {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative h-[360px] sm:h-[430px] w-full max-w-[360px] sm:max-w-none tracker-card rounded-sm"
+        className="group relative h-[380px] sm:h-[450px] w-full max-w-[360px] sm:max-w-none tracker-card rounded-sm"
       >
         <CardWrapper
           project={project}
@@ -220,10 +284,12 @@ const ProjectCard = ({ project, onHover, onSelectVideo }) => {
             {/* HALFTONE DOT OVERLAY */}
             <div
               className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none"
-              aria-hidden="true"
-            >
-              <div className="w-full h-full halftone-overlay-sm" />
-            </div>
+              style={{
+                backgroundImage:
+                  "radial-gradient(var(--color-ink-stroke) 1px, transparent 1px)",
+                backgroundSize: "6px 6px",
+              }}
+            />
 
             {/* INNER BORDERS */}
             <div
@@ -231,13 +297,11 @@ const ProjectCard = ({ project, onHover, onSelectVideo }) => {
               style={{ borderRadius: "1px" }}
             />
 
-            {/* TOP-LEFT: SPEECH BUBBLE CATEGORY BADGE */}
-            <div
-              className="absolute top-4 left-4 z-[10]"
-              style={{ transform: "translateZ(40px)" }}
-            >
+            {/* TOP-LEFT: CATEGORY BADGE */}
+            <div className="absolute top-4 left-4 z-[10]">
               <span
-                className={`speech-bubble inline-block ${catColor.bg} ${catColor.text} comic-chip px-3.5 py-1.5 text-[10px] font-black tracking-[0.2em] uppercase`}
+                className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] comic-chip ${catColor.bg} ${catColor.text}`}
+                style={{ transform: "translateZ(50px)" }}
               >
                 {project.category}
               </span>
@@ -281,19 +345,31 @@ const ProjectCard = ({ project, onHover, onSelectVideo }) => {
                   {project.title}
                 </h3>
 
-                {/* ACTION BUTTON */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  style={{ transform: "translateZ(40px)" }}
-                  className={`w-full py-3 text-center text-[10px] font-black uppercase tracking-[0.2em] comic-chip transition-colors ${
-                    project.link
-                      ? "bg-spider-red text-comic-ink hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
-                      : "bg-comic-panel text-comic-ink/50 cursor-not-allowed"
-                  }`}
-                >
-                  {actionText}
-                </motion.div>
+                {/* DUAL ACTION BUTTON ROW */}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSelectBrief(project);
+                    }}
+                    className="flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] comic-chip bg-spider-yellow text-spider-black pop-shadow-sm hover:pop-shadow-active transition-colors z-20"
+                  >
+                    MISSION BRIEF
+                  </button>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    className={`flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] comic-chip transition-colors ${
+                      project.link
+                        ? "bg-spider-red text-comic-ink hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
+                        : "bg-comic-panel text-comic-ink/50 cursor-not-allowed"
+                    }`}
+                  >
+                    {actionText}
+                  </motion.div>
+                </div>
               </div>
             </div>
           </div>
@@ -330,6 +406,7 @@ const Projects = () => {
   const [hovered, setHovered] = useState(null);
   const [justOpened, setJustOpened] = useState(false);
   const [activeVideo, setActiveVideo] = useState(null);
+  const [selectedBrief, setSelectedBrief] = useState(null);
   const audioRef = useRef(null);
   const categories = ["All", "Web", "Video", "Game"];
 
@@ -522,6 +599,7 @@ const Projects = () => {
                             project={project}
                             onHover={setHovered}
                             onSelectVideo={setActiveVideo}
+                            onSelectBrief={setSelectedBrief}
                           />
                         </motion.div>
                       ))}
@@ -563,6 +641,9 @@ const Projects = () => {
 
       {/* VIDEO MODAL PLAYER */}
       <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
+
+      {/* PROJECT BRIEF MODAL */}
+      <ProjectBriefModal project={selectedBrief} onClose={() => setSelectedBrief(null)} />
     </motion.section>
   );
 };
