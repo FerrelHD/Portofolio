@@ -55,8 +55,21 @@ const AnimatedCounter = ({ target, suffix = "" }) => {
 };
 
 const SecretIdentityCard = () => {
-  // Mobile tap-to-toggle (tidak ada hover di mobile)
   const [revealed, setRevealed] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
+    if (!isHovered) setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   return (
     <div
@@ -64,6 +77,9 @@ const SecretIdentityCard = () => {
         revealed ? "force-reveal" : ""
       }`}
       style={{ borderRadius: "4px" }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
       onClick={() => setRevealed((r) => !r)}
       onTouchEnd={(e) => {
         e.preventDefault();
@@ -89,8 +105,18 @@ const SecretIdentityCard = () => {
         />
       </div>
 
-      {/* LAYER 2: CIRCLE FADE REVEAL (FOTO ASLI FERREL) */}
-      <div className="identity-circle-reveal w-full h-full">
+      {/* LAYER 2: SPOTLIGHT CURSOR UNMASK REVEAL (FOTO ASLI FERREL) */}
+      <div
+        className="identity-circle-reveal w-full h-full"
+        style={{
+          clipPath:
+            isHovered || revealed
+              ? `circle(${revealed ? "85%" : "105px"} at ${mousePos.x}% ${mousePos.y}%)`
+              : "circle(0px at 50% 50%)",
+          opacity: isHovered || revealed ? 1 : 0,
+          transition: "clip-path 0.12s ease-out, opacity 0.3s ease",
+        }}
+      >
         <img
           src={FERREL_PORTRAIT_URL}
           alt="Ferrel Rashad Akeyla - Secret Identity"
@@ -100,6 +126,11 @@ const SecretIdentityCard = () => {
               "https://picsum.photos/seed/ferrel-rashad-portrait/800/1000";
           }}
         />
+        {/* Halftone Dot Texture overlay inside spotlight */}
+        <div
+          className="absolute inset-0 pointer-events-none halftone-overlay-sm opacity-40 mix-blend-overlay"
+          aria-hidden="true"
+        />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -108,6 +139,17 @@ const SecretIdentityCard = () => {
           }}
         />
       </div>
+
+      {/* SPIDER-SENSE HUD SCANNER RING (Mengekor di kursor) */}
+      <div
+        className="absolute w-[210px] h-[210px] -ml-[105px] -mt-[105px] rounded-full border-2 border-spider-red shadow-[0_0_25px_rgba(255,30,38,0.7)] pointer-events-none transition-opacity duration-300 z-[7]"
+        style={{
+          left: `${mousePos.x}%`,
+          top: `${mousePos.y}%`,
+          opacity: isHovered && !revealed ? 1 : 0,
+          transition: "left 0.12s ease-out, top 0.12s ease-out, opacity 0.3s ease",
+        }}
+      />
 
       {/* HALFTONE OVERLAY di seluruh card */}
       <div
@@ -120,13 +162,13 @@ const SecretIdentityCard = () => {
       {/* ===== TOP LEFT BADGE — Identity Label Swap ===== */}
       <div className="absolute top-4 left-4 z-[10] overflow-hidden h-[38px]">
         {/* IDLE state badge: SPIDER-MAN */}
-        <div className="identity-label label-idle">
+        <div className={`identity-label ${isHovered || revealed ? "label-active" : "label-idle"}`}>
           <span className="inline-block bg-spider-red comic-chip text-comic-ink px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
             Spider-Man
           </span>
         </div>
         {/* REVEAL state badge: FERREL */}
-        <div className="identity-label label-active">
+        <div className={`identity-label ${isHovered || revealed ? "label-idle" : "label-active"}`}>
           <span className="inline-block bg-spider-blue comic-chip text-comic-ink px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
             Ferrel Rashad
           </span>
@@ -136,15 +178,15 @@ const SecretIdentityCard = () => {
       {/* ===== BOTTOM RIGHT BADGE — Classified / Revealed ===== */}
       <div className="absolute bottom-4 right-4 z-[10] overflow-hidden h-[38px]">
         {/* IDLE: CLASSIFIED */}
-        <div className="identity-label label-idle">
+        <div className={`identity-label ${isHovered || revealed ? "label-active" : "label-idle"}`}>
           <span className="inline-block bg-spider-yellow comic-chip text-spider-black px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase blink-soft">
             Classified
           </span>
         </div>
-        {/* REVEAL: IDENTITY REVEALED */}
-        <div className="identity-label label-active">
+        {/* REVEAL: TARGET UNMASKED */}
+        <div className={`identity-label ${isHovered || revealed ? "label-idle" : "label-active"}`}>
           <span className="inline-block bg-comic-ink comic-chip text-spider-black px-3 py-1.5 text-[10px] font-black tracking-[0.18em] uppercase">
-            Identity Revealed
+            {isHovered ? "Target Unmasking" : "Identity Revealed"}
           </span>
         </div>
       </div>
@@ -152,14 +194,14 @@ const SecretIdentityCard = () => {
       {/* ===== INSTRUCTION TEXT BELOW BADGE ===== */}
       <div className="absolute bottom-4 left-4 z-[10]">
         <p className="text-[9px] font-bold uppercase tracking-[0.16em] text-comic-ink/80 comic-stroke-thin">
-          [ Hover / Tap to Unmask ]
+          [ Move Cursor / Tap to Unmask ]
         </p>
       </div>
 
-      {/* Mobile force-reveal CSS: jika state revealed=true, pakai style inline override */}
+      {/* Mobile force-reveal CSS */}
       {revealed && (
         <style>{`
-          .force-reveal .identity-circle-reveal { clip-path: circle(75% at 50% 50%) !important; opacity: 1 !important; }
+          .force-reveal .identity-circle-reveal { clip-path: circle(85% at 50% 50%) !important; opacity: 1 !important; }
           .force-reveal .label-idle { opacity: 0; transform: translateY(-12px) !important; }
           .force-reveal .label-active { opacity: 1; transform: translateY(-100%) !important; }
           .force-reveal .identity-glow-ring { opacity: 1 !important; }
