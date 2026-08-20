@@ -58,7 +58,7 @@
     border-left: 2px solid var(--color-ink-stroke);
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--color-spider-red), var(--color-spider-blue));
+    background: linear-gradient(180deg, var(--color-spider-red) 0%, var(--color-spider-yellow) 50%, var(--color-spider-blue) 100%);
     border-left: 2px solid var(--color-ink-stroke);
     border-right: 2px solid var(--color-ink-stroke);
   }
