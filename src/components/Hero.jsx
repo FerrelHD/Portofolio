@@ -175,11 +175,11 @@ const Hero = () => {
               </span>
             </motion.div>
 
-            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR */}
+            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (Tegak & Solid seperti logo Navbar) */}
             <div className="w-full flex justify-center px-1">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-[#FF1E26] italic uppercase whitespace-nowrap tracking-[0.01em] font-black"
+                className="inline-block text-[#FF1E26] uppercase whitespace-nowrap tracking-tight font-black"
                 style={{
                   fontSize: "clamp(1.6rem, 5.2vw, 4rem)",
                   lineHeight: 1.05,
