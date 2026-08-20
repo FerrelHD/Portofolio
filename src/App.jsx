@@ -14,7 +14,6 @@ import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
 import AudioPlayer from "./components/AudioPlayer";
 import SmoothScroll from "./components/SmoothScroll";
-import WebCursor from "./components/WebCursor";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -78,7 +77,6 @@ function App() {
 
   return (
     <div className="relative">
-      <WebCursor />
       <SmoothScroll />
       <ScrollFX />
       <PageLoader />
