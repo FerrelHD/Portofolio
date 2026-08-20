@@ -221,12 +221,12 @@ const Hero = () => {
               icon="⚡"
             />
             <ComicDoodleButton
-              text="DOWNLOAD DOSSIER"
+              text="DOWNLOAD CV"
               href={`${import.meta.env.BASE_URL}cv.pdf`}
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              variant="blue"
+              variant="black"
               icon="📥"
             />
           </motion.div>

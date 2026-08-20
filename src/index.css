@@ -1460,6 +1460,61 @@ body.user-reduce-motion * {
   color: #FF1E26;
 }
 
+/* === BLACK / DARK INK VARIANT === */
+.comic-doodle-black .doodle-bg {
+  background: #111118;
+  border: 3px solid #000;
+  box-shadow:
+    4px 4px 0px #FF1E26,
+    8px 8px 0px #FFD500,
+    12px 12px 0px #000;
+}
+
+.comic-doodle-black:active .doodle-bg {
+  box-shadow:
+    2px 2px 0px #FF1E26,
+    4px 4px 0px #FFD500,
+    6px 6px 0px #000;
+}
+
+.comic-doodle-black .doodle-outline {
+  background: #FFD500;
+}
+
+.comic-doodle-black .doodle-shine {
+  background: rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.comic-doodle-black .doodle-text [data-label] {
+  color: #FFFFFF;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000,
+    2px 2px 0 #FF1E26;
+}
+
+.comic-doodle-black:hover .doodle-text [data-label] {
+  color: #FFD500;
+  text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000,
+    3px 3px 0 #FF1E26;
+}
+
+.comic-doodle-black .doodle-stars .star-left {
+  color: #FFD500;
+}
+
+.comic-doodle-black .doodle-stars .star-right {
+  color: #FF1E26;
+}
+
+
 
 
 
