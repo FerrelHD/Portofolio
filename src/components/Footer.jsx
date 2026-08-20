@@ -154,9 +154,9 @@ const Footer = () => {
               </span>
             </div>
           </div>
-          <CaseStudyModal open={caseStudyOpen} onClose={() => setCaseStudyOpen(false)} />
         </div>
       </div>
+      <CaseStudyModal open={caseStudyOpen} onClose={() => setCaseStudyOpen(false)} />
     </footer>
   );
 };
