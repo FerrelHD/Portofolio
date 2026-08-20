@@ -14,10 +14,12 @@ import ShortcutsModal from "./components/ShortcutsModal";
 import ScrollFX from "./components/ScrollFX";
 import AudioPlayer from "./components/AudioPlayer";
 import SmoothScroll from "./components/SmoothScroll";
+import CommandPalette from "./components/CommandPalette";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
@@ -46,6 +48,14 @@ function App() {
       // ESC: close modals
       if (e.key === "Escape") {
         setShortcutsOpen(false);
+        setCmdOpen(false);
+        return;
+      }
+
+      // Cmd + K or Ctrl + K: open Command Palette
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCmdOpen((v) => !v);
         return;
       }
 
@@ -98,6 +108,7 @@ function App() {
       <ScrollFX />
       <PageLoader />
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
+      <CommandPalette open={cmdOpen} onClose={() => setCmdOpen(false)} />
       <a href="#about" className="skip-link">
         Skip to Story!
       </a>

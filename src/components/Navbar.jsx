@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import MotionToggle from "./MotionToggle";
+import SuitSelector from "./SuitSelector";
+import { Command } from "lucide-react";
 
 const SECTION_IDS = ["about", "services", "projects", "skills", "contact"];
 
@@ -143,8 +145,23 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* RIGHT: Motion Toggle + CTA + Mobile Burger */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        {/* RIGHT: Suit Selector + Cmd+K + Motion Toggle + CTA + Mobile Burger */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden xl:block">
+            <SuitSelector />
+          </div>
+
+          <button
+            onClick={() => {
+              const evt = new KeyboardEvent("keydown", { key: "k", metaKey: true });
+              window.dispatchEvent(evt);
+            }}
+            className="hidden md:inline-flex items-center gap-1.5 bg-comic-panel border-2 border-comic-ink px-2.5 py-1 text-[10px] font-black uppercase text-comic-ink/80 comic-chip hover:bg-spider-yellow hover:text-spider-black transition-colors"
+          >
+            <Command size={11} strokeWidth={2.5} />
+            <span>K</span>
+          </button>
+
           <div className="hidden sm:block">
             <MotionToggle />
           </div>

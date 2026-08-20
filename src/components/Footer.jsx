@@ -1,6 +1,10 @@
+import React, { useState } from "react";
+import CaseStudyModal from "./CaseStudyModal";
+
 const NEXT_ISSUE = { num: 2, progress: 40, nextUp: "Case Studies / Blog Section" };
 
 const Footer = () => {
+  const [caseStudyOpen, setCaseStudyOpen] = useState(false);
   return (
     <footer
       className="relative overflow-hidden py-8 sm:py-12 bg-spider-black border-t-[3px] border-spider-yellow"
@@ -117,11 +121,14 @@ const Footer = () => {
                 "repeating-linear-gradient(-25deg, transparent 0px, transparent 16px, var(--color-spider-yellow) 16px, var(--color-spider-yellow) 17px)",
             }}
           />
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div
+            onClick={() => setCaseStudyOpen(true)}
+            className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer group"
+          >
             {/* 1. Kiri: ISSUE Badge */}
-            <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-3 py-1 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm">
+            <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-3 py-1 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm group-hover:bg-spider-yellow group-hover:text-spider-black transition-colors">
               <span className="w-1.5 h-1.5 bg-spider-yellow comic-chip animate-pulse" />
-              ISSUE #{String(NEXT_ISSUE.num).padStart(3, "0")}
+              ISSUE #{String(NEXT_ISSUE.num).padStart(3, "0")} (Click to Read)
             </span>
 
             {/* 2. Tengah: Progress Bar */}
@@ -147,6 +154,7 @@ const Footer = () => {
               </span>
             </div>
           </div>
+          <CaseStudyModal open={caseStudyOpen} onClose={() => setCaseStudyOpen(false)} />
         </div>
       </div>
     </footer>
