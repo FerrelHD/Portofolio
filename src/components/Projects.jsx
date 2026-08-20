@@ -439,7 +439,7 @@ const Projects = () => {
                         Terminal Status: Locked
                       </p>
                       <p className="text-comic-ink/40 text-[11px] sm:text-xs mb-8 tracking-wide">
-                        Masukkan kunci akses untuk menampilkan arsip misi aktif
+                        Enter clearance key to display active mission archives
                       </p>
                       <button
                         onClick={handleOpen}
