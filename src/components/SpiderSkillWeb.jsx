@@ -7,13 +7,13 @@ import { soundFX } from "../lib/soundFx";
 // Asset Imports for Real Brand Icons
 import reactIcon from "../assets/React-icon.svg.webp";
 import tailwindIcon from "../assets/tailwind.svg";
-import typescriptIcon from "../assets/typescript.png";
+import typescriptIcon from "../assets/typescript-svgrepo-com.svg";
 import nodejsIcon from "../assets/nodejs.webp";
 import videoEditIcon from "../assets/video editing icon2.jpg";
 import framerIcon from "../assets/framer-motion-icon.png";
 import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "../assets/unityicon.png";
-import figmaIcon from "../assets/figma icon.png";
+import figmaIcon from "../assets/figma-logo-png-svg.webp";
 import sqlIcon from "../assets/sql icon 2.png";
 import aiAgentIcon from "../assets/ai agent icon 2.png";
 import spiderEmblem from "../assets/spidey-emblem.svg";
