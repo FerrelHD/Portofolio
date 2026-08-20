@@ -333,104 +333,40 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        {/* MAIN LAYOUT 50/50 split */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 lg:gap-12 xl:gap-20 items-start">
-          {/* ============= LEFT: COMIC SOCIAL POST & DIRECT SIGNAL CHANNELS ============= */}
-          <div className="z-10 w-full min-w-0 space-y-6">
-            {/* SPIDEY LIVE SOCIAL DISPATCH CARD */}
-            <motion.div variants={fadeUp}>
-              <ComicSocialCard />
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="pt-2">
-              <span className="inline-block bg-spider-red comic-chip text-comic-ink px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm mb-4">
-                Direct Signal Channels
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                {contactInfo.map((info, i) => {
-                  const c = ACCENT_MAP[info.accent] || ACCENT_MAP["spider-red"];
-                  const isCopied = !!copiedMap[info.label];
-                  const isLocation = info.label === "Location";
-                  return (
-                    <motion.a
-                      key={info.label}
-                      href={info.href}
-                      onClick={(e) => handleCopyCard(info, e)}
-                      variants={fadeUp}
-                      transition={{ delay: i * 0.05 }}
-                      className={`group relative comic-panel p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1 hover:pop-shadow-sm overflow-hidden cursor-pointer ${
-                        isCopied ? "ring-2 ring-spider-yellow" : ""
-                      }`}
-                      style={{ borderRadius: "2px" }}
-                      target={info.href.startsWith("http") ? "_blank" : undefined}
-                      rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    >
-                      {/* Colored accent bar at top-left corner */}
-                      <div className={`absolute top-0 left-0 w-32 h-1.5 ${c.accentBar}`} />
-                      {/* Copied badge overlay */}
-                      <AnimatePresence>
-                        {isCopied && (
-                          <motion.span
-                            key={`copied-${info.label}`}
-                            className="copy-badge"
-                            initial={{ opacity: 0, y: -10, scale: 0.7 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -8, scale: 0.8 }}
-                            transition={{ type: "spring", stiffness: 380, damping: 20 }}
-                          >
-                            ✔ Copied!
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
-                      {/* Icon */}
-                      <div
-                        className={`mb-3 sm:mb-4 w-11 h-11 flex items-center justify-center comic-chip group-hover:scale-110 transition-transform origin-top-left ${c.iconBg} ${c.iconText}`}
-                      >
-                        {info.icon}
-                      </div>
-                      {/* Label chip */}
-                      <p className="mb-1.5 inline-block bg-spider-black comic-chip text-comic-ink/80 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em]">
-                        {info.label}
-                        {!isLocation && (
-                          <span className="ml-1.5 text-comic-ink/40 normal-case tracking-normal font-bold">
-                            (click to copy)
-                          </span>
-                        )}
-                        {isLocation && (
-                          <span className="ml-1.5 text-comic-ink/40 normal-case tracking-normal font-bold">
-                            (open maps)
-                          </span>
-                        )}
-                      </p>
-                      {/* Value */}
-                      <p className="font-black text-[12px] sm:text-sm leading-snug break-all">
-                        {info.value}
-                      </p>
-                    </motion.a>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-            {/* Signature Banner below info cards */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-wrap items-center gap-3 pt-1"
-            >
-              <span className="inline-flex items-center gap-2 bg-comic-panel comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
-                Response Time — Under 24h
-              </span>
-              <span className="inline-flex items-center gap-2 bg-spider-blue comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
-                Freelance Slots — Open
-              </span>
-            </motion.div>
-          </div>
-
-          {/* ============= RIGHT: COMIC TRANSMISSION FORM ============= */}
+        {/* MAIN BALANCED 2-COLUMN SECTION: Comic Social Post (Left) vs Mission Form (Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16">
+          {/* ============= LEFT: SPIDEY COMIC SOCIAL CARD (5 cols) ============= */}
           <motion.div
             variants={fadeUp}
-            className="z-10 w-full min-w-0 comic-panel p-6 sm:p-8 md:p-10 relative overflow-hidden"
-            style={{ borderRadius: "2px" }}
+            className="lg:col-span-5 flex flex-col items-center justify-center w-full"
+          >
+            <ComicSocialCard
+              onFocusContact={() => {
+                const input = document.getElementById("contact-name-input");
+                if (input) {
+                  input.focus();
+                  input.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+              }}
+            />
+
+            {/* Quick Status Chips under card */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
+              <span className="inline-flex items-center gap-1.5 bg-comic-panel comic-chip text-comic-ink px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                Response: &lt; 24 Hours
+              </span>
+              <span className="inline-flex items-center gap-1.5 bg-spider-blue comic-chip text-comic-ink px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase">
+                Freelance: Available
+              </span>
+            </div>
+          </motion.div>
+
+          {/* ============= RIGHT: COMIC TRANSMISSION FORM (7 cols) ============= */}
+          <motion.div
+            variants={fadeUp}
+            className="lg:col-span-7 z-10 w-full comic-panel p-6 sm:p-8 md:p-9 relative overflow-hidden"
+            style={{ borderRadius: "4px" }}
           >
             {/* Halftone Texture inside form container */}
             <div
@@ -442,7 +378,7 @@ const Contact = () => {
             />
 
             {/* Comic Header Stamp */}
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-6 mb-6 border-b-2 border-comic-ink/10">
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-5 mb-5 border-b-2 border-comic-ink/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
                   <Send size={18} strokeWidth={2.8} />
@@ -462,9 +398,9 @@ const Contact = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} noValidate className="relative z-10 space-y-5 sm:space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                <div className="space-y-2">
+            <form onSubmit={handleSubmit} noValidate className="relative z-10 space-y-4 sm:space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                <div className="space-y-1.5">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-comic-ink/60 flex items-center justify-between">
                     <span>Your Identity / Name</span>
                     {errors.name && (
@@ -487,7 +423,7 @@ const Contact = () => {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <label className="text-[10px] font-black uppercase tracking-[0.2em] text-comic-ink/60 flex items-center justify-between">
                     <span>Return Frequency (Email)</span>
                     {errors.email && (
@@ -510,7 +446,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-comic-ink/60 flex items-center justify-between">
                   <span>Mission Details</span>
                   {errors.message && (
@@ -520,7 +456,7 @@ const Contact = () => {
                   )}
                 </label>
                 <textarea
-                  rows="5"
+                  rows="4"
                   value={form.message}
                   onChange={handleChange("message")}
                   placeholder="Describe your mission brief — scope, goals, timeline..."
@@ -542,6 +478,86 @@ const Contact = () => {
             </form>
           </motion.div>
         </div>
+
+        {/* ============= BOTTOM: DIRECT SIGNAL CHANNELS (4-COLUMN RELAY HUB) ============= */}
+        <motion.div variants={fadeUp} className="w-full pt-4">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <span className="h-[2px] w-12 bg-spider-red" />
+            <span className="bg-spider-red comic-chip text-comic-ink px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
+              Direct Signal Relay Channels
+            </span>
+            <span className="h-[2px] w-12 bg-spider-red" />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {contactInfo.map((info, i) => {
+              const c = ACCENT_MAP[info.accent] || ACCENT_MAP["spider-red"];
+              const isCopied = !!copiedMap[info.label];
+              const isLocation = info.label === "Location";
+              return (
+                <motion.a
+                  key={info.label}
+                  href={info.href}
+                  onClick={(e) => handleCopyCard(info, e)}
+                  variants={fadeUp}
+                  transition={{ delay: i * 0.05 }}
+                  className={`group relative comic-panel p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:pop-shadow-sm overflow-hidden cursor-pointer flex flex-col justify-between ${
+                    isCopied ? "ring-2 ring-spider-yellow" : ""
+                  }`}
+                  style={{ borderRadius: "4px" }}
+                  target={info.href.startsWith("http") ? "_blank" : undefined}
+                  rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                >
+                  {/* Colored accent bar at top-left corner */}
+                  <div className={`absolute top-0 left-0 w-24 h-1.5 ${c.accentBar}`} />
+
+                  {/* Copied badge overlay */}
+                  <AnimatePresence>
+                    {isCopied && (
+                      <motion.span
+                        key={`copied-${info.label}`}
+                        className="copy-badge"
+                        initial={{ opacity: 0, y: -10, scale: 0.7 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -8, scale: 0.8 }}
+                        transition={{ type: "spring", stiffness: 380, damping: 20 }}
+                      >
+                        ✔ Copied!
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Icon & Label */}
+                  <div>
+                    <div
+                      className={`mb-3 w-10 h-10 flex items-center justify-center comic-chip group-hover:scale-110 transition-transform origin-top-left ${c.iconBg} ${c.iconText}`}
+                    >
+                      {info.icon}
+                    </div>
+                    <p className="mb-1 inline-block bg-spider-black comic-chip text-comic-ink/80 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em]">
+                      {info.label}
+                      {!isLocation && (
+                        <span className="ml-1 text-comic-ink/40 normal-case tracking-normal font-bold">
+                          (copy)
+                        </span>
+                      )}
+                      {isLocation && (
+                        <span className="ml-1 text-comic-ink/40 normal-case tracking-normal font-bold">
+                          (maps)
+                        </span>
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Value */}
+                  <p className="font-black text-[12px] sm:text-xs leading-snug break-all mt-2 text-comic-ink/90">
+                    {info.value}
+                  </p>
+                </motion.a>
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
     </motion.section>
   );
