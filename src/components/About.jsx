@@ -257,7 +257,7 @@ const SecretIdentityCard = () => {
           >
             <div className="h-[34px] flex items-center">
               <span className="bg-spider-red text-white border-2 border-black px-3 py-1 text-[9.5px] sm:text-[10px] font-black tracking-[0.2em] uppercase rounded-md shadow-[2px_2px_0_#000]">
-                SPIDER-HERO
+                SPIDERMAN
               </span>
             </div>
             <div className="h-[34px] flex items-center">
