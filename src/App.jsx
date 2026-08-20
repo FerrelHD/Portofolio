@@ -124,8 +124,11 @@ function App() {
         <Contact />
       </main>
       <Footer />
-      <AudioPlayer />
-      <SuitSelector />
+      {/* FLOATING SPIDER CONTROL DOCK */}
+      <div className="fixed bottom-5 left-4 sm:bottom-6 sm:left-6 z-40 flex items-center gap-2">
+        <SuitSelector />
+        <AudioPlayer />
+      </div>
       <BackToTop />
     </div>
   );

@@ -44,6 +44,12 @@ const AudioPlayer = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isPlaying]);
 
+  useEffect(() => {
+    const handleCloseAudio = () => setIsOpen(false);
+    window.addEventListener("spidey:close-audio", handleCloseAudio);
+    return () => window.removeEventListener("spidey:close-audio", handleCloseAudio);
+  }, []);
+
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
@@ -68,8 +74,15 @@ const AudioPlayer = () => {
     else if (isMuted) setIsMuted(false);
   };
 
+  const toggleOpen = () => {
+    if (!isOpen) {
+      window.dispatchEvent(new CustomEvent("spidey:close-suits"));
+    }
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <div className="fixed bottom-5 left-4 sm:bottom-6 sm:left-6 z-40">
+    <div className="relative">
       <audio ref={audioRef} src={backsoundAudio} loop preload="auto" />
 
       <div className="relative flex items-center gap-2">
@@ -139,7 +152,7 @@ const AudioPlayer = () => {
 
         {/* MAIN COLLAPSED FLOATING PILL BUTTON */}
         <button
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={toggleOpen}
           className={`flex items-center gap-2 py-2 px-3.5 comic-chip border-2 border-comic-ink text-xs font-black uppercase tracking-wider transition-transform active:scale-95 pop-shadow-sm ${
             isPlaying
               ? "bg-spider-yellow text-spider-black pop-shadow-active"
