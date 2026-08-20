@@ -67,7 +67,7 @@ const SpiderEmblem = ({ className = "w-7 h-7" }) => (
   </svg>
 );
 
-const SpiderGadgetDrawer = ({ onTriggerSwing }) => {
+const SpiderGadgetDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSuit, setActiveSuit] = useState("classic");
 
@@ -291,20 +291,6 @@ const SpiderGadgetDrawer = ({ onTriggerSwing }) => {
                     className="w-full accent-spider-red cursor-pointer h-1.5 bg-comic-ink/20 rounded-lg appearance-none"
                   />
                 </div>
-
-                {/* Easter Egg Trigger Button */}
-                {onTriggerSwing && (
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      onTriggerSwing();
-                    }}
-                    className="w-full mt-3 py-2 px-3 bg-spider-red text-comic-ink comic-chip border-2 border-spider-black text-[10px] font-black uppercase tracking-widest pop-shadow-sm hover:bg-spider-yellow hover:text-spider-black transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <Sparkles size={12} />
-                    <span>LAUNCH WEB SWING [S]</span>
-                  </button>
-                )}
               </div>
             </motion.div>
           </>

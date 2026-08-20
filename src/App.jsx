@@ -15,13 +15,11 @@ import ScrollFX from "./components/ScrollFX";
 import SmoothScroll from "./components/SmoothScroll";
 import CommandPalette from "./components/CommandPalette";
 import SpiderGadgetDrawer from "./components/SpiderGadgetDrawer";
-import SwingSpideyOverlay from "./components/SwingSpideyOverlay";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
-  const [swingOpen, setSwingOpen] = useState(false);
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
@@ -70,10 +68,9 @@ function App() {
         return;
       }
 
-      // S (huruf s saja tanpa modifier) = Spider Sense + Web Swing Easter Egg
+      // S (huruf s saja tanpa modifier) = Spider Sense
       if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "s" || e.key === "S")) {
         triggerSpiderSense();
-        setSwingOpen(true);
         return;
       }
 
@@ -126,8 +123,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-      <SpiderGadgetDrawer onTriggerSwing={() => setSwingOpen(true)} />
-      <SwingSpideyOverlay open={swingOpen} onClose={() => setSwingOpen(false)} />
+      <SpiderGadgetDrawer />
       <BackToTop />
     </div>
   );
