@@ -30,7 +30,22 @@ const AnimeBackground = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 0% 0%, rgba(255,30,38,0.18) 0%, transparent 45%), radial-gradient(ellipse at 100% 100%, rgba(22,93,255,0.18) 0%, transparent 45%)",
+            "radial-gradient(ellipse at 0% 0%, rgba(255,30,38,0.22) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(22,93,255,0.22) 0%, transparent 50%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Layer 4B: Comic Action Burst Rays (Faint Comic Sunburst) */}
+      <div
+        className="absolute inset-0 opacity-[0.035] burst-bg mix-blend-screen"
+        aria-hidden="true"
+      />
+
+      {/* Layer 4C: Comic Book Ink Vignette Edge */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          boxShadow: "inset 0 0 100px rgba(10, 10, 10, 0.85)",
         }}
         aria-hidden="true"
       />

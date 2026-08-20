@@ -12,13 +12,14 @@ const SmoothScroll = () => {
     if (prefersReduced || bodyReduced) return;
 
     const lenis = new Lenis({
-      duration: 1.25,
+      duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Ultra-smooth exponential ease-out
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1.05,
+      wheelMultiplier: 1.15,
       touchMultiplier: 1.5,
+      lerp: 0.08,
     });
 
     let rafId;
