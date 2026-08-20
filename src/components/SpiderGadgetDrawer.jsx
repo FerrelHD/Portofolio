@@ -480,6 +480,28 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
                     )}
                   </button>
                 </div>
+
+                {/* Comic Volume Slider Row */}
+                <div className="flex items-center gap-2.5 bg-[#0D0D12] px-2.5 py-1.5 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
+                  <Volume2 size={13} className="text-spider-yellow shrink-0" />
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value={isMuted ? 0 : volume}
+                    onChange={(e) => {
+                      const newVol = parseFloat(e.target.value);
+                      setVolume(newVol);
+                      if (isMuted && newVol > 0) setIsMuted(false);
+                    }}
+                    aria-label="Volume Slider"
+                    className="w-full h-1.5 bg-[#20202C] rounded-lg appearance-none cursor-pointer accent-spider-yellow"
+                  />
+                  <span className="text-[10px] font-mono font-bold text-zinc-300 w-8 text-right shrink-0 tabular-nums">
+                    {isMuted ? "0%" : `${Math.round(volume * 100)}%`}
+                  </span>
+                </div>
               </div>
             </motion.div>
           </>
