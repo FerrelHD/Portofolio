@@ -17,7 +17,7 @@ const CaseStudyModal = ({ open, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-2xl bg-comic-panel border-4 border-spider-black comic-chip pop-shadow-blue overflow-hidden my-8"
+          className="relative w-full max-w-2xl max-h-[88vh] overflow-y-auto bg-comic-panel border-4 border-spider-black comic-chip pop-shadow-blue my-auto"
         >
           {/* Header Bar */}
           <div className="bg-spider-blue border-b-4 border-spider-black px-6 py-4 flex items-center justify-between">

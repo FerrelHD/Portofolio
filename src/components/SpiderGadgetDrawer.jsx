@@ -179,7 +179,7 @@ const SpiderGadgetDrawer = () => {
               animate={{ x: "0%", opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-80 bg-comic-panel border-4 border-spider-black comic-chip p-5 shadow-2xl pop-shadow-red overflow-hidden"
+              className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-[270px] xs:w-72 sm:w-80 max-w-[calc(100vw-3.5rem)] max-h-[85vh] overflow-y-auto bg-comic-panel border-4 border-spider-black comic-chip p-4 sm:p-5 shadow-2xl pop-shadow-red"
             >
               {/* Halftone Overlay */}
               <div className="absolute inset-0 opacity-15 pointer-events-none halftone-overlay-sm" />
