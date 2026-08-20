@@ -1,139 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Zap, ExternalLink } from "lucide-react";
+import { Sparkles, Zap } from "lucide-react";
 import { soundFX } from "../lib/soundFx";
 
-/* =========================================================================
-   OFFICIAL BRAND VECTOR SVG ICONS (PRECISION EMBEDDED)
-   ========================================================================= */
-
-// 1. React (Official Orbital Atom)
-const ReactIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="-11.5 -10.23174 23 20.46348" fill="currentColor">
-    <circle cx="0" cy="0" r="2.05" fill="#00D8FF" />
-    <g stroke="#00D8FF" strokeWidth="1" fill="none">
-      <ellipse rx="11" ry="4.2" />
-      <ellipse rx="11" ry="4.2" transform="rotate(60)" />
-      <ellipse rx="11" ry="4.2" transform="rotate(120)" />
-    </g>
-  </svg>
-);
-
-// 2. Tailwind CSS (Official Dual-Wave Curves)
-const TailwindIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path
-      d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.336 6.182 14.975 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.336 13.382 8.975 12 6.001 12z"
-      fill="#38BDF8"
-    />
-  </svg>
-);
-
-// 3. TypeScript (Official 'TS' Lettermark)
-const TypeScriptIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <rect width="24" height="24" rx="3" fill="#3178C6" />
-    <path
-      d="M11.5 8H5.5V10H7.5V17H9.5V10H11.5V8ZM18.5 10.8C18.2 10.2 17.5 9.8 16.5 9.8C15.3 9.8 14.3 10.4 14.3 11.5C14.3 12.6 15.1 13.1 16.2 13.5L16.8 13.7C17.5 14 17.9 14.3 17.9 14.9C17.9 15.6 17.2 16 16.3 16C15.2 16 14.4 15.4 14.1 14.4H12.3C12.6 16.4 14.2 17.5 16.3 17.5C18.3 17.5 19.8 16.4 19.8 14.8C19.8 13.4 18.9 12.8 17.6 12.3L17 12.1C16.3 11.8 15.9 11.6 15.9 11C15.9 10.5 16.4 10.2 17.1 10.2C17.8 10.2 18.3 10.5 18.5 11.1L18.5 10.8Z"
-      fill="#FFFFFF"
-    />
-  </svg>
-);
-
-// 4. Node.js (Official Hexagon)
-const NodeIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path
-      d="M12 2L3.5 7V17L12 22L20.5 17V7L12 2ZM17.2 14.7C17.2 14.8 17.1 14.9 17 15L12.5 17.6C12.3 17.7 12.1 17.7 11.9 17.6L7.4 15C7.3 14.9 7.2 14.8 7.2 14.7V9.5C7.2 9.4 7.3 9.3 7.4 9.2L11.9 6.6C12.1 6.5 12.3 6.5 12.5 6.6L17 9.2C17.1 9.3 17.2 9.4 17.2 9.5V14.7Z"
-      fill="#5FA04E"
-    />
-  </svg>
-);
-
-// 5. Blender 3D (Official Blender Curved Eye/Flame Logo)
-const BlenderIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    {/* Blender orange arms and central blue pupil */}
-    <path
-      d="M12 2C8 2 4.5 4.5 3 8C4.5 7 6.5 6.5 8.5 7C5.5 9 4 12 4.5 15.5C5 13.5 6.5 12 8.5 12C7.5 13.5 7.5 15.5 8.5 17C9.5 15.5 11.5 15 13 16C12 17.5 12 19.5 13 21C17.5 20.5 21 16.5 21 12C21 6.5 17 2 12 2ZM14.5 14C13.1 14 12 12.9 12 11.5C12 10.1 13.1 9 14.5 9C15.9 9 17 10.1 17 11.5C17 12.9 15.9 14 14.5 14Z"
-      fill="#EA7600"
-    />
-    <circle cx="14.5" cy="11.5" r="1.5" fill="#225785" />
-  </svg>
-);
-
-// 6. Unity (Official 3D Tri-Chevron Cube)
-const UnityIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path
-      d="M12 2L4 6.8V16.4L12 21.2L20 16.4V6.8L12 2ZM12 4.4L18 8V11.2L14.4 9.2L12 13.4L9.6 9.2L6 11.2V8L12 4.4ZM6 12.8L9.2 11L11.6 15.2H7.8L6 16.2V12.8ZM18 16.2L16.2 15.2H12.4L14.8 11L18 12.8V16.2Z"
-      fill="#FFFFFF"
-    />
-  </svg>
-);
-
-// 7. Unreal Engine (Official Circle 'U' Emblem)
-const UnrealIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <circle cx="12" cy="12" r="10" fill="#0E1128" stroke="#FFFFFF" strokeWidth="1.5" />
-    <path
-      d="M8.5 7.5V12C8.5 14.5 10 16.5 12 16.5C14 16.5 15.5 14.5 15.5 12V7.5H13.8V12C13.8 13.5 13 14.8 12 14.8C11 14.8 10.2 13.5 10.2 12V7.5H8.5Z"
-      fill="#FFFFFF"
-    />
-  </svg>
-);
-
-// 8. Framer Motion (Official Tri-Level Geometric 'F')
-const FramerIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M4 2H20V9.33H12L4 2Z" fill="#FF007A" />
-    <path d="M4 9.33H12V16.67H4L12 9.33Z" fill="#FF007A" />
-    <path d="M4 16.67H12L4 24V16.67Z" fill="#FF007A" />
-  </svg>
-);
-
-// 9. Figma / UI-UX (Official 5 Geometries)
-const FigmaIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none">
-    <path d="M8 2H12V8H8C6.34 8 5 6.66 5 5C5 3.34 6.34 2 8 2Z" fill="#F24E1E" />
-    <path d="M12 2H16C17.66 2 19 3.34 19 5C19 6.66 17.66 8 16 8H12V2Z" fill="#FF7262" />
-    <path d="M12 8H16C17.66 8 19 9.34 19 11C19 12.66 17.66 14 16 14H12V8Z" fill="#1ABCFE" />
-    <path d="M5 11C5 9.34 6.34 8 8 8H12V14H8C6.34 14 5 12.66 5 11Z" fill="#A259FF" />
-    <path d="M5 17C5 15.34 6.34 14 8 14H12V17C12 18.66 10.66 20 9 20C7.34 20 5 18.66 5 17Z" fill="#0ACF83" />
-  </svg>
-);
-
-// 10. SQL & Databases (Stacked Disk Cylinders)
-const DatabaseIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2">
-    <ellipse cx="12" cy="5" rx="9" ry="3" />
-    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-  </svg>
-);
-
-// 11. Video Editing / Premiere Pro (Film Reel & Play Matrix)
-const VideoEditIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#FF1E26" strokeWidth="2">
-    <rect x="2" y="2" width="20" height="20" rx="2.18" />
-    <line x1="7" y1="2" x2="7" y2="22" />
-    <line x1="17" y1="2" x2="17" y2="22" />
-    <line x1="2" y1="12" x2="22" y2="12" />
-    <line x1="2" y1="7" x2="7" y2="7" />
-    <line x1="2" y1="17" x2="7" y2="17" />
-    <line x1="17" y1="17" x2="22" y2="17" />
-    <line x1="17" y1="7" x2="22" y2="7" />
-  </svg>
-);
-
-// 12. AI Tooling & Neural Workflows (Neural Node Matrix)
-const AiToolsIcon = ({ className = "w-4 h-4" }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="#FFD500" strokeWidth="2">
-    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-    <circle cx="12" cy="12" r="4" fill="#FFD500" fillOpacity="0.3" />
-  </svg>
-);
+// Asset Imports for Real Brand Icons
+import reactIcon from "../assets/React-icon.svg.webp";
+import tailwindIcon from "../assets/tailwind.svg";
+import typescriptIcon from "../assets/typescript.png";
+import nodejsIcon from "../assets/nodejs.webp";
+import videoEditIcon from "../assets/video editing icon.png";
+import framerIcon from "../assets/framermotionicon.webp";
+import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
+import unityIcon from "../assets/unityicon.png";
+import figmaIcon from "../assets/figma icon.png";
+import sqlIcon from "../assets/sql icon.svg";
+import aiAgentIcon from "../assets/ai agent icon.png";
 
 // Center Hub: Authentic Sharp Spider-Man Emblem
 const CenterSpiderEmblem = ({ className = "w-7 h-7" }) => (
@@ -154,7 +36,7 @@ const CenterSpiderEmblem = ({ className = "w-7 h-7" }) => (
 );
 
 /* =========================================================================
-   SKILL NODES DATA
+   SKILL NODES DATA (11 SKILLS — UNREAL REMOVED)
    ========================================================================= */
 
 export const SKILLS_DATA = [
@@ -168,7 +50,7 @@ export const SKILLS_DATA = [
     color: "#00D8FF",
     ring: 1,
     angle: 0,
-    icon: <ReactIcon className="w-5 h-5" />,
+    iconImg: reactIcon,
     desc: "Single-page apps, SSR architectures, state management, and custom hook lifecycles.",
     fact: "Learned React inspired by Spider-Man's high-tech suit HUD upgrades! 🕸️",
   },
@@ -181,7 +63,7 @@ export const SKILLS_DATA = [
     color: "#38BDF8",
     ring: 1,
     angle: 60,
-    icon: <TailwindIcon className="w-4 h-4" />,
+    iconImg: tailwindIcon,
     desc: "Responsive design systems, micro-animations, theme tokens, and clean utility styling.",
     fact: "Tailwind utility classes are like webs — flexible, swift, and rock solid! 🎨",
   },
@@ -194,7 +76,7 @@ export const SKILLS_DATA = [
     color: "#3178C6",
     ring: 1,
     angle: 120,
-    icon: <TypeScriptIcon className="w-4 h-4" />,
+    iconImg: typescriptIcon,
     desc: "Type safety, asynchronous patterns, ESNext standards, and robust interface modeling.",
     fact: "Type safety catches runtime bugs before villains even have a chance to strike! 🛡️",
   },
@@ -207,7 +89,7 @@ export const SKILLS_DATA = [
     color: "#5FA04E",
     ring: 1,
     angle: 180,
-    icon: <NodeIcon className="w-4 h-4" />,
+    iconImg: nodejsIcon,
     desc: "RESTful API design, middleware pipelines, authentication, and database integration.",
     fact: "Backend server performance fast as web-slinging under heavy traffic loads! ⚡",
   },
@@ -220,7 +102,7 @@ export const SKILLS_DATA = [
     color: "#FF1E26",
     ring: 1,
     angle: 240,
-    icon: <VideoEditIcon className="w-4 h-4" />,
+    iconImg: videoEditIcon,
     desc: "Premiere Pro / After Effects, pacing, cinematic sound design, and viral narrative flow.",
     fact: "Rhythmic cuts and pacing edited with precision like a cinematic comic trailer! 🎬",
   },
@@ -233,7 +115,7 @@ export const SKILLS_DATA = [
     color: "#FF007A",
     ring: 1,
     angle: 300,
-    icon: <FramerIcon className="w-4 h-4" />,
+    iconImg: framerIcon,
     desc: "Physics springs, scroll triggers, gesture controls, and smooth interactive UI transitions.",
     fact: "60 FPS interactions that make every click feel like a superhero action scene! 💥",
   },
@@ -248,7 +130,7 @@ export const SKILLS_DATA = [
     color: "#EA7600",
     ring: 2,
     angle: 30,
-    icon: <BlenderIcon className="w-4 h-4" />,
+    iconImg: blenderIcon,
     desc: "Hard surface modeling, texturing, stylized lighting, and web 3D asset optimization.",
     fact: "Crafting 3D props and lighting for immersive comic multiverse atmospheres! 🧊",
   },
@@ -261,7 +143,7 @@ export const SKILLS_DATA = [
     color: "#FFFFFF",
     ring: 2,
     angle: 90,
-    icon: <UnityIcon className="w-4 h-4" />,
+    iconImg: unityIcon,
     desc: "Player controllers, collision physics, tilemapping, and arcade gameplay mechanics.",
     fact: "Architecting game loops and ultra-smooth movement / swing physics mechanics! 🎮",
   },
@@ -274,38 +156,25 @@ export const SKILLS_DATA = [
     color: "#A259FF",
     ring: 2,
     angle: 150,
-    icon: <FigmaIcon className="w-4 h-4" />,
+    iconImg: figmaIcon,
     desc: "Figma design systems, wireframing, typography hierarchies, and mobile responsiveness.",
     fact: "Designing comic book layouts and high-converting modern user journeys! 📐",
   },
   {
     id: "databases",
-    name: "SQL & NoSQL",
+    name: "SQL & Databases",
     category: "Web Craft",
     level: "Familiar",
     levelText: "Working Knowledge • Schemas",
     color: "#00E5FF",
     ring: 2,
     angle: 210,
-    icon: <DatabaseIcon className="w-4 h-4" />,
+    iconImg: sqlIcon,
     desc: "PostgreSQL, MongoDB, indexing, relational modeling, and query optimizations.",
     fact: "Structuring clean databases so query responses fly at the speed of light! 🗄️",
   },
 
   // Ring 3 (Exploring • Modern Tooling)
-  {
-    id: "unreal",
-    name: "Unreal Engine",
-    category: "Arcade Combat",
-    level: "Exploring",
-    levelText: "Exploring • Realtime 3D",
-    color: "#8B9BB4",
-    ring: 3,
-    angle: 45,
-    icon: <UnrealIcon className="w-4 h-4" />,
-    desc: "Lumen lighting, Blueprint scripting, and cinematic virtual environments.",
-    fact: "Exploring next-gen real-time graphic fidelity and open world traversal! 🕹️",
-  },
   {
     id: "ai_tools",
     name: "AI Agents",
@@ -315,7 +184,7 @@ export const SKILLS_DATA = [
     color: "#FFD500",
     ring: 3,
     angle: 225,
-    icon: <AiToolsIcon className="w-4 h-4" />,
+    iconImg: aiAgentIcon,
     desc: "Prompt engineering, MCP integrations, agentic workflows, and automated DX pipelines.",
     fact: "Pair programming with AI to accelerate prototyping speed by 10x! 🤖",
   },
@@ -370,6 +239,13 @@ const SpiderSkillWeb = () => {
               <stop offset="40%" stopColor="#165DFF" stopOpacity="0.15" />
               <stop offset="100%" stopColor="transparent" stopOpacity="0" />
             </radialGradient>
+
+            {/* Circular Clip Paths for Node Icons (to eliminate square backgrounds) */}
+            {SKILLS_DATA.map((node) => (
+              <clipPath key={`clip-${node.id}`} id={`clip-${node.id}`}>
+                <circle cx="0" cy="0" r="13" />
+              </clipPath>
+            ))}
           </defs>
 
           {/* Web Base Glow Background */}
@@ -453,7 +329,7 @@ const SpiderSkillWeb = () => {
             </g>
           </g>
 
-          {/* 5. INTERACTIVE SKILL NODES WITH OFFICIAL SVG BRAND LOGOS */}
+          {/* 5. INTERACTIVE SKILL NODES WITH CLEAN EMBEDDED ICONS */}
           {SKILLS_DATA.map((node) => {
             const pos = getNodePos(node.ring, node.angle);
             const isSelected = selectedSkill?.id === node.id;
@@ -475,7 +351,7 @@ const SpiderSkillWeb = () => {
                 {/* Node Outer Halo on Selection */}
                 {isSelected && (
                   <circle
-                    r="20"
+                    r="21"
                     fill="none"
                     stroke={node.color}
                     strokeWidth="2.5"
@@ -486,15 +362,23 @@ const SpiderSkillWeb = () => {
                 {/* Node Circle Background Badge */}
                 <circle
                   r={isSelected ? "17" : "14"}
-                  fill={isSelected ? "#0A0A0A" : "#12121A"}
-                  stroke={isSelected ? node.color : "#404050"}
+                  fill="#0E121A"
+                  stroke={isSelected ? node.color : "#4A4A5A"}
                   strokeWidth={isSelected ? "3" : "1.8"}
                   className="transition-all duration-300 group-hover:scale-125 shadow-lg drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
                 />
 
-                {/* Embedded Real SVG Logo Icon */}
-                <g transform={isSelected ? "translate(-8, -8) scale(1)" : "translate(-7, -7) scale(0.88)"} className="transition-all duration-300 pointer-events-none">
-                  {node.icon}
+                {/* Embedded Real Icon Image clipped within circle */}
+                <g clipPath={`url(#clip-${node.id})`} className="pointer-events-none">
+                  <image
+                    href={node.iconImg}
+                    x={isSelected ? "-11" : "-9"}
+                    y={isSelected ? "-11" : "-9"}
+                    width={isSelected ? "22" : "18"}
+                    height={isSelected ? "22" : "18"}
+                    preserveAspectRatio="xMidYMid meet"
+                    className="transition-all duration-300"
+                  />
                 </g>
 
                 {/* Node Name Label Underneath */}
@@ -546,13 +430,16 @@ const SpiderSkillWeb = () => {
                 </span>
               </div>
 
-              {/* Title with Official Vector SVG Icon */}
+              {/* Title with Real Icon Image */}
               <div className="flex items-center gap-3 mb-1">
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center border-2 border-black shadow-[3px_3px_0_#000] shrink-0"
-                  style={{ backgroundColor: "#1E1E28" }}
+                  className="w-11 h-11 rounded-xl p-2 flex items-center justify-center border-2 border-black shadow-[3px_3px_0_#000] shrink-0 bg-[#1E1E28] overflow-hidden"
                 >
-                  {selectedSkill.icon}
+                  <img
+                    src={selectedSkill.iconImg}
+                    alt={selectedSkill.name}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wide leading-none">

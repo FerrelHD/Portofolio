@@ -136,9 +136,16 @@ const Skills = () => {
                       className="bg-[#1A1A24] border-2 border-black rounded-xl p-4 hover:border-spider-red transition-all duration-300 group hover:-translate-y-1 shadow-[3px_3px_0_#000]"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-black text-sm text-white group-hover:text-spider-red transition-colors">
-                          {skill.name}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={skill.iconImg}
+                            alt={skill.name}
+                            className="w-5 h-5 object-contain"
+                          />
+                          <span className="font-black text-sm text-white group-hover:text-spider-red transition-colors">
+                            {skill.name}
+                          </span>
+                        </div>
                         <span className="text-[10px] uppercase font-bold text-zinc-400 bg-zinc-800/60 px-2 py-0.5 rounded">
                           {skill.category}
                         </span>
