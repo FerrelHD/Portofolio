@@ -73,19 +73,13 @@ const SecretIdentityCard = () => {
       {/* GLOW RING SAAT DI-HOVER / TER-REVEAL */}
       <div className="identity-glow-ring" style={{ borderRadius: "4px" }} />
 
-      {/* LAYER 1 (BASE): FOTO ASLI FERREL */}
+      {/* LAYER 1 (BASE): SPIDER SUIT MASK */}
       <div className="identity-photo-base w-full h-full">
         <img
-          src={FERREL_PORTRAIT_URL}
-          alt="Ferrel Rashad Akeyla - Secret Identity"
-          className="w-full h-full object-cover grayscale contrast-110"
-          onError={(e) => {
-            // Fallback jika file ferrel-portrait.jpg belum ada
-            e.currentTarget.src =
-              "https://picsum.photos/seed/ferrel-rashad-portrait/800/1000";
-          }}
+          src={SPIDER_SUIT_URL}
+          alt="Spider-Man Mask"
+          className="w-full h-full object-cover contrast-110"
         />
-        {/* Inner vignette + subtle halftone di atas foto */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -95,38 +89,25 @@ const SecretIdentityCard = () => {
         />
       </div>
 
-      {/* LAYER 2: DIAGONAL YELLOW SLASH WIPE */}
-      <div className="identity-slash" style={{ borderRadius: "inherit" }} />
-
-      {/* LAYER 3: 4 TRIANGULAR SUIT PIECES (Diagonal Slash — Opsi A) */}
-      {/* Top-Left Triangle */}
-      <div
-        className="suit-piece suit-piece-tl"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Top-Right Triangle */}
-      <div
-        className="suit-piece suit-piece-tr"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Bottom-Left Triangle */}
-      <div
-        className="suit-piece suit-piece-bl"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
-      {/* Bottom-Right Triangle */}
-      <div
-        className="suit-piece suit-piece-br"
-        style={{
-          backgroundImage: `url(${SPIDER_SUIT_URL})`,
-        }}
-      />
+      {/* LAYER 2: CIRCLE FADE REVEAL (FOTO ASLI FERREL) */}
+      <div className="identity-circle-reveal w-full h-full">
+        <img
+          src={FERREL_PORTRAIT_URL}
+          alt="Ferrel Rashad Akeyla - Secret Identity"
+          className="w-full h-full object-cover grayscale contrast-110"
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://picsum.photos/seed/ferrel-rashad-portrait/800/1000";
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(10,10,10,0.45) 100%)",
+          }}
+        />
+      </div>
 
       {/* HALFTONE OVERLAY di seluruh card */}
       <div
@@ -178,11 +159,7 @@ const SecretIdentityCard = () => {
       {/* Mobile force-reveal CSS: jika state revealed=true, pakai style inline override */}
       {revealed && (
         <style>{`
-          .force-reveal .suit-piece-tl { transform: translate(-25%, -25%) rotate(-10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-tr { transform: translate(25%, -25%) rotate(10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-bl { transform: translate(-25%, 25%) rotate(10deg); opacity: 0.2 !important; }
-          .force-reveal .suit-piece-br { transform: translate(25%, 25%) rotate(-10deg); opacity: 0.2 !important; }
-          .force-reveal .identity-slash { opacity: 1; transform: translateX(100%) !important; }
+          .force-reveal .identity-circle-reveal { clip-path: circle(75% at 50% 50%) !important; opacity: 1 !important; }
           .force-reveal .label-idle { opacity: 0; transform: translateY(-12px) !important; }
           .force-reveal .label-active { opacity: 1; transform: translateY(-100%) !important; }
           .force-reveal .identity-glow-ring { opacity: 1 !important; }
