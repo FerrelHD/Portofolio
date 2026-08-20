@@ -34,17 +34,17 @@ const ComicActionFX = () => {
       text: customText || randomItem.text,
       bg: randomItem.bg,
       textColor: randomItem.textCol,
-      rotate: randomItem.rotate + (Math.random() * 8 - 4),
-      scale: 0.9 + Math.random() * 0.3,
+      rotate: randomItem.rotate + (Math.random() * 6 - 3),
+      scale: 0.75 + Math.random() * 0.15,
     };
 
-    setBursts((prev) => [...prev.slice(-10), burst]); // Keep at most 10 active
+    setBursts((prev) => [...prev.slice(-8), burst]); // Keep at most 8 active
     soundFX.playPunch();
     achievementManager.trackComicClick();
 
     setTimeout(() => {
       setBursts((prev) => prev.filter((b) => b.id !== id));
-    }, 750);
+    }, 650);
   }, []);
 
   useEffect(() => {
@@ -89,9 +89,9 @@ const ComicActionFX = () => {
             "--burst-scale": `${burst.scale}`,
           }}
         >
-          {/* Comic Burst Star Container */}
+          {/* Compact Comic Burst Badge */}
           <div
-            className="relative font-black tracking-widest text-sm md:text-base px-3 py-1.5 rounded-lg border-2 border-black shadow-[4px_4px_0px_#000]"
+            className="relative font-black tracking-wider text-[10px] sm:text-xs px-2 py-0.5 rounded-md border-[1.5px] border-black shadow-[2px_2px_0px_#000]"
             style={{
               backgroundColor: burst.bg,
               color: burst.textColor,

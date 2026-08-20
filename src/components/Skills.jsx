@@ -40,10 +40,7 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0A0E]">
-      {/* Halftone & Grid overlay background */}
-      <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
-
+    <section id="skills" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-transparent">
       <div className="relative max-w-7xl mx-auto z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -56,7 +53,7 @@ const Skills = () => {
             SKILLS & TECH STACK
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 mt-3 font-medium">
-            Tanpa persentase ambigu — diklasifikasikan langsung berdasarkan level kemahiran produksi dan pengalaman nyata.
+            An interactive map of my technical stack across web development, game systems, and visual computing. Hover over each node to view detailed proficiencies.
           </p>
 
           {/* View Mode Toggle Buttons */}
@@ -64,11 +61,10 @@ const Skills = () => {
             <button
               type="button"
               onClick={() => handleToggleView("web")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
-                viewMode === "web"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${viewMode === "web"
                   ? "bg-spider-red text-white shadow-[0_2px_10px_rgba(255,30,38,0.4)]"
                   : "text-zinc-400 hover:text-white"
-              }`}
+                }`}
             >
               <Share2 size={14} />
               <span>Spider Web Matrix</span>
@@ -76,11 +72,10 @@ const Skills = () => {
             <button
               type="button"
               onClick={() => handleToggleView("deck")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
-                viewMode === "deck"
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${viewMode === "deck"
                   ? "bg-spider-blue text-white shadow-[0_2px_10px_rgba(22,93,255,0.4)]"
                   : "text-zinc-400 hover:text-white"
-              }`}
+                }`}
             >
               <Grid size={14} />
               <span>Classified Deck</span>

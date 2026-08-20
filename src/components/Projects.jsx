@@ -442,17 +442,9 @@ const Projects = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className="py-16 md:py-28 relative overflow-hidden bg-comic-surface"
+      className="py-16 md:py-28 relative overflow-hidden bg-transparent"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
-
-      {/* Background decoration */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-40"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay-sm" />
-      </div>
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"

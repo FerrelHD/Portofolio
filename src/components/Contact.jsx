@@ -297,13 +297,6 @@ const Contact = () => {
           />
         )}
       </AnimatePresence>
-      {/* Halftone texture */}
-      <div
-        className="absolute inset-0 opacity-40 pointer-events-none"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay-sm" />
-      </div>
 
       {/* Red & Blue Spotlight */}
       <div
