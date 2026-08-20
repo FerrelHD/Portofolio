@@ -15,6 +15,7 @@ import ScrollFX from "./components/ScrollFX";
 import AudioPlayer from "./components/AudioPlayer";
 import SmoothScroll from "./components/SmoothScroll";
 import CommandPalette from "./components/CommandPalette";
+import SuitSelector from "./components/SuitSelector";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
@@ -124,6 +125,7 @@ function App() {
       </main>
       <Footer />
       <AudioPlayer />
+      <SuitSelector />
       <BackToTop />
     </div>
   );

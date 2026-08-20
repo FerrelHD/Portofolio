@@ -145,11 +145,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* RIGHT: Suit Selector + Cmd+K + Motion Toggle + CTA + Mobile Burger */}
+        {/* RIGHT: Cmd+K + Motion Toggle + CTA + Mobile Burger */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden xl:block">
-            <SuitSelector />
-          </div>
 
           <button
             onClick={() => {
