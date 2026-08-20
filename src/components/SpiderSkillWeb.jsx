@@ -17,21 +17,37 @@ import figmaIcon from "../assets/figma icon.png";
 import sqlIcon from "../assets/sql icon.svg";
 import aiAgentIcon from "../assets/ai agent icon.png";
 
-// Center Hub: Authentic Sharp Spider-Man Emblem
-const CenterSpiderEmblem = ({ className = "w-7 h-7" }) => (
-  <svg className={className} viewBox="0 0 100 100" fill="currentColor">
-    <path d="M50 36 c-3 -4 -6 -7 -6 -11 c0 -5 2 -9 6 -11 c4 2 6 6 6 11 c0 4 -3 7 -6 11 z" />
-    <path d="M50 38 c-5 5 -8 15 -8 24 c0 12 3 22 8 30 c5 -8 8 -18 8 -30 c0 -9 -3 -19 -8 -24 z" />
-    {/* Left Legs */}
-    <path d="M46 28 C32 8 16 10 12 24 C18 18 30 16 44 29 Z" />
-    <path d="M44 33 C25 18 10 26 8 42 C15 32 26 28 42 36 Z" />
-    <path d="M43 44 C22 46 8 58 6 76 C15 62 26 56 42 48 Z" />
-    <path d="M44 54 C30 70 20 84 16 96 C24 84 32 72 45 58 Z" />
-    {/* Right Legs */}
-    <path d="M54 28 C68 8 84 10 88 24 C82 18 70 16 56 29 Z" />
-    <path d="M56 33 C75 18 90 26 92 42 C85 32 74 28 58 36 Z" />
-    <path d="M57 44 C78 46 92 58 94 76 C85 62 74 56 58 48 Z" />
-    <path d="M56 54 C70 70 80 84 84 96 C76 84 68 72 55 58 Z" />
+// Center Hub: Authentic Sharp Spider-Man Emblem (Matching User Requested Vector)
+const CenterSpiderEmblem = ({ className = "w-8 h-8" }) => (
+  <svg className={className} viewBox="0 0 500 500" fill="currentColor">
+    <g fill="currentColor">
+      {/* Abdomen & Head */}
+      <path d="M 250,195 C 240,175 235,160 235,145 C 235,130 242,120 250,112 C 258,120 265,130 265,145 C 265,160 260,175 250,195 Z" />
+      <path d="M 250,200 C 230,225 218,270 218,310 C 218,360 232,410 250,445 C 268,410 282,360 282,310 C 282,270 270,225 250,200 Z" />
+
+      {/* Top Mandibles */}
+      <path d="M 245,115 L 250,105 L 255,115 Z" />
+
+      {/* Top Left Leg 1 (Long Horn) */}
+      <path d="M 238,135 C 190,40 145,55 125,120 C 145,95 180,85 230,140 Z" />
+      {/* Top Left Leg 2 */}
+      <path d="M 232,160 C 160,100 110,135 100,210 C 122,170 158,155 224,175 Z" />
+
+      {/* Bottom Left Leg 3 */}
+      <path d="M 226,220 C 120,230 70,290 60,370 C 95,310 140,285 220,240 Z" />
+      {/* Bottom Left Leg 4 (Long Bottom Needle) */}
+      <path d="M 230,260 C 170,330 135,400 120,460 C 148,410 178,350 238,280 Z" />
+
+      {/* Top Right Leg 1 (Long Horn) */}
+      <path d="M 262,135 C 310,40 355,55 375,120 C 355,95 320,85 270,140 Z" />
+      {/* Top Right Leg 2 */}
+      <path d="M 268,160 C 340,100 390,135 400,210 C 378,170 342,155 276,175 Z" />
+
+      {/* Bottom Right Leg 3 */}
+      <path d="M 274,220 C 380,230 430,290 440,370 C 405,310 360,285 280,240 Z" />
+      {/* Bottom Right Leg 4 (Long Bottom Needle) */}
+      <path d="M 270,260 C 330,330 365,400 380,460 C 352,410 322,350 262,280 Z" />
+    </g>
   </svg>
 );
 
@@ -302,11 +318,11 @@ const SpiderSkillWeb = () => {
           })}
 
           {/* 4. CENTER HUB: AUTHENTIC SPIDER-MAN EMBLEM */}
-          <g transform={`translate(${cx - 24}, ${cy - 24})`}>
+          <g transform={`translate(${cx}, ${cy})`}>
             {/* Outer Pulsing Neon Red Ring */}
             <circle
-              cx="24"
-              cy="24"
+              cx="0"
+              cy="0"
               r="24"
               fill="none"
               stroke="#FF1E26"
@@ -315,17 +331,17 @@ const SpiderSkillWeb = () => {
             />
             {/* Base Hub Button */}
             <circle
-              cx="24"
-              cy="24"
+              cx="0"
+              cy="0"
               r="22"
               fill="#0A0A0A"
               stroke="#FF1E26"
               strokeWidth="2.5"
               className="shadow-2xl"
             />
-            {/* Center Official Sharp Spider Vector */}
-            <g transform="translate(10, 10) scale(0.28)" className="text-white">
-              <CenterSpiderEmblem className="w-[100px] h-[100px] text-white fill-white" />
+            {/* Center Official Sharp Spider Vector centered at (0,0) */}
+            <g transform="translate(-16, -16)" className="text-white fill-white pointer-events-none">
+              <CenterSpiderEmblem className="w-8 h-8 text-white fill-white" />
             </g>
           </g>
 
