@@ -275,8 +275,8 @@ const Skills = () => {
                           </p>
                         </div>
 
-                        {/* Bottom Section: Power Meter + Comic Fact Bubble */}
-                        <div className="space-y-3 pt-2">
+                        {/* Bottom Section: Power Meter */}
+                        <div className="pt-2">
                           {/* Comic Arcade Power Meter */}
                           <div className="bg-[#0E0E16] border-2 border-black rounded-lg p-2 shadow-[2px_2px_0_#000]">
                             <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-wider text-zinc-400 mb-1">
@@ -300,14 +300,6 @@ const Skills = () => {
                                 }}
                               />
                             </div>
-                          </div>
-
-                          {/* Spidey Comic Fact Speech Box */}
-                          <div className="text-[10.5px] leading-relaxed text-zinc-300 italic bg-[#0B0B10] p-2.5 rounded-xl border-2 border-black border-l-4 border-l-spider-yellow shadow-[2px_2px_0_#000]">
-                            <div className="not-italic text-[8.5px] font-black uppercase tracking-widest text-spider-yellow flex items-center gap-1 mb-1">
-                              <span>🕷️ DEV FACT</span>
-                            </div>
-                            "{skill.fact}"
                           </div>
                         </div>
                       </motion.div>
