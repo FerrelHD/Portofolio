@@ -39,24 +39,30 @@ const SUITS = [
   },
 ];
 
-/* Iconic Sharp Spider-Man Suit Emblem Vector SVG */
-const SpiderEmblem = ({ className = "w-6 h-6" }) => (
+/* Authentic Sharp Spider-Man Emblem Vector SVG */
+const SpiderEmblem = ({ className = "w-7 h-7" }) => (
   <svg className={className} viewBox="0 0 100 100" fill="currentColor">
-    {/* Central Spider Head & Abdomen Body */}
-    <path d="M50 42 c-2 -4 -6 -7 -6 -12 c0 -4 2 -8 6 -10 c4 2 6 6 6 10 c0 5 -4 8 -6 12 z" />
-    <path d="M50 44 c-4 4 -7 12 -7 20 c0 10 3 18 7 24 c4 -6 7 -14 7 -24 c0 -8 -3 -16 -7 -20 z" />
-    {/* Left Top Legs */}
-    <path d="M46 36 Q32 18 18 20 Q30 28 42 38 Z" />
-    <path d="M44 40 Q22 26 12 34 Q26 40 40 44 Z" />
-    {/* Left Bottom Legs */}
-    <path d="M43 48 Q20 48 10 60 Q26 56 41 52 Z" />
-    <path d="M45 54 Q28 68 22 84 Q34 72 44 60 Z" />
-    {/* Right Top Legs */}
-    <path d="M54 36 Q68 18 82 20 Q70 28 58 38 Z" />
-    <path d="M56 40 Q78 26 88 34 Q74 40 60 44 Z" />
-    {/* Right Bottom Legs */}
-    <path d="M57 48 Q80 48 90 60 Q74 56 59 52 Z" />
-    <path d="M55 54 Q72 68 78 84 Q66 72 56 60 Z" />
+    {/* Abdomen & Head */}
+    <path d="M50 36 c-3 -4 -6 -7 -6 -11 c0 -5 2 -9 6 -11 c4 2 6 6 6 11 c0 4 -3 7 -6 11 z" />
+    <path d="M50 38 c-5 5 -8 15 -8 24 c0 12 3 22 8 30 c5 -8 8 -18 8 -30 c0 -9 -3 -19 -8 -24 z" />
+
+    {/* Left Top Leg 1 */}
+    <path d="M46 28 C32 8 16 10 12 24 C18 18 30 16 44 29 Z" />
+    {/* Left Top Leg 2 */}
+    <path d="M44 33 C25 18 10 26 8 42 C15 32 26 28 42 36 Z" />
+    {/* Left Bottom Leg 3 */}
+    <path d="M43 44 C22 46 8 58 6 76 C15 62 26 56 42 48 Z" />
+    {/* Left Bottom Leg 4 */}
+    <path d="M44 54 C30 70 20 84 16 96 C24 84 32 72 45 58 Z" />
+
+    {/* Right Top Leg 1 */}
+    <path d="M54 28 C68 8 84 10 88 24 C82 18 70 16 56 29 Z" />
+    {/* Right Top Leg 2 */}
+    <path d="M56 33 C75 18 90 26 92 42 C85 32 74 28 58 36 Z" />
+    {/* Right Bottom Leg 3 */}
+    <path d="M57 44 C78 46 92 58 94 76 C85 62 74 56 58 48 Z" />
+    {/* Right Bottom Leg 4 */}
+    <path d="M56 54 C70 70 80 84 84 96 C76 84 68 72 55 58 Z" />
   </svg>
 );
 
@@ -143,17 +149,14 @@ const SpiderGadgetDrawer = () => {
     <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50">
       <audio ref={audioRef} src={backsoundAudio} loop preload="auto" />
 
-      {/* LEFT ATTACHED SPIDER EMBLEM TAB BUTTON */}
+      {/* COMPACT LEFT ATTACHED SPIDER EMBLEM BUTTON (No text, compact 44x44px) */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="relative group flex items-center gap-2 bg-spider-red border-y-3 border-r-3 border-spider-black py-3 px-2.5 comic-chip shadow-2xl pop-shadow-red hover:bg-spider-yellow hover:text-spider-black transition-all active:scale-95 text-comic-ink"
+        className="group flex items-center justify-center bg-spider-red border-y-3 border-r-3 border-spider-black w-11 h-11 comic-chip shadow-2xl pop-shadow-red hover:bg-spider-yellow transition-all active:scale-95 text-comic-ink"
         style={{ borderRadius: "0 8px 8px 0" }}
         title="Open Spider Gadget Control Dock"
       >
-        <SpiderEmblem className="w-6 h-6 text-spider-yellow group-hover:text-spider-black transition-transform group-hover:scale-110" />
-        <span className="text-[10px] font-black uppercase tracking-widest writing-mode-vertical hidden sm:inline">
-          DOCK
-        </span>
+        <SpiderEmblem className="w-7 h-7 text-spider-yellow group-hover:text-spider-black transition-transform group-hover:scale-110" />
       </button>
 
       {/* SLIDE-OUT COMIC GADGET DRAWER PANEL */}
