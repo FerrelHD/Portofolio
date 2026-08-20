@@ -1,62 +1,78 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { Code2, Sparkles, Gamepad2, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
+import { Code2, Sparkles, Gamepad2, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
+import { soundFX } from "../lib/soundFx";
 
 const services = [
   {
     id: "web-dev",
-    eyebrow: "SUPERPOWER #01",
+    issue: "ISSUE #01 // WEB CRAFT",
+    sfx: "POW! ⚡",
+    sfxBg: "bg-spider-red text-white",
     title: "Full-Stack Web Dev",
     subtitle: "Custom Web Applications & APIs",
     description:
-      "Building high-performance, secure, and scalable web applications using React, Next.js, Laravel, and modern databases.",
+      "Building ultra-fast, secure, and production-ready web applications using React, Next.js, Laravel, and scalable database architectures.",
     accent: "spider-red",
     accentBg: "bg-spider-red",
-    shadowClass: "pop-shadow-red",
+    accentBorder: "border-spider-red",
+    shadowClass: "hover:shadow-[10px_10px_0_#FF1E26]",
     icon: <Code2 size={24} strokeWidth={2.5} />,
-    features: [
-      "Custom React & Next.js Frontend",
-      "Laravel / Node.js Robust Backend",
-      "Database & REST API Integration",
-      "SEO & High Performance Core Vitals",
+    arsenal: [
+      "React 19 & Next.js",
+      "Laravel / Node.js API",
+      "Database & REST Design",
+      "Tailwind CSS / Styling",
+      "SEO & Core Web Vitals",
+      "Secure Auth & Middleware",
     ],
   },
   {
     id: "ui-motion",
-    eyebrow: "SUPERPOWER #02",
+    issue: "ISSUE #02 // UI & MOTION",
+    sfx: "ZAP! ✨",
+    sfxBg: "bg-spider-blue text-white",
     title: "Interactive UI & Motion",
     subtitle: "Engaging & High-Converting Design",
     description:
-      "Crafting interactive, fully-responsive web interfaces for all devices (Mobile & Desktop) with stunning micro-animations.",
+      "Crafting immersive, 60 FPS fully-responsive interfaces with physics springs, gesture controls, and stunning micro-interactions.",
     accent: "spider-blue",
     accentBg: "bg-spider-blue",
-    shadowClass: "pop-shadow-blue",
+    accentBorder: "border-spider-blue",
+    shadowClass: "hover:shadow-[10px_10px_0_#165DFF]",
     icon: <Sparkles size={24} strokeWidth={2.5} />,
-    features: [
-      "100% Mobile Responsive Layout",
-      "Smooth Micro-Animations & FX",
-      "Clean UI/UX & High Clarity",
-      "Accessible & Modern Aesthetics",
+    arsenal: [
+      "Framer Motion Physics",
+      "60 FPS Micro-Animations",
+      "100% Mobile Responsive",
+      "Clean Modern UI/UX",
+      "Interactive Sound FX",
+      "Halftone & Comic Effects",
     ],
   },
   {
     id: "creative-crafts",
-    eyebrow: "SUPERPOWER #03",
+    issue: "ISSUE #03 // 3D & GAMES",
+    sfx: "BAM! 🎮",
+    sfxBg: "bg-spider-yellow text-spider-black",
     title: "Multiverse & Game Crafts",
     subtitle: "3D, Video & Interactive Media",
     description:
-      "Game mechanics development (Unity/C#), cinematic video editing, and 3D asset creation for unique interactive media.",
+      "Engineered game mechanics (Unity/C#), cinematic video editing, and stylized 3D asset modeling for interactive comic experiences.",
     accent: "spider-yellow",
-    accentBg: "bg-spider-yellow",
-    shadowClass: "pop-shadow-yellow",
+    accentBg: "bg-spider-yellow text-spider-black",
+    accentBorder: "border-spider-yellow",
+    shadowClass: "hover:shadow-[10px_10px_0_#FFD500]",
     icon: <Gamepad2 size={24} strokeWidth={2.5} />,
-    features: [
-      "Unity Game Dev & Logic",
+    arsenal: [
+      "Unity & C# Mechanics",
       "Cinematic Video Editing",
-      "3D Modeling Assets (Blender)",
+      "3D Blender Modeling",
+      "Physics & Collision Systems",
       "Interactive Canvas & WebGL",
+      "Audio Pacing & Soundtracks",
     ],
   },
 ];
@@ -73,9 +89,9 @@ const Services = () => {
           viewport={{ once: true, margin: "-80px" }}
           className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
         >
-          <motion.div variants={fadeUp} className="mb-3">
+          <motion.div variants={fadeUp} className="mb-3 flex justify-center">
             <span className="inline-block py-1.5 px-4 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase pop-shadow-sm">
-              SUPERPOWERS / CLIENT SERVICES
+              SUPERPOWERS // CLIENT SERVICES
             </span>
           </motion.div>
           
@@ -90,7 +106,7 @@ const Services = () => {
             variants={fadeUp}
             className="text-sm sm:text-base text-comic-ink/70 font-medium leading-relaxed max-w-2xl mx-auto"
           >
-            End-to-end digital solutions designed to help your brand, business, or creative project stand out with epic flair.
+            End-to-end digital solutions designed to help your brand, business, or creative project stand out with epic superhero flair.
           </motion.p>
         </motion.div>
 
@@ -106,59 +122,75 @@ const Services = () => {
             <motion.div
               key={service.id}
               variants={fadeUp}
-              className={`group bg-comic-card comic-panel p-6 sm:p-7 rounded-sm flex flex-col justify-between transition-transform duration-200 hover:-translate-y-1.5 ${service.shadowClass}`}
+              onMouseEnter={() => soundFX.playBeep(420)}
+              className={`group relative bg-[#101018] border-[3.5px] border-black p-6 sm:p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-[6px_6px_0_#000] hover:-translate-y-2 select-none overflow-hidden ${service.shadowClass}`}
             >
+              {/* Comic Color Accent Bar at Top */}
+              <div className={`absolute top-0 left-0 right-0 h-2 ${service.accentBg}`} />
+
+              {/* Hover Sound Effect Pop Sticker */}
+              <div
+                className={`absolute top-4 right-4 z-20 ${service.sfxBg} text-[9.5px] font-black tracking-widest px-2.5 py-1 rounded-md border-2 border-black shadow-[2px_2px_0_#000] transform rotate-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-200`}
+              >
+                {service.sfx}
+              </div>
+
               <div>
                 {/* Header Badge & Icon */}
-                <div className="flex items-center justify-between mb-5">
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 bg-comic-surface border-2 border-comic-ink text-comic-ink">
-                    {service.eyebrow}
-                  </span>
+                <div className="flex items-center gap-3 mb-5 mt-1">
                   <div
-                    className={`w-12 h-12 ${service.accentBg} comic-chip flex items-center justify-center text-comic-ink shadow-sm group-hover:scale-105 transition-transform`}
+                    className={`w-12 h-12 ${service.accentBg} rounded-xl border-2 border-black flex items-center justify-center shadow-[3px_3px_0_#000] group-hover:scale-105 transition-transform shrink-0`}
                   >
                     {service.icon}
+                  </div>
+                  <div>
+                    <span className="text-[9.5px] sm:text-[10px] font-mono font-black uppercase tracking-wider px-2 py-0.5 bg-black/60 border border-white/10 text-white/90 rounded">
+                      {service.issue}
+                    </span>
                   </div>
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-xl sm:text-2xl font-black text-comic-ink tracking-tight mb-1">
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-1 group-hover:text-spider-yellow transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-xs font-bold text-spider-blue mb-4 uppercase tracking-wider">
+                <p className="text-xs font-black text-spider-blue mb-3.5 uppercase tracking-wider">
                   {service.subtitle}
                 </p>
-                <p className="text-xs sm:text-sm text-comic-ink/80 font-medium leading-relaxed mb-6">
+                <p className="text-xs sm:text-[13px] text-white/70 font-medium leading-relaxed mb-6">
                   {service.description}
                 </p>
 
-                {/* Feature List */}
-                <div className="space-y-2.5 mb-6 pt-4 border-t-2 border-comic-ink/10">
-                  {service.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5">
-                      <CheckCircle2
-                        size={15}
-                        strokeWidth={2.5}
-                        className="text-spider-red shrink-0 mt-0.5"
-                      />
-                      <span className="text-xs sm:text-sm font-semibold text-comic-ink/90">
-                        {feat}
+                {/* Tech Arsenal Pills */}
+                <div className="pt-4 mb-6 border-t-2 border-white/10">
+                  <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/50 mb-3 flex items-center gap-1.5">
+                    <Zap size={12} className="text-spider-yellow" />
+                    <span>Deliverables &amp; Arsenal</span>
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {service.arsenal.map((item, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[10.5px] sm:text-[11px] font-black px-2.5 py-1 bg-white/5 hover:bg-spider-yellow hover:text-black border border-white/15 text-white/90 rounded-md transition-colors shadow-[1px_1px_0_#000]"
+                      >
+                        {item}
                       </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Action Link to Contact */}
               <a
                 href="#contact"
-                className="mt-2 inline-flex items-center justify-between w-full py-2.5 px-4 bg-comic-surface hover:bg-spider-yellow hover:text-spider-black border-2 border-comic-ink font-black text-xs uppercase tracking-wider transition-colors group/btn"
+                onClick={() => soundFX.playPunch()}
+                className="mt-2 inline-flex items-center justify-between w-full py-3 px-4 bg-spider-yellow text-spider-black hover:bg-spider-red hover:text-white border-[2.5px] border-black rounded-xl font-black text-xs uppercase tracking-[0.16em] shadow-[4px_4px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all group/btn"
               >
-                <span>Discuss Project</span>
+                <span>Initiate Mission</span>
                 <ArrowRight
                   size={16}
-                  strokeWidth={2.5}
-                  className="group-hover/btn:translate-x-1 transition-transform"
+                  strokeWidth={2.8}
+                  className="group-hover/btn:translate-x-1.5 transition-transform"
                 />
               </a>
             </motion.div>
@@ -171,11 +203,11 @@ const Services = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-12 text-center max-w-xl mx-auto"
+          className="mt-14 text-center max-w-xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 py-2 px-4 bg-comic-panel border-2 border-comic-ink text-comic-ink text-xs font-bold rounded-full shadow-sm">
-            <ShieldCheck size={16} className="text-spider-red shrink-0" />
-            <span>Clear Code • Timely Delivery • 100% Mobile Optimized</span>
+          <div className="inline-flex items-center gap-2.5 py-2.5 px-5 bg-[#101018] border-2 border-black text-white text-xs font-black rounded-xl shadow-[4px_4px_0_#000]">
+            <ShieldCheck size={17} className="text-spider-red shrink-0" />
+            <span>Clean Scalable Code • Fast Turnaround • 100% Mobile Optimized</span>
           </div>
         </motion.div>
       </div>

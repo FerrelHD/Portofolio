@@ -6,8 +6,12 @@ const ComicDoodleButton = ({
   text = "SWING INTO ACTION",
   onClick,
   href,
+  download,
+  target,
+  rel,
   className = "",
-  variant = "primary", // "primary" (yellow) | "danger" (red)
+  variant = "yellow", // "yellow" | "blue" | "red"
+  icon = "⚡",
   submitted = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -28,7 +32,7 @@ const ComicDoodleButton = ({
         soundFX.playBeep(480);
       }}
       onMouseLeave={() => setIsHovered(false)}
-      className={`comic-doodle-btn group relative select-none ${className}`}
+      className={`comic-doodle-btn comic-doodle-${variant} group relative select-none ${className}`}
     >
       {/* Flame Glow underneath */}
       <div className="doodle-glow" />
@@ -65,10 +69,10 @@ const ComicDoodleButton = ({
             ))}
           </span>
 
-          {/* Action Icon: ⚡ changes to ✔ upon submit/active */}
+          {/* Action Icon: icon changes to ✔ upon submit/active */}
           <div className="doodle-icon-wrap">
             {!submitted ? (
-              <span className="doodle-icon-zap">⚡</span>
+              <span className="doodle-icon-zap">{icon}</span>
             ) : (
               <span className="doodle-icon-check">✔</span>
             )}
@@ -80,7 +84,13 @@ const ComicDoodleButton = ({
 
   if (href) {
     return (
-      <a href={href} className="inline-block">
+      <a
+        href={href}
+        download={download}
+        target={target}
+        rel={rel}
+        className="inline-block"
+      >
         {content}
       </a>
     );
@@ -90,3 +100,4 @@ const ComicDoodleButton = ({
 };
 
 export default ComicDoodleButton;
+

@@ -209,7 +209,7 @@ const Hero = () => {
             crafting immersive digital experiences with cinematic flair.
           </motion.p>
 
-          {/* CTA BUTTONS (Comic Doodle Multi-Layer RGB Button) */}
+          {/* CTA BUTTONS (Comic Doodle Multi-Layer RGB Matching Buttons) */}
           <motion.div
             variants={fadeUp}
             className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-7 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
@@ -217,17 +217,18 @@ const Hero = () => {
             <ComicDoodleButton
               text="EXPLORE MISSIONS"
               href="#projects"
+              variant="yellow"
+              icon="⚡"
             />
-            <a
+            <ComicDoodleButton
+              text="DOWNLOAD DOSSIER"
               href={`${import.meta.env.BASE_URL}cv.pdf`}
               download="CV_Ferrel_Rashad_Akeyla.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-spider-blue comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 rounded-xl font-black uppercase tracking-[0.16em] text-sm sm:text-base flex items-center justify-center gap-2.5 pop-shadow-blue hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active text-center"
-            >
-              <Download size={18} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
-              Download Dossier
-            </a>
+              variant="blue"
+              icon="📥"
+            />
           </motion.div>
 
           {/* MOBILE FEATURE STRIP (< lg displays) */}

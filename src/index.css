@@ -1412,5 +1412,54 @@ body.user-reduce-motion * {
   }
 }
 
+/* === BLUE VARIANT === */
+.comic-doodle-blue .doodle-bg {
+  background: #165DFF;
+  box-shadow:
+    4px 4px 0px #FF1E26,
+    8px 8px 0px #FFD500,
+    12px 12px 0px #111;
+}
+
+.comic-doodle-blue:active .doodle-bg {
+  box-shadow:
+    2px 2px 0px #FF1E26,
+    4px 4px 0px #FFD500,
+    6px 6px 0px #111;
+}
+
+.comic-doodle-blue .doodle-outline {
+  background: #FFD500;
+}
+
+.comic-doodle-blue .doodle-text [data-label] {
+  color: #FFFFFF;
+  text-shadow:
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111,
+    2px 2px 0 #FF1E26;
+}
+
+.comic-doodle-blue:hover .doodle-text [data-label] {
+  color: #FFD500;
+  text-shadow:
+    -1px -1px 0 #111,
+    1px -1px 0 #111,
+    -1px 1px 0 #111,
+    1px 1px 0 #111,
+    3px 3px 0 #111;
+}
+
+.comic-doodle-blue .doodle-stars .star-left {
+  color: #FFD500;
+}
+
+.comic-doodle-blue .doodle-stars .star-right {
+  color: #FF1E26;
+}
+
+
 
 
