@@ -44,10 +44,10 @@ const Skills = () => {
       <div className="relative max-w-7xl mx-auto z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 bg-spider-red/10 border-2 border-spider-red/40 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-widest text-spider-red mb-3">
+          <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase mb-3">
             <Sparkles size={14} />
-            <span>SUPERHERO ABILITY MATRIX</span>
-          </div>
+            SUPERHERO ABILITY MATRIX
+          </span>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none">
             SKILLS & TECH STACK
