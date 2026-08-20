@@ -156,10 +156,16 @@ npm run preview
 
 ## 🎮 Keyboard Shortcuts
 
-- <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> — Open Command Palette
-- <kbd>S</kbd> — Trigger Spider-Sense Radar Glow
-- <kbd>G</kbd> — Launch Spidey Bug Hunter Mini-Game
-- <kbd>Esc</kbd> — Dismiss any active modal or drawer
+- <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> — Open Spider Terminal Command Palette
+- <kbd>S</kbd> — Trigger Spider-Sense Tingling Radar Glow
+- <kbd>G</kbd> — Launch Spidey Bug Hunter 30s Arcade Mini-Game
+- <kbd>N</kbd> / <kbd>B</kbd> — Read The Daily Bugle Newspaper Press Report
+- <kbd>D</kbd> — Toggle Spider Gadget Dock & Multiverse Theme Suits
+- <kbd>P</kbd> — Play / Pause Background Music Track
+- <kbd>M</kbd> — Mute / Unmute Audio Suite
+- <kbd>1</kbd> - <kbd>6</kbd> — Instant Jump to Sections (Hero, About, Services, Projects, Skills, Contact)
+- <kbd>?</kbd> — Toggle Comic Shortcuts Cheatsheet Modal
+- <kbd>Esc</kbd> — Close all active modals & slide-out drawers
 
 ---
 

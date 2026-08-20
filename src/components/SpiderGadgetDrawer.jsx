@@ -107,6 +107,50 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
     }
   }, [volume, isMuted]);
 
+  useEffect(() => {
+    const handleToggleBgm = () => {
+      if (!audioRef.current) return;
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+        soundFX.playBeep(300);
+      } else {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            soundFX.playBeep(600);
+          })
+          .catch(() => {});
+      }
+    };
+
+    const handleToggleMute = () => {
+      setIsMuted((prev) => {
+        const next = !prev;
+        soundFX.playBeep(next ? 250 : 500);
+        return next;
+      });
+    };
+
+    const handleToggleDock = () => {
+      setIsOpen((prev) => {
+        soundFX.playThwip();
+        return !prev;
+      });
+    };
+
+    window.addEventListener("spidey:toggle-bgm", handleToggleBgm);
+    window.addEventListener("spidey:toggle-mute", handleToggleMute);
+    window.addEventListener("spidey:toggle-dock", handleToggleDock);
+
+    return () => {
+      window.removeEventListener("spidey:toggle-bgm", handleToggleBgm);
+      window.removeEventListener("spidey:toggle-mute", handleToggleMute);
+      window.removeEventListener("spidey:toggle-dock", handleToggleDock);
+    };
+  }, [isPlaying]);
+
   const applySuit = (suitId) => {
     setActiveSuit(suitId);
     localStorage.setItem("spidey-suit", suitId);

@@ -9,12 +9,13 @@ const ShortcutsModal = ({ open, onClose }) => {
     { key: "S", label: "Trigger Spider-Sense Tingling", accent: "bg-spider-red" },
     { key: "N", label: "Read The Daily Bugle Newspaper Report", accent: "bg-spider-yellow" },
     { key: "G", label: "Play Spidey Bug Hunter (30s Arcade Mini-Game)", accent: "bg-spider-red" },
+    { key: "D", label: "Toggle Spider Gadget Dock & Multiverse Suits", accent: "bg-spider-yellow" },
     { key: "Ctrl+K", label: "Open Spider Terminal Command Palette", accent: "bg-spider-blue" },
     { key: "P", label: "Toggle Play / Pause BGM Song", accent: "bg-spider-red" },
     { key: "M", label: "Toggle Mute / Unmute Audio", accent: "bg-spider-yellow" },
-    { key: "1-6", label: "Quick jump to sections (About, Projects, Skills, Contact)", accent: "bg-spider-blue" },
+    { key: "1-6", label: "Quick jump to sections (Hero, About, Services, Projects, Skills, Contact)", accent: "bg-spider-blue" },
     { key: "?", label: "Show / hide this shortcuts panel", accent: "bg-spider-blue" },
-    { key: "Esc", label: "Close modals / popups", accent: "bg-comic-panel" },
+    { key: "Esc", label: "Close all active modals & drawers", accent: "bg-comic-panel" },
   ];
   return (
     <AnimatePresence>

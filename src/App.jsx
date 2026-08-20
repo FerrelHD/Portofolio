@@ -154,9 +154,30 @@ function App() {
         return;
       }
 
+      // P = Toggle Play / Pause BGM
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "p" || e.key === "P")) {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("spidey:toggle-bgm"));
+        return;
+      }
+
+      // M = Toggle Mute / Unmute Audio
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "m" || e.key === "M")) {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("spidey:toggle-mute"));
+        return;
+      }
+
+      // D = Toggle Spider Gadget Dock
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "d" || e.key === "D")) {
+        e.preventDefault();
+        window.dispatchEvent(new CustomEvent("spidey:toggle-dock"));
+        return;
+      }
+
       // Hotkey 1 - 6 untuk navigasi cepat antar section
       const sectionKeys = {
-        "1": "#about",
+        "1": "#hero",
         "2": "#about",
         "3": "#services",
         "4": "#projects",
@@ -165,10 +186,15 @@ function App() {
       };
 
       if (!e.metaKey && !e.ctrlKey && !e.altKey && sectionKeys[e.key]) {
-        const targetEl = document.querySelector(sectionKeys[e.key]);
-        if (targetEl) {
-          soundFX.playBeep(420 + parseInt(e.key, 10) * 40);
-          targetEl.scrollIntoView({ behavior: "smooth" });
+        if (e.key === "1") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          soundFX.playBeep(450);
+        } else {
+          const targetEl = document.querySelector(sectionKeys[e.key]);
+          if (targetEl) {
+            soundFX.playBeep(420 + parseInt(e.key, 10) * 40);
+            targetEl.scrollIntoView({ behavior: "smooth" });
+          }
         }
       }
     };
