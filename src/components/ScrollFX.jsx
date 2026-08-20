@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
 const ScrollFX = () => {
   const [showPageFlip, setShowPageFlip] = useState(false);
@@ -12,7 +12,12 @@ const ScrollFX = () => {
   const lastY = useRef(0);
   const speedTimer = useRef(null);
 
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 350,
+    damping: 35,
+    restDelta: 0.001,
+  });
 
   // Bagian A: Page Flip Divider on comic:section-change
   useEffect(() => {
@@ -78,6 +83,12 @@ const ScrollFX = () => {
 
   return (
     <>
+      {/* Top Spider-Laser Scroll Progress Tracker */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-spider-red via-spider-yellow to-spider-blue z-[160] origin-left shadow-[0_0_12px_#FF1E26] pointer-events-none"
+        style={{ scaleX }}
+      />
+
       {/* Bagian A: Page Flip Divider Sweep */}
       <AnimatePresence>
         {showPageFlip && (

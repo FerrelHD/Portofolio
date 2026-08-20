@@ -1,33 +1,65 @@
+// Comic & Superhero Motion Physics for Scroll Reveal Animations
+
 export const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: {
+    opacity: 0,
+    y: 35,
+    scale: 0.97,
+  },
   visible: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.5,
-      ease: "easeOut",
+      type: "spring",
+      damping: 22,
+      stiffness: 260,
+      mass: 0.7,
+    },
+  },
+};
+
+export const comicPop = {
+  hidden: {
+    opacity: 0,
+    scale: 0.9,
+    rotate: -1.5,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      type: "spring",
+      damping: 18,
+      stiffness: 300,
     },
   },
 };
 
 export const slideUp = {
-  hidden: { y: "100%" },
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
   visible: {
+    opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
-      ease: "easeOut",
+      type: "spring",
+      damping: 24,
+      stiffness: 220,
     },
   },
 };
 
 export const staggerContainer = {
-  hidden: { opacity: 1 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
+      staggerChildren: 0.09,
+      delayChildren: 0.05,
     },
   },
 };

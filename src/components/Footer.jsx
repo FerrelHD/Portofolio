@@ -126,31 +126,15 @@ const Footer = () => {
             className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer group"
           >
             {/* 1. Kiri: ISSUE Badge */}
-            <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-3 py-1 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm group-hover:bg-spider-yellow group-hover:text-spider-black transition-colors">
+            <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-3.5 py-1.5 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm group-hover:bg-spider-yellow group-hover:text-spider-black transition-colors">
               <span className="w-1.5 h-1.5 bg-spider-yellow comic-chip animate-pulse" />
-              ISSUE #{String(NEXT_ISSUE.num).padStart(3, "0")} (Click to Read)
+              ISSUE #{String(NEXT_ISSUE.num).padStart(3, "0")} • Click to Read
             </span>
 
-            {/* 2. Tengah: Progress Bar */}
-            <div className="w-full md:w-[260px] lg:w-[320px] flex items-center gap-3">
-              <div className="loader-progress-track h-4 flex-1">
-                <div
-                  className="loader-progress-fill"
-                  style={{
-                    width: `${NEXT_ISSUE.progress}%`,
-                    background: "linear-gradient(90deg, var(--color-spider-blue), var(--color-spider-yellow))",
-                  }}
-                />
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-spider-yellow tabular-nums shrink-0">
-                {NEXT_ISSUE.progress}%
-              </span>
-            </div>
-
-            {/* 3. Kanan: Next Up Status */}
+            {/* 2. Kanan: Next Up Status */}
             <div className="flex items-center gap-2 text-center md:text-right shrink-0">
-              <span className="text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase text-comic-ink/80">
-                Next: <span className="text-spider-yellow">{NEXT_ISSUE.nextUp}</span>
+              <span className="text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-comic-ink/90">
+                Coming Next: <span className="text-spider-yellow underline decoration-spider-yellow/50 underline-offset-4">{NEXT_ISSUE.nextUp}</span>
               </span>
             </div>
           </div>
