@@ -16,7 +16,7 @@ import unityIcon from "../assets/unityicon.png";
 import figmaIcon from "../assets/figma-logo-png-svg.webp";
 import sqlIcon from "../assets/sql icon 2.png";
 import aiAgentIcon from "../assets/ai agent icon 2.png";
-import spiderEmblem from "../assets/spidey-emblem.svg";
+import spiderEmblem from "../assets/spideyicon.png";
 
 /* =========================================================================
    SKILL NODES DATA (11 SKILLS — UNREAL REMOVED)
@@ -291,7 +291,7 @@ const SpiderSkillWeb = () => {
             {/* Base Hub */}
             <circle r="22" fill="#0A0A0A" stroke="#FF1E26" strokeWidth="2.5" />
             {/* Spider Emblem as raster image — fixed pixel size, no overflow */}
-            <image href={spiderEmblem} x="-15" y="-15" width="30" height="30" className="pointer-events-none" style={{ filter: "invert(1)" }} />
+            <image href={spiderEmblem} x="-15" y="-15" width="30" height="30" className="pointer-events-none" style={{ mixBlendMode: "screen" }} />
           </g>
 
           {/* 5. INTERACTIVE SKILL NODES WITH CLEAN EMBEDDED ICONS */}
