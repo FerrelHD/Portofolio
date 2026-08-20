@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, Check, Music, Play, Pause, Volume2, VolumeX, ShieldAlert } from "lucide-react";
 import backsoundAudio from "../assets/backsound.mp3";
+import spideyEmblem from "../assets/spidey-emblem.svg";
 
 const SUITS = [
   {
@@ -156,7 +157,11 @@ const SpiderGadgetDrawer = () => {
         style={{ borderRadius: "0 8px 8px 0" }}
         title="Open Spider Gadget Control Dock"
       >
-        <SpiderEmblem className="w-7 h-7 text-spider-yellow group-hover:text-spider-black transition-transform group-hover:scale-110" />
+        <img
+          src={spideyEmblem}
+          alt="Spider Emblem"
+          className="w-7 h-7 object-contain group-hover:scale-110 transition-transform drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]"
+        />
       </button>
 
       {/* SLIDE-OUT COMIC GADGET DRAWER PANEL */}
