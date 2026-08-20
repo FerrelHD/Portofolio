@@ -176,13 +176,13 @@ const Hero = () => {
             </motion.div>
 
             {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (True Outer Stroke 8-Arah + 3D Blue Bevel) */}
-            <div className="w-full flex justify-center px-1">
+            <div className="w-full flex justify-center px-2">
               <motion.span
                 variants={slideUp}
                 className="inline-block text-[#FF1E26] uppercase whitespace-nowrap tracking-tight font-black"
                 style={{
-                  fontSize: "clamp(1.6rem, 5.2vw, 4rem)",
-                  lineHeight: 1.05,
+                  fontSize: "clamp(1.35rem, 5vw, 3.9rem)",
+                  lineHeight: 1.06,
                   textShadow:
                     "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
                 }}
@@ -192,10 +192,10 @@ const Hero = () => {
             </div>
 
             {/* 3. GOLDEN SUBTITLE: YOUR NEIGHBORHOOD DEVELOPER */}
-            <div className="w-full flex justify-center mt-1.5 sm:mt-2 px-1">
+            <div className="w-full flex justify-center mt-1.5 sm:mt-2 px-2">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.16em] sm:tracking-[0.22em] font-black text-[10px] sm:text-xs md:text-sm"
+                className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.14em] xs:tracking-[0.18em] sm:tracking-[0.24em] font-black text-[9.5px] xs:text-[11px] sm:text-xs md:text-sm"
                 style={{
                   textShadow:
                     "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1.5px 1.5px 0 #000",
@@ -209,7 +209,7 @@ const Hero = () => {
           {/* SUBTITLE (≤ 20 words) */}
           <motion.p
             variants={fadeUp}
-            className="text-sm sm:text-base md:text-lg text-comic-ink/70 mb-8 sm:mb-12 max-w-2xl mx-auto font-medium px-2 leading-relaxed"
+            className="text-xs xs:text-sm sm:text-base md:text-lg text-comic-ink/70 mb-8 sm:mb-12 max-w-2xl mx-auto font-medium px-4 leading-relaxed"
           >
             Full Stack Web Developer, Video Editor, 3D Modeler, and Game Developer
             crafting immersive digital experiences with cinematic flair.
@@ -218,7 +218,7 @@ const Hero = () => {
           {/* CTA BUTTONS (Comic Doodle Multi-Layer Red & Blue Matching Buttons) */}
           <motion.div
             variants={fadeUp}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-7 px-4 sm:px-0 max-w-xs sm:max-w-none mx-auto"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-3 sm:px-0 max-w-full mx-auto"
           >
             <ComicDoodleButton
               text="EXPLORE MISSIONS"
