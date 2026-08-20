@@ -96,21 +96,6 @@ const Navbar = () => {
       }}
       className="fixed top-0 left-0 right-0 z-50 border-b-solid"
     >
-      {/* THWIP! Badge saat ganti section */}
-      <AnimatePresence>
-        {showThwip && (
-          <motion.span
-            key={`thwip-${lastActiveRef.current || activeId || Date.now()}`}
-            className="thwip-badge hidden lg:block"
-            initial={{ opacity: 0, y: -12, scale: 0.6, rotate: -8 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-            exit={{ opacity: 0, y: -10, scale: 0.7, rotate: 6 }}
-            transition={{ type: "spring", stiffness: 420, damping: 18 }}
-          >
-            THWIP!
-          </motion.span>
-        )}
-      </AnimatePresence>
       <div className="container mx-auto px-5 sm:px-6 relative flex items-center justify-between">
         {/* LOGO: Ferrel + spider dot with comic stroke */}
         <motion.a
@@ -127,22 +112,40 @@ const Navbar = () => {
 
         {/* CENTER NAV (Desktop) */}
         <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 space-x-5 xl:space-x-7">
-          {navLinks.map((link, i) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className={`relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 transition-all duration-200 ${
-                activeId === link.id
-                  ? "text-spider-black bg-spider-yellow comic-chip"
-                  : "text-comic-ink/80 hover:text-spider-black hover:bg-spider-yellow hover:comic-chip"
-              }`}
-            >
-              {link.name}
-            </motion.a>
-          ))}
+          {navLinks.map((link, i) => {
+            const isActive = activeId === link.id;
+            return (
+              <motion.a
+                key={link.name}
+                href={link.href}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className={`relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 transition-all duration-200 ${
+                  isActive
+                    ? "text-spider-black bg-spider-yellow comic-chip"
+                    : "text-comic-ink/80 hover:text-spider-black hover:bg-spider-yellow hover:comic-chip"
+                }`}
+              >
+                {/* THWIP! Badge pop-up tepat di atas link aktif */}
+                <AnimatePresence>
+                  {isActive && showThwip && (
+                    <motion.span
+                      key={`thwip-${link.id}`}
+                      initial={{ opacity: 0, y: 8, scale: 0.5, rotate: -10 }}
+                      animate={{ opacity: 1, y: -26, scale: 1, rotate: -4 }}
+                      exit={{ opacity: 0, y: -32, scale: 0.6, rotate: 8 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 18 }}
+                      className="absolute left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 border-spider-black px-2 py-0.5 text-[9px] font-black italic tracking-widest uppercase comic-chip pop-shadow-sm pointer-events-none whitespace-nowrap z-20"
+                    >
+                      THWIP!
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                {link.name}
+              </motion.a>
+            );
+          })}
         </div>
 
         {/* RIGHT: Motion Toggle + CTA + Mobile Burger */}
