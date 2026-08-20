@@ -164,26 +164,26 @@ const Hero = () => {
 
           {/* HEADLINE — Official Spider-Man Movie Logo Typography Style */}
           <motion.h1
-            className="w-full max-w-5xl mx-auto font-black mb-6 sm:mb-8 flex flex-col items-center select-none"
+            className="w-full max-w-4xl mx-auto font-black mb-5 sm:mb-7 flex flex-col items-center select-none"
           >
             {/* 1. MARVEL-STYLE TOP PILL: SPIDER-DEV */}
-            <motion.div variants={slideUp} className="mb-2 sm:mb-3">
-              <span className="inline-block bg-[#FF1E26] text-white px-3.5 py-0.5 sm:px-4 sm:py-1 border-[2.5px] border-black font-black text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase shadow-[2px_2px_0_#000] rounded-sm">
+            <motion.div variants={slideUp} className="mb-1.5 sm:mb-2">
+              <span className="inline-block bg-[#FF1E26] text-white px-2.5 py-0.5 sm:px-3 sm:py-0.5 border-[2px] border-black font-black text-[9px] sm:text-[10.5px] tracking-[0.22em] sm:tracking-[0.26em] uppercase shadow-[1.5px_1.5px_0_#000] rounded-sm">
                 SPIDER-DEV
               </span>
             </motion.div>
 
-            {/* 2. GIANT 3D MOVIE LOGO TITLE: DIGITAL CREATOR */}
+            {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (Calibrated Responsive Scale) */}
             <div className="w-full flex justify-center px-1">
               <motion.span
                 variants={slideUp}
                 className="inline-block text-[#FF1E26] italic uppercase whitespace-nowrap tracking-[0.01em]"
                 style={{
-                  fontSize: "clamp(2.2rem, 7.8vw, 6.2rem)",
-                  lineHeight: 1.02,
-                  WebkitTextStroke: "clamp(1.5px, 0.22vw, 3px) #000000",
+                  fontSize: "clamp(1.6rem, 5.2vw, 4rem)",
+                  lineHeight: 1.05,
+                  WebkitTextStroke: "clamp(1px, 0.16vw, 2.2px) #000000",
                   textShadow:
-                    "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 3px 0 #165DFF, 2px 5px 0 #165DFF, 3px 7px 0 #0C38A8, 4px 9px 0 #061B54, 5px 12px 0 #000000, 6px 15px 12px rgba(0,0,0,0.6)",
+                    "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 2px 0 #165DFF, 2px 3.5px 0 #165DFF, 2.5px 5px 0 #0C38A8, 3px 6.5px 0 #000000, 4px 8px 8px rgba(0,0,0,0.45)",
                 }}
               >
                 DIGITAL CREATOR
@@ -191,13 +191,13 @@ const Hero = () => {
             </div>
 
             {/* 3. GOLDEN SUBTITLE: YOUR NEIGHBORHOOD DEVELOPER */}
-            <div className="w-full flex justify-center mt-2 sm:mt-3 px-1">
+            <div className="w-full flex justify-center mt-1.5 sm:mt-2 px-1">
               <motion.span
                 variants={slideUp}
-                className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.22em] sm:tracking-[0.3em] font-black text-[11px] sm:text-sm md:text-base lg:text-lg"
+                className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.16em] sm:tracking-[0.22em] font-black text-[10px] sm:text-xs md:text-sm"
                 style={{
                   textShadow:
-                    "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 2px 2px 0 #000",
+                    "1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1.5px 1.5px 0 #000",
                 }}
               >
                 YOUR NEIGHBORHOOD DEVELOPER
