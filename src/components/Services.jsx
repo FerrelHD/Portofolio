@@ -11,7 +11,7 @@ const services = [
     title: "Full-Stack Web Dev",
     subtitle: "Custom Web Applications & APIs",
     description:
-      "Membangun aplikasi web berperforma tinggi, aman, dan scalable menggunakan React, Next.js, Laravel, dan database modern.",
+      "Building high-performance, secure, and scalable web applications using React, Next.js, Laravel, and modern databases.",
     accent: "spider-red",
     accentBg: "bg-spider-red",
     shadowClass: "pop-shadow-red",
@@ -29,7 +29,7 @@ const services = [
     title: "Interactive UI & Motion",
     subtitle: "Engaging & High-Converting Design",
     description:
-      "Merancang antarmuka web interaktif yang responsif di semua device (Mobile & Desktop) dengan sentuhan mikro-animasi memukau.",
+      "Crafting interactive, fully-responsive web interfaces for all devices (Mobile & Desktop) with stunning micro-animations.",
     accent: "spider-blue",
     accentBg: "bg-spider-blue",
     shadowClass: "pop-shadow-blue",
