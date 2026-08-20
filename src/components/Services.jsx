@@ -47,7 +47,7 @@ const services = [
     title: "Multiverse & Game Crafts",
     subtitle: "3D, Video & Interactive Media",
     description:
-      "Pengembangan game mechanics (Unity/C#), editing video cinematic, serta pembuatan aset 3D untuk media interaktif unik.",
+      "Game mechanics development (Unity/C#), cinematic video editing, and 3D asset creation for unique interactive media.",
     accent: "spider-yellow",
     accentBg: "bg-spider-yellow",
     shadowClass: "pop-shadow-yellow",
@@ -90,7 +90,7 @@ const Services = () => {
             variants={fadeUp}
             className="text-sm sm:text-base text-comic-ink/70 font-medium leading-relaxed max-w-2xl mx-auto"
           >
-            Solusi pengembangan digital ujung-ke-ujung (End-to-End) yang siap membantu ide bisnis atau proyek Anda tampil unggul dan berkesan.
+            End-to-end digital solutions designed to help your brand, business, or creative project stand out with epic flair.
           </motion.p>
         </motion.div>
 

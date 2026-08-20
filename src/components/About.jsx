@@ -291,7 +291,7 @@ const About = () => {
                 Alignment — Hero
               </span>
               <span className="inline-flex items-center gap-2 bg-comic-panel comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
-                Sector — Depok, Jawa Barat
+                Sector — West Java, Indonesia
               </span>
               <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
                 Status — Available
