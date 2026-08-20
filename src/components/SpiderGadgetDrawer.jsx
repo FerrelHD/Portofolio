@@ -194,13 +194,13 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
               setIsOpen(true);
               soundFX.playThwip();
             }}
-            className="absolute -top-11 left-0.5 sm:left-1 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+            className="absolute -top-15 sm:-top-18 left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
             title="Click Spidey to open Gadgets!"
           >
             <img
               src={spideyGif}
               alt="Perched Spider-Man"
-              className="w-12 h-12 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] filter"
+              className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-[0_6px_12px_rgba(0,0,0,0.85)] filter"
             />
           </motion.div>
         )}
