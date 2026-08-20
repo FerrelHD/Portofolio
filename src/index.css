@@ -183,26 +183,77 @@
     perspective: 1000px;
   }
 
-  /* Circle Fade Identity Reveal */
+  /* Layer 1: Base (real photo) */
   .identity-photo-base {
     position: absolute;
     inset: 0;
     z-index: 1;
   }
 
-  .identity-circle-reveal {
+  /* Suit triangle pieces shared */
+  .suit-piece {
     position: absolute;
-    inset: 0;
     z-index: 5;
-    clip-path: circle(0% at 50% 50%);
-    opacity: 0;
-    transition: clip-path 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    transition: all 0.55s cubic-bezier(0.7, 0, 0.3, 1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
-  .group:hover .identity-circle-reveal,
-  .force-reveal .identity-circle-reveal {
-    clip-path: circle(75% at 50% 50%);
-    opacity: 1;
+  /* Top-Left Triangle → fly TL -25%/-25% rotate -10 */
+  .suit-piece-tl {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    transform-origin: top left;
+  }
+  .group:hover .suit-piece-tl {
+    transform: translate(-25%, -25%) rotate(-10deg);
+    opacity: 0.2;
+  }
+
+  /* Top-Right Triangle → fly TR +25%/-25% rotate +10 */
+  .suit-piece-tr {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    transform-origin: top right;
+  }
+  .group:hover .suit-piece-tr {
+    transform: translate(25%, -25%) rotate(10deg);
+    opacity: 0.2;
+  }
+
+  /* Bottom-Left Triangle → fly BL -25%/+25% rotate +10 */
+  .suit-piece-bl {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    transform-origin: bottom left;
+  }
+  .group:hover .suit-piece-bl {
+    transform: translate(-25%, 25%) rotate(10deg);
+    opacity: 0.2;
+  }
+
+  /* Bottom-Right Triangle → fly BR +25%/+25% rotate -10 */
+  .suit-piece-br {
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    transform-origin: bottom right;
+  }
+  .group:hover .suit-piece-br {
+    transform: translate(25%, 25%) rotate(-10deg);
+    opacity: 0.2;
   }
 
   /* Yellow diagonal slash overlay wipe */
