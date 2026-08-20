@@ -194,7 +194,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
               setIsOpen(true);
               soundFX.playThwip();
             }}
-            className="absolute bottom-full mb-[-2px] sm:mb-[-3px] left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+            className="absolute bottom-full mb-[-7px] sm:mb-[-8px] left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
             title="Click Spidey to open Gadgets!"
           >
             <img
