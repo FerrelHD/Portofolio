@@ -100,9 +100,15 @@ const Services = () => {
             className="text-3xl sm:text-4xl md:text-5xl font-black text-comic-ink tracking-tight mb-4 select-none"
           >
             WHAT I CAN{" "}
-            <span className="text-spider-red italic relative inline-block px-1">
+            <span
+              className="text-[#FF1E26] italic relative inline-block px-1"
+              style={{
+                textShadow:
+                  "1px 2px 0 #165DFF, 2px 3.5px 0 #165DFF, 2.5px 5px 0 #0C38A8, 3px 6.5px 0 #000000, 4px 8px 8px rgba(0,0,0,0.45)",
+              }}
+            >
               BUILD
-              <span className="absolute -bottom-1 left-0 right-0 h-1.5 bg-spider-red/80 rounded-full" />
+              <span className="absolute -bottom-1 left-0 right-0 h-1.5 bg-spider-red/80 rounded-full shadow-[0_2px_4px_#165DFF]" />
             </span>{" "}
             FOR YOU
           </motion.h2>
