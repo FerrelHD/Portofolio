@@ -15,16 +15,27 @@ import ScrollFX from "./components/ScrollFX";
 import SmoothScroll from "./components/SmoothScroll";
 import CommandPalette from "./components/CommandPalette";
 import SpiderGadgetDrawer from "./components/SpiderGadgetDrawer";
+import ComicActionFX from "./components/ComicActionFX";
+import AchievementToast from "./components/AchievementToast";
+import DailyBugleModal from "./components/DailyBugleModal";
+import SpideyBugHunter from "./components/SpideyBugHunter";
+import { achievementManager } from "./lib/achievements";
+import { soundFX } from "./lib/soundFx";
 
 function App() {
   const [spiderSense, setSpiderSense] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [dailyBugleOpen, setDailyBugleOpen] = useState(false);
+  const [bugHunterOpen, setBugHunterOpen] = useState(false);
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
     if (senseTimer.current) return; // throttle: tidak trigger lagi sambil aktif
     setSpiderSense(true);
+    soundFX.playSenseBuzz();
+    achievementManager.unlock("spider_sense");
+
     if (typeof document !== "undefined") {
       document.body.classList.add("spider-sense-active");
     }
@@ -38,17 +49,37 @@ function App() {
     }, 2200);
   }, []);
 
+  // Track scrolling to unlock True Believer achievement
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window !== "undefined") {
+        const scrolledToBottom =
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 120;
+        if (scrolledToBottom) {
+          achievementManager.unlock("true_believer");
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const onKey = (e) => {
       // Jangan tangkap event jika user sedang mengetik di input / textarea
-      const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : "";
-      const editable = tag === "input" || tag === "textarea" || tag === "select" ||
+      const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : "";
+      const editable =
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
         (e.target && typeof e.target.isContentEditable === "boolean" && e.target.isContentEditable);
 
-      // ESC: close modals
+      // ESC: close all modals
       if (e.key === "Escape") {
         setShortcutsOpen(false);
         setCmdOpen(false);
+        setDailyBugleOpen(false);
+        setBugHunterOpen(false);
         return;
       }
 
@@ -74,6 +105,20 @@ function App() {
         return;
       }
 
+      // N or B = Daily Bugle Newspaper
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "n" || e.key === "N")) {
+        e.preventDefault();
+        setDailyBugleOpen((prev) => !prev);
+        return;
+      }
+
+      // G = Spidey Bug Hunter Game
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "g" || e.key === "G")) {
+        e.preventDefault();
+        setBugHunterOpen((prev) => !prev);
+        return;
+      }
+
       // Hotkey 1 - 6 untuk navigasi cepat antar section
       const sectionKeys = {
         "1": "#about",
@@ -87,6 +132,7 @@ function App() {
       if (!e.metaKey && !e.ctrlKey && !e.altKey && sectionKeys[e.key]) {
         const targetEl = document.querySelector(sectionKeys[e.key]);
         if (targetEl) {
+          soundFX.playBeep(420 + parseInt(e.key, 10) * 40);
           targetEl.scrollIntoView({ behavior: "smooth" });
         }
       }
@@ -107,23 +153,43 @@ function App() {
       <SmoothScroll />
       <ScrollFX />
       <PageLoader />
+
+      {/* Global Interactive Overlays */}
+      <ComicActionFX />
+      <AchievementToast />
+      <DailyBugleModal isOpen={dailyBugleOpen} onClose={() => setDailyBugleOpen(false)} />
+      <SpideyBugHunter isOpen={bugHunterOpen} onClose={() => setBugHunterOpen(false)} />
+
+      {/* Existing Modals */}
       <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
-      <CommandPalette open={cmdOpen} onClose={() => setCmdOpen(false)} />
+      <CommandPalette
+        open={cmdOpen}
+        onClose={() => setCmdOpen(false)}
+        onOpenDailyBugle={() => setDailyBugleOpen(true)}
+        onOpenBugHunter={() => setBugHunterOpen(true)}
+        triggerSpiderSense={triggerSpiderSense}
+      />
+
       <a href="#about" className="skip-link">
         Skip to Story!
       </a>
       <AnimeBackground />
       <Navbar />
+
       <main>
         <Hero />
-        <About />
+        <About onOpenDailyBugle={() => setDailyBugleOpen(true)} />
         <Services />
         <Projects />
         <Skills />
         <Contact />
       </main>
+
       <Footer />
-      <SpiderGadgetDrawer />
+      <SpiderGadgetDrawer
+        onOpenBugHunter={() => setBugHunterOpen(true)}
+        onOpenDailyBugle={() => setDailyBugleOpen(true)}
+      />
       <BackToTop />
     </div>
   );

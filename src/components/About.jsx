@@ -198,7 +198,7 @@ const SecretIdentityCard = () => {
   );
 };
 
-const About = () => {
+const About = ({ onOpenDailyBugle }) => {
   const stats = [
     { label: "Years Active", value: 1, suffix: "+", accent: "border-t-spider-red" },
     { label: "Missions Done", value: 5, suffix: "+", accent: "border-t-spider-blue" },
@@ -291,7 +291,7 @@ const About = () => {
               </p>
             </div>
 
-            {/* Small signature banner */}
+            {/* Small signature banner & Daily Bugle Newspaper Launcher */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
                 Alignment — Hero
@@ -299,9 +299,15 @@ const About = () => {
               <span className="inline-flex items-center gap-2 bg-comic-panel comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
                 Sector — West Java, Indonesia
               </span>
-              <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
-                Status — Available
-              </span>
+              {onOpenDailyBugle && (
+                <button
+                  type="button"
+                  onClick={onOpenDailyBugle}
+                  className="inline-flex items-center gap-2 bg-[#F4EBD9] text-black hover:bg-white comic-chip px-4 py-2 text-[10px] font-black tracking-[0.15em] uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95"
+                >
+                  <span>📰 Read Daily Bugle Report</span>
+                </button>
+              )}
             </div>
           </motion.div>
         </div>

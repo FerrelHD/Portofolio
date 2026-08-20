@@ -1,334 +1,169 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layout, Video, Gamepad2, Lightbulb } from "lucide-react";
+import { Layout, Video, Gamepad2, Sparkles, Grid, Share2, CheckCircle, Zap, Compass } from "lucide-react";
 import { fadeUp, staggerContainer } from "../lib/animation";
+import SpiderSkillWeb, { SKILLS_DATA } from "./SpiderSkillWeb";
+import { soundFX } from "../lib/soundFx";
 
-const skillCategories = [
+const PROFICIENCY_GROUPS = [
   {
-    title: "Web Craft",
-    eyebrow: "Ability Matrix 01",
-    accent: "spider-red",
-    accentBg: "bg-spider-red",
-    accentText: "text-spider-red",
-    icon: <Layout size={22} strokeWidth={2.5} />,
-    skills: [
-      {
-        name: "React / Next.js",
-        level: 90,
-        fact: "Learned React inspired by Spider-Man's tech suit upgrades! 🕸️",
-      },
-      {
-        name: "Node.js / Express",
-        level: 85,
-        fact: "Backend server performance fast as web-slinging under heavy request loads! ⚡",
-      },
-      {
-        name: "Tailwind CSS",
-        level: 95,
-        fact: "Tailwind utility classes are like webs — flexible, swift, and rock solid! 🎨",
-      },
-      {
-        name: "TypeScript",
-        level: 80,
-        fact: "Type safety prevents unexpected bugs before villains even get a chance to strike! 🛡️",
-      },
-    ],
+    level: "Proficient",
+    title: "Core Mastery • Daily Driver",
+    subtitle: "Teknologi yang dikuasai secara mendalam untuk arsitektur produksi siap rilis.",
+    badgeClass: "bg-emerald-500/15 text-emerald-400 border-emerald-500/40",
+    skills: SKILLS_DATA.filter((s) => s.level === "Proficient"),
   },
   {
-    title: "Multiverse Arts",
-    eyebrow: "Ability Matrix 02",
-    accent: "spider-blue",
-    accentBg: "bg-spider-blue",
-    accentText: "text-spider-blue",
-    icon: <Video size={22} strokeWidth={2.5} />,
-    skills: [
-      {
-        name: "Video Editing",
-        level: 88,
-        fact: "Rhythmic cuts and pacing edited with precision like a cinematic comic trailer! 🎬",
-      },
-      {
-        name: "3D Modeling (Blender)",
-        level: 82,
-        fact: "Crafting 3D assets and cinematic lighting for immersive multiverse atmospheres! 🧊",
-      },
-      {
-        name: "Color Grading",
-        level: 85,
-        fact: "Color tones tuned with high contrast inspired by vintage comic book prints! 🌈",
-      },
-      {
-        name: "Motion Graphics",
-        level: 75,
-        fact: "Pop-art visual animations bringing comic book sound effects to life! 💥",
-      },
-    ],
+    level: "Familiar",
+    title: "Working Knowledge • Delivered",
+    subtitle: "Teknologi dengan pemahaman fundamental kokoh dan telah diimplementasikan dalam berbagai project.",
+    badgeClass: "bg-sky-500/15 text-sky-400 border-sky-500/40",
+    skills: SKILLS_DATA.filter((s) => s.level === "Familiar"),
   },
   {
-    title: "Arcade Combat",
-    eyebrow: "Ability Matrix 03",
-    accent: "spider-yellow",
-    accentBg: "bg-spider-yellow",
-    accentText: "text-spider-yellow",
-    icon: <Gamepad2 size={22} strokeWidth={2.5} />,
-    skills: [
-      {
-        name: "Unity / C#",
-        level: 80,
-        fact: "Architecting game logic and ultra-smooth movement/swing physics mechanics! 🎮",
-      },
-      {
-        name: "Unreal Engine",
-        level: 70,
-        fact: "Exploring real-time environment rendering with stunning graphic fidelity! 🕹️",
-      },
-      {
-        name: "Game Design",
-        level: 85,
-        fact: "Balancing gameplay loops to keep players engaged throughout every mission! 🎯",
-      },
-      {
-        name: "Level Building",
-        level: 78,
-        fact: "Designing skyscraper platforms and obstacle layouts for optimal traversal routes! 🏙️",
-      },
-    ],
+    level: "Exploring",
+    title: "Next-Gen • Modern Tooling",
+    subtitle: "Eksplorasi aktif pada teknologi mutakhir dan agentic workflows untuk meningkatkan produktivitas.",
+    badgeClass: "bg-amber-500/15 text-amber-400 border-amber-500/40",
+    skills: SKILLS_DATA.filter((s) => s.level === "Exploring"),
   },
 ];
 
 const Skills = () => {
-  const [activeFactKey, setActiveFactKey] = useState(null);
-  const factTimerRef = useRef(null);
-  const containerRef = useRef(null);
+  const [viewMode, setViewMode] = useState("web"); // "web" | "deck"
+  const [activeTab, setActiveTab] = useState("all");
 
-  const handleBarClick = (key) => {
-    if (activeFactKey === key) {
-      setActiveFactKey(null);
-      if (factTimerRef.current) clearTimeout(factTimerRef.current);
-    } else {
-      setActiveFactKey(key);
-      if (factTimerRef.current) clearTimeout(factTimerRef.current);
-      factTimerRef.current = setTimeout(() => {
-        setActiveFactKey(null);
-      }, 3500);
-    }
+  const handleToggleView = (mode) => {
+    setViewMode(mode);
+    soundFX.playBeep(520);
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setActiveFactKey(null);
-      }
-    };
-    window.addEventListener("click", handleOutsideClick);
-    return () => {
-      window.removeEventListener("click", handleOutsideClick);
-      if (factTimerRef.current) clearTimeout(factTimerRef.current);
-    };
-  }, []);
-
   return (
-    <motion.section
-      id="skills"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      className="py-16 md:py-28 relative overflow-hidden"
-    >
-      {/* Background texture */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-50"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay-sm" />
-      </div>
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 35% at 50% 0%, rgba(255,30,38,0.06) 0%, transparent 70%), radial-gradient(ellipse 55% 35% at 50% 100%, rgba(22,93,255,0.06) 0%, transparent 70%)",
-        }}
-      />
+    <section id="skills" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-[#0A0A0E]">
+      {/* Halftone & Grid overlay background */}
+      <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10" ref={containerRef}>
-        {/* Header */}
-        <motion.div variants={fadeUp} className="text-center mb-12 md:mb-20">
-          <div className="flex items-center justify-center gap-1.5 mb-2">
-            <span className="bg-spider-yellow comic-chip text-spider-black text-[9px] font-black uppercase tracking-[0.2em] px-2.5 py-0.5 inline-flex items-center gap-1">
-              <Lightbulb size={11} strokeWidth={3} />
-              Click bar for fun facts!
-            </span>
+      <div className="relative max-w-7xl mx-auto z-10">
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 bg-spider-red/10 border-2 border-spider-red/40 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-widest text-spider-red mb-3">
+            <Sparkles size={14} />
+            <span>SUPERHERO ABILITY MATRIX</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
-            Spider-
-            <span className="text-spider-red comic-stroke drop-shadow-[3px_3px_0_var(--color-ink-stroke)]">
-              Abilities
-            </span>
-          </h2>
-          <p className="text-comic-ink/50 max-w-lg mx-auto font-medium text-sm sm:text-base">
-            Power stats breakdown - technical prowess across three core disciplines.
-          </p>
-        </motion.div>
 
-        {/* ABILITY MATRIX GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-          {skillCategories.map((cat, catIdx) => (
-            <motion.div
-              key={cat.title}
-              variants={fadeUp}
-              transition={{ delay: catIdx * 0.08 }}
-              className="relative group"
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none">
+            SKILLS & TECH STACK
+          </h2>
+          <p className="text-sm sm:text-base text-zinc-400 mt-3 font-medium">
+            Tanpa persentase ambigu — diklasifikasikan langsung berdasarkan level kemahiran produksi dan pengalaman nyata.
+          </p>
+
+          {/* View Mode Toggle Buttons */}
+          <div className="inline-flex items-center p-1 bg-[#14141C] border-2 border-black rounded-xl mt-6 shadow-[3px_3px_0_#000]">
+            <button
+              type="button"
+              onClick={() => handleToggleView("web")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
+                viewMode === "web"
+                  ? "bg-spider-red text-white shadow-[0_2px_10px_rgba(255,30,38,0.4)]"
+                  : "text-zinc-400 hover:text-white"
+              }`}
             >
+              <Share2 size={14} />
+              <span>Spider Web Matrix</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleToggleView("deck")}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${
+                viewMode === "deck"
+                  ? "bg-spider-blue text-white shadow-[0_2px_10px_rgba(22,93,255,0.4)]"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <Grid size={14} />
+              <span>Classified Deck</span>
+            </button>
+          </div>
+        </div>
+
+        {/* View 1: Interactive Spider Web Matrix */}
+        {viewMode === "web" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="w-full"
+          >
+            <SpiderSkillWeb />
+          </motion.div>
+        )}
+
+        {/* View 2: Classified Level Deck */}
+        {viewMode === "deck" && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="space-y-10"
+          >
+            {PROFICIENCY_GROUPS.map((group) => (
               <div
-                className="comic-panel relative"
-                style={{ borderRadius: "3px" }}
+                key={group.level}
+                className="bg-[#121218] border-3 border-black rounded-2xl p-6 sm:p-8 shadow-[5px_5px_0_#165DFF]"
               >
-                {/* TOP ACCENT HEADER BAR */}
-                <div className={`${cat.accentBg} comic-chip border-t-0 border-l-0 border-r-0 px-5 sm:px-6 py-4 sm:py-5`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3.5">
-                      <div
-                        className={`w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center bg-spider-black comic-chip text-comic-ink`}
-                      >
-                        {cat.icon}
-                      </div>
-                      <div>
-                        <p className="text-[9px] font-black uppercase tracking-[0.22em] text-spider-black/70">
-                          {cat.eyebrow}
-                        </p>
-                        <h3 className="text-[17px] sm:text-xl font-black uppercase tracking-tight text-spider-black leading-tight">
-                          {cat.title}
-                        </h3>
-                      </div>
+                {/* Group Level Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-4 mb-6">
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs font-black uppercase px-3 py-1 rounded-md border ${group.badgeClass}`}>
+                        {group.level}
+                      </span>
+                      <h3 className="text-xl font-black uppercase tracking-wide text-white">
+                        {group.title}
+                      </h3>
                     </div>
-                    {/* Spider icon small */}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-spider-black/70">
-                      <circle cx="12" cy="12" r="2.5" />
-                      <path
-                        d="M12 5.5v2M12 16.5v2M5.5 12h2M16.5 12h2M7 7l1.5 1.5M15.5 15.5L17 17M7 17l1.5-1.5M15.5 8.5L17 7"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        fill="none"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                    <p className="text-xs text-zinc-400 mt-1 font-medium">
+                      {group.subtitle}
+                    </p>
                   </div>
+                  <span className="text-xs font-mono text-zinc-500 font-bold">
+                    {group.skills.length} Capabilities
+                  </span>
                 </div>
 
-                {/* CARD BODY — Skill Bars */}
-                <div className="p-5 sm:p-7 md:p-8 space-y-5 sm:space-y-6 relative">
-                  {/* Halftone overlay inside card body */}
-                  <div
-                    className="absolute inset-0 opacity-20 pointer-events-none"
-                    aria-hidden="true"
-                  >
-                    <div className="w-full h-full halftone-overlay-sm" />
-                  </div>
-
-                  {cat.skills.map((skill, skillIdx) => {
-                    const factKey = `${catIdx}-${skillIdx}`;
-                    const isOpen = activeFactKey === factKey;
-
-                    return (
-                      <div
-                        key={skill.name}
-                        className={`relative cursor-pointer group/bar ${isOpen ? 'z-[50]' : 'z-10'}`}
-                        onClick={() => handleBarClick(factKey)}
-                        data-cursor="target"
-                        data-cursor-label="FACT!"
-                      >
-                        <div className="flex justify-between mb-2 items-baseline">
-                          <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.18em] sm:tracking-[0.22em] text-comic-ink/75 group-hover/bar:text-spider-yellow transition-colors">
-                            {skill.name}
-                          </span>
-                          <span
-                            className={`text-[11px] sm:text-xs font-black ${cat.accentText} tabular-nums`}
-                          >
-                            {skill.level}%
-                          </span>
-                        </div>
-
-                        {/* Comic Jagged Progress Bar Track */}
-                        <div
-                          className="h-[10px] sm:h-3 w-full bg-comic-surface comic-chip border-[1.5px] relative overflow-hidden transition-transform group-hover/bar:scale-[1.01]"
-                          style={{ borderRadius: "1px" }}
-                        >
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: skillIdx * 0.08 }}
-                            className="h-full relative"
-                            style={{
-                              background: `linear-gradient(90deg, var(--color-${cat.accent}) 0%, var(--color-spider-yellow) 100%)`,
-                            }}
-                          >
-                            <div
-                              className="absolute top-0 left-0 right-0 h-[35%] bg-white/25"
-                              style={{ borderRadius: "0" }}
-                            />
-                            <div
-                              className="absolute right-0 top-0 bottom-0 w-2"
-                              style={{
-                                background:
-                                  "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(10,10,10,0.4) 2px, rgba(10,10,10,0.4) 4px)",
-                              }}
-                            />
-                          </motion.div>
-                        </div>
-
-                        {/* FUN FACT TOOLTIP */}
-                        <AnimatePresence>
-                          {isOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.85, y: -6 }}
-                              animate={{ opacity: 1, scale: 1, y: 0 }}
-                              exit={{ opacity: 0, scale: 0.85, y: -6 }}
-                              transition={{ type: "spring", stiffness: 450, damping: 25 }}
-                              className="fun-fact-tooltip absolute z-30 top-full left-0 right-0 mt-2 bg-spider-yellow text-spider-black comic-chip p-3 pop-shadow-sm pointer-events-none"
-                            >
-                              <div className="fun-fact-caret absolute -top-2 left-6 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-b-[8px] border-b-spider-black" />
-                              <div className="text-[11px] font-bold italic leading-snug">
-                                <span className="block font-black not-italic text-[10px] tracking-wider uppercase bg-spider-black text-spider-yellow px-1.5 py-0.5 mb-1.5 comic-chip w-fit">
-                                  💡 FUN FACT
-                                </span>
-                                {skill.fact}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  })}
-
-                  {/* Footer stat ringkasan card */}
-                  <div className="pt-2 mt-2 border-t-2 border-comic-surface flex items-center justify-between">
-                    <div>
-                      <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/50 mb-0.5">
-                        Avg Power
-                      </p>
-                      <p className={`text-lg font-black comic-stroke-thin ${cat.accentText}`}>
-                        {Math.round(cat.skills.reduce((a, b) => a + b.level, 0) / cat.skills.length)}%
-                      </p>
-                    </div>
-                    <span
-                      className={`${cat.accentBg} comic-chip text-spider-black px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.18em]`}
+                {/* Grid of Tech Stack Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {group.skills.map((skill) => (
+                    <div
+                      key={skill.id}
+                      className="bg-[#1A1A24] border-2 border-black rounded-xl p-4 hover:border-spider-red transition-all duration-300 group hover:-translate-y-1 shadow-[3px_3px_0_#000]"
                     >
-                      Tier S
-                    </span>
-                  </div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-black text-sm text-white group-hover:text-spider-red transition-colors">
+                          {skill.name}
+                        </span>
+                        <span className="text-[10px] uppercase font-bold text-zinc-400 bg-zinc-800/60 px-2 py-0.5 rounded">
+                          {skill.category}
+                        </span>
+                      </div>
+                      <p className="text-xs text-zinc-300 leading-relaxed mb-3">
+                        {skill.desc}
+                      </p>
+                      <div className="text-[11px] text-zinc-400 italic bg-black/40 p-2 rounded border-l-2 border-spider-yellow">
+                        "{skill.fact}"
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </motion.div>
+        )}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
 export default Skills;
-

@@ -7,12 +7,14 @@ const ShortcutsModal = ({ open, onClose }) => {
   if (!open) return null;
   const items = [
     { key: "S", label: "Trigger Spider-Sense Tingling", accent: "bg-spider-red" },
-    { key: "P", label: "Toggle Play / Pause BGM Song (Default 3% Volume)", accent: "bg-spider-red" },
-    { key: "M", label: "Toggle Mute / Unmute Background Audio", accent: "bg-spider-yellow" },
-    { key: "1-6", label: "Quick jump to sections (About, Projects, Contact)", accent: "bg-spider-blue" },
+    { key: "N", label: "Read The Daily Bugle Newspaper Report", accent: "bg-spider-yellow" },
+    { key: "G", label: "Play Spidey Bug Hunter (30s Arcade Mini-Game)", accent: "bg-spider-red" },
+    { key: "Ctrl+K", label: "Open Spider Terminal Command Palette", accent: "bg-spider-blue" },
+    { key: "P", label: "Toggle Play / Pause BGM Song", accent: "bg-spider-red" },
+    { key: "M", label: "Toggle Mute / Unmute Audio", accent: "bg-spider-yellow" },
+    { key: "1-6", label: "Quick jump to sections (About, Projects, Skills, Contact)", accent: "bg-spider-blue" },
     { key: "?", label: "Show / hide this shortcuts panel", accent: "bg-spider-blue" },
-    { key: "Tab", label: "Focus skip link & navigate", accent: "bg-spider-yellow" },
-    { key: "Esc", label: "Close modals / shortcuts panel", accent: "bg-comic-panel" },
+    { key: "Esc", label: "Close modals / popups", accent: "bg-comic-panel" },
   ];
   return (
     <AnimatePresence>
