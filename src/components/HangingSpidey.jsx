@@ -5,11 +5,11 @@ import spideyGif from "../assets/spidey.gif";
 
 const HangingSpidey = () => {
   return (
-    <div className="relative flex flex-col items-center select-none pointer-events-none">
-      {/* Web Line dangling from top */}
+    <div className="relative flex flex-col items-center select-none pointer-events-none z-30">
+      {/* Web Line attached right to the top border of the photo frame */}
       <div
         className="w-[2px] bg-white/90 shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse"
-        style={{ height: "90px" }}
+        style={{ height: "40px" }}
       />
 
       {/* Hanging Upside Down Pixel Spidey with Pendulum Swing */}
@@ -21,7 +21,7 @@ const HangingSpidey = () => {
         <img
           src={spideyGif}
           alt="Hanging Spider-Man Easter Egg"
-          className="w-14 h-14 sm:w-16 sm:h-16 object-contain mix-blend-multiply drop-shadow-[0_4px_12px_rgba(255,30,38,0.4)]"
+          className="w-12 h-12 sm:w-14 sm:h-14 object-contain mix-blend-multiply drop-shadow-[0_4px_12px_rgba(255,30,38,0.5)]"
         />
       </motion.div>
     </div>

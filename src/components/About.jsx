@@ -71,6 +71,11 @@ const SecretIdentityCard = () => {
         setRevealed((r) => !r);
       }}
     >
+      {/* HANGING SPIDEY (Attached right at the top frame border) */}
+      <div className="absolute top-0 right-5 z-30 pointer-events-none">
+        <HangingSpidey />
+      </div>
+
       {/* GLOW RING SAAT DI-HOVER / TER-REVEAL */}
       <div className="identity-glow-ring" style={{ borderRadius: "4px" }} />
 
@@ -248,9 +253,6 @@ const About = () => {
             variants={fadeUp}
             className="lg:col-span-5 max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-32 relative"
           >
-            <div className="absolute -top-24 right-6 z-20 hidden sm:block">
-              <HangingSpidey />
-            </div>
             <SecretIdentityCard />
             {/* Comic credit chip */}
             <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-[0.18em] uppercase text-comic-ink/60">
