@@ -57,27 +57,27 @@ const Skills = () => {
           </p>
 
           {/* View Mode Toggle Buttons */}
-          <div className="inline-flex items-center p-1 bg-[#14141C] border-2 border-black rounded-xl mt-6 shadow-[3px_3px_0_#000]">
+          <div className="inline-flex items-center p-1 bg-[#14141C] border-2 border-black rounded-xl mt-6 shadow-[3px_3px_0_#000] max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => handleToggleView("web")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${viewMode === "web"
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap ${viewMode === "web"
                   ? "bg-spider-red text-white shadow-[0_2px_10px_rgba(255,30,38,0.4)]"
                   : "text-zinc-400 hover:text-white"
                 }`}
             >
-              <Share2 size={14} />
+              <Share2 size={13} />
               <span>Spider Web Matrix</span>
             </button>
             <button
               type="button"
               onClick={() => handleToggleView("deck")}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all ${viewMode === "deck"
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap ${viewMode === "deck"
                   ? "bg-spider-blue text-white shadow-[0_2px_10px_rgba(22,93,255,0.4)]"
                   : "text-zinc-400 hover:text-white"
                 }`}
             >
-              <Grid size={14} />
+              <Grid size={13} />
               <span>Classified Deck</span>
             </button>
           </div>

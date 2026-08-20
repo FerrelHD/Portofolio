@@ -238,17 +238,19 @@ const SpiderSkillWeb = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-8 justify-between w-full max-w-6xl mx-auto">
+    <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 lg:gap-12 justify-center w-full max-w-6xl mx-auto px-2 sm:px-4">
       {/* Interactive Web Constellation SVG with Orbital Motion */}
       <div
-        className="relative w-full max-w-[500px] aspect-square flex items-center justify-center select-none group/web"
+        className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-[440px] lg:max-w-[500px] aspect-square flex items-center justify-center select-none touch-manipulation group/web"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setTimeout(() => setIsPaused(false), 2500)}
       >
         {/* Ambient Radial Web Halo Glow */}
-        <div className="absolute inset-0 bg-spider-red/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 bg-spider-red/10 rounded-full blur-2xl sm:blur-3xl pointer-events-none" />
 
-        <svg viewBox="0 0 500 500" className="w-full h-full drop-shadow-[0_0_35px_rgba(22,93,255,0.25)] overflow-visible">
+        <svg viewBox="0 0 500 500" className="w-full h-full drop-shadow-[0_0_25px_rgba(22,93,255,0.2)] sm:drop-shadow-[0_0_35px_rgba(22,93,255,0.25)] overflow-visible">
           <defs>
             {/* Radial Web Center Glow */}
             <radialGradient id="webCenterGlow" cx="50%" cy="50%" r="50%">
@@ -379,6 +381,9 @@ const SpiderSkillWeb = () => {
                   soundFX.playBeep(440 + node.ring * 100);
                 }}
               >
+                {/* Touch Hit Area (for effortless mobile tapping) */}
+                <circle r="25" fill="transparent" />
+
                 {/* Node Outer Halo on Selection */}
                 {isSelected && (
                   <circle
@@ -433,24 +438,24 @@ const SpiderSkillWeb = () => {
       </div>
 
       {/* Selected Skill Detail Comic Card */}
-      <div className="w-full lg:max-w-md">
+      <div className="w-full max-w-md lg:max-w-md">
         <AnimatePresence mode="wait">
           {selectedSkill && (
             <motion.div
               key={selectedSkill.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="bg-[#14141A] border-3 border-black rounded-2xl p-6 shadow-[6px_6px_0px_#FF1E26] relative overflow-hidden"
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="bg-[#14141A] border-2 sm:border-3 border-black rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-[4px_4px_0px_#FF1E26] sm:shadow-[6px_6px_0px_#FF1E26] relative overflow-hidden"
             >
               {/* Category & Level Badge */}
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 bg-zinc-800/80 px-2.5 py-1 rounded-md">
+              <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+                <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-zinc-400 bg-zinc-800/80 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md">
                   {selectedSkill.category}
                 </span>
                 <span
-                  className={`text-xs font-black uppercase px-2.5 py-1 rounded-md border ${
+                  className={`text-[10px] sm:text-xs font-black uppercase px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md border ${
                     selectedSkill.level === "Proficient"
                       ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/40"
                       : selectedSkill.level === "Familiar"
@@ -463,8 +468,8 @@ const SpiderSkillWeb = () => {
               </div>
 
               {/* Title with Real Icon Image */}
-              <div className="flex items-center gap-3 mb-1">
-                <div className="w-11 h-11 rounded-xl p-2 flex items-center justify-center border-2 border-black shadow-[3px_3px_0_#000] shrink-0 bg-[#1E1E28] overflow-hidden">
+              <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl p-1.5 sm:p-2 flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000] sm:shadow-[3px_3px_0_#000] shrink-0 bg-[#1E1E28] overflow-hidden">
                   <img
                     src={selectedSkill.iconImg}
                     alt={selectedSkill.name}
@@ -473,10 +478,10 @@ const SpiderSkillWeb = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wide leading-none">
+                  <h3 className="text-lg sm:text-2xl font-black text-white uppercase tracking-wide leading-none">
                     {selectedSkill.name}
                   </h3>
-                  <p className="text-xs font-bold text-spider-yellow uppercase tracking-wider mt-1 flex items-center gap-1">
+                  <p className="text-[11px] sm:text-xs font-bold text-spider-yellow uppercase tracking-wider mt-1 flex items-center gap-1">
                     <Zap size={12} />
                     <span>{selectedSkill.levelText}</span>
                   </p>
@@ -484,24 +489,24 @@ const SpiderSkillWeb = () => {
               </div>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed my-3.5">
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed my-2.5 sm:my-3.5">
                 {selectedSkill.desc}
               </p>
 
               {/* Comic Lore / Fun Fact */}
-              <div className="bg-[#1A1A24] border-l-4 border-spider-red p-3 rounded-r-xl">
-                <div className="text-[10px] font-black uppercase tracking-wider text-spider-red mb-0.5 flex items-center gap-1">
+              <div className="bg-[#1A1A24] border-l-4 border-spider-red p-2.5 sm:p-3 rounded-r-xl">
+                <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-spider-red mb-0.5 flex items-center gap-1">
                   <Sparkles size={12} />
                   <span>Spidey Lore / Dev Fact</span>
                 </div>
-                <p className="text-xs text-zinc-300 italic font-medium leading-normal">
+                <p className="text-[11px] sm:text-xs text-zinc-300 italic font-medium leading-normal">
                   "{selectedSkill.fact}"
                 </p>
               </div>
 
               {/* Action hint */}
-              <div className="mt-4 pt-3 border-t border-zinc-800 flex items-center justify-between text-[10px] font-mono text-zinc-500">
-                <span>Hover or click nodes on web matrix</span>
+              <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-zinc-800 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-zinc-500">
+                <span>Tap or click nodes on web matrix</span>
                 <span className="text-spider-blue font-bold">Node #{selectedSkill.id}</span>
               </div>
             </motion.div>
