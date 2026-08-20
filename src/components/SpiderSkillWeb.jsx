@@ -9,47 +9,14 @@ import reactIcon from "../assets/React-icon.svg.webp";
 import tailwindIcon from "../assets/tailwind.svg";
 import typescriptIcon from "../assets/typescript.png";
 import nodejsIcon from "../assets/nodejs.webp";
-import videoEditIcon from "../assets/video editing icon.png";
-import framerIcon from "../assets/framermotionicon.webp";
+import videoEditIcon from "../assets/video editing icon2.jpg";
+import framerIcon from "../assets/framer-motion-icon.png";
 import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "../assets/unityicon.png";
 import figmaIcon from "../assets/figma icon.png";
-import sqlIcon from "../assets/sql icon.svg";
-import aiAgentIcon from "../assets/ai agent icon.png";
-
-// Center Hub: Authentic Sharp Spider-Man Emblem (Matching User Requested Vector)
-const CenterSpiderEmblem = ({ className = "w-8 h-8" }) => (
-  <svg className={className} viewBox="0 0 500 500" fill="currentColor">
-    <g fill="currentColor">
-      {/* Abdomen & Head */}
-      <path d="M 250,195 C 240,175 235,160 235,145 C 235,130 242,120 250,112 C 258,120 265,130 265,145 C 265,160 260,175 250,195 Z" />
-      <path d="M 250,200 C 230,225 218,270 218,310 C 218,360 232,410 250,445 C 268,410 282,360 282,310 C 282,270 270,225 250,200 Z" />
-
-      {/* Top Mandibles */}
-      <path d="M 245,115 L 250,105 L 255,115 Z" />
-
-      {/* Top Left Leg 1 (Long Horn) */}
-      <path d="M 238,135 C 190,40 145,55 125,120 C 145,95 180,85 230,140 Z" />
-      {/* Top Left Leg 2 */}
-      <path d="M 232,160 C 160,100 110,135 100,210 C 122,170 158,155 224,175 Z" />
-
-      {/* Bottom Left Leg 3 */}
-      <path d="M 226,220 C 120,230 70,290 60,370 C 95,310 140,285 220,240 Z" />
-      {/* Bottom Left Leg 4 (Long Bottom Needle) */}
-      <path d="M 230,260 C 170,330 135,400 120,460 C 148,410 178,350 238,280 Z" />
-
-      {/* Top Right Leg 1 (Long Horn) */}
-      <path d="M 262,135 C 310,40 355,55 375,120 C 355,95 320,85 270,140 Z" />
-      {/* Top Right Leg 2 */}
-      <path d="M 268,160 C 340,100 390,135 400,210 C 378,170 342,155 276,175 Z" />
-
-      {/* Bottom Right Leg 3 */}
-      <path d="M 274,220 C 380,230 430,290 440,370 C 405,310 360,285 280,240 Z" />
-      {/* Bottom Right Leg 4 (Long Bottom Needle) */}
-      <path d="M 270,260 C 330,330 365,400 380,460 C 352,410 322,350 262,280 Z" />
-    </g>
-  </svg>
-);
+import sqlIcon from "../assets/sql icon 2.png";
+import aiAgentIcon from "../assets/ai agent icon 2.png";
+import spiderEmblem from "../assets/spidey-emblem.svg";
 
 /* =========================================================================
    SKILL NODES DATA (11 SKILLS — UNREAL REMOVED)
@@ -317,32 +284,14 @@ const SpiderSkillWeb = () => {
             );
           })}
 
-          {/* 4. CENTER HUB: AUTHENTIC SPIDER-MAN EMBLEM */}
+          {/* 4. CENTER HUB: SPIDER-MAN EMBLEM (using <image> to avoid nested SVG overflow) */}
           <g transform={`translate(${cx}, ${cy})`}>
             {/* Outer Pulsing Neon Red Ring */}
-            <circle
-              cx="0"
-              cy="0"
-              r="24"
-              fill="none"
-              stroke="#FF1E26"
-              strokeWidth="2"
-              className="animate-ping opacity-35"
-            />
-            {/* Base Hub Button */}
-            <circle
-              cx="0"
-              cy="0"
-              r="22"
-              fill="#0A0A0A"
-              stroke="#FF1E26"
-              strokeWidth="2.5"
-              className="shadow-2xl"
-            />
-            {/* Center Official Sharp Spider Vector centered at (0,0) */}
-            <g transform="translate(-16, -16)" className="text-white fill-white pointer-events-none">
-              <CenterSpiderEmblem className="w-8 h-8 text-white fill-white" />
-            </g>
+            <circle r="24" fill="none" stroke="#FF1E26" strokeWidth="2" className="animate-ping opacity-35" />
+            {/* Base Hub */}
+            <circle r="22" fill="#0A0A0A" stroke="#FF1E26" strokeWidth="2.5" />
+            {/* Spider Emblem as raster image — fixed pixel size, no overflow */}
+            <image href={spiderEmblem} x="-15" y="-15" width="30" height="30" className="pointer-events-none" style={{ filter: "invert(1)" }} />
           </g>
 
           {/* 5. INTERACTIVE SKILL NODES WITH CLEAN EMBEDDED ICONS */}
@@ -384,7 +333,7 @@ const SpiderSkillWeb = () => {
                   className="transition-all duration-300 group-hover:scale-125 shadow-lg drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
                 />
 
-                {/* Embedded Real Icon Image clipped within circle */}
+                {/* Embedded Real Icon Image clipped within circle, mix-blend-mode removes white bg */}
                 <g clipPath={`url(#clip-${node.id})`} className="pointer-events-none">
                   <image
                     href={node.iconImg}
@@ -394,6 +343,7 @@ const SpiderSkillWeb = () => {
                     height={isSelected ? "22" : "18"}
                     preserveAspectRatio="xMidYMid meet"
                     className="transition-all duration-300"
+                    style={{ mixBlendMode: "screen" }}
                   />
                 </g>
 
