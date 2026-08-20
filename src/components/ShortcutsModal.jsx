@@ -7,6 +7,7 @@ const ShortcutsModal = ({ open, onClose }) => {
   if (!open) return null;
   const items = [
     { key: "S", label: "Trigger Spider-Sense Tingling", accent: "bg-spider-red" },
+    { key: "1-6", label: "Quick jump to sections (About, Projects, Contact)", accent: "bg-spider-yellow" },
     { key: "?", label: "Show / hide this shortcuts panel", accent: "bg-spider-blue" },
     { key: "Tab", label: "Focus skip link & navigate", accent: "bg-spider-yellow" },
     { key: "Esc", label: "Close modals / shortcuts panel", accent: "bg-comic-panel" },

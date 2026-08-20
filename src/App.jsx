@@ -60,8 +60,25 @@ function App() {
 
       // S (huruf s saja tanpa modifier) = Spider Sense
       if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "s" || e.key === "S")) {
-        // Jangan di-preventDefault agar jika di masa depan ada pakai untuk search input tidak bentrok jika editable sudah filter
         triggerSpiderSense();
+        return;
+      }
+
+      // Hotkey 1 - 6 untuk navigasi cepat antar section
+      const sectionKeys = {
+        "1": "#about",
+        "2": "#about",
+        "3": "#services",
+        "4": "#projects",
+        "5": "#skills",
+        "6": "#contact",
+      };
+
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && sectionKeys[e.key]) {
+        const targetEl = document.querySelector(sectionKeys[e.key]);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: "smooth" });
+        }
       }
     };
 
