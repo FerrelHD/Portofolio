@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, X, Check, Music, Play, Pause, Volume2, VolumeX, ShieldAlert } from "lucide-react";
 import backsoundAudio from "../assets/backsound.mp3";
-import spideyEmblem from "../assets/spiderman-emblem.svg";
+import spideyEmblem from "../assets/spiderman-emblem.jpg";
 
 const SUITS = [
   {
