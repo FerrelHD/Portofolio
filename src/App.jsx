@@ -19,6 +19,7 @@ import ComicActionFX from "./components/ComicActionFX";
 import AchievementToast from "./components/AchievementToast";
 import DailyBugleModal from "./components/DailyBugleModal";
 import SpideyBugHunter from "./components/SpideyBugHunter";
+import ComicTicker from "./components/ComicTicker";
 import { achievementManager } from "./lib/achievements";
 import { soundFX } from "./lib/soundFx";
 
@@ -178,9 +179,34 @@ function App() {
 
       <main>
         <Hero />
+        <ComicTicker
+          items={[
+            "📰 THE DAILY BUGLE: WHO IS THIS DEVELOPER?",
+            "🕷️ WEB-SLINGING FULLSTACK ENGINEER IN ACTION",
+            "⚡ CRAFTING ULTRA-FAST NEXT.JS & REACT APPS",
+            "💥 200 OK • ZERO PRODUCTION CRIMES",
+            "🕸️ THWIP! HIGH-PERFORMANCE CODE ARCHITECTURES",
+            "🚀 READY FOR MISSION-CRITICAL DEPLOYMENTS",
+          ]}
+          rotate="-rotate-1"
+          variant="daily-bugle"
+        />
         <About onOpenDailyBugle={() => setDailyBugleOpen(true)} />
         <Services />
         <Projects />
+        <ComicTicker
+          items={[
+            "🔥 HIGH-PERFORMANCE TECH MATRIX LOADED",
+            "⚛️ REACT 19 & NEXT.JS MASTERED",
+            "🌊 TAILWIND CSS STYLED TO PERFECTION",
+            "🎮 60 FPS INTERACTIVE WEB & GAME SYSTEMS",
+            "🧊 3D BLENDER MULTIVERSE COMPUTING",
+            "🤖 MODERN AGENTIC DX ACTIVATED",
+          ]}
+          rotate="rotate-1"
+          reverse={true}
+          variant="daily-bugle"
+        />
         <Skills />
         <Contact />
       </main>

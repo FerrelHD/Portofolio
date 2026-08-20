@@ -990,4 +990,42 @@ body.user-reduce-motion * {
   animation: comic-pop 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+/* =============================================== */
+/* === COMIC TICKER MARQUEE ANIMATION          === */
+/* =============================================== */
+@keyframes comic-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes comic-marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-comic-marquee {
+  display: flex;
+  width: max-content;
+  animation: comic-marquee 28s linear infinite;
+}
+
+.animate-comic-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: comic-marquee-reverse 28s linear infinite;
+}
+
+.animate-comic-marquee:hover,
+.animate-comic-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
 
