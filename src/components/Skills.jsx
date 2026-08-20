@@ -1,38 +1,96 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layout, Video, Gamepad2, Sparkles, Grid, Share2, CheckCircle, Zap, Compass } from "lucide-react";
-import { fadeUp, staggerContainer } from "../lib/animation";
+import {
+  Sparkles,
+  Grid,
+  Share2,
+  Zap,
+  ShieldAlert,
+  Flame,
+  Award,
+  Terminal,
+  Cpu,
+  Bookmark,
+} from "lucide-react";
 import SpiderSkillWeb, { SKILLS_DATA } from "./SpiderSkillWeb";
 import { soundFX } from "../lib/soundFx";
+
+// Skill power mastery percentages & color accents
+const SKILL_POWER_METRICS = {
+  react: { power: 95, color: "#00D8FF", label: "ADVANCED" },
+  tailwind: { power: 98, color: "#38BDF8", label: "EXPERT" },
+  typescript: { power: 90, color: "#3178C6", label: "ADVANCED" },
+  node: { power: 88, color: "#5FA04E", label: "PROFICIENT" },
+  video: { power: 92, color: "#FF1E26", label: "CINEMATIC" },
+  motion: { power: 94, color: "#FF007A", label: "FLUID 60FPS" },
+  blender: { power: 78, color: "#EA7600", label: "MODELING" },
+  unity: { power: 75, color: "#FFFFFF", label: "GAME LOOPS" },
+  figma: { power: 86, color: "#F24E1E", label: "UI / UX" },
+  sql: { power: 72, color: "#00758F", label: "QUERIES" },
+  ai: { power: 80, color: "#A855F7", label: "AGENTIC DX" },
+};
 
 const PROFICIENCY_GROUPS = [
   {
     level: "Proficient",
+    dossierCode: "DOSSIER-01 // DAILY ARSENAL",
     title: "Core Mastery • Daily Driver",
-    subtitle: "Teknologi yang dikuasai secara mendalam untuk arsitektur produksi siap rilis.",
-    badgeClass: "bg-emerald-500/15 text-emerald-400 border-emerald-500/40",
+    subtitle:
+      "Teknologi yang dikuasai secara mendalam untuk arsitektur produksi siap rilis & performa tinggi.",
+    badgeClass: "bg-emerald-500/20 text-emerald-300 border-2 border-emerald-500/50 shadow-[2px_2px_0_#000]",
+    panelShadow: "shadow-[6px_6px_0_#10B981]",
     skills: SKILLS_DATA.filter((s) => s.level === "Proficient"),
   },
   {
     level: "Familiar",
+    dossierCode: "DOSSIER-02 // BATTLE TESTED",
     title: "Working Knowledge • Delivered",
-    subtitle: "Teknologi dengan pemahaman fundamental kokoh dan telah diimplementasikan dalam berbagai project.",
-    badgeClass: "bg-sky-500/15 text-sky-400 border-sky-500/40",
+    subtitle:
+      "Teknologi dengan pemahaman fundamental kokoh dan telah diimplementasikan dalam berbagai project nyata.",
+    badgeClass: "bg-sky-500/20 text-sky-300 border-2 border-sky-500/50 shadow-[2px_2px_0_#000]",
+    panelShadow: "shadow-[6px_6px_0_#165DFF]",
     skills: SKILLS_DATA.filter((s) => s.level === "Familiar"),
   },
   {
     level: "Exploring",
+    dossierCode: "DOSSIER-03 // NEXT-GEN RESEARCH",
     title: "Next-Gen • Modern Tooling",
-    subtitle: "Eksplorasi aktif pada teknologi mutakhir dan agentic workflows untuk meningkatkan produktivitas.",
-    badgeClass: "bg-amber-500/15 text-amber-400 border-amber-500/40",
+    subtitle:
+      "Eksplorasi aktif pada teknologi mutakhir, AI agentic workflows, dan automated productivity pipelines.",
+    badgeClass: "bg-amber-500/20 text-amber-300 border-2 border-amber-500/50 shadow-[2px_2px_0_#000]",
+    panelShadow: "shadow-[6px_6px_0_#FFD500]",
     skills: SKILLS_DATA.filter((s) => s.level === "Exploring"),
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 25, scale: 0.94 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 280,
+      damping: 22,
+      mass: 0.75,
+    },
+  },
+};
+
 const Skills = () => {
   const [viewMode, setViewMode] = useState("web"); // "web" | "deck"
-  const [activeTab, setActiveTab] = useState("all");
 
   const handleToggleView = (mode) => {
     setViewMode(mode);
@@ -40,11 +98,14 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-transparent">
+    <section
+      id="skills"
+      className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden bg-transparent"
+    >
       <div className="relative max-w-7xl mx-auto z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase mb-3">
+          <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase mb-3 shadow-[3px_3px_0_#000]">
             <Sparkles size={14} />
             SUPERHERO ABILITY MATRIX
           </span>
@@ -53,18 +114,19 @@ const Skills = () => {
             SKILLS & TECH STACK
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 mt-3 font-medium">
-            An interactive map of my technical stack across web development, game systems, and visual computing. Hover over each node to view detailed proficiencies.
+            An interactive comic dossier of my technical capabilities across modern web systems, visual arts, and computing engines.
           </p>
 
           {/* View Mode Toggle Buttons */}
-          <div className="inline-flex items-center p-1 bg-[#14141C] border-2 border-black rounded-xl mt-6 shadow-[3px_3px_0_#000] max-w-full overflow-x-auto">
+          <div className="inline-flex items-center p-1.5 bg-[#14141C] border-3 border-black rounded-2xl mt-6 shadow-[4px_4px_0_#000] max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => handleToggleView("web")}
-              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap ${viewMode === "web"
-                  ? "bg-spider-red text-white shadow-[0_2px_10px_rgba(255,30,38,0.4)]"
-                  : "text-zinc-400 hover:text-white"
-                }`}
+              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap border-2 ${
+                viewMode === "web"
+                  ? "bg-spider-red text-white border-black shadow-[2px_2px_0_#000]"
+                  : "border-transparent text-zinc-400 hover:text-white"
+              }`}
             >
               <Share2 size={13} />
               <span>Spider Web Matrix</span>
@@ -72,10 +134,11 @@ const Skills = () => {
             <button
               type="button"
               onClick={() => handleToggleView("deck")}
-              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap ${viewMode === "deck"
-                  ? "bg-spider-blue text-white shadow-[0_2px_10px_rgba(22,93,255,0.4)]"
-                  : "text-zinc-400 hover:text-white"
-                }`}
+              className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap border-2 ${
+                viewMode === "deck"
+                  ? "bg-spider-blue text-white border-black shadow-[2px_2px_0_#000]"
+                  : "border-transparent text-zinc-400 hover:text-white"
+              }`}
             >
               <Grid size={13} />
               <span>Classified Deck</span>
@@ -95,71 +158,162 @@ const Skills = () => {
           </motion.div>
         )}
 
-        {/* View 2: Classified Level Deck */}
+        {/* View 2: Classified Level Deck (Comic Trading Cards) */}
         {viewMode === "deck" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="space-y-10"
+            className="space-y-12"
           >
             {PROFICIENCY_GROUPS.map((group) => (
               <div
                 key={group.level}
-                className="bg-[#121218] border-3 border-black rounded-2xl p-6 sm:p-8 shadow-[5px_5px_0_#165DFF]"
+                className={`bg-[#121218] border-3 sm:border-4 border-black rounded-2xl sm:rounded-3xl p-5 sm:p-8 ${group.panelShadow} relative overflow-hidden`}
               >
+                {/* Halftone / Strip Background Accent */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-white/[0.03] to-transparent pointer-events-none" />
+
                 {/* Group Level Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-black pb-5 mb-6">
                   <div>
-                    <div className="flex items-center gap-3">
-                      <span className={`text-xs font-black uppercase px-3 py-1 rounded-md border ${group.badgeClass}`}>
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-spider-yellow bg-black/60 px-2 py-0.5 rounded border border-black shadow-[1px_1px_0_#000]">
+                        {group.dossierCode}
+                      </span>
+                      <span className={`text-[10px] sm:text-xs font-black uppercase px-2.5 py-0.5 rounded-md ${group.badgeClass}`}>
                         {group.level}
                       </span>
-                      <h3 className="text-xl font-black uppercase tracking-wide text-white">
-                        {group.title}
-                      </h3>
                     </div>
-                    <p className="text-xs text-zinc-400 mt-1 font-medium">
+                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+                      {group.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-300 mt-1 font-medium max-w-2xl leading-relaxed">
                       {group.subtitle}
                     </p>
                   </div>
-                  <span className="text-xs font-mono text-zinc-500 font-bold">
-                    {group.skills.length} Capabilities
-                  </span>
+                  <div className="self-start sm:self-center flex items-center gap-1.5 bg-[#1B1B26] border-2 border-black px-3 py-1.5 rounded-xl shadow-[2px_2px_0_#000]">
+                    <ShieldAlert size={14} className="text-spider-yellow" />
+                    <span className="text-xs font-mono font-black text-white">
+                      {group.skills.length} TECH ASSETS
+                    </span>
+                  </div>
                 </div>
 
-                {/* Grid of Tech Stack Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {group.skills.map((skill) => (
-                    <div
-                      key={skill.id}
-                      className="bg-[#1A1A24] border-2 border-black rounded-xl p-4 hover:border-spider-red transition-all duration-300 group hover:-translate-y-1 shadow-[3px_3px_0_#000]"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <img
-                            src={skill.iconImg}
-                            alt={skill.name}
-                            className="w-5 h-5 object-contain"
-                            style={{ filter: skill.id === "unity" ? "invert(1)" : "none" }}
-                          />
-                          <span className="font-black text-sm text-white group-hover:text-spider-red transition-colors">
-                            {skill.name}
-                          </span>
+                {/* Grid of Comic Trading Cards */}
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="show"
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+                >
+                  {group.skills.map((skill) => {
+                    const metrics = SKILL_POWER_METRICS[skill.id] || {
+                      power: 80,
+                      color: "#FF1E26",
+                      label: "ACTIVE",
+                    };
+                    const isUnity = skill.id === "unity";
+
+                    return (
+                      <motion.div
+                        key={skill.id}
+                        variants={cardVariants}
+                        whileHover={{ y: -6, scale: 1.02 }}
+                        onClick={() => soundFX.playBeep(650)}
+                        className="bg-[#181824] border-3 border-black rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#FF1E26] hover:border-spider-red transition-all group flex flex-col justify-between cursor-pointer relative overflow-hidden"
+                      >
+                        {/* Top Accent Bar */}
+                        <div
+                          className="absolute top-0 left-0 right-0 h-1"
+                          style={{ backgroundColor: metrics.color }}
+                        />
+
+                        {/* Card Header: Icon + Title + Category */}
+                        <div>
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="flex items-center gap-3">
+                              {/* Avatar Box */}
+                              <div className="w-11 h-11 rounded-xl bg-[#0D0D14] border-2 border-black flex items-center justify-center p-2 shrink-0 shadow-[2px_2px_0_#000] group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                                <img
+                                  src={skill.iconImg}
+                                  alt={skill.name}
+                                  className="w-full h-full object-contain"
+                                  style={{
+                                    mixBlendMode: isUnity ? "normal" : "screen",
+                                    filter: isUnity ? "invert(1)" : "none",
+                                  }}
+                                />
+                              </div>
+
+                              <div>
+                                <h4 className="font-black text-sm sm:text-base text-white group-hover:text-spider-red transition-colors leading-tight">
+                                  {skill.name}
+                                </h4>
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                                  {skill.category}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Power Level Label Chip */}
+                            <span
+                              className="text-[9px] font-black uppercase px-2 py-0.5 rounded-md border border-black shadow-[1.5px_1.5px_0_#000] shrink-0"
+                              style={{
+                                backgroundColor: `${metrics.color}20`,
+                                color: metrics.color,
+                                borderColor: `${metrics.color}60`,
+                              }}
+                            >
+                              {metrics.label}
+                            </span>
+                          </div>
+
+                          {/* Skill Description */}
+                          <p className="text-xs text-zinc-300 leading-relaxed mb-3.5 font-medium">
+                            {skill.desc}
+                          </p>
                         </div>
-                        <span className="text-[10px] uppercase font-bold text-zinc-400 bg-zinc-800/60 px-2 py-0.5 rounded">
-                          {skill.category}
-                        </span>
-                      </div>
-                      <p className="text-xs text-zinc-300 leading-relaxed mb-3">
-                        {skill.desc}
-                      </p>
-                      <div className="text-[11px] text-zinc-400 italic bg-black/40 p-2 rounded border-l-2 border-spider-yellow">
-                        "{skill.fact}"
-                      </div>
-                    </div>
-                  ))}
-                </div>
+
+                        {/* Bottom Section: Power Meter + Comic Fact Bubble */}
+                        <div className="space-y-3 pt-2">
+                          {/* Comic Arcade Power Meter */}
+                          <div className="bg-[#0E0E16] border-2 border-black rounded-lg p-2 shadow-[2px_2px_0_#000]">
+                            <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-wider text-zinc-400 mb-1">
+                              <span className="flex items-center gap-1">
+                                <Zap size={10} style={{ color: metrics.color }} />
+                                MASTERY LEVEL
+                              </span>
+                              <span className="font-mono text-white font-black">
+                                {metrics.power}%
+                              </span>
+                            </div>
+
+                            {/* Progress Energy Bar */}
+                            <div className="w-full h-2 bg-black/80 rounded-sm border border-zinc-800 p-0.5 flex items-center overflow-hidden">
+                              <div
+                                className="h-full rounded-xs transition-all duration-500"
+                                style={{
+                                  width: `${metrics.power}%`,
+                                  backgroundColor: metrics.color,
+                                  boxShadow: `0 0 8px ${metrics.color}88`,
+                                }}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Spidey Comic Fact Speech Box */}
+                          <div className="text-[10.5px] leading-relaxed text-zinc-300 italic bg-[#0B0B10] p-2.5 rounded-xl border-2 border-black border-l-4 border-l-spider-yellow shadow-[2px_2px_0_#000]">
+                            <div className="not-italic text-[8.5px] font-black uppercase tracking-widest text-spider-yellow flex items-center gap-1 mb-1">
+                              <span>🕷️ DEV FACT</span>
+                            </div>
+                            "{skill.fact}"
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
               </div>
             ))}
           </motion.div>
