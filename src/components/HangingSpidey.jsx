@@ -13,7 +13,7 @@ const HangingSpidey = () => {
       <img
         src={spideyHangingGif}
         alt="Hanging Spider-Man Easter Egg"
-        className="w-28 sm:w-36 md:w-40 h-auto object-contain mix-blend-multiply drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+        className="w-20 sm:w-24 md:w-28 h-auto object-contain mix-blend-multiply drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
       />
     </motion.div>
   );
