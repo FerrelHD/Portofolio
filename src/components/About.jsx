@@ -385,7 +385,13 @@ const About = ({ onOpenDailyBugle }) => {
         <motion.div variants={fadeUp} className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase text-white">
             Beyond The{" "}
-            <span className="text-spider-yellow drop-shadow-[3px_3px_0_#000] italic">
+            <span
+              className="text-spider-yellow italic inline-block px-1 select-none"
+              style={{
+                textShadow:
+                  "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
+              }}
+            >
               Mask
             </span>
           </h2>
