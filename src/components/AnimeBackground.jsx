@@ -2,7 +2,7 @@ import React from "react";
 
 const AnimeBackground = () => {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#F7F4EE]">
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#EDEAE2]">
 
       {/* Layer 5: Subtle Comic Grain / Noise (SVG inline data) */}
       <svg

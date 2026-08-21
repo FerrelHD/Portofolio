@@ -4,28 +4,31 @@
   --font-display: "Syne", sans-serif;
   --font-body: "DM Sans", sans-serif;
 
-  /* COMIC EDITORIAL ARTBOOK PALETTE */
-  --color-spider-red: #D9231E;
+  /* BRAND CORE & NEUTRALS (EDITORIAL COMIC / VINTAGE PAPER) */
+  --color-spider-red: #D31F1F;
+  --color-spider-red-hover: #B71919;
+  --color-spider-red-light: #FDE8E8;
   --color-spider-blue: #165DFF;
   --color-spider-yellow: #FFD500;
-  --color-spider-black: #111215;
+  --color-spider-black: #1A1A1A;
 
-  --color-comic-surface: #F7F4EE;
+  --color-comic-surface: #EDEAE2;
   --color-comic-panel: #FFFFFF;
-  --color-comic-ink: #111215;
-  --color-comic-halftone: rgba(0, 0, 0, 0.04);
+  --color-comic-ink: #1A1A1A;
+  --color-comic-ink-muted: #6B6661;
+  --color-comic-charcoal: #2B2D2F;
+  --color-comic-border: #DCD8CE;
   --color-pop-magenta: #FF4081;
 
-  --color-ink-stroke: #18181B;
-  --color-glow-red: rgba(217, 35, 30, 0.25);
-  --color-glow-blue: rgba(22, 93, 255, 0.25);
+  --color-ink-stroke: #1A1A1A;
 
   /* Utility tokens */
-  --color-primary: var(--color-spider-red);
+  --color-primary: #D31F1F;
+  --color-primary-hover: #B71919;
   --color-secondary: var(--color-spider-blue);
   --color-accent: var(--color-spider-yellow);
-  --color-dark: var(--color-spider-black);
-  --color-off-white: var(--color-comic-ink);
+  --color-dark: #1A1A1A;
+  --color-off-white: #EDEAE2;
 }
 
 /* ============================================ */
@@ -730,7 +733,7 @@
 }
 
 .tracker-bar {
-  background: #18181B;
+  background: var(--color-spider-red);
   color: #FFFFFF;
   border-bottom: 3px solid var(--color-ink-stroke);
   padding: 12px 18px;
@@ -754,12 +757,12 @@
 }
 
 .tracker-status-offline {
-  background: #555;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .tracker-inner-display {
   position: relative;
-  background: #F7F4EE;
+  background: #EDEAE2;
   min-height: 400px;
 }
 

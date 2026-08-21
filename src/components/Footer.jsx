@@ -7,59 +7,27 @@ const Footer = () => {
   const [caseStudyOpen, setCaseStudyOpen] = useState(false);
   return (
     <footer
-      className="relative overflow-hidden py-8 sm:py-12 bg-spider-black border-t-[3px] border-spider-yellow"
+      className="relative overflow-hidden py-8 sm:py-12 bg-spider-red text-white border-t-[3.5px] border-black"
     >
-      {/* Halftone overlay */}
-      <div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay-sm" />
-      </div>
-
-      {/* Subtle web pattern in corner */}
-      <svg
-        className="absolute -top-[60%] -right-[5%] w-[45%] h-[200%] opacity-[0.05] pointer-events-none rotate-180"
-        viewBox="0 0 400 400"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <g fill="none" stroke="currentColor" strokeWidth="1" className="text-spider-yellow">
-          <circle cx="400" cy="0" r="40" />
-          <circle cx="400" cy="0" r="80" />
-          <circle cx="400" cy="0" r="120" />
-          <circle cx="400" cy="0" r="160" />
-          <circle cx="400" cy="0" r="200" />
-          <circle cx="400" cy="0" r="240" />
-          <circle cx="400" cy="0" r="280" />
-          <circle cx="400" cy="0" r="320" />
-          <line x1="400" y1="0" x2="400" y2="-400" />
-          <line x1="400" y1="0" x2="800" y2="0" />
-          <line x1="400" y1="0" x2="0" y2="-400" transform="rotate(30 400 0)" />
-          <line x1="400" y1="0" x2="0" y2="-400" transform="rotate(60 400 0)" />
-          <line x1="400" y1="0" x2="0" y2="-400" transform="rotate(-30 400 0)" />
-        </g>
-      </svg>
-
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* ============ MAIN FOOTER: 3 COLUMNS ============ */}
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6 md:gap-8 text-center md:text-left mb-8 md:mb-10">
           {/* LEFT COLUMN: Copyright + Logo Mark */}
           <div className="flex items-center gap-3 justify-center md:justify-start order-2 md:order-1">
             {/* Spider Icon Chip */}
-            <span className="inline-flex items-center justify-center w-10 h-10 bg-spider-red comic-chip">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-comic-ink">
+            <span className="inline-flex items-center justify-center w-10 h-10 bg-white comic-chip text-spider-red shadow-[2px_2px_0_#000]">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <circle cx="12" cy="12" r="3" />
                 <path
                   d="M12 5.5v2M12 16.5v2M5.5 12h2M16.5 12h2M7 7l1.5 1.5M15.5 15.5L17 17M7 17l1.5-1.5M15.5 8.5L17 7"
                   stroke="currentColor"
-                  strokeWidth="1.8"
+                  strokeWidth="2"
                   fill="none"
                   strokeLinecap="round"
                 />
               </svg>
             </span>
-            <p className="text-[11px] sm:text-xs font-black tracking-[0.2em] uppercase text-comic-ink/70 leading-tight">
+            <p className="text-[11px] sm:text-xs font-black tracking-[0.2em] uppercase text-white leading-tight">
               © 2026 Ferrel Rashad.
               <br className="md:hidden" />
               <span className="hidden md:inline"> </span>
@@ -73,12 +41,10 @@ const Footer = () => {
               {
                 name: "LinkedIn",
                 href: "https://www.linkedin.com/in/ferrel-rashad-8a165514b/",
-                accent: "bg-spider-blue",
               },
               {
                 name: "GitHub",
                 href: "https://github.com/FerrelHD",
-                accent: "bg-comic-panel",
               },
             ].map((link) => (
               <a
@@ -86,7 +52,7 @@ const Footer = () => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group relative ${link.accent} comic-chip px-4 py-2 text-comic-ink hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active`}
+                className="group relative bg-white text-spider-black comic-chip px-5 py-2.5 hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active transition-all active:pop-shadow-active shadow-[3px_3px_0_#000]"
               >
                 <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.22em]">
                   {link.name}
@@ -97,10 +63,10 @@ const Footer = () => {
 
           {/* RIGHT COLUMN: Build Credit */}
           <div className="flex items-center gap-2 justify-center md:justify-end order-3">
-            <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] uppercase text-comic-ink/70">
+            <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] uppercase text-white/90">
               Built With
             </span>
-            <span className="inline-flex items-center gap-1.5 bg-spider-red comic-chip text-comic-ink px-2.5 py-1">
+            <span className="inline-flex items-center gap-1.5 bg-white text-spider-red comic-chip px-3 py-1 shadow-[2px_2px_0_#000]">
               <span className="w-1.5 h-1.5 bg-spider-yellow comic-chip" />
               <span className="text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
                 React + Framer
@@ -111,30 +77,22 @@ const Footer = () => {
 
         {/* ============ PROGRESS TRACKER STRIP (FITUR #12) ============ */}
         <div
-          className="border-t-2 border-comic-panel pt-5 sm:pt-6 overflow-hidden relative"
+          className="border-t-2 border-white/20 pt-5 sm:pt-6 overflow-hidden relative"
         >
-          {/* Diagonal speed lines (comic) */}
-          <div
-            className="absolute inset-0 opacity-[0.08] pointer-events-none"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(-25deg, transparent 0px, transparent 16px, var(--color-spider-yellow) 16px, var(--color-spider-yellow) 17px)",
-            }}
-          />
           <div
             onClick={() => setCaseStudyOpen(true)}
             className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 cursor-pointer group"
           >
             {/* 1. Kiri: ISSUE Badge */}
-            <span className="inline-flex items-center gap-2 bg-spider-red comic-chip text-comic-ink px-3.5 py-1.5 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm group-hover:bg-spider-yellow group-hover:text-spider-black transition-colors">
-              <span className="w-1.5 h-1.5 bg-spider-yellow comic-chip animate-pulse" />
+            <span className="inline-flex items-center gap-2 bg-spider-yellow text-spider-black comic-chip px-3.5 py-1.5 font-black text-[10px] tracking-[0.24em] uppercase shrink-0 pop-shadow-sm group-hover:bg-white transition-colors">
+              <span className="w-1.5 h-1.5 bg-spider-red comic-chip animate-pulse" />
               ISSUE #{String(NEXT_ISSUE.num).padStart(3, "0")} • Click to Read
             </span>
 
             {/* 2. Kanan: Next Up Status */}
             <div className="flex items-center gap-2 text-center md:text-right shrink-0">
-              <span className="text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-comic-ink/90">
-                Coming Next: <span className="text-spider-yellow underline decoration-spider-yellow/50 underline-offset-4">{NEXT_ISSUE.nextUp}</span>
+              <span className="text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase text-white">
+                Coming Next: <span className="text-spider-yellow underline decoration-spider-yellow/60 underline-offset-4">{NEXT_ISSUE.nextUp}</span>
               </span>
             </div>
           </div>

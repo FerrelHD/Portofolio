@@ -468,15 +468,15 @@ const Projects = () => {
           className={`tracker-frame ${justOpened ? "tracker-frame-on" : ""}`}
         >
           {/* TOP BAR */}
-          <div className="tracker-bar">
+          <div className="tracker-bar bg-spider-red text-white">
             <div className="flex items-center gap-3 min-w-0">
               <Radio size={18} strokeWidth={2.5} className="text-spider-yellow flex-shrink-0" />
-              <span className="font-black text-[11px] sm:text-xs tracking-[0.18em] uppercase text-comic-ink truncate">
+              <span className="font-black text-[11px] sm:text-xs tracking-[0.18em] uppercase text-white truncate">
                 Mission Archives Tracker
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="hidden sm:block font-black text-[10px] tracking-[0.18em] uppercase text-comic-ink/80">
+              <span className="hidden sm:block font-black text-[10px] tracking-[0.18em] uppercase text-white/90">
                 {isOpen ? `Active: ${activeCount}` : "Terminal Locked"}
               </span>
               <div
@@ -486,7 +486,7 @@ const Projects = () => {
               />
               <span
                 className={`font-black text-[10px] tracking-[0.18em] uppercase ${
-                  isOpen ? "text-spider-yellow" : "text-comic-ink/50"
+                  isOpen ? "text-spider-yellow" : "text-white/70"
                 }`}
               >
                 {isOpen ? "ONLINE" : "OFFLINE"}

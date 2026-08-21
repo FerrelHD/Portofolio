@@ -60,7 +60,7 @@ const Navbar = ({ onOpenDeck }) => {
   const backgroundColor = useTransform(
     smoothScrollY,
     [0, 80],
-    ["rgba(247, 244, 238, 0)", "rgba(247, 244, 238, 0.95)"]
+    ["rgba(237, 234, 226, 0)", "rgba(237, 234, 226, 0.95)"]
   );
   const backdropBlur = useTransform(
     smoothScrollY,
