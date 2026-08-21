@@ -378,7 +378,7 @@ const About = ({ onOpenDailyBugle }) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white"
+      className="py-24 sm:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_calc(100%-2.5vw),0_100%)]"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* SECTION HEADER */}

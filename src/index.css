@@ -119,6 +119,25 @@
     color: var(--color-comic-ink);
   }
 
+  /* ===== Signature 3D Comic Pop Text Shadows ===== */
+  .comic-3d-text-red {
+    color: #D31F1F;
+    text-shadow:
+      -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000,
+      0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000,
+      1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8,
+      3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5);
+  }
+
+  .comic-3d-text-yellow {
+    color: #FFD500;
+    text-shadow:
+      -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000,
+      0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000,
+      1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8,
+      3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5);
+  }
+
   /* ===== Halftone Dot Pattern Overlay ===== */
   .halftone-overlay {
     background-image: radial-gradient(circle, var(--color-comic-halftone) 1.2px, transparent 1.2px);

@@ -111,7 +111,16 @@ const Skills = () => {
           </span>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-comic-ink leading-none">
-            SKILLS & TECH STACK
+            SKILLS &{" "}
+            <span
+              className="text-[#D31F1F] italic inline-block px-1 select-none"
+              style={{
+                textShadow:
+                  "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
+              }}
+            >
+              TECH STACK
+            </span>
           </h2>
           <p className="text-sm sm:text-base text-comic-ink/70 mt-3 font-medium">
             An interactive comic dossier of my technical capabilities across modern web systems, visual arts, and computing engines.

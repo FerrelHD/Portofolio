@@ -76,17 +76,17 @@ const StickyComicTicker = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-2 sm:py-2.5 select-none transition-colors duration-500 ease-in-out font-black text-xs sm:text-sm tracking-[0.2em] uppercase ${colorStyles}`}
+      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-3 sm:py-3.5 select-none transition-colors duration-500 ease-in-out font-black text-sm sm:text-base tracking-[0.24em] uppercase ${colorStyles}`}
       aria-label="Live Comic Ribbon Ticker"
     >
-      <div className="animate-comic-marquee flex items-center gap-6 sm:gap-8 whitespace-nowrap will-change-transform">
+      <div className="animate-comic-marquee flex items-center gap-7 sm:gap-10 whitespace-nowrap will-change-transform">
         {displayItems.map((word, index) => (
           <React.Fragment key={index}>
-            <span className="font-black tracking-[0.22em] shrink-0">{word}</span>
+            <span className="font-black tracking-[0.24em] shrink-0">{word}</span>
             <img
               src={spiderEmblem}
               alt="Spider Emblem"
-              className="w-4 h-4 sm:w-5 sm:h-5 object-contain shrink-0 transition-all duration-300"
+              className="w-5 h-5 sm:w-6 sm:h-6 object-contain shrink-0 transition-all duration-300"
               style={{ filter: emblemFilter }}
             />
           </React.Fragment>
