@@ -5,7 +5,6 @@ import {
   X,
   Printer,
   Download,
-  Loader2,
   ChevronLeft,
   ChevronRight,
   Code2,
@@ -61,7 +60,6 @@ const SLIDES = [
 
 const PortfolioDeckModal = ({ isOpen, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isGenerating, setIsGenerating] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => {
@@ -87,51 +85,6 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
   const handlePrint = () => {
     soundFX.playBeep(600);
     window.print();
-  };
-
-  const handleDirectDownload = async () => {
-    if (isGenerating) return;
-    setIsGenerating(true);
-    soundFX.playBeep(600);
-
-    try {
-      const html2pdfModule = await import("html2pdf.js");
-      const html2pdf = html2pdfModule.default || html2pdfModule;
-      const element = document.getElementById("pdf-deck-export-source");
-
-      if (!element) {
-        window.print();
-        return;
-      }
-
-      const opt = {
-        margin: 0,
-        filename: "Ferrel_Rashad_Akeyla_Portfolio_Deck.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          backgroundColor: "#111318",
-          windowWidth: 1200,
-        },
-        jsPDF: {
-          unit: "px",
-          format: [1200, 675],
-          orientation: "landscape",
-          hotfixes: ["px_scaling"],
-        },
-        pagebreak: { mode: ["css", "legacy"], after: ".pdf-slide-break" },
-      };
-
-      await html2pdf().set(opt).from(element).save();
-      soundFX.playSenseBuzz();
-    } catch (err) {
-      console.error("PDF Export error:", err);
-      window.print();
-    } finally {
-      setIsGenerating(false);
-    }
   };
 
   // Keyboard navigation
@@ -181,25 +134,19 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Direct Auto-Download PDF Button */}
-            <button
-              onClick={handleDirectDownload}
-              disabled={isGenerating}
-              className="flex items-center gap-1.5 bg-spider-yellow hover:bg-white text-spider-black px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider comic-chip transition-all shadow-[2px_2px_0_#000] disabled:opacity-75 cursor-pointer"
-              title="Download 5-Slide PDF Presentation Deck directly"
+            {/* Direct Instant Download PDF Link */}
+            <a
+              href={`${import.meta.env.BASE_URL}Ferrel_Rashad_Portfolio_Deck.pdf`}
+              download="Ferrel_Rashad_Portfolio_Deck.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => soundFX.playBeep(600)}
+              className="flex items-center gap-1.5 bg-spider-yellow hover:bg-white text-spider-black px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider comic-chip transition-all shadow-[2px_2px_0_#000] cursor-pointer"
+              title="Download High-Res Landscape PDF Presentation Deck directly"
             >
-              {isGenerating ? (
-                <>
-                  <Loader2 size={14} className="animate-spin text-spider-red" />
-                  <span>Generating PDF...</span>
-                </>
-              ) : (
-                <>
-                  <Download size={14} />
-                  <span>Download PDF</span>
-                </>
-              )}
-            </button>
+              <Download size={14} />
+              <span>Download PDF</span>
+            </a>
 
             {/* Quick Print Button */}
             <button
@@ -221,6 +168,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
             </button>
           </div>
         </div>
+
 
 
         {/* MAIN SLIDE VIEW CONTAINER (Screen View) */}
