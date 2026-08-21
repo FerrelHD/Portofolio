@@ -121,11 +121,10 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 transition-all duration-200 ${
-                  isActive
+                className={`relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 transition-all duration-200 ${isActive
                     ? "text-spider-black bg-spider-yellow comic-chip"
                     : "text-comic-ink/80 hover:text-spider-black hover:bg-spider-yellow hover:comic-chip"
-                }`}
+                  }`}
               >
                 {/* THWIP! Badge pop-up tepat di atas link aktif */}
                 <AnimatePresence>
@@ -199,11 +198,10 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`relative z-10 text-sm font-black uppercase tracking-[0.18em] py-2.5 px-4 comic-chip ${
-                    activeId === link.id
+                  className={`relative z-10 text-sm font-black uppercase tracking-[0.18em] py-2.5 px-4 comic-chip ${activeId === link.id
                       ? "bg-spider-yellow text-spider-black"
                       : "bg-comic-panel text-comic-ink/90 hover:bg-spider-blue hover:text-comic-ink"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </a>

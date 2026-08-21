@@ -5,11 +5,12 @@ import "lenis/dist/lenis.css";
 
 const SmoothScroll = () => {
   useEffect(() => {
-    // Skip smooth scroll if reduced motion is enabled
+    // Skip smooth scroll if reduced motion is enabled or on mobile touch screens for 60fps native momentum scrolling
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const bodyReduced = document.body.classList.contains("user-reduce-motion");
+    const isMobile = window.innerWidth < 768 || ("ontouchstart" in window && window.innerWidth < 1024);
 
-    if (prefersReduced || bodyReduced) return;
+    if (prefersReduced || bodyReduced || isMobile) return;
 
     const lenis = new Lenis({
       duration: 1.4,

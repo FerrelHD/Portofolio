@@ -12,8 +12,6 @@ import BackToTop from "./components/BackToTop";
 import PageLoader from "./components/PageLoader";
 import ScrollFX from "./components/ScrollFX";
 import SmoothScroll from "./components/SmoothScroll";
-import SpiderGadgetDrawer from "./components/SpiderGadgetDrawer";
-import ComicActionFX from "./components/ComicActionFX";
 import AchievementToast from "./components/AchievementToast";
 import ComicTicker from "./components/ComicTicker";
 import { achievementManager } from "./lib/achievements";
@@ -24,6 +22,8 @@ const DailyBugleModal = lazy(() => import("./components/DailyBugleModal"));
 const SpideyBugHunter = lazy(() => import("./components/SpideyBugHunter"));
 const ShortcutsModal = lazy(() => import("./components/ShortcutsModal"));
 const CommandPalette = lazy(() => import("./components/CommandPalette"));
+const SpiderGadgetDrawer = lazy(() => import("./components/SpiderGadgetDrawer"));
+const ComicActionFX = lazy(() => import("./components/ComicActionFX"));
 
 // Skill Real Asset Icons
 import reactIcon from "./assets/React-icon.svg.webp";
@@ -218,11 +218,11 @@ function App() {
       <PageLoader />
 
       {/* Global Interactive Overlays */}
-      <ComicActionFX />
       <AchievementToast />
 
       {/* Lazy Loaded Interactive Overlays & Modals */}
       <Suspense fallback={null}>
+        <ComicActionFX />
         {dailyBugleOpen && (
           <DailyBugleModal isOpen={dailyBugleOpen} onClose={() => setDailyBugleOpen(false)} />
         )}
@@ -241,6 +241,10 @@ function App() {
             triggerSpiderSense={triggerSpiderSense}
           />
         )}
+        <SpiderGadgetDrawer
+          onOpenBugHunter={() => setBugHunterOpen(true)}
+          onOpenDailyBugle={() => setDailyBugleOpen(true)}
+        />
       </Suspense>
 
       <a href="#about" className="skip-link">
@@ -270,10 +274,6 @@ function App() {
       </main>
 
       <Footer />
-      <SpiderGadgetDrawer
-        onOpenBugHunter={() => setBugHunterOpen(true)}
-        onOpenDailyBugle={() => setDailyBugleOpen(true)}
-      />
       <BackToTop />
     </div>
   );

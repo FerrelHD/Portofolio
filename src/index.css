@@ -1562,6 +1562,22 @@ body.user-reduce-motion * {
   color: #FF1E26;
 }
 
+/* =============================================== */
+/* === PERFORMANCE OPTIMIZATIONS               === */
+/* =============================================== */
+main > section:not(#hero) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+.comic-ticker-container,
+.spider-web-canvas,
+.comic-action-fx {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+
 
 
 

@@ -66,6 +66,17 @@ Inspired by classic Spider-Man comic books, the UI blends retro halftone Ben-Day
 
 ---
 
+## ⚡ Performance & Optimization Architecture
+
+This application is engineered for maximum performance, minimal bundle weight, and smooth 60 FPS execution across desktop and mobile devices:
+
+- 🚀 **Dynamic Code-Splitting & Lazy Loading (`React.lazy`)**: Interactive overlays, modals, and heavy canvas components (`SpideyBugHunter`, `DailyBugleModal`, `CommandPalette`, `SpiderGadgetDrawer`, `ComicActionFX`) are loaded dynamically, reducing initial JavaScript bundle size significantly for rapid FCP & LCP.
+- 📱 **Adaptive 60 FPS Mobile Touch Scroll**: Automatically disables heavy smooth-scroll polyfills on touch screens (`< 768px`), using native browser momentum scrolling for zero-lag mobile navigation.
+- 🔊 **Zero-Bloat Web Audio API Synthesizer**: Procedural Web Audio oscillators generate retro 8-bit sound effects (web-shooter THWIP!, chiptune beeps, victory fanfare) directly in code without requiring external audio asset network downloads.
+- 🎨 **CSS Hardware Acceleration & DOM Scaffolding**: Utilizes `content-visibility: auto` on offscreen sections and GPU composite layers (`transform: translateZ(0)`) to eliminate frame drops during rapid scrolling.
+
+---
+
 ## 🛠️ Tech Stack & Dependencies
 
 | Category | Technologies / Libraries |
