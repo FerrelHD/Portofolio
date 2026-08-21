@@ -86,8 +86,6 @@ const BackToTop = () => {
               <path d="M7.5 12 Q12 8.5 16.5 12" />
               <circle cx="12" cy="20" r="2" fill="currentColor" stroke="none" />
             </svg>
-            {/* Hover tooltip */}
-            <span className="web-tooltip hidden sm:inline-block">Swing Up!</span>
           </motion.button>
         )}
       </AnimatePresence>

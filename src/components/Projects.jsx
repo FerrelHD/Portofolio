@@ -442,7 +442,7 @@ const Projects = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className="py-24 sm:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_0,100%_2.5vw,100%_100%,0_calc(100%-2.5vw))]"
+      className="py-24 sm:py-32 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_0,100%_2.5vw,100%_100%,0_100%)]"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 

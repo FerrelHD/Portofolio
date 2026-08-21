@@ -32,8 +32,8 @@ const SLIDES = [
     id: 1,
     category: "EXECUTIVE BRIEF",
     title: "Ferrel Rashad Akeyla",
-    subtitle: "Full-Stack Web Developer & Game Designer",
-    tagline: "Bridging creative cinematic storytelling with modern, high-performance software engineering.",
+    subtitle: "Spider-Dev · Full-Stack Web Developer & Game Designer",
+    tagline: "Your Neighborhood Developer — Bridging cinematic storytelling with modern, high-performance software engineering.",
     type: "cover",
   },
   {
@@ -190,23 +190,23 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.97, x: -20 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-full aspect-[16/9] max-h-[75vh] bg-[#111318] border-4 border-spider-black comic-chip pop-shadow-red overflow-hidden relative flex flex-col p-5 sm:p-8 md:p-10 justify-between text-comic-ink"
+            className="w-full aspect-[16/9] max-h-[75vh] bg-[#EDEAE2] border-4 border-spider-black comic-chip pop-shadow-red overflow-hidden relative flex flex-col p-5 sm:p-8 md:p-10 justify-between text-comic-ink"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 10% 10%, rgba(255,30,38,0.1) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(22,93,255,0.1) 0%, transparent 40%)",
+                "radial-gradient(circle at 10% 10%, rgba(211,31,31,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(22,93,255,0.05) 0%, transparent 40%)",
             }}
           >
             {/* Slide Halftone Background Accent */}
             <div
-              className="absolute inset-0 opacity-[0.05] pointer-events-none"
+              className="absolute inset-0 opacity-[0.07] pointer-events-none"
               style={{
-                backgroundImage: "radial-gradient(circle, #FFF 1.5px, transparent 1.5px)",
-                backgroundSize: "12px 12px",
+                backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                backgroundSize: "14px 14px",
               }}
             />
 
             {/* Slide Header Tag */}
-            <div className="relative z-10 flex items-center justify-between border-b-2 border-comic-ink/15 pb-2.5 sm:pb-3">
+            <div className="relative z-10 flex items-center justify-between border-b-2 border-comic-ink/20 pb-2.5 sm:pb-3">
               <div className="flex items-center gap-2">
                 <span className="bg-spider-yellow text-spider-black px-2.5 py-0.5 text-[9px] sm:text-[10px] font-black uppercase tracking-widest comic-chip">
                   {SLIDES[currentSlide].category}
@@ -225,10 +225,9 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               {renderSlideContent(SLIDES[currentSlide])}
             </div>
 
-            {/* Slide Footer */}
-            <div className="relative z-10 flex items-center justify-between border-t-2 border-comic-ink/15 pt-2 text-[9px] sm:text-[11px] font-bold text-comic-ink/60">
+            <div className="relative z-10 flex items-center justify-between border-t-2 border-comic-ink/20 pt-2 text-[9px] sm:text-[11px] font-bold text-comic-ink/50">
               <div className="flex items-center gap-2">
-                <span className="text-spider-yellow">★</span>
+                <span className="text-spider-red">★</span>
                 <span>Ferrel Rashad Akeyla — Digital Portfolio Deck</span>
               </div>
               <div className="flex items-center gap-3">
@@ -292,25 +291,27 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
           {SLIDES.map((slide, index) => (
             <div
               key={`print-slide-${slide.id}`}
-              className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-10 box-border flex flex-col justify-between bg-[#111318] text-[#F0EDE3] relative"
+              className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-10 box-border flex flex-col justify-between bg-[#EDEAE2] text-[#1A1A1A] relative"
               style={{
                 pageBreakAfter: "always",
                 breakAfter: "page",
                 WebkitPrintColorAdjust: "exact",
                 printColorAdjust: "exact",
+                backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                backgroundSize: "18px 18px",
               }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b-2 border-[#F0EDE3]/20 pb-3">
+              <div className="flex items-center justify-between border-b-2 border-[#1A1A1A]/20 pb-3">
                 <div className="flex items-center gap-3">
-                  <span className="bg-[#FFD500] text-[#0D0D11] px-3 py-0.5 text-xs font-black uppercase tracking-widest rounded-sm">
+                  <span className="bg-[#FFD500] text-[#1A1A1A] px-3 py-0.5 text-xs font-black uppercase tracking-widest rounded-sm border-2 border-[#1A1A1A]">
                     {slide.category}
                   </span>
-                  <span className="text-xs font-bold text-[#F0EDE3]/60 uppercase tracking-widest">
+                  <span className="text-xs font-bold text-[#1A1A1A]/60 uppercase tracking-widest">
                     MISSION BRIEF & PORTFOLIO DECK
                   </span>
                 </div>
-                <span className="text-sm font-black text-[#FF1E26]">
+                <span className="text-sm font-black text-[#D31F1F]">
                   0{index + 1} / 0{SLIDES.length}
                 </span>
               </div>
@@ -321,7 +322,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between border-t-2 border-[#F0EDE3]/20 pt-3 text-xs font-bold text-[#F0EDE3]/60">
+              <div className="flex items-center justify-between border-t-2 border-[#1A1A1A]/20 pt-3 text-xs font-bold text-[#1A1A1A]/60">
                 <span>Ferrel Rashad Akeyla — Digital Portfolio Pitch Deck</span>
                 <span>West Java, Indonesia | 2026 Edition</span>
               </div>
@@ -349,17 +350,17 @@ function renderSlideContent(slide) {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-comic-ink comic-stroke-thin leading-none">
               FERREL RASHAD <span className="text-spider-red">AKEYLA</span>
             </h1>
-            <p className="text-sm sm:text-base md:text-lg font-bold text-spider-yellow tracking-wide">
-              Full-Stack Web Developer & Game Designer | Multidisciplinary Digital Creator
+            <p className="text-sm sm:text-base md:text-lg font-bold text-spider-red tracking-wide">
+              Spider-Dev · Full-Stack Web Developer & Game Designer
             </p>
             <p className="text-xs sm:text-sm text-comic-ink/80 max-w-2xl leading-relaxed">
-              Crafting immersive web platforms, interactive game environments, and cinematic multimedia with high aesthetic fidelity and clean engineering.
+              Your Neighborhood Developer — crafting immersive web platforms, interactive game environments, and cinematic multimedia with high aesthetic fidelity and clean engineering.
             </p>
 
             {/* Quick Contact Badges */}
             <div className="flex flex-wrap gap-2 pt-1 text-[10px] sm:text-xs font-bold">
               <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
-                <Mail size={13} className="text-spider-yellow" />
+                <Mail size={13} className="text-spider-red" />
                 <span>ferrelrashadakeyla2014@gmail.com</span>
               </span>
               <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
@@ -450,18 +451,18 @@ function renderSlideContent(slide) {
                 POW!
               </div>
               <div>
-                <div className="flex items-center gap-2 text-spider-yellow font-black text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
                   <Code2 size={16} />
                   <span>Frontend</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> React 19 & Next.js</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> TypeScript / Modern JS</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> Tailwind CSS v4 & Vite</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> Framer Motion (60 FPS)</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> React 19 & Next.js</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> TypeScript / Modern JS</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Tailwind CSS v4 & Vite</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Framer Motion (60 FPS)</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-yellow">
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
                 [FLUID REACTIVE UX]
               </div>
             </div>
@@ -511,23 +512,23 @@ function renderSlideContent(slide) {
             </div>
 
             {/* Column 4: Multimedia & Design */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-emerald-500">
-              <div className="absolute -top-2.5 right-3 bg-emerald-500 text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-1">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-yellow">
+              <div className="absolute -top-2.5 right-3 bg-spider-yellow text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-1">
                 ACTION!
               </div>
               <div>
-                <div className="flex items-center gap-2 text-emerald-400 font-black text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
                   <Video size={16} />
                   <span>Multimedia & UI</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Vegas Pro 18 Video Editing</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Blender 3D Assets</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Figma Design Systems</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Sound Design & FX Audio</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Vegas Pro 18 Video Editing</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Blender 3D Assets</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Figma Design Systems</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Sound Design & FX Audio</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-emerald-400">
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
                 [CINEMATIC STORYTELLING]
               </div>
             </div>
@@ -564,7 +565,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">Full-Stack</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Fersya Shop
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -572,7 +573,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Filament admin panel for stock & webhooks.</span>
                   </div>
                 </div>
@@ -600,7 +601,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">React + Supabase</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Student Life
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -608,7 +609,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Real-time task sync & Supabase auth.</span>
                   </div>
                 </div>
@@ -636,7 +637,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">Full-Stack</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Finesser Shop
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -644,7 +645,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Instant licensing delivery pipelines.</span>
                   </div>
                 </div>
@@ -688,7 +689,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">C# Physics</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Street Rush
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -696,7 +697,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Steady 60 FPS mobile performance.</span>
                   </div>
                 </div>
@@ -724,7 +725,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">Luau Code</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Gunung Gede Trail
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -732,7 +733,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Realistic terrain & day/night lighting.</span>
                   </div>
                 </div>
@@ -760,7 +761,7 @@ function renderSlideContent(slide) {
                   </span>
                   <span className="text-[9px] font-bold text-comic-ink/50">Vegas Pro</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
                   Cinematic AMVs
                 </h3>
                 <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
@@ -768,7 +769,7 @@ function renderSlideContent(slide) {
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
                     <span>Frank Ocean & Playboi Carti vocal sync.</span>
                   </div>
                 </div>
@@ -822,14 +823,14 @@ function renderSlideContent(slide) {
           </div>
 
           <div className="md:col-span-5 bg-comic-surface border-4 border-spider-black p-5 sm:p-6 comic-chip space-y-3">
-            <div className="flex items-center gap-2 text-spider-yellow font-black text-xs uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider">
               <ShieldCheck size={16} />
               <span>Status: Open for Opportunities</span>
             </div>
             <div className="space-y-2 text-xs font-bold text-comic-ink/80">
               <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
                 <span>Roles:</span>
-                <span className="text-spider-yellow">Full-Stack / Frontend / Game</span>
+                <span className="text-spider-red">Full-Stack / Frontend / Game</span>
               </div>
               <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
                 <span>Work Model:</span>

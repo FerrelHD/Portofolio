@@ -478,11 +478,11 @@ const Contact = () => {
         {/* ============= BOTTOM: DIRECT SIGNAL CHANNELS (4-COLUMN RELAY HUB) ============= */}
         <motion.div variants={fadeUp} className="w-full pt-4">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="h-[2px] w-12 bg-spider-red" />
-            <span className="bg-spider-red comic-chip text-comic-ink px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
+            <span className="h-[2px] w-12 bg-spider-yellow" />
+            <span className="bg-spider-yellow comic-chip text-spider-black px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
               Direct Signal Relay Channels
             </span>
-            <span className="h-[2px] w-12 bg-spider-red" />
+            <span className="h-[2px] w-12 bg-spider-yellow" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

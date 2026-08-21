@@ -5,12 +5,7 @@ import spiderEmblem from "../assets/spiderman-emblem.png";
 const TICKER_WORDS = [
   "COMIC BOOK",
   "COMIC ARTS",
-  "FULL STACK HERO",
-  "DIGITAL CREATOR",
-  "REACT & NEXT.JS",
-  "3D & GAME CRAFT",
   "SPIDER-DEV",
-  "ISSUE #001",
 ];
 
 /**
@@ -66,17 +61,17 @@ const StickyComicTicker = () => {
   const colorStyles = isRedSection
     ? "bg-[#EDEAE2] text-[#D31F1F]"
     : isDarkSection
-    ? "bg-[#FFD500] text-[#1A1A1A]"
-    : "bg-[#D31F1F] text-[#FFFFFF]";
+      ? "bg-[#FFD500] text-[#1A1A1A]"
+      : "bg-[#D31F1F] text-[#FFFFFF]";
 
   const emblemFilter = isRedSection
     ? "brightness(0) saturate(100%) invert(18%) sepia(85%) saturate(4678%) hue-rotate(352deg) brightness(88%) contrast(96%)" // Red icon
     : isDarkSection
-    ? "brightness(0)" // Black icon on Yellow
-    : "brightness(0) invert(1)"; // Pure White icon on Red
+      ? "brightness(0)" // Black icon on Yellow
+      : "brightness(0) invert(1)"; // Pure White icon on Red
 
   // Duplicate items for continuous smooth marquee loop
-  const displayItems = [...TICKER_WORDS, ...TICKER_WORDS, ...TICKER_WORDS, ...TICKER_WORDS];
+  const displayItems = Array(8).fill(TICKER_WORDS).flat();
 
   return (
     <div

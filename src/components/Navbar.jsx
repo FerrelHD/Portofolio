@@ -110,8 +110,8 @@ const Navbar = ({ onOpenDeck }) => {
           </span>
         </motion.a>
 
-        {/* CENTER NAV (Desktop) — Flex centered with responsive gap */}
-        <div className="hidden lg:flex items-center justify-center space-x-1.5 xl:space-x-3 2xl:space-x-5">
+        {/* CENTER NAV (Desktop) — Absolute center relative to full navbar */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 xl:gap-1">
           {navLinks.map((link, i) => {
             const isActive = activeId === link.id;
             return (
@@ -156,16 +156,14 @@ const Navbar = ({ onOpenDeck }) => {
               onClick={onOpenDeck}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black comic-chip px-2.5 sm:px-3 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase pop-shadow-sm hover:bg-white transition-all cursor-pointer whitespace-nowrap"
+              className="inline-flex items-center justify-center bg-spider-yellow text-spider-black comic-chip w-9 h-9 pop-shadow-sm hover:bg-white transition-all cursor-pointer"
               title="Open Portfolio Pitch Deck & PDF Export (Hotkey: E)"
             >
-              <Printer size={13} strokeWidth={2.5} />
-              <span className="hidden sm:inline">Deck / PDF</span>
-              <span className="sm:hidden">PDF</span>
+              <Printer size={15} strokeWidth={2.5} />
             </motion.button>
           )}
 
-          <div className="hidden xl:block">
+          <div className="hidden 2xl:block">
             <MotionToggle />
           </div>
 
@@ -178,7 +176,7 @@ const Navbar = ({ onOpenDeck }) => {
               transition: { type: "spring", stiffness: 400, damping: 10 },
             }}
             whileTap={{ scale: 0.96 }}
-            className="hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-3 xl:px-5 py-1.5 xl:py-2 text-[10px] xl:text-xs font-black tracking-[0.14em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all active:pop-shadow-active whitespace-nowrap"
+            className="hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-3 xl:px-4 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all active:pop-shadow-active whitespace-nowrap"
           >
             Swing Into Action
           </motion.a>

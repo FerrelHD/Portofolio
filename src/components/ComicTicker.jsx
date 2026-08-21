@@ -73,7 +73,7 @@ const ComicTicker = ({
               <span
                 className={`inline-flex items-center justify-center px-2 py-0.5 rounded text-[10px] sm:text-xs font-black uppercase tracking-widest border border-black shadow-[2px_2px_0_#000] shrink-0 ${
                   isBugle
-                    ? "bg-spider-red text-white"
+                    ? "bg-spider-black text-spider-yellow"
                     : "bg-spider-yellow text-spider-black"
                 }`}
               >
