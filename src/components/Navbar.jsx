@@ -96,13 +96,13 @@ const Navbar = ({ onOpenDeck }) => {
       }}
       className="fixed top-0 left-0 right-0 z-50 border-b-solid"
     >
-      <div className="container mx-auto px-5 sm:px-6 relative flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 relative flex items-center justify-between gap-2 lg:gap-4">
         {/* LOGO: Ferrel + spider dot with comic stroke */}
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-lg sm:text-xl lg:text-2xl font-display font-black tracking-tighter shrink-0 select-none"
+          className="text-base sm:text-lg lg:text-xl xl:text-2xl font-display font-black tracking-tighter shrink-0 select-none"
         >
           <span className="text-comic-ink comic-stroke-thin">FERREL RASHAD</span>
           <span className="text-spider-red drop-shadow-[1px_1px_0_var(--color-ink-stroke)]">
@@ -110,8 +110,8 @@ const Navbar = ({ onOpenDeck }) => {
           </span>
         </motion.a>
 
-        {/* CENTER NAV (Desktop) */}
-        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 space-x-5 xl:space-x-7">
+        {/* CENTER NAV (Desktop) — Flex centered with responsive gap */}
+        <div className="hidden lg:flex items-center justify-center space-x-1.5 xl:space-x-3 2xl:space-x-5">
           {navLinks.map((link, i) => {
             const isActive = activeId === link.id;
             return (
@@ -121,10 +121,11 @@ const Navbar = ({ onOpenDeck }) => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`relative text-[11px] xl:text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 transition-all duration-200 ${isActive
+                className={`relative text-[10.5px] xl:text-xs font-bold uppercase tracking-[0.14em] xl:tracking-[0.18em] px-2 xl:px-2.5 py-1 transition-all duration-200 whitespace-nowrap ${
+                  isActive
                     ? "text-spider-black bg-spider-yellow comic-chip"
                     : "text-comic-ink/80 hover:text-spider-black hover:bg-spider-yellow hover:comic-chip"
-                  }`}
+                }`}
               >
                 {/* THWIP! Badge pop-up tepat di atas link aktif */}
                 <AnimatePresence>
@@ -148,22 +149,23 @@ const Navbar = ({ onOpenDeck }) => {
         </div>
 
         {/* RIGHT: Deck Button + Motion Toggle + CTA + Mobile Burger */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0">
           {onOpenDeck && (
             <motion.button
               type="button"
               onClick={onOpenDeck}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="hidden md:inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black comic-chip px-3 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.14em] uppercase pop-shadow-sm hover:bg-white transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black comic-chip px-2.5 sm:px-3 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase pop-shadow-sm hover:bg-white transition-all cursor-pointer whitespace-nowrap"
               title="Open Portfolio Pitch Deck & PDF Export (Hotkey: E)"
             >
               <Printer size={13} strokeWidth={2.5} />
-              <span>Deck / PDF</span>
+              <span className="hidden sm:inline">Deck / PDF</span>
+              <span className="sm:hidden">PDF</span>
             </motion.button>
           )}
 
-          <div className="hidden sm:block">
+          <div className="hidden xl:block">
             <MotionToggle />
           </div>
 
@@ -176,7 +178,7 @@ const Navbar = ({ onOpenDeck }) => {
               transition: { type: "spring", stiffness: 400, damping: 10 },
             }}
             whileTap={{ scale: 0.96 }}
-            className="hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-4 sm:px-6 py-2 text-[11px] sm:text-xs font-black tracking-[0.15em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all active:pop-shadow-active"
+            className="hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-3 xl:px-5 py-1.5 xl:py-2 text-[10px] xl:text-xs font-black tracking-[0.14em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all active:pop-shadow-active whitespace-nowrap"
           >
             Swing Into Action
           </motion.a>
@@ -184,12 +186,13 @@ const Navbar = ({ onOpenDeck }) => {
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="lg:hidden p-1.5 text-comic-ink comic-chip bg-spider-black hover:bg-spider-red transition-colors"
+            className="lg:hidden p-1.5 text-comic-ink comic-chip bg-spider-black hover:bg-spider-red transition-colors shrink-0"
           >
             {isOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
           </button>
         </div>
       </div>
+
 
       {/* MOBILE MENU */}
       <AnimatePresence>
