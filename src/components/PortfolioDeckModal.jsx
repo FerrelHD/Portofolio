@@ -19,6 +19,14 @@ import {
 } from "lucide-react";
 import { soundFX } from "../lib/soundFx";
 
+import ferrelPortrait from "../assets/ferrel-portrait.jpg";
+import fersyaShop from "../assets/fersya-shop.webp";
+import studentLife from "../assets/student-life.jpg";
+import finesserShop from "../assets/Shop.webp";
+import streetRush from "../assets/street-rush.webp";
+import gunungGede from "../assets/image-1784710274754.webp";
+
+
 const SLIDES = [
   {
     id: 1,
@@ -366,11 +374,32 @@ function renderSlideContent(slide) {
           </div>
 
           <div className="md:col-span-4 hidden md:flex flex-col gap-3">
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 comic-chip">
+            <div className="flex items-center gap-3 bg-comic-surface border-2 border-comic-ink p-2.5 comic-chip">
+              <div className="w-16 h-20 border-2 border-spider-red overflow-hidden shrink-0 bg-black">
+                <img
+                  src={ferrelPortrait}
+                  alt="Ferrel Portrait"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div>
+                <span className="text-[9px] font-black text-spider-yellow uppercase tracking-wider block">
+                  Agent Dossier
+                </span>
+                <span className="text-xs font-black text-comic-ink block">
+                  Ferrel Rashad Akeyla
+                </span>
+                <span className="text-[9px] font-bold text-comic-ink/60 block mt-0.5">
+                  Clearance Level 05
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 comic-chip">
               <div className="text-[10px] font-black text-spider-yellow uppercase tracking-wider mb-1">
                 Core Domains
               </div>
-              <div className="space-y-1.5 text-xs font-bold">
+              <div className="space-y-1 text-[11px] font-bold">
                 <div className="flex items-center gap-2">
                   <span className="text-spider-red">✓</span> Web App Engineering
                 </div>
@@ -384,11 +413,6 @@ function renderSlideContent(slide) {
                   <span className="text-emerald-400">✓</span> UI/UX & Design Systems
                 </div>
               </div>
-            </div>
-            <div className="bg-spider-red/10 border-2 border-spider-red/40 p-3 rounded-sm text-center">
-              <span className="text-[10px] font-black uppercase text-spider-yellow tracking-widest">
-                Level 05 S.H.I.E.L.D. Clearance
-              </span>
             </div>
           </div>
         </div>
@@ -488,106 +512,115 @@ function renderSlideContent(slide) {
 
     case "web-projects":
       return (
-        <div className="space-y-3 sm:space-y-4">
-          <div className="mb-1 sm:mb-2">
+        <div className="space-y-2.5 sm:space-y-3">
+          <div className="mb-1">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
               Featured Web Engineering Missions
             </h2>
-            <p className="text-xs sm:text-sm text-comic-ink/70">
+            <p className="text-[11px] sm:text-xs text-comic-ink/70">
               Robust e-commerce, real-time productivity platforms, and scalable digital storefronts.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3">
             {/* Project 1: Fersya Shop */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
-                    E-Commerce Platform
-                  </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">Full-Stack</span>
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src={fersyaShop}
+                    alt="Fersya Shop Preview"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                    E-Commerce
+                  </span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">Full-Stack</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
                   Fersya Shop
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
                   Modern e-commerce platform for healthy foods and organic body care products.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Filament admin panel for live stock & order webhooks.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Mobile-first UI with custom category filters.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Filament admin panel for stock & webhooks.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 flex items-center justify-between text-[10px] font-bold text-spider-blue">
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-blue">
                 <span>Laravel 11 • Filament • Tailwind</span>
               </div>
             </div>
 
             {/* Project 2: Student Life */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
-                    Productivity App
-                  </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">Frontend + Supabase</span>
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src={studentLife}
+                    alt="Student Life Preview"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                    Productivity
+                  </span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">React + Supabase</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
                   Student Life
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
                   Task management and academic schedule tracking suite for high-efficiency students.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Real-time task sync & authentication with Supabase.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Interactive dashboard with calendar schedule widgets.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Real-time task sync & Supabase auth.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 flex items-center justify-between text-[10px] font-bold text-spider-yellow">
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-yellow">
                 <span>React 19 • TypeScript • Supabase</span>
               </div>
             </div>
 
             {/* Project 3: Finesser Shop */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-spider-yellow text-black px-2 py-0.5 uppercase tracking-wider rounded-sm">
-                    Digital Storefront
-                  </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">Full-Stack</span>
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src={finesserShop}
+                    alt="Finesser Shop Preview"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-spider-yellow text-black px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                    Storefront
+                  </span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">Full-Stack</span>
+                </div>
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
                   Finesser Shop
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
                   Digital asset marketplace offering templates, design kits, and creative tools.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Digital product licensing & direct instant delivery logic.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Structured MVC backend models for asset catalogs.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Instant licensing delivery pipelines.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 flex items-center justify-between text-[10px] font-bold text-spider-red">
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-red">
                 <span>Laravel • MySQL • Bootstrap</span>
               </div>
             </div>
@@ -597,112 +630,122 @@ function renderSlideContent(slide) {
 
     case "game-projects":
       return (
-        <div className="space-y-3 sm:space-y-4">
-          <div className="mb-1 sm:mb-2">
+        <div className="space-y-2.5 sm:space-y-3">
+          <div className="mb-1">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
               Interactive Game Systems & Multimedia
             </h2>
-            <p className="text-xs sm:text-sm text-comic-ink/70">
+            <p className="text-[11px] sm:text-xs text-comic-ink/70">
               3D gameplay engineering, atmospheric trail simulations, and rhythmic motion video production.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3">
             {/* Item 1: Street Rush */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src={streetRush}
+                    alt="Street Rush Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
                     Unity 3D Game
                   </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">C# Physics</span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">C# Physics</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
                   Street Rush
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
-                  Fast-paced 3D arcade runner game engineered with Unity and custom C# physics algorithms.
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
+                  Fast-paced 3D arcade runner game engineered with Unity and custom C# physics.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Maintained stable 60 FPS mobile performance.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Dynamic camera shake, obstacle spawner, and score multipliers.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Steady 60 FPS mobile performance.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 text-[10px] font-bold text-spider-yellow">
+              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-spider-yellow">
                 Unity • C# • Mobile Optimization
               </div>
             </div>
 
             {/* Item 2: Gunung Gede Simulation */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src={gunungGede}
+                    alt="Gunung Gede Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
                     Roblox Simulation
                   </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">Luau Code</span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">Luau Code</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
                   Gunung Gede Trail
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
                   Immersive 3D hiking simulation recreating Mount Gede's Gunung Putri trail.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Realistic mountain terrain, weather atmosphere & day/night cycle.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Custom stamina system, inventory, checkpoints in Luau.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Realistic terrain & day/night lighting.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 text-[10px] font-bold text-spider-blue">
-                Roblox Studio • Luau Scripting • 3D Terrain
+              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-spider-blue">
+                Roblox Studio • Luau • 3D Terrain
               </div>
             </div>
 
             {/* Item 3: Cinematic Video Production */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-black bg-emerald-500 text-black px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                  <img
+                    src="https://img.youtube.com/vi/WMrnRucy0qs/maxresdefault.jpg"
+                    alt="Cinematic AMV Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[9px] font-black bg-emerald-500 text-black px-2 py-0.5 uppercase tracking-wider rounded-sm">
                     Video & Motion
                   </span>
-                  <span className="text-[10px] font-bold text-comic-ink/50">Vegas Pro</span>
+                  <span className="text-[9px] font-bold text-comic-ink/50">Vegas Pro</span>
                 </div>
-                <h3 className="text-base sm:text-lg font-black uppercase text-spider-yellow mb-1">
-                  Cinematic AMVs & Edits
+                <h3 className="text-sm sm:text-base font-black uppercase text-spider-yellow mb-0.5">
+                  Cinematic AMVs
                 </h3>
-                <p className="text-xs text-comic-ink/80 mb-3 leading-relaxed">
-                  High-tempo anime music videos featuring precise audio-visual beat sync and motion pacing.
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
+                  High-tempo anime music videos featuring precise audio-visual beat sync.
                 </p>
-                <div className="space-y-1.5 text-[11px] text-comic-ink/70 mb-3">
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Frank Ocean & Playboi Carti rhythmic cut synchronization.</span>
-                  </div>
-                  <div className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-spider-yellow shrink-0 mt-0.5" />
-                    <span>Speed ramping, motion blur, and cinematic color grading.</span>
+                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
+                  <div className="flex items-start gap-1">
+                    <CheckCircle2 size={12} className="text-spider-yellow shrink-0 mt-0.5" />
+                    <span>Frank Ocean & Playboi Carti vocal sync.</span>
                   </div>
                 </div>
               </div>
-              <div className="pt-2 border-t border-comic-ink/10 text-[10px] font-bold text-emerald-400">
+              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-emerald-400">
                 Vegas Pro 18 • Sound Design • Beat Timing
               </div>
             </div>
           </div>
         </div>
       );
+
 
     case "contact":
       return (
