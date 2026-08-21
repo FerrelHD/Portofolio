@@ -1,9 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
-  Command,
   FileText,
   Mail,
   Github,
@@ -13,11 +12,20 @@ import {
   Newspaper,
   Gamepad2,
   Volume2,
+  Printer,
 } from "lucide-react";
+
 import { achievementManager } from "../lib/achievements";
 import { soundFX } from "../lib/soundFx";
 
-const CommandPalette = ({ open, onClose, onOpenDailyBugle, onOpenBugHunter, triggerSpiderSense }) => {
+const CommandPalette = ({
+  open,
+  onClose,
+  onOpenDailyBugle,
+  onOpenBugHunter,
+  onOpenDeck,
+  triggerSpiderSense,
+}) => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -42,8 +50,17 @@ const CommandPalette = ({ open, onClose, onOpenDailyBugle, onOpenBugHunter, trig
 
   const actions = [
     {
+      id: "pitch-deck",
+      title: "View Portfolio Pitch Deck & Export PDF [Hotkey: E]",
+      icon: <Printer size={16} className="text-spider-yellow" />,
+      perform: () => {
+        onClose();
+        if (onOpenDeck) onOpenDeck();
+      },
+    },
+    {
       id: "daily-bugle",
-      title: "Read The Daily Bugle Newspaper Report",
+      title: "Read The Daily Bugle Newspaper Report [Hotkey: N]",
       icon: <Newspaper size={16} className="text-yellow-400" />,
       perform: () => {
         onClose();

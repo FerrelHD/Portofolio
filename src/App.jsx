@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -24,6 +24,8 @@ const ShortcutsModal = lazy(() => import("./components/ShortcutsModal"));
 const CommandPalette = lazy(() => import("./components/CommandPalette"));
 const SpiderGadgetDrawer = lazy(() => import("./components/SpiderGadgetDrawer"));
 const ComicActionFX = lazy(() => import("./components/ComicActionFX"));
+const PortfolioDeckModal = lazy(() => import("./components/PortfolioDeckModal"));
+
 
 // Skill Real Asset Icons
 import reactIcon from "./assets/React-icon.svg.webp";
@@ -65,6 +67,7 @@ function App() {
   const [cmdOpen, setCmdOpen] = useState(false);
   const [dailyBugleOpen, setDailyBugleOpen] = useState(false);
   const [bugHunterOpen, setBugHunterOpen] = useState(false);
+  const [deckOpen, setDeckOpen] = useState(false);
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
@@ -101,6 +104,13 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Listen to custom spidey:open-deck event
+  useEffect(() => {
+    const onOpenDeck = () => setDeckOpen(true);
+    window.addEventListener("spidey:open-deck", onOpenDeck);
+    return () => window.removeEventListener("spidey:open-deck", onOpenDeck);
+  }, []);
+
   useEffect(() => {
     const onKey = (e) => {
       // Jangan tangkap event jika user sedang mengetik di input / textarea
@@ -117,6 +127,7 @@ function App() {
         setCmdOpen(false);
         setDailyBugleOpen(false);
         setBugHunterOpen(false);
+        setDeckOpen(false);
         return;
       }
 
@@ -155,6 +166,14 @@ function App() {
         setBugHunterOpen((prev) => !prev);
         return;
       }
+
+      // E = Portfolio Pitch Deck & PDF Generator
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "e" || e.key === "E")) {
+        e.preventDefault();
+        setDeckOpen((prev) => !prev);
+        return;
+      }
+
 
       // P = Toggle Play / Pause BGM
       if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "p" || e.key === "P")) {
@@ -229,6 +248,9 @@ function App() {
         {bugHunterOpen && (
           <SpideyBugHunter isOpen={bugHunterOpen} onClose={() => setBugHunterOpen(false)} />
         )}
+        {deckOpen && (
+          <PortfolioDeckModal isOpen={deckOpen} onClose={() => setDeckOpen(false)} />
+        )}
         {shortcutsOpen && (
           <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
         )}
@@ -238,12 +260,14 @@ function App() {
             onClose={() => setCmdOpen(false)}
             onOpenDailyBugle={() => setDailyBugleOpen(true)}
             onOpenBugHunter={() => setBugHunterOpen(true)}
+            onOpenDeck={() => setDeckOpen(true)}
             triggerSpiderSense={triggerSpiderSense}
           />
         )}
         <SpiderGadgetDrawer
           onOpenBugHunter={() => setBugHunterOpen(true)}
           onOpenDailyBugle={() => setDailyBugleOpen(true)}
+          onOpenDeck={() => setDeckOpen(true)}
         />
       </Suspense>
 
@@ -251,7 +275,7 @@ function App() {
         Skip to Story!
       </a>
       <AnimeBackground />
-      <Navbar />
+      <Navbar onOpenDeck={() => setDeckOpen(true)} />
 
       <main>
         <Hero />

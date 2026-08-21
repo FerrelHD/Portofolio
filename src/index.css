@@ -1577,6 +1577,65 @@ main > section:not(#hero) {
   transform: translateZ(0);
 }
 
+/* =============================================== */
+/* === PDF & PITCH DECK PRINT STYLES           === */
+/* =============================================== */
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+    background: #111318 !important;
+    color: #F0EDE3 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    overflow: visible !important;
+  }
+
+  /* Hide standard web interactive elements during print */
+  nav,
+  footer,
+  main,
+  .skip-link,
+  .page-loader,
+  .comic-ticker-container,
+  .achievement-toast,
+  .back-to-top,
+  .scroll-fx,
+  .comic-action-fx,
+  .anime-bg {
+    display: none !important;
+  }
+
+  /* Full print slide pages */
+  .print-deck-root {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #111318 !important;
+  }
+
+  .print-slide-page {
+    width: 100vw !important;
+    height: 100vh !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-sizing: border-box !important;
+    padding: 32px 48px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #111318 !important;
+    color: #F0EDE3 !important;
+    overflow: hidden !important;
+  }
+}
+
+
 
 
 

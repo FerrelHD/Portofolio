@@ -20,7 +20,9 @@ import {
   Flame,
   ShieldCheck,
   SlidersHorizontal,
+  Printer,
 } from "lucide-react";
+
 import backsoundAudio from "../assets/backsound.mp3";
 import spideyEmblem from "../assets/spideyicon.png";
 import spideyGif from "../assets/spidey.gif";
@@ -73,8 +75,9 @@ const ACHIEVEMENT_ICONS = {
   true_believer: <ShieldCheck size={14} className="text-sky-400" />,
 };
 
-const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
+const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const [activeTab, setActiveTab] = useState("suits"); // "suits" | "trophies" | "arcade"
   const [activeSuit, setActiveSuit] = useState("classic");
   const [unlockedCount, setUnlockedCount] = useState(0);
@@ -510,8 +513,34 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle }) => {
                       <span>Read Daily Bugle</span>
                     </button>
                   </div>
+
+                  {/* PITCH DECK / EXPORT PDF CARD */}
+                  <div className="bg-[#1A1A24] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#FF1E26]">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-5 h-5 rounded bg-spider-red border border-black flex items-center justify-center text-white">
+                        <Printer size={12} />
+                      </div>
+                      <span className="text-xs font-black uppercase tracking-wide text-white">
+                        Portfolio Pitch Deck & PDF
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-zinc-300 mb-2.5 leading-relaxed font-medium">
+                      Slide presentasi ringkas 5 halaman landscape untuk export PDF / pitching!
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (onOpenDeck) onOpenDeck();
+                      }}
+                      className="w-full py-2 bg-spider-red hover:bg-red-500 text-white font-black text-xs uppercase rounded-lg border-2 border-black shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all flex items-center justify-center gap-1.5"
+                    >
+                      <span>Open Pitch Deck & PDF (E)</span>
+                    </button>
+                  </div>
                 </div>
               )}
+
 
               {/* AUDIO & SFX SUITE SECTION */}
               <div className="relative z-10 space-y-2.5 border-t-2 border-black pt-3">

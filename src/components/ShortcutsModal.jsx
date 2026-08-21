@@ -3,9 +3,11 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Command } from "lucide-react";
 
+
 const ShortcutsModal = ({ open, onClose }) => {
   if (!open) return null;
   const items = [
+    { key: "E", label: "Open Portfolio Pitch Deck & Export PDF", accent: "bg-spider-yellow" },
     { key: "S", label: "Trigger Spider-Sense Tingling", accent: "bg-spider-red" },
     { key: "N", label: "Read The Daily Bugle Newspaper Report", accent: "bg-spider-yellow" },
     { key: "G", label: "Play Spidey Bug Hunter (30s Arcade Mini-Game)", accent: "bg-spider-red" },
@@ -17,6 +19,7 @@ const ShortcutsModal = ({ open, onClose }) => {
     { key: "?", label: "Show / hide this shortcuts panel", accent: "bg-spider-blue" },
     { key: "Esc", label: "Close all active modals & drawers", accent: "bg-comic-panel" },
   ];
+
   return (
     <AnimatePresence>
       {open && (

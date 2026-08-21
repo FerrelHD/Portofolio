@@ -1,14 +1,14 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Printer } from "lucide-react";
 import MotionToggle from "./MotionToggle";
-import SuitSelector from "./SuitSelector";
-import { Command } from "lucide-react";
+
 
 const SECTION_IDS = ["about", "services", "projects", "skills", "contact"];
 
-const Navbar = () => {
+const Navbar = ({ onOpenDeck }) => {
+
   const { scrollY } = useScroll();
   const smoothScrollY = useSpring(scrollY, { stiffness: 300, damping: 40 });
   const [isOpen, setIsOpen] = useState(false);
@@ -147,8 +147,22 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* RIGHT: Motion Toggle + CTA + Mobile Burger */}
+        {/* RIGHT: Deck Button + Motion Toggle + CTA + Mobile Burger */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {onOpenDeck && (
+            <motion.button
+              type="button"
+              onClick={onOpenDeck}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden md:inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black comic-chip px-3 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.14em] uppercase pop-shadow-sm hover:bg-white transition-all cursor-pointer"
+              title="Open Portfolio Pitch Deck & PDF Export (Hotkey: E)"
+            >
+              <Printer size={13} strokeWidth={2.5} />
+              <span>Deck / PDF</span>
+            </motion.button>
+          )}
+
           <div className="hidden sm:block">
             <MotionToggle />
           </div>
@@ -192,6 +206,20 @@ const Navbar = () => {
             >
               {/* Halftone bg inside mobile menu */}
               <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
+
+              {onOpenDeck && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false);
+                    onOpenDeck();
+                  }}
+                  className="relative z-10 text-center bg-spider-yellow text-spider-black comic-chip px-6 py-3 text-sm font-black tracking-[0.18em] uppercase pop-shadow-sm flex items-center justify-center gap-2"
+                >
+                  <Printer size={16} />
+                  <span>Portfolio Pitch Deck / PDF</span>
+                </button>
+              )}
 
               {navLinks.map((link) => (
                 <a

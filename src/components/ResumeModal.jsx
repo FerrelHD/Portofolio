@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, Copy, ShieldAlert } from "lucide-react";
+
 
 const ResumeModal = ({ open, onClose }) => {
   if (!open) return null;
@@ -79,11 +79,20 @@ const ResumeModal = ({ open, onClose }) => {
             {/* Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4 border-t-2 border-comic-surface shrink-0">
               <button
+                onClick={() => {
+                  if (onClose) onClose();
+                  window.dispatchEvent(new CustomEvent("spidey:open-deck"));
+                }}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-spider-yellow text-spider-black px-4 py-2.5 text-xs font-black uppercase tracking-wider comic-chip hover:bg-white transition-colors"
+              >
+                <span>View PPT / Pitch Deck</span>
+              </button>
+              <button
                 onClick={copyLink}
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-comic-surface border-2 border-comic-ink text-comic-ink px-4 py-2.5 text-xs font-black uppercase tracking-wider comic-chip hover:bg-spider-yellow hover:text-spider-black transition-colors"
               >
                 <Copy size={14} />
-                <span>Copy Dossier Link</span>
+                <span>Copy Link</span>
               </button>
               <a
                 href="https://github.com/FerrelHD"
@@ -92,7 +101,7 @@ const ResumeModal = ({ open, onClose }) => {
                 className="w-full sm:w-auto flex items-center justify-center gap-2 bg-spider-red text-comic-ink px-5 py-2.5 text-xs font-black uppercase tracking-wider comic-chip pop-shadow-sm hover:bg-spider-yellow hover:text-spider-black transition-all text-center"
               >
                 <Download size={14} />
-                <span>Download PDF Resume</span>
+                <span>GitHub Dossier</span>
               </a>
             </div>
           </div>
