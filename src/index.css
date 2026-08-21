@@ -52,22 +52,15 @@
     font-weight: 900;
   }
 
-  /* Smooth scrollbar — base layer */
+  /* Invisible smooth scrollbar */
+  html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
   ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: var(--color-comic-surface);
-    border-left: 2px solid var(--color-ink-stroke);
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--color-spider-red);
-    border-left: 2px solid var(--color-ink-stroke);
-    border-right: 2px solid var(--color-ink-stroke);
-    transition: background-color 0.2s ease;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #B71919;
+    display: none;
+    width: 0px;
+    height: 0px;
   }
 }
 
@@ -818,9 +811,9 @@
 }
 
 .tracker-open-btn {
-  background: var(--color-spider-red);
+  background: var(--color-spider-yellow);
   border: 3.5px solid var(--color-ink-stroke);
-  color: #FFFFFF;
+  color: var(--color-spider-black);
   padding: 18px 44px;
   font-family: var(--font-display);
   font-weight: 900;
@@ -835,8 +828,8 @@
 .tracker-open-btn:hover {
   transform: translate(2px, 2px);
   box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
-  background: var(--color-spider-yellow);
-  color: var(--color-spider-black);
+  background: var(--color-spider-red);
+  color: #FFFFFF;
 }
 
 .tracker-open-btn:active {
