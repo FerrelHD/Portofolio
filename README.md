@@ -15,7 +15,7 @@
 
 <br />
 
-[![Portfolio Preview](./preview.png)](https://ferrelhd.github.io/Portofolio/)
+[![Portfolio Preview](./preview-v2.png)](https://ferrelhd.github.io/Portofolio/)
 
 </div>
 
