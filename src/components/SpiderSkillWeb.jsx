@@ -292,7 +292,7 @@ const SpiderSkillWeb = () => {
               animate={{ opacity: 1, y: 0, scale: 1, rotate: -1 }}
               exit={{ opacity: 0, y: -6, scale: 0.9, rotate: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="absolute -top-7 sm:-top-9 left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 sm:border-3 border-black comic-chip px-3 sm:px-4 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest pointer-events-none shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] z-20 flex items-center gap-1.5 whitespace-nowrap"
+              className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 sm:border-3 border-black comic-chip px-3 sm:px-4 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest pointer-events-none shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] z-20 flex items-center gap-1.5 whitespace-nowrap"
             >
               <Zap size={13} className="text-spider-red fill-spider-red" />
               <span>SLOW-MOTION MODE ACTIVATED!</span>
