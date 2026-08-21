@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { fadeUp, staggerContainer } from "../lib/animation";
+import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
+import { soundFX } from "../lib/soundFx";
 import HangingSpidey from "./HangingSpidey";
 
 /* ================================================================
@@ -27,7 +28,7 @@ const FERREL_PORTRAIT_URL = new URL("../assets/ferrel-portrait.jpg", import.meta
 /* Animated Stat Counter: counts 0 → target when in view */
 const AnimatedCounter = ({ target, suffix = "" }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -372,17 +373,19 @@ const About = ({ onOpenDailyBugle }) => {
   ];
 
   return (
-    <motion.section
+    <section
       id="about"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
       className="py-24 sm:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_calc(100%-2.5vw),0_100%)]"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* SECTION HEADER */}
-        <motion.div variants={fadeUp} className="text-center mb-12 md:mb-16">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
+          className="text-center mb-12 md:mb-16"
+        >
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase text-white">
             Beyond The{" "}
             <span
@@ -401,10 +404,16 @@ const About = ({ onOpenDailyBugle }) => {
         </motion.div>
 
         {/* MAIN SPLIT LAYOUT: 40% Identity Card / 60% Origin Text */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-14 md:mb-20">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-14 md:mb-20"
+        >
           {/* LEFT — SECRET IDENTITY CARD WITH HANGING SPIDEY */}
           <motion.div
-            variants={fadeUp}
+            variants={comicPop}
             className="lg:col-span-5 max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-32 relative"
           >
             <SecretIdentityCard />
@@ -464,16 +473,20 @@ const About = ({ onOpenDailyBugle }) => {
               )}
             </div>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* BOTTOM: POWER STATS (3 Comic Stat Blocks) */}
         <motion.div
-          variants={fadeUp}
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {stats.map((stat) => (
-            <div
+            <motion.div
               key={stat.label}
+              variants={comicPop}
               className={`bg-white text-comic-ink p-5 sm:p-7 md:p-8 relative overflow-hidden border-3 border-black shadow-[6px_6px_0_#000] ${stat.accent}`}
               style={{ borderRadius: "2px" }}
             >
@@ -490,12 +503,13 @@ const About = ({ onOpenDailyBugle }) => {
               <p className="relative text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-comic-ink">
                 {stat.label}
               </p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
 export default About;
+

@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Code2, Sparkles, Gamepad2, ArrowRight, ShieldCheck, Zap } from "lucide-react";
-import { fadeUp, staggerContainer } from "../lib/animation";
+import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
 import { soundFX } from "../lib/soundFx";
 
 const services = [
@@ -86,10 +86,10 @@ const Services = () => {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, amount: "some" }}
           className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
         >
-          <motion.div variants={fadeUp} className="mb-3 flex justify-center">
+          <motion.div variants={comicStamp} className="mb-3 flex justify-center">
             <span className="inline-block py-1.5 px-4 bg-spider-yellow comic-chip text-spider-black text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase pop-shadow-sm">
               SUPERPOWERS // CLIENT SERVICES
             </span>
@@ -125,13 +125,13 @@ const Services = () => {
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, amount: "some" }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
         >
           {services.map((service) => (
             <motion.div
               key={service.id}
-              variants={fadeUp}
+              variants={comicPop}
               onMouseEnter={() => soundFX.playBeep(420)}
               className={`group relative bg-white border-[3.5px] border-black p-6 sm:p-7 rounded-2xl flex flex-col justify-between transition-all duration-300 shadow-[6px_6px_0_#000] hover:-translate-y-2 select-none overflow-hidden text-comic-ink ${service.shadowClass}`}
             >

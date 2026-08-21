@@ -16,7 +16,7 @@ import {
   X,
   Signal,
 } from "lucide-react";
-import { fadeUp, staggerContainer } from "../lib/animation";
+import { fadeUp, staggerContainer, comicPop } from "../lib/animation";
 import VideoModal from "./VideoModal";
 import ProjectBriefModal from "./ProjectBriefModal";
 import finesserShop from "../assets/Shop.webp";
@@ -436,12 +436,8 @@ const Projects = () => {
   const activeCount = filteredProjects.length;
 
   return (
-    <motion.section
+    <section
       id="projects"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
       className="py-24 sm:py-32 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_0,100%_2.5vw,100%_100%,0_100%)]"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
@@ -449,7 +445,12 @@ const Projects = () => {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6 md:gap-8">
-          <motion.div variants={fadeUp}>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: "some" }}
+          >
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase text-white">
               Mission{" "}
               <span
@@ -470,7 +471,10 @@ const Projects = () => {
 
         {/* SPIDEY TRACKER FRAME */}
         <motion.div
-          variants={fadeUp}
+          variants={comicPop}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
           className={`tracker-frame ${justOpened ? "tracker-frame-on" : ""}`}
         >
           {/* TOP BAR */}
@@ -629,7 +633,7 @@ const Projects = () => {
 
       {/* PROJECT BRIEF MODAL */}
       <ProjectBriefModal project={selectedBrief} onClose={() => setSelectedBrief(null)} />
-    </motion.section>
+    </section>
   );
 };
 

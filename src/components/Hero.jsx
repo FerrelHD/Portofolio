@@ -2,7 +2,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Github, Code2, Zap, Gamepad2, Download, FolderKanban } from "lucide-react";
-import { fadeUp, slideUp, staggerContainer } from "../lib/animation";
+import { fadeUp, slideUp, staggerContainer, comicStamp, comicPop } from "../lib/animation";
 import ComicDoodleButton from "./ComicDoodleButton";
 
 const Hero = () => {
@@ -46,15 +46,10 @@ const Hero = () => {
       };
 
   return (
-    <motion.section
+    <section
       id="hero"
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12"
     >
-
-
       {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Nicely Framed Inward */}
       <motion.div
         animate={floatAnim1}
@@ -125,9 +120,14 @@ const Hero = () => {
       </motion.div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-20">
-        <div className="text-center max-w-5xl mx-auto">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="text-center max-w-5xl mx-auto"
+        >
           {/* EYEBROW — Comic Issue Chip */}
-          <motion.div variants={fadeUp} className="mb-4 sm:mb-7 flex justify-center px-2">
+          <motion.div variants={comicStamp} className="mb-4 sm:mb-7 flex justify-center px-2">
             <span className="inline-block py-1 px-3 sm:py-1.5 sm:px-5 bg-spider-yellow comic-chip text-spider-black text-[9px] xs:text-[10px] sm:text-xs font-black tracking-[0.08em] sm:tracking-[0.22em] uppercase pop-shadow-sm max-w-[92vw] sm:max-w-none text-balance leading-tight sm:leading-normal">
               Comic Issue #001 — Origin of the Digital Creator
             </span>
@@ -135,21 +135,21 @@ const Hero = () => {
 
           {/* HEADLINE — Official Spider-Man Movie Logo Typography Style */}
           <motion.h1
+            variants={fadeUp}
             className="w-full max-w-4xl mx-auto font-black mb-5 sm:mb-7 flex flex-col items-center select-none"
           >
             {/* 1. MARVEL-STYLE TOP PILL: SPIDER-DEV */}
-            <motion.div variants={slideUp} className="mb-1.5 sm:mb-2">
+            <div className="mb-1.5 sm:mb-2">
               <span
                 className="inline-block bg-[#FF1E26] text-white px-2.5 py-0.5 sm:px-3 sm:py-0.5 border-[2px] border-black font-black text-[9px] sm:text-[10.5px] tracking-[0.22em] sm:tracking-[0.26em] uppercase shadow-[1.5px_1.5px_0_#000] rounded-sm"
               >
                 SPIDER-DEV
               </span>
-            </motion.div>
+            </div>
 
             {/* 2. 3D MOVIE LOGO TITLE: DIGITAL CREATOR (True Outer Stroke 8-Arah + 3D Blue Bevel) */}
             <div className="w-full flex justify-center px-2">
-              <motion.span
-                variants={slideUp}
+              <span
                 className="inline-block text-[#FF1E26] uppercase whitespace-nowrap tracking-tight font-black"
                 style={{
                   fontSize: "clamp(1.35rem, 5vw, 3.9rem)",
@@ -159,13 +159,12 @@ const Hero = () => {
                 }}
               >
                 DIGITAL CREATOR
-              </motion.span>
+              </span>
             </div>
 
             {/* 3. GOLDEN SUBTITLE: YOUR NEIGHBORHOOD DEVELOPER */}
             <div className="w-full flex justify-center mt-1.5 sm:mt-2 px-2">
-              <motion.span
-                variants={slideUp}
+              <span
                 className="inline-block text-spider-yellow uppercase whitespace-nowrap tracking-[0.14em] xs:tracking-[0.18em] sm:tracking-[0.24em] font-black text-[9.5px] xs:text-[11px] sm:text-xs md:text-sm"
                 style={{
                   textShadow:
@@ -173,7 +172,7 @@ const Hero = () => {
                 }}
               >
                 YOUR NEIGHBORHOOD DEVELOPER
-              </motion.span>
+              </span>
             </div>
           </motion.h1>
 
@@ -188,7 +187,7 @@ const Hero = () => {
 
           {/* CTA BUTTONS (Comic Doodle Multi-Layer Red & Blue Matching Buttons) */}
           <motion.div
-            variants={fadeUp}
+            variants={comicPop}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-3 sm:px-0 max-w-full mx-auto"
           >
             <ComicDoodleButton
@@ -261,9 +260,9 @@ const Hero = () => {
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

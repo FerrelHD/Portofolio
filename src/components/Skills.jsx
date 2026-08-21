@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import SpiderSkillWeb, { SKILLS_DATA } from "./SpiderSkillWeb";
 import { soundFX } from "../lib/soundFx";
+import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
 
 // Skill power mastery percentages & color accents
 const SKILL_POWER_METRICS = {
@@ -104,11 +105,19 @@ const Skills = () => {
     >
       <div className="relative max-w-7xl mx-auto z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase mb-3 shadow-[3px_3px_0_#000]">
-            <Sparkles size={14} />
-            SUPERHERO ABILITY MATRIX
-          </span>
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <motion.div variants={comicStamp} className="mb-3 flex justify-center">
+            <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase shadow-[3px_3px_0_#000]">
+              <Sparkles size={14} />
+              SUPERHERO ABILITY MATRIX
+            </span>
+          </motion.div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-comic-ink leading-none">
             SKILLS &{" "}
@@ -153,7 +162,7 @@ const Skills = () => {
               <span>Classified Deck</span>
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* View 1: Interactive Spider Web Matrix */}
         {viewMode === "web" && (

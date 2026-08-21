@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Linkedin, Github, MapPin, Send, X, Check } from "lucide-react";
-import { fadeUp, staggerContainer } from "../lib/animation";
+import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
 import ComicSocialCard from "./ComicSocialCard";
 import ComicDoodleButton from "./ComicDoodleButton";
 
@@ -282,12 +282,8 @@ const Contact = () => {
     "w-full px-4 sm:px-5 py-3 sm:py-4 bg-[#EDEAE2] border-2 border-black comic-chip transition-all outline-none font-black text-sm text-comic-ink placeholder:text-comic-ink/50";
 
   return (
-    <motion.section
+    <section
       id="contact"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.18 }}
       className="py-24 sm:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_100%,0_100%)]"
     >
       {/* Success Modal */}
@@ -304,6 +300,9 @@ const Contact = () => {
         {/* SECTION HEADER */}
         <motion.div
           variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
           className="text-center mb-12 md:mb-16 lg:mb-20"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase relative inline-block text-white">
@@ -330,10 +329,16 @@ const Contact = () => {
         </motion.div>
 
         {/* MAIN BALANCED 2-COLUMN SECTION: Comic Social Post (Left) vs Mission Form (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16"
+        >
           {/* ============= LEFT: SPIDEY COMIC SOCIAL CARD (5 cols) ============= */}
           <motion.div
-            variants={fadeUp}
+            variants={comicPop}
             className="lg:col-span-5 flex flex-col items-center justify-center w-full"
           >
             <ComicSocialCard
@@ -360,7 +365,7 @@ const Contact = () => {
 
           {/* ============= RIGHT: COMIC TRANSMISSION FORM (7 cols) ============= */}
           <motion.div
-            variants={fadeUp}
+            variants={comicPop}
             className="lg:col-span-7 z-10 w-full bg-white text-comic-ink border-4 border-black shadow-[8px_8px_0_#000] p-6 sm:p-8 md:p-9 relative overflow-hidden"
             style={{ borderRadius: "4px" }}
           >
@@ -452,10 +457,10 @@ const Contact = () => {
                   )}
                 </label>
                 <textarea
-                  rows="4"
+                  rows={4}
                   value={form.message}
                   onChange={handleChange("message")}
-                  placeholder="Describe your mission brief — scope, goals, timeline..."
+                  placeholder="Tell me about your project goals, scope, and timeline..."
                   className={`${inputBase} resize-none focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${
                     errors.message ? "input-error" : ""
                   }`}
@@ -473,10 +478,16 @@ const Contact = () => {
               </div>
             </form>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* ============= BOTTOM: DIRECT SIGNAL CHANNELS (4-COLUMN RELAY HUB) ============= */}
-        <motion.div variants={fadeUp} className="w-full pt-4">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "some" }}
+          className="w-full pt-4"
+        >
           <div className="flex items-center justify-center gap-3 mb-6">
             <span className="h-[2px] w-12 bg-spider-yellow" />
             <span className="bg-spider-yellow comic-chip text-spider-black px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.22em] uppercase pop-shadow-sm">
@@ -486,7 +497,7 @@ const Contact = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {contactInfo.map((info, i) => {
+            {contactInfo.map((info) => {
               const c = ACCENT_MAP[info.accent] || ACCENT_MAP["spider-red"];
               const isCopied = !!copiedMap[info.label];
               const isLocation = info.label === "Location";
@@ -495,8 +506,7 @@ const Contact = () => {
                   key={info.label}
                   href={info.href}
                   onClick={(e) => handleCopyCard(info, e)}
-                  variants={fadeUp}
-                  transition={{ delay: i * 0.05 }}
+                  variants={comicPop}
                   className={`group relative bg-white text-comic-ink border-3 border-black shadow-[4px_4px_0_#000] p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_#000] overflow-hidden cursor-pointer flex flex-col justify-between ${
                     isCopied ? "ring-2 ring-spider-yellow" : ""
                   }`}
@@ -555,7 +565,7 @@ const Contact = () => {
           </div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
