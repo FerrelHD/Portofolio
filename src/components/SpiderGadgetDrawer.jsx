@@ -143,11 +143,19 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
       });
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("spidey:toggle-bgm", handleToggleBgm);
     window.addEventListener("spidey:toggle-mute", handleToggleMute);
     window.addEventListener("spidey:toggle-dock", handleToggleDock);
 
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("spidey:toggle-bgm", handleToggleBgm);
       window.removeEventListener("spidey:toggle-mute", handleToggleMute);
       window.removeEventListener("spidey:toggle-dock", handleToggleDock);
@@ -208,7 +216,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
   };
 
   return (
-    <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 select-none">
+    <>
       {/* Hidden Native Audio Element */}
       <audio
         ref={audioRef}
@@ -218,80 +226,90 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
         onEnded={() => setIsPlaying(false)}
       />
 
-      {/* ANIMATED SPIDEY PERCHED ON TOP OF BUTTON */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            key="perched-spidey"
-            initial={{ y: -60, opacity: 0, scale: 0.3 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{
-              y: -50,
-              opacity: 0,
-              scale: 0.2,
-              transition: { duration: 0.2, ease: "easeIn" },
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 420,
-              damping: 18,
-              mass: 0.8,
-            }}
-            onClick={() => {
-              setIsOpen(true);
-              soundFX.playThwip();
-            }}
-            className="absolute -top-[44px] left-0 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
-            title="Click Spidey to open Gadgets!"
-          >
-            <img
-              src={spideyGif}
-              alt="Perched Spider-Man"
-              className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)] filter"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* DOCK TOGGLE BUTTON (Flush to screen edge with no gap) */}
-      <button
-        onClick={() => {
-          setIsOpen(!isOpen);
-          soundFX.playThwip();
-        }}
-        aria-label="Toggle Spider Control Dock"
-        className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-black py-3 pl-3 pr-3.5 rounded-r-2xl shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all hover:pr-5 active:pr-3.5"
-      >
-        <div className="flex flex-col items-center gap-1.5">
-          <div className="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center p-0.5">
-            <img
-              src={spideyEmblem}
-              alt="Spider Emblem"
-              className="w-full h-full object-contain filter group-hover:invert"
-            />
-          </div>
-          <span className="text-[9px] font-black uppercase tracking-widest [writing-mode:vertical-rl] rotate-180">
-            GADGETS
-          </span>
-          {unlockedCount > 0 && (
-            <span className="w-2 h-2 rounded-full bg-spider-red border border-black animate-ping" />
+      {/* FLOATING TRIGGER TAB (Fixed on screen edge) */}
+      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40 select-none">
+        {/* ANIMATED SPIDEY PERCHED ON TOP OF BUTTON */}
+        <AnimatePresence>
+          {!isOpen && (
+            <motion.div
+              key="perched-spidey"
+              initial={{ y: -60, opacity: 0, scale: 0.3 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              exit={{
+                y: -50,
+                opacity: 0,
+                scale: 0.2,
+                transition: { duration: 0.2, ease: "easeIn" },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 420,
+                damping: 18,
+                mass: 0.8,
+              }}
+              onClick={() => {
+                setIsOpen(true);
+                soundFX.playThwip();
+              }}
+              className="absolute -top-[44px] left-0 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+              title="Click Spidey to open Gadgets!"
+            >
+              <img
+                src={spideyGif}
+                alt="Perched Spider-Man"
+                className="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)] filter"
+              />
+            </motion.div>
           )}
-        </div>
-      </button>
+        </AnimatePresence>
 
-      {/* SLIDE-OUT PANEL */}
+        {/* DOCK TOGGLE BUTTON */}
+        <button
+          onClick={() => {
+            setIsOpen(!isOpen);
+            soundFX.playThwip();
+          }}
+          aria-label="Toggle Spider Control Dock"
+          className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-black py-3 pl-3 pr-3.5 rounded-r-2xl shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all hover:pr-5 active:pr-3.5 pointer-events-auto"
+        >
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center p-0.5">
+              <img
+                src={spideyEmblem}
+                alt="Spider Emblem"
+                className="w-full h-full object-contain filter group-hover:invert"
+              />
+            </div>
+            <span className="text-[9px] font-black uppercase tracking-widest [writing-mode:vertical-rl] rotate-180">
+              GADGETS
+            </span>
+            {unlockedCount > 0 && (
+              <span className="w-2 h-2 rounded-full bg-spider-red border border-black animate-ping" />
+            )}
+          </div>
+        </button>
+      </div>
+
+      {/* FULLY RESPONSIVE SLIDE-OUT DRAWER MODAL */}
       <AnimatePresence>
         {isOpen && (
-          <>
+          <div className="fixed inset-0 z-50 pointer-events-none select-none">
             {/* Backdrop click dismiss */}
-            <div className="fixed inset-0 z-[-1]" onClick={() => setIsOpen(false)} />
-
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-xs pointer-events-auto"
+              onClick={() => setIsOpen(false)}
+            />
+
+            {/* Slide-out Panel */}
+            <motion.div
+              initial={{ x: "-110%", opacity: 0 }}
               animate={{ x: "0%", opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
-              transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-[300px] xs:w-84 sm:w-92 max-w-[calc(100vw-3.5rem)] max-h-[88vh] overflow-y-auto bg-white border-3 sm:border-4 border-black rounded-2xl p-4 sm:p-5 shadow-[6px_6px_0px_#D31F1F] text-comic-ink"
+              exit={{ x: "-110%", opacity: 0 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              className="fixed left-2 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-auto w-[calc(100vw-1rem)] sm:w-92 max-w-[380px] max-h-[82vh] sm:max-h-[85vh] overflow-y-auto bg-white border-3 sm:border-4 border-black rounded-2xl p-4 sm:p-5 shadow-[6px_6px_0px_#D31F1F] text-comic-ink"
             >
               {/* Header */}
               <div className="relative z-10 flex items-center justify-between border-b-2 border-black pb-3 mb-3.5">
@@ -612,10 +630,10 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                 </div>
               </div>
             </motion.div>
-          </>
+          </div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 };
 

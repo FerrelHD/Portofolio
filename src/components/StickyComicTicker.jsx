@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import spiderEmblem from "../assets/spideyicon.png";
+import spiderEmblem from "../assets/spiderman-emblem.png";
 
 const TICKER_WORDS = [
   "COMIC BOOK",
