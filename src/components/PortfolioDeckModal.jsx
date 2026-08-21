@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Printer,
+  Download,
+  Loader2,
   ChevronLeft,
   ChevronRight,
   Code2,
@@ -17,7 +19,6 @@ import {
   Cpu,
 } from "lucide-react";
 import { soundFX } from "../lib/soundFx";
-
 
 const SLIDES = [
   {
@@ -60,6 +61,7 @@ const SLIDES = [
 
 const PortfolioDeckModal = ({ isOpen, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => {
@@ -85,6 +87,51 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
   const handlePrint = () => {
     soundFX.playBeep(600);
     window.print();
+  };
+
+  const handleDirectDownload = async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+    soundFX.playBeep(600);
+
+    try {
+      const html2pdfModule = await import("html2pdf.js");
+      const html2pdf = html2pdfModule.default || html2pdfModule;
+      const element = document.getElementById("pdf-deck-export-source");
+
+      if (!element) {
+        window.print();
+        return;
+      }
+
+      const opt = {
+        margin: 0,
+        filename: "Ferrel_Rashad_Akeyla_Portfolio_Deck.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: "#111318",
+          windowWidth: 1200,
+        },
+        jsPDF: {
+          unit: "px",
+          format: [1200, 675],
+          orientation: "landscape",
+          hotfixes: ["px_scaling"],
+        },
+        pagebreak: { mode: ["css", "legacy"], after: ".pdf-slide-break" },
+      };
+
+      await html2pdf().set(opt).from(element).save();
+      soundFX.playSenseBuzz();
+    } catch (err) {
+      console.error("PDF Export error:", err);
+      window.print();
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   // Keyboard navigation
@@ -118,7 +165,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
       >
         {/* TOP BAR / CONTROLS (Hidden during print) */}
         <div
-          className="w-full max-w-6xl mx-auto flex items-center justify-between gap-4 py-2 px-3 sm:px-4 bg-comic-panel border-2 border-spider-black comic-chip text-comic-ink z-20 shrink-0 print:hidden"
+          className="w-full max-w-6xl mx-auto flex items-center justify-between gap-3 py-2 px-3 sm:px-4 bg-comic-panel border-2 border-spider-black comic-chip text-comic-ink z-20 shrink-0 print:hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center gap-2 sm:gap-3">
@@ -134,14 +181,34 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Quick Export PDF Button */}
+            {/* Direct Auto-Download PDF Button */}
+            <button
+              onClick={handleDirectDownload}
+              disabled={isGenerating}
+              className="flex items-center gap-1.5 bg-spider-yellow hover:bg-white text-spider-black px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider comic-chip transition-all shadow-[2px_2px_0_#000] disabled:opacity-75 cursor-pointer"
+              title="Download 5-Slide PDF Presentation Deck directly"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 size={14} className="animate-spin text-spider-red" />
+                  <span>Generating PDF...</span>
+                </>
+              ) : (
+                <>
+                  <Download size={14} />
+                  <span>Download PDF</span>
+                </>
+              )}
+            </button>
+
+            {/* Quick Print Button */}
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 sm:gap-2 bg-spider-red hover:bg-spider-yellow hover:text-spider-black text-comic-ink px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider comic-chip transition-all shadow-[2px_2px_0_#000]"
-              title="Print or Save as Landscape PDF"
+              className="hidden sm:flex items-center gap-1.5 bg-comic-surface hover:bg-spider-red hover:text-white text-comic-ink px-2.5 sm:px-3 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider comic-chip transition-all border border-comic-ink/20"
+              title="Print Dialog"
             >
               <Printer size={14} />
-              <span>Export PDF</span>
+              <span>Print</span>
             </button>
 
             {/* Close Button */}
@@ -154,6 +221,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
             </button>
           </div>
         </div>
+
 
         {/* MAIN SLIDE VIEW CONTAINER (Screen View) */}
         <div
@@ -257,15 +325,18 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* =========================================================================
-            DEDICATED FULL PRINT DECK CONTAINER
-            - Only visible when printing (`window.print()`)
-            - Renders all 5 slides cleanly one per landscape page
+            DEDICATED FULL PRINT & AUTO-DOWNLOAD DECK CONTAINER
+            - Offscreen in normal viewport for instant html2pdf.js capturing
+            - Block & full-size in @media print
            ========================================================================= */}
-        <div className="hidden print:block print:w-full print:h-auto print-deck-root">
+        <div
+          id="pdf-deck-export-source"
+          className="fixed -left-[9999px] top-0 w-[1200px] z-[-100] pointer-events-none opacity-100 print:opacity-100 print:pointer-events-auto print:static print:left-auto print:w-full print:h-auto print-deck-root"
+        >
           {SLIDES.map((slide, index) => (
             <div
               key={`print-slide-${slide.id}`}
-              className="print-slide-page w-[100vw] h-[100vh] p-8 box-border flex flex-col justify-between bg-[#111318] text-[#F0EDE3] relative"
+              className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-10 box-border flex flex-col justify-between bg-[#111318] text-[#F0EDE3] relative"
               style={{
                 pageBreakAfter: "always",
                 breakAfter: "page",
@@ -303,6 +374,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </AnimatePresence>
+
   );
 };
 
