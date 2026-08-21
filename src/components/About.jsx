@@ -378,7 +378,7 @@ const About = ({ onOpenDailyBugle }) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white border-y-4 border-black"
+      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* SECTION HEADER */}
@@ -422,9 +422,9 @@ const About = ({ onOpenDailyBugle }) => {
               </span>
             </div>
 
-            {/* Comic Caption Box */}
-            <div className="comic-caption bg-white p-5 sm:p-7 rounded-sm border-3 border-black shadow-[6px_6px_0_#000]">
-              <p className="text-sm sm:text-lg text-comic-ink mb-4 sm:mb-5 leading-relaxed font-medium">
+            {/* Comic Caption Box — Pure White Container with High Contrast */}
+            <div className="bg-white text-comic-ink p-6 sm:p-8 rounded-sm border-3 border-black shadow-[6px_6px_0_#000]">
+              <p className="text-sm sm:text-base text-comic-ink mb-4 leading-relaxed font-semibold">
                 Hi! I&apos;m <strong className="text-spider-red font-black">Ferrel Rashad Akeyla</strong>,
                 a multidisciplinary digital creator based in Indonesia. With expertise spanning{" "}
                 <strong className="text-spider-blue font-black">
@@ -432,7 +432,7 @@ const About = ({ onOpenDailyBugle }) => {
                 </strong>
                 , I deliver creative solutions that blend visual aesthetics with technical excellence.
               </p>
-              <p className="text-sm sm:text-lg text-comic-ink leading-relaxed font-medium">
+              <p className="text-sm sm:text-base text-comic-ink leading-relaxed font-semibold">
                 I believe every project is an opportunity to create unique and immersive experiences,
                 whether through responsive web applications, cinematic video storytelling,
                 detailed 3D models, or interactive gaming worlds.

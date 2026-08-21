@@ -1,23 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import spiderEmblem from "../assets/spideyicon.png";
 
-const TICKER_ITEMS = [
+const TICKER_WORDS = [
   "COMIC BOOK",
-  "✦",
   "COMIC ARTS",
-  "✦",
   "FULL STACK HERO",
-  "✦",
   "DIGITAL CREATOR",
-  "✦",
   "REACT & NEXT.JS",
-  "✦",
   "3D & GAME CRAFT",
-  "✦",
   "SPIDER-DEV",
-  "✦",
   "ISSUE #001",
-  "✦",
 ];
 
 /**
@@ -25,7 +18,7 @@ const TICKER_ITEMS = [
  * inverts colors based on whether the active section is Cream or Red.
  */
 const StickyComicTicker = () => {
-  // "cream" | "red"
+  // "cream" | "red" | "dark"
   const [activeTheme, setActiveTheme] = useState("cream");
 
   useEffect(() => {
@@ -40,10 +33,8 @@ const StickyComicTicker = () => {
     ];
 
     const observerCallback = (entries) => {
-      // Find the entry that has the highest intersection ratio
       const visibleEntries = entries.filter((e) => e.isIntersecting);
       if (visibleEntries.length > 0) {
-        // Sort by intersection ratio descending
         visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         const topEntry = visibleEntries[0];
         const match = sections.find((s) => s.id === topEntry.target.id);
@@ -66,23 +57,22 @@ const StickyComicTicker = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Invert colors:
-  // If active section is "cream" -> Ticker is RED bg with WHITE text
-  // If active section is "red"   -> Ticker is CREAM bg with RED/BLACK text
-  // If active section is "dark"  -> Ticker is YELLOW bg with BLACK text
   const isRedSection = activeTheme === "red";
   const isDarkSection = activeTheme === "dark";
 
+  // Seamless borderless design without black strokes
   const colorStyles = isRedSection
-    ? "bg-[#EDEAE2] text-[#D31F1F] border-t-3 border-black shadow-[0_-4px_0_#000]"
+    ? "bg-[#EDEAE2] text-[#D31F1F]"
     : isDarkSection
-    ? "bg-[#FFD500] text-[#1A1A1A] border-t-3 border-black shadow-[0_-4px_0_#000]"
-    : "bg-[#D31F1F] text-[#FFFFFF] border-t-3 border-black shadow-[0_-4px_0_#000]";
+    ? "bg-[#2B2D2F] text-[#FFFFFF]"
+    : "bg-[#D31F1F] text-[#FFFFFF]";
 
-  const starColor = isRedSection ? "text-[#1A1A1A]" : isDarkSection ? "text-[#D31F1F]" : "text-[#FFD500]";
+  const emblemFilter = isRedSection
+    ? "brightness(0) saturate(100%) invert(18%) sepia(85%) saturate(4678%) hue-rotate(352deg) brightness(88%) contrast(96%)" // Red icon
+    : "brightness(0) invert(1)"; // Pure White icon on Red & Charcoal
 
-  // Duplicate items for continuous marquee loop
-  const displayItems = [...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS];
+  // Duplicate items for continuous smooth marquee loop
+  const displayItems = [...TICKER_WORDS, ...TICKER_WORDS, ...TICKER_WORDS, ...TICKER_WORDS];
 
   return (
     <div
@@ -90,19 +80,17 @@ const StickyComicTicker = () => {
       aria-label="Live Comic Ribbon Ticker"
     >
       <div className="animate-comic-marquee flex items-center gap-6 sm:gap-8 whitespace-nowrap will-change-transform">
-        {displayItems.map((item, index) => {
-          const isStar = item === "✦";
-          return (
-            <span
-              key={index}
-              className={`inline-flex items-center shrink-0 ${
-                isStar ? `${starColor} text-base sm:text-lg animate-pulse` : "font-black tracking-[0.22em]"
-              }`}
-            >
-              {item}
-            </span>
-          );
-        })}
+        {displayItems.map((word, index) => (
+          <React.Fragment key={index}>
+            <span className="font-black tracking-[0.22em] shrink-0">{word}</span>
+            <img
+              src={spiderEmblem}
+              alt="Spider Emblem"
+              className="w-4 h-4 sm:w-5 sm:h-5 object-contain shrink-0 transition-all duration-300"
+              style={{ filter: emblemFilter }}
+            />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

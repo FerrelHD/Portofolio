@@ -442,7 +442,7 @@ const Projects = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white border-y-4 border-black"
+      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 

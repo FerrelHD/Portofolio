@@ -114,8 +114,9 @@
     border: 2px solid var(--color-ink-stroke);
   }
   .comic-caption {
-    border: 2px solid var(--color-spider-yellow);
-    background-color: rgba(255, 213, 0, 0.06);
+    border: 3px solid var(--color-ink-stroke);
+    background-color: var(--color-comic-panel);
+    color: var(--color-comic-ink);
   }
 
   /* ===== Halftone Dot Pattern Overlay ===== */
