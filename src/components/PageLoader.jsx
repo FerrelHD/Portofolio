@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Command } from "lucide-react";
+import { Command, Sparkles } from "lucide-react";
+import spiderEmblem from "../assets/spiderman-emblem.png";
 
 const LOADER_SESSION_KEY = "comic_portfolio_shown_loader_v1";
 
@@ -11,7 +12,7 @@ const PageLoader = ({ onDone }) => {
 
   useEffect(() => {
     let cancelled = false;
-    // Cek sessionStorage: hanya tampilkan PER page load session (bukan tiap navigasi SPA mount)
+    // Cek sessionStorage: hanya tampilkan per page load session (bukan tiap navigasi SPA mount)
     try {
       const shown = window.sessionStorage.getItem(LOADER_SESSION_KEY);
       if (shown === "1") {
@@ -23,10 +24,9 @@ const PageLoader = ({ onDone }) => {
       // ignore storage access errors
     }
 
-    // Simulasikan progress sampai window load event + minimal 1 detik
     const start = performance.now();
-    const minDuration = 1100;
-    const maxProgressBeforeWait = 82;
+    const minDuration = 1200;
+    const maxProgressBeforeWait = 88;
 
     let rafId;
     const tick = (now) => {
@@ -46,7 +46,6 @@ const PageLoader = ({ onDone }) => {
     const finish = () => {
       if (cancelled) return;
       setProgress(100);
-      // Mark selesai, lalu exit animasi
       setTimeout(() => {
         if (!cancelled) {
           setMounted(false);
@@ -55,23 +54,8 @@ const PageLoader = ({ onDone }) => {
           } catch (_) {}
           if (onDone) onDone();
         }
-      }, 450);
+      }, 500);
     };
-
-    // Jika window sudah fully loaded dan duration terlewati, selesaikan lebih cepat
-    if (document.readyState === "complete") {
-      // Biarkan animasi berjalan sesuai durasi minimum agar terasa
-    } else {
-      const onLoad = () => {
-        // Page sudah siap, percepata sisa progress ke 100
-      };
-      window.addEventListener("load", onLoad, { once: true });
-      return () => {
-        cancelled = true;
-        cancelAnimationFrame(rafId);
-        window.removeEventListener("load", onLoad);
-      };
-    }
 
     return () => {
       cancelled = true;
@@ -83,108 +67,91 @@ const PageLoader = ({ onDone }) => {
     <AnimatePresence>
       {mounted && (
         <motion.div
-          className="page-loader"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-spider-black/90 backdrop-blur-sm overflow-hidden select-none"
           key="page-loader-root"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{ duration: 0.45, ease: [0.7, 0, 0.3, 1] }}
         >
-          <div className="page-loader-inner">
-            <div className="page-loader-halftone halftone-overlay" />
+          {/* Halftone Dot Overlay */}
+          <div
+            className="absolute inset-0 opacity-20 pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(#FFF 1.5px, transparent 1.5px)",
+              backgroundSize: "16px 16px",
+            }}
+          />
 
-            {/* Logo mark */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
-              className="mb-6 sm:mb-8"
-            >
-              <div className="inline-flex items-center gap-3">
-                <span className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center bg-spider-red comic-chip">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="text-comic-ink"
-                  >
-                    <circle cx="12" cy="12" r="3" />
-                    <path
-                      d="M12 5.5v2M12 16.5v2M5.5 12h2M16.5 12h2M7 7l1.5 1.5M15.5 15.5L17 17M7 17l1.5-1.5M15.5 8.5L17 7"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
-                <div className="text-left">
-                  <p className="text-[10px] sm:text-xs font-black tracking-[0.25em] uppercase text-comic-ink/50 mb-1">
-                    Issue #001 — Loading
-                  </p>
-                  <p className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tight">
-                    <span className="text-comic-ink comic-stroke">The Amazing </span>
-                    <span className="text-spider-red comic-stroke italic">Digital Creator</span>
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+          {/* Central Comic Panel Card */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 25 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 280, damping: 22 }}
+            className="relative w-full max-w-lg bg-[#EDEAE2] border-4 border-spider-black comic-chip pop-shadow-red overflow-hidden p-6 sm:p-8 text-comic-ink text-center"
+          >
+            {/* Top Comic Red Header Banner */}
+            <div className="absolute top-0 left-0 right-0 h-3 bg-spider-red border-b-2 border-spider-black" />
 
-            {/* Progress Comic Chip */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className="mb-3 sm:mb-4 flex items-center justify-between px-1"
-            >
-              <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-3 py-1.5">
-                <span className="w-1.5 h-1.5 bg-spider-black comic-chip animate-pulse" />
-                <span className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] uppercase">
-                  Assembling Comic Panels…
-                </span>
-              </span>
-              <span className="inline-flex items-center justify-center bg-spider-black comic-chip text-spider-yellow px-3 py-1.5 min-w-[56px]">
-                <span className="text-[10px] sm:text-[11px] font-black tabular-nums">
-                  {progress}%
-                </span>
-              </span>
-            </motion.div>
+            {/* Issue Badge */}
+            <div className="inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border-2 border-spider-black comic-chip shadow-[2px_2px_0_#000] mt-1 mb-4">
+              <Sparkles size={13} className="text-spider-red shrink-0" />
+              <span>ISSUE #001 // INITIALIZING SPIDER-DEV</span>
+            </div>
 
-            {/* Progress Track */}
+            {/* Central Animated Spider Emblem */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="loader-progress-track"
-              style={{ borderRadius: "2px" }}
+              animate={{ rotate: [0, -3, 3, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3.5 bg-spider-red border-3 border-spider-black comic-chip flex items-center justify-center p-2.5 shadow-[3px_3px_0_#000]"
             >
-              <div
-                className="loader-progress-fill"
-                style={{ width: `${progress}%` }}
+              <img
+                src={spiderEmblem}
+                alt="Spider-Man Emblem"
+                className="w-full h-full object-contain filter brightness-0 invert drop-shadow-[0_2px_0_rgba(0,0,0,0.8)]"
               />
             </motion.div>
 
-            {/* Footer chips */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35 }}
-              className="mt-5 sm:mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
-            >
-              <span className="inline-flex items-center gap-1.5 bg-comic-panel comic-chip text-comic-ink px-3 py-1.5">
-                <Command size={11} strokeWidth={2.5} className="text-spider-yellow" />
-                <span className="text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
-                  Press ? for shortcuts
-                </span>
+            {/* Titles */}
+            <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-comic-ink comic-stroke leading-none mb-1">
+              FERREL RASHAD <span className="text-spider-red">AKEYLA</span>
+            </h1>
+            <p className="text-[11px] sm:text-xs font-bold text-spider-black/70 tracking-widest uppercase mb-5">
+              YOUR NEIGHBORHOOD DEVELOPER
+            </p>
+
+            {/* Progress Header Info */}
+            <div className="mb-2 flex items-center justify-between px-1 text-[10px] sm:text-xs font-black uppercase">
+              <span className="flex items-center gap-1.5 text-spider-black">
+                <span className="w-2 h-2 rounded-full bg-spider-red animate-pulse" />
+                <span>Assembling Web Matrix…</span>
               </span>
-              <span className="inline-flex items-center gap-1.5 bg-comic-panel comic-chip text-comic-ink px-3 py-1.5">
-                <kbd className="kbd-key" style={{ minWidth: 24, height: 20, fontSize: 10 }}>S</kbd>
-                <span className="text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
-                  = Spider-Sense
-                </span>
+              <span className="bg-spider-black text-spider-yellow px-2.5 py-0.5 border border-black comic-chip tabular-nums font-mono">
+                {progress}%
               </span>
-            </motion.div>
-          </div>
+            </div>
+
+            {/* Comic Progress Bar Track */}
+            <div className="relative w-full h-5 sm:h-6 bg-white border-3 border-spider-black comic-chip shadow-[3px_3px_0_#000] overflow-hidden mb-5">
+              <motion.div
+                className="h-full bg-gradient-to-r from-spider-red via-spider-yellow to-spider-yellow border-r-3 border-spider-black"
+                style={{ width: `${progress}%` }}
+                transition={{ ease: "easeOut", duration: 0.1 }}
+              />
+            </div>
+
+            {/* Quick Hotkey Tips Footer */}
+            <div className="pt-3 border-t-2 border-spider-black/15 flex flex-wrap items-center justify-center gap-2 text-[9px] sm:text-[10px] font-black uppercase text-spider-black/80">
+              <span className="inline-flex items-center gap-1 bg-white border border-spider-black/40 px-2 py-1 comic-chip shadow-[1px_1px_0_#000]">
+                <kbd className="font-mono bg-spider-yellow text-spider-black px-1 rounded-xs">E</kbd> Deck / PDF
+              </span>
+              <span className="inline-flex items-center gap-1 bg-white border border-spider-black/40 px-2 py-1 comic-chip shadow-[1px_1px_0_#000]">
+                <kbd className="font-mono bg-spider-red text-white px-1 rounded-xs">S</kbd> Spider-Sense
+              </span>
+              <span className="inline-flex items-center gap-1 bg-white border border-spider-black/40 px-2 py-1 comic-chip shadow-[1px_1px_0_#000]">
+                <kbd className="font-mono bg-spider-blue text-white px-1 rounded-xs">Ctrl+K</kbd> Terminal
+              </span>
+            </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
