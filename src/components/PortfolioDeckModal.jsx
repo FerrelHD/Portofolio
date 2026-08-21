@@ -342,7 +342,7 @@ function renderSlideContent(slide) {
     case "cover":
       return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
-          <div className="md:col-span-8 space-y-3 sm:space-y-4">
+          <div className="md:col-span-7 space-y-3 sm:space-y-4">
             <div className="inline-block bg-spider-red text-white px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border-2 border-black rounded-sm shadow-[2px_2px_0_#000]">
               MISSION BRIEF & EXECUTIVE DOSSIER
             </div>
@@ -357,7 +357,7 @@ function renderSlideContent(slide) {
             </p>
 
             {/* Quick Contact Badges */}
-            <div className="flex flex-wrap gap-2 pt-2 text-[10px] sm:text-xs font-bold">
+            <div className="flex flex-wrap gap-2 pt-1 text-[10px] sm:text-xs font-bold">
               <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
                 <Mail size={13} className="text-spider-yellow" />
                 <span>ferrelrashadakeyla2014@gmail.com</span>
@@ -373,50 +373,35 @@ function renderSlideContent(slide) {
             </div>
           </div>
 
-          <div className="md:col-span-4 hidden md:flex flex-col gap-3">
-            <div className="flex items-center gap-3 bg-comic-surface border-2 border-comic-ink p-2.5 comic-chip">
-              <div className="w-16 h-20 border-2 border-spider-red overflow-hidden shrink-0 bg-black">
+          {/* Right Column: Big Handsome Spotlight Portrait */}
+          <div className="md:col-span-5 hidden md:flex flex-col items-center justify-center">
+            <div className="bg-comic-surface border-3 border-comic-ink p-3 comic-chip shadow-[6px_6px_0px_#FF1E26] w-full max-w-[260px] text-center">
+              <div className="w-full h-44 sm:h-52 border-2 border-spider-yellow overflow-hidden bg-black mb-2.5 shadow-[2px_2px_0_#000]">
                 <img
                   src={ferrelPortrait}
                   alt="Ferrel Portrait"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
-              <div>
+              <div className="flex items-center justify-between px-1 mb-1">
                 <span className="text-[9px] font-black text-spider-yellow uppercase tracking-wider block">
-                  Agent Dossier
+                  AGENT DOSSIER #001
                 </span>
-                <span className="text-xs font-black text-comic-ink block">
-                  Ferrel Rashad Akeyla
-                </span>
-                <span className="text-[9px] font-bold text-comic-ink/60 block mt-0.5">
-                  Clearance Level 05
+                <span className="text-[8px] font-black bg-emerald-500 text-black px-1.5 py-0.5 uppercase tracking-wider rounded-xs">
+                  ACTIVE
                 </span>
               </div>
-            </div>
-
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 comic-chip">
-              <div className="text-[10px] font-black text-spider-yellow uppercase tracking-wider mb-1">
-                Core Domains
-              </div>
-              <div className="space-y-1 text-[11px] font-bold">
-                <div className="flex items-center gap-2">
-                  <span className="text-spider-red">✓</span> Web App Engineering
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-spider-blue">✓</span> 3D Game Programming
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-spider-yellow">✓</span> Video & Motion Production
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-emerald-400">✓</span> UI/UX & Design Systems
-                </div>
-              </div>
+              <span className="text-sm font-black text-comic-ink block uppercase">
+                Ferrel Rashad Akeyla
+              </span>
+              <span className="text-[10px] font-bold text-comic-ink/60 block mt-0.5">
+                Full-Stack & Game Systems Specialist
+              </span>
             </div>
           </div>
         </div>
       );
+
 
     case "skills":
       return (
@@ -552,8 +537,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-blue">
-                <span>Laravel 11 • Filament • Tailwind</span>
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Laravel 11</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-yellow text-black px-1.5 py-0.5 rounded-xs border border-black">Filament 3</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">Tailwind</span>
               </div>
             </div>
 
@@ -586,8 +573,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-yellow">
-                <span>React 19 • TypeScript • Supabase</span>
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-[#00D8FF] text-black px-1.5 py-0.5 rounded-xs border border-black">React 19</span>
+                <span className="text-[8.5px] font-black uppercase bg-[#3178C6] text-white px-1.5 py-0.5 rounded-xs border border-black">TypeScript</span>
+                <span className="text-[8.5px] font-black uppercase bg-[#10B981] text-black px-1.5 py-0.5 rounded-xs border border-black">Supabase</span>
               </div>
             </div>
 
@@ -620,8 +609,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center justify-between text-[9px] font-bold text-spider-red">
-                <span>Laravel • MySQL • Bootstrap</span>
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Laravel</span>
+                <span className="text-[8.5px] font-black uppercase bg-[#00758F] text-white px-1.5 py-0.5 rounded-xs border border-black">MySQL</span>
+                <span className="text-[8.5px] font-black uppercase bg-[#A259FF] text-white px-1.5 py-0.5 rounded-xs border border-black">Bootstrap</span>
               </div>
             </div>
           </div>
@@ -670,8 +661,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-spider-yellow">
-                Unity • C# • Mobile Optimization
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-white text-black px-1.5 py-0.5 rounded-xs border border-black">Unity Engine</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">C# Physics</span>
+                <span className="text-[8.5px] font-black uppercase bg-emerald-500 text-black px-1.5 py-0.5 rounded-xs border border-black">60 FPS</span>
               </div>
             </div>
 
@@ -704,8 +697,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-spider-blue">
-                Roblox Studio • Luau • 3D Terrain
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">Roblox Studio</span>
+                <span className="text-[8.5px] font-black uppercase bg-sky-400 text-black px-1.5 py-0.5 rounded-xs border border-black">Luau Scripts</span>
+                <span className="text-[8.5px] font-black uppercase bg-amber-500 text-black px-1.5 py-0.5 rounded-xs border border-black">3D Terrain</span>
               </div>
             </div>
 
@@ -738,8 +733,10 @@ function renderSlideContent(slide) {
                   </div>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 text-[9px] font-bold text-emerald-400">
-                Vegas Pro 18 • Sound Design • Beat Timing
+              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
+                <span className="text-[8.5px] font-black uppercase bg-emerald-500 text-black px-1.5 py-0.5 rounded-xs border border-black">Vegas Pro 18</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Beat Timing</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-yellow text-black px-1.5 py-0.5 rounded-xs border border-black">Color Grade</span>
               </div>
             </div>
           </div>
