@@ -32,29 +32,31 @@ const StickyComicTicker = () => {
       { id: "footer", type: "dark" },
     ];
 
-    const observerCallback = (entries) => {
-      const visibleEntries = entries.filter((e) => e.isIntersecting);
-      if (visibleEntries.length > 0) {
-        visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        const topEntry = visibleEntries[0];
-        const match = sections.find((s) => s.id === topEntry.target.id);
-        if (match) {
-          setActiveTheme(match.type);
+    const updateTickerTheme = () => {
+      // Check the exact physical pixel where the bottom ticker sits
+      const tickerY = window.innerHeight - 25;
+      for (const sec of sections) {
+        const el =
+          document.getElementById(sec.id) ||
+          (sec.id === "footer" ? document.querySelector("footer") : null);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= tickerY && rect.bottom >= tickerY) {
+            setActiveTheme(sec.type);
+            return;
+          }
         }
       }
     };
 
-    const observer = new IntersectionObserver(observerCallback, {
-      threshold: [0.15, 0.4, 0.7],
-      rootMargin: "-10% 0px -10% 0px",
-    });
+    updateTickerTheme();
+    window.addEventListener("scroll", updateTickerTheme, { passive: true });
+    window.addEventListener("resize", updateTickerTheme, { passive: true });
 
-    sections.forEach(({ id }) => {
-      const el = document.getElementById(id) || document.querySelector(id === "footer" ? "footer" : `#${id}`);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener("scroll", updateTickerTheme);
+      window.removeEventListener("resize", updateTickerTheme);
+    };
   }, []);
 
   const isRedSection = activeTheme === "red";
@@ -78,17 +80,17 @@ const StickyComicTicker = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-3 sm:py-4 select-none transition-colors duration-500 ease-in-out font-display font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-tighter ${colorStyles}`}
+      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-2 sm:py-2.5 select-none transition-colors duration-300 ease-in-out font-display font-black text-sm sm:text-base md:text-lg uppercase tracking-tighter ${colorStyles}`}
       aria-label="Live Comic Ribbon Ticker"
     >
-      <div className="animate-comic-marquee flex items-center gap-7 sm:gap-10 md:gap-12 whitespace-nowrap will-change-transform font-display">
+      <div className="animate-comic-marquee flex items-center gap-6 sm:gap-8 md:gap-9 whitespace-nowrap will-change-transform font-display">
         {displayItems.map((word, index) => (
           <React.Fragment key={index}>
             <span className="font-display font-black tracking-tighter shrink-0">{word}</span>
             <img
               src={spiderEmblem}
               alt="Spider Emblem"
-              className="w-9 h-9 sm:w-11 sm:h-11 md:w-13 md:h-13 object-contain shrink-0 transition-all duration-300 mx-1"
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 object-contain shrink-0 transition-all duration-300 mx-1"
               style={{ filter: emblemFilter }}
             />
           </React.Fragment>
