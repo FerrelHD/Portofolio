@@ -21,7 +21,7 @@ import { soundFX } from "../lib/soundFx";
 
 import ferrelPortrait from "../assets/ferrel-portrait.jpg";
 import fersyaShop from "../assets/fersya-shop.webp";
-import studentLife from "../assets/student-life.jpg";
+import studentLife from "../assets/student-life.png";
 import finesserShop from "../assets/Shop.webp";
 import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
