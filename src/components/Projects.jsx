@@ -445,26 +445,18 @@ const Projects = () => {
       className="py-16 md:py-28 relative overflow-hidden bg-transparent"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 45% 25% at 15% 10%, rgba(22,93,255,0.08) 0%, transparent 70%), radial-gradient(ellipse 45% 25% at 85% 90%, rgba(255,30,38,0.08) 0%, transparent 70%)",
-        }}
-      />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6 md:gap-8">
           <motion.div variants={fadeUp}>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase text-comic-ink">
               Mission{" "}
               <span className="text-spider-blue comic-stroke drop-shadow-[3px_3px_0_var(--color-ink-stroke)]">
                 Archives
               </span>
             </h2>
-            <p className="text-comic-ink/50 max-w-md font-medium text-sm sm:text-base">
+            <p className="text-comic-ink/70 max-w-md font-medium text-sm sm:text-base">
               Curated missions across web development, video editing, 3D modeling, and game design.
             </p>
           </motion.div>

@@ -86,10 +86,10 @@
 
   /* ===== Pop Art 3D Drop Shadow ===== */
   .pop-shadow-red {
-    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke), 0 0 40px var(--color-glow-red);
+    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke);
   }
   .pop-shadow-blue {
-    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke), 0 0 40px var(--color-glow-blue);
+    box-shadow: 4px 4px 0px 0px var(--color-ink-stroke);
   }
   .pop-shadow-yellow {
     box-shadow: 4px 4px 0px 0px var(--color-ink-stroke);
@@ -410,7 +410,7 @@
     max-height: 88vh;
     overflow-y: auto;
     border: 4px solid var(--color-ink-stroke);
-    box-shadow: 8px 8px 0 0 var(--color-ink-stroke), 0 0 60px var(--color-glow-red);
+    box-shadow: 8px 8px 0 0 var(--color-ink-stroke);
     background: var(--color-comic-panel);
   }
   .modal-halftone {
@@ -441,13 +441,13 @@
     justify-content: center;
     background: var(--color-spider-blue);
     border: 3px solid var(--color-ink-stroke);
-    box-shadow: 4px 4px 0 0 var(--color-ink-stroke), 0 0 20px var(--color-glow-blue);
+    box-shadow: 4px 4px 0 0 var(--color-ink-stroke);
     cursor: pointer;
     transition: all 0.2s ease;
   }
   .web-shooter-btn:hover {
     background: var(--color-spider-yellow);
-    box-shadow: 2px 2px 0 0 var(--color-ink-stroke), 0 0 30px var(--color-glow-red);
+    box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
     transform: translate(2px, 2px);
   }
   .web-shooter-btn:active {

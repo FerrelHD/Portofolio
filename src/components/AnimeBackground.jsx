@@ -3,25 +3,9 @@ import React from "react";
 const AnimeBackground = () => {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#F7F4EE]">
-      {/* Layer 1: Halftone Dot Pattern (Subtle Paper Print) */}
+      {/* Layer 1: Halftone Dot Pattern (Subtle Paper Texture) */}
       <div
-        className="absolute inset-0 halftone-overlay opacity-30"
-        aria-hidden="true"
-      />
-
-      {/* Layer 2: Subtle Warm Comic Accents */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at 15% 15%, rgba(217,35,30,0.06) 0%, transparent 60%), radial-gradient(ellipse at 85% 85%, rgba(22,93,255,0.05) 0%, transparent 60%), radial-gradient(ellipse at 50% 50%, rgba(255,213,0,0.03) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Layer 3: Faint Comic Sunburst Rays */}
-      <div
-        className="absolute inset-0 opacity-[0.02] burst-bg mix-blend-multiply"
+        className="absolute inset-0 halftone-overlay opacity-20"
         aria-hidden="true"
       />
 

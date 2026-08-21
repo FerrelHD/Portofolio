@@ -61,25 +61,13 @@ const Hero = () => {
         DEV
       </div>
 
-      {/* Large Halftone Gradient Overlay with bottom fade mask */}
-      <div
-        className="absolute inset-0 z-[-1] opacity-60 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 15% 10%, rgba(255,30,38,0.22) 0%, transparent 60%), radial-gradient(ellipse 60% 70% at 90% 90%, rgba(22,93,255,0.22) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255,213,0,0.05) 0%, transparent 70%)",
-          maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-          WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
-        }}
-        aria-hidden="true"
-      />
-
       {/* Fine grid halftone dot pattern */}
       <div
-        className="absolute inset-0 z-[-1] opacity-[0.07]"
+        className="absolute inset-0 z-[-1] opacity-[0.04]"
         aria-hidden="true"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(240,237,227,1) 1.5px, transparent 1.5px)",
+            "radial-gradient(circle, #18181B 1.2px, transparent 1.2px)",
           backgroundSize: "10px 10px",
         }}
       />
@@ -89,12 +77,12 @@ const Hero = () => {
         animate={floatAnim1}
         className="absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
       >
-        <div className="bg-spider-red comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
+        <div className="bg-spider-red comic-chip p-2.5 sm:p-3 pop-shadow-sm text-white flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
             <Code2 size={18} strokeWidth={2.5} />
           </div>
           <div>
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-comic-ink/80">
+            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/80">
               Web Craft
             </p>
             <p className="font-black text-xs sm:text-sm">Full Stack</p>
@@ -106,8 +94,8 @@ const Hero = () => {
         animate={floatAnim2}
         className="absolute top-[20%] left-[6%] lg:left-[8%] xl:left-[12%] 2xl:left-[16%] z-[5] hidden lg:block"
       >
-        <div className="bg-comic-panel comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
-          <div className="w-9 h-9 bg-comic-surface comic-chip flex items-center justify-center text-spider-red">
+        <div className="bg-white comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
+          <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
             <Github size={18} strokeWidth={2.5} />
           </div>
           <div>

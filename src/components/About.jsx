@@ -388,16 +388,6 @@ const About = ({ onOpenDailyBugle }) => {
         <div className="w-full h-full halftone-overlay" />
       </div>
 
-      {/* Red & blue corner vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 30% at 90% 20%, rgba(255,30,38,0.08) 0%, transparent 70%), radial-gradient(ellipse 50% 30% at 10% 80%, rgba(22,93,255,0.08) 0%, transparent 70%)",
-        }}
-      />
-
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* SECTION HEADER — No eyebrow (hero only punya eyebrow) */}
         <motion.div variants={fadeUp} className="text-center mb-12 md:mb-16">

@@ -279,7 +279,7 @@ const Contact = () => {
   };
 
   const inputBase =
-    "w-full px-4 sm:px-5 py-3 sm:py-4 bg-comic-surface comic-chip transition-all outline-none font-black text-sm placeholder:text-comic-ink/30";
+    "w-full px-4 sm:px-5 py-3 sm:py-4 bg-[#F7F4EE] border-2 border-black comic-chip transition-all outline-none font-black text-sm text-comic-ink placeholder:text-comic-ink/40";
 
   return (
     <motion.section
@@ -299,16 +299,6 @@ const Contact = () => {
           />
         )}
       </AnimatePresence>
-
-      {/* Red & Blue Spotlight */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 45% 40% at 8% 15%, rgba(255,30,38,0.1) 0%, transparent 70%), radial-gradient(ellipse 45% 40% at 92% 85%, rgba(22,93,255,0.1) 0%, transparent 70%)",
-        }}
-      />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* SECTION HEADER — Comic Sound Effect Style */}
@@ -534,15 +524,15 @@ const Contact = () => {
                     >
                       {info.icon}
                     </div>
-                    <p className="mb-1 inline-block bg-spider-black comic-chip text-comic-ink/80 px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em]">
+                    <p className="mb-1 inline-block bg-spider-yellow comic-chip text-spider-black px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.2em]">
                       {info.label}
                       {!isLocation && (
-                        <span className="ml-1 text-comic-ink/40 normal-case tracking-normal font-bold">
+                        <span className="ml-1 text-spider-black/60 normal-case tracking-normal font-bold">
                           (copy)
                         </span>
                       )}
                       {isLocation && (
-                        <span className="ml-1 text-comic-ink/40 normal-case tracking-normal font-bold">
+                        <span className="ml-1 text-spider-black/60 normal-case tracking-normal font-bold">
                           (maps)
                         </span>
                       )}
