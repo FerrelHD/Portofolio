@@ -60,7 +60,7 @@ const Navbar = ({ onOpenDeck }) => {
   const backgroundColor = useTransform(
     smoothScrollY,
     [0, 80],
-    ["rgba(20, 20, 20, 0)", "rgba(20, 20, 20, 0.92)"]
+    ["rgba(247, 244, 238, 0)", "rgba(247, 244, 238, 0.95)"]
   );
   const backdropBlur = useTransform(
     smoothScrollY,
@@ -70,7 +70,7 @@ const Navbar = ({ onOpenDeck }) => {
   const borderColor = useTransform(
     smoothScrollY,
     [0, 80],
-    ["rgba(10, 10, 10, 0)", "rgba(255, 30, 38, 0.5)"]
+    ["rgba(24, 24, 27, 0)", "rgba(24, 24, 27, 0.25)"]
   );
   const borderWidth = useTransform(smoothScrollY, [0, 80], ["0px", "2px"]);
   const paddingY = useTransform(smoothScrollY, [0, 80], [28, 14]);

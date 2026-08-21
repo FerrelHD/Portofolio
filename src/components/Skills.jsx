@@ -110,22 +110,22 @@ const Skills = () => {
             SUPERHERO ABILITY MATRIX
           </span>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-comic-ink leading-none">
             SKILLS & TECH STACK
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 mt-3 font-medium">
+          <p className="text-sm sm:text-base text-comic-ink/70 mt-3 font-medium">
             An interactive comic dossier of my technical capabilities across modern web systems, visual arts, and computing engines.
           </p>
 
           {/* View Mode Toggle Buttons */}
-          <div className="inline-flex items-center p-1.5 bg-[#14141C] border-3 border-black rounded-2xl mt-6 shadow-[4px_4px_0_#000] max-w-full overflow-x-auto">
+          <div className="inline-flex items-center p-1.5 bg-white border-3 border-black rounded-2xl mt-6 shadow-[4px_4px_0_#000] max-w-full overflow-x-auto">
             <button
               type="button"
               onClick={() => handleToggleView("web")}
               className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap border-2 ${
                 viewMode === "web"
                   ? "bg-spider-red text-white border-black shadow-[2px_2px_0_#000]"
-                  : "border-transparent text-zinc-400 hover:text-white"
+                  : "border-transparent text-comic-ink/70 hover:text-comic-ink"
               }`}
             >
               <Share2 size={13} />
@@ -137,7 +137,7 @@ const Skills = () => {
               className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 rounded-xl text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap border-2 ${
                 viewMode === "deck"
                   ? "bg-spider-blue text-white border-black shadow-[2px_2px_0_#000]"
-                  : "border-transparent text-zinc-400 hover:text-white"
+                  : "border-transparent text-comic-ink/70 hover:text-comic-ink"
               }`}
             >
               <Grid size={13} />
@@ -169,32 +169,32 @@ const Skills = () => {
             {PROFICIENCY_GROUPS.map((group) => (
               <div
                 key={group.level}
-                className={`bg-[#121218] border-3 sm:border-4 border-black rounded-2xl sm:rounded-3xl p-5 sm:p-8 ${group.panelShadow} relative overflow-hidden`}
+                className={`bg-white border-3 sm:border-4 border-black rounded-2xl sm:rounded-3xl p-5 sm:p-8 ${group.panelShadow} relative overflow-hidden`}
               >
                 {/* Halftone / Strip Background Accent */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-white/[0.03] to-transparent pointer-events-none" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-black/[0.02] to-transparent pointer-events-none" />
 
                 {/* Group Level Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-black pb-5 mb-6">
                   <div>
                     <div className="flex items-center gap-2.5 mb-1.5">
-                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-spider-yellow bg-black/60 px-2 py-0.5 rounded border border-black shadow-[1px_1px_0_#000]">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-spider-black bg-spider-yellow px-2 py-0.5 rounded border border-black shadow-[1px_1px_0_#000]">
                         {group.dossierCode}
                       </span>
                       <span className={`text-[10px] sm:text-xs font-black uppercase px-2.5 py-0.5 rounded-md ${group.badgeClass}`}>
                         {group.level}
                       </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+                    <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-comic-ink">
                       {group.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-zinc-300 mt-1 font-medium max-w-2xl leading-relaxed">
+                    <p className="text-xs sm:text-sm text-comic-ink/70 mt-1 font-medium max-w-2xl leading-relaxed">
                       {group.subtitle}
                     </p>
                   </div>
-                  <div className="self-start sm:self-center flex items-center gap-1.5 bg-[#1B1B26] border-2 border-black px-3 py-1.5 rounded-xl shadow-[2px_2px_0_#000]">
-                    <ShieldAlert size={14} className="text-spider-yellow" />
-                    <span className="text-xs font-mono font-black text-white">
+                  <div className="self-start sm:self-center flex items-center gap-1.5 bg-[#F7F4EE] border-2 border-black px-3 py-1.5 rounded-xl shadow-[2px_2px_0_#000]">
+                    <ShieldAlert size={14} className="text-spider-red" />
+                    <span className="text-xs font-mono font-black text-comic-ink">
                       {group.skills.length} TECH ASSETS
                     </span>
                   </div>
@@ -221,11 +221,11 @@ const Skills = () => {
                         variants={cardVariants}
                         whileHover={{ y: -6, scale: 1.02 }}
                         onClick={() => soundFX.playBeep(650)}
-                        className="bg-[#181824] border-3 border-black rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#FF1E26] hover:border-spider-red transition-all group flex flex-col justify-between cursor-pointer relative overflow-hidden"
+                        className="bg-white border-3 border-black rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#D9231E] hover:border-spider-red transition-all group flex flex-col justify-between cursor-pointer relative overflow-hidden text-comic-ink"
                       >
                         {/* Top Accent Bar */}
                         <div
-                          className="absolute top-0 left-0 right-0 h-1"
+                          className="absolute top-0 left-0 right-0 h-1.5"
                           style={{ backgroundColor: metrics.color }}
                         />
 
@@ -234,23 +234,22 @@ const Skills = () => {
                           <div className="flex items-start justify-between gap-3 mb-3">
                             <div className="flex items-center gap-3">
                               {/* Avatar Box */}
-                              <div className="w-11 h-11 rounded-xl bg-[#0D0D14] border-2 border-black flex items-center justify-center p-2 shrink-0 shadow-[2px_2px_0_#000] group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                              <div className="w-11 h-11 rounded-xl bg-[#F7F4EE] border-2 border-black flex items-center justify-center p-2 shrink-0 shadow-[2px_2px_0_#000] group-hover:scale-110 group-hover:rotate-3 transition-transform">
                                 <img
                                   src={skill.iconImg}
                                   alt={skill.name}
                                   className="w-full h-full object-contain"
                                   style={{
-                                    mixBlendMode: isUnity ? "normal" : "screen",
-                                    filter: isUnity ? "invert(1)" : "none",
+                                    filter: isUnity ? "none" : "none",
                                   }}
                                 />
                               </div>
 
                               <div>
-                                <h4 className="font-black text-sm sm:text-base text-white group-hover:text-spider-red transition-colors leading-tight">
+                                <h4 className="font-black text-sm sm:text-base text-comic-ink group-hover:text-spider-red transition-colors leading-tight">
                                   {skill.name}
                                 </h4>
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-comic-ink/60">
                                   {skill.category}
                                 </span>
                               </div>
@@ -260,7 +259,7 @@ const Skills = () => {
                             <span
                               className="text-[9px] font-black uppercase px-2 py-0.5 rounded-md border border-black shadow-[1.5px_1.5px_0_#000] shrink-0"
                               style={{
-                                backgroundColor: `${metrics.color}20`,
+                                backgroundColor: `${metrics.color}18`,
                                 color: metrics.color,
                                 borderColor: `${metrics.color}60`,
                               }}
@@ -270,7 +269,7 @@ const Skills = () => {
                           </div>
 
                           {/* Skill Description */}
-                          <p className="text-xs text-zinc-300 leading-relaxed mb-3.5 font-medium">
+                          <p className="text-xs text-comic-ink/80 leading-relaxed mb-3.5 font-medium">
                             {skill.desc}
                           </p>
                         </div>
@@ -278,19 +277,19 @@ const Skills = () => {
                         {/* Bottom Section: Power Meter */}
                         <div className="pt-2">
                           {/* Comic Arcade Power Meter */}
-                          <div className="bg-[#0E0E16] border-2 border-black rounded-lg p-2 shadow-[2px_2px_0_#000]">
-                            <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-wider text-zinc-400 mb-1">
+                          <div className="bg-[#F7F4EE] border-2 border-black rounded-lg p-2 shadow-[2px_2px_0_#000]">
+                            <div className="flex items-center justify-between text-[9px] font-black uppercase tracking-wider text-comic-ink/70 mb-1">
                               <span className="flex items-center gap-1">
                                 <Zap size={10} style={{ color: metrics.color }} />
                                 MASTERY LEVEL
                               </span>
-                              <span className="font-mono text-white font-black">
+                              <span className="font-mono text-comic-ink font-black">
                                 {metrics.power}%
                               </span>
                             </div>
 
                             {/* Progress Energy Bar */}
-                            <div className="w-full h-2 bg-black/80 rounded-sm border border-zinc-800 p-0.5 flex items-center overflow-hidden">
+                            <div className="w-full h-2 bg-white rounded-sm border border-black p-0.5 flex items-center overflow-hidden">
                               <div
                                 className="h-full rounded-xs transition-all duration-500"
                                 style={{

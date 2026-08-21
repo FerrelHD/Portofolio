@@ -4,21 +4,21 @@
   --font-display: "Syne", sans-serif;
   --font-body: "DM Sans", sans-serif;
 
-  /* COMIC POP ART PALETTE */
-  --color-spider-red: #FF1E26;
+  /* COMIC EDITORIAL ARTBOOK PALETTE */
+  --color-spider-red: #D9231E;
   --color-spider-blue: #165DFF;
   --color-spider-yellow: #FFD500;
-  --color-spider-black: #0A0A0A;
+  --color-spider-black: #111215;
 
-  --color-comic-surface: #141414;
-  --color-comic-panel: #1E1E24;
-  --color-comic-ink: #F0EDE3;
-  --color-comic-halftone: #2A2A35;
+  --color-comic-surface: #F7F4EE;
+  --color-comic-panel: #FFFFFF;
+  --color-comic-ink: #111215;
+  --color-comic-halftone: rgba(0, 0, 0, 0.04);
   --color-pop-magenta: #FF4081;
 
-  --color-ink-stroke: #0A0A0A;
-  --color-glow-red: rgba(255, 30, 38, 0.4);
-  --color-glow-blue: rgba(22, 93, 255, 0.4);
+  --color-ink-stroke: #18181B;
+  --color-glow-red: rgba(217, 35, 30, 0.25);
+  --color-glow-blue: rgba(22, 93, 255, 0.25);
 
   /* Utility tokens */
   --color-primary: var(--color-spider-red);
@@ -717,28 +717,21 @@
 
 .tracker-frame {
   position: relative;
-  background: linear-gradient(180deg, #0a1628 0%, #0d1f3c 100%);
-  border: 4px solid var(--color-spider-blue);
-  box-shadow:
-    0 0 0 2px var(--color-ink-stroke),
-    0 0 0 6px #0a2463,
-    inset 0 0 0 2px #0a2463,
-    0 0 60px rgba(22, 93, 255, 0.25);
-  border-radius: 8px;
+  background: #FFFFFF;
+  border: 3.5px solid var(--color-ink-stroke);
+  box-shadow: 6px 6px 0 0 var(--color-ink-stroke);
+  border-radius: 12px;
   overflow: hidden;
 }
 
 .tracker-frame-on {
   animation: tracker-flicker 0.6s ease-out 1;
-  box-shadow:
-    0 0 0 2px var(--color-ink-stroke),
-    0 0 0 6px #0a2463,
-    inset 0 0 0 2px #0a2463,
-    0 0 80px rgba(22, 93, 255, 0.5);
+  box-shadow: 8px 8px 0 0 #D9231E;
 }
 
 .tracker-bar {
-  background: linear-gradient(180deg, #165DFF 0%, #0a2463 100%);
+  background: #18181B;
+  color: #FFFFFF;
   border-bottom: 3px solid var(--color-ink-stroke);
   padding: 12px 18px;
   display: flex;
@@ -766,15 +759,7 @@
 
 .tracker-inner-display {
   position: relative;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(22, 93, 255, 0.04) 0px,
-      rgba(22, 93, 255, 0.04) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    linear-gradient(180deg, rgba(10,22,40,0.95) 0%, rgba(13,31,60,0.95) 100%);
+  background: #F7F4EE;
   min-height: 400px;
 }
 
@@ -783,9 +768,9 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(22, 93, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(22, 93, 255, 0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(24, 24, 27, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 24, 27, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
   z-index: 0;
 }

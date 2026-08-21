@@ -2,51 +2,26 @@ import React from "react";
 
 const AnimeBackground = () => {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Layer 1: Halftone Dot Pattern (Comic Print) */}
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#F7F4EE]">
+      {/* Layer 1: Halftone Dot Pattern (Subtle Paper Print) */}
       <div
-        className="absolute inset-0 halftone-overlay opacity-50"
+        className="absolute inset-0 halftone-overlay opacity-30"
         aria-hidden="true"
       />
 
-      {/* Layer 2: Halftone Dot Small */}
-      <div
-        className="absolute inset-0 halftone-overlay-sm opacity-80"
-        aria-hidden="true"
-      />
-
-      {/* Layer 3: Horizontal Scanlines */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 4px)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Layer 4: Red-Blue Radial Spotlights (NYC Night Vignette) */}
+      {/* Layer 2: Subtle Warm Comic Accents */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse at 0% 0%, rgba(255,30,38,0.22) 0%, transparent 50%), radial-gradient(ellipse at 100% 100%, rgba(22,93,255,0.22) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 15% 15%, rgba(217,35,30,0.06) 0%, transparent 60%), radial-gradient(ellipse at 85% 85%, rgba(22,93,255,0.05) 0%, transparent 60%), radial-gradient(ellipse at 50% 50%, rgba(255,213,0,0.03) 0%, transparent 70%)",
         }}
         aria-hidden="true"
       />
 
-      {/* Layer 4B: Comic Action Burst Rays (Faint Comic Sunburst) */}
+      {/* Layer 3: Faint Comic Sunburst Rays */}
       <div
-        className="absolute inset-0 opacity-[0.035] burst-bg mix-blend-screen"
-        aria-hidden="true"
-      />
-
-      {/* Layer 4C: Comic Book Ink Vignette Edge */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          boxShadow: "inset 0 0 100px rgba(10, 10, 10, 0.85)",
-        }}
+        className="absolute inset-0 opacity-[0.02] burst-bg mix-blend-multiply"
         aria-hidden="true"
       />
 

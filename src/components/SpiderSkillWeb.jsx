@@ -514,20 +514,20 @@ const SpiderSkillWeb = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="bg-[#14141A] border-2 sm:border-3 border-black rounded-xl sm:rounded-2xl p-5 sm:p-7 shadow-[5px_5px_0px_#FF1E26] sm:shadow-[7px_7px_0px_#FF1E26] relative overflow-hidden"
+              className="bg-[#FFFFFF] border-2 sm:border-3 border-[#18181B] rounded-xl sm:rounded-2xl p-5 sm:p-7 shadow-[5px_5px_0px_#D9231E] sm:shadow-[7px_7px_0px_#D9231E] relative overflow-hidden text-[#18181B]"
             >
               {/* Category & Level Badge */}
               <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-zinc-400 bg-zinc-800/80 px-2.5 sm:px-3 py-1 rounded-md">
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#18181B] bg-[#F7F4EE] border border-[#18181B] px-2.5 sm:px-3 py-1 rounded-md">
                   {selectedSkill.category}
                 </span>
                 <span
                   className={`text-[10px] sm:text-xs font-black uppercase px-2.5 sm:px-3 py-1 rounded-md border ${
                     selectedSkill.level === "Proficient"
-                      ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/40"
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-600"
                       : selectedSkill.level === "Familiar"
-                      ? "bg-sky-500/15 text-sky-400 border-sky-500/40"
-                      : "bg-amber-500/15 text-amber-400 border-amber-500/40"
+                      ? "bg-sky-50 text-sky-700 border-sky-600"
+                      : "bg-amber-50 text-amber-700 border-amber-600"
                   }`}
                 >
                   {selectedSkill.level}
@@ -536,22 +536,21 @@ const SpiderSkillWeb = () => {
 
               {/* Title with Real Icon Image */}
               <div className="flex items-center gap-3 sm:gap-4 mb-2">
-                <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl p-2 flex items-center justify-center border-2 border-black shadow-[3px_3px_0_#000] shrink-0 bg-[#1E1E28] overflow-hidden">
+                <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl p-2 flex items-center justify-center border-2 border-black shadow-[3px_3px_0_#000] shrink-0 bg-[#F7F4EE] overflow-hidden">
                   <img
                     src={selectedSkill.iconImg}
                     alt={selectedSkill.name}
                     className="w-full h-full object-contain"
                     style={{
-                      mixBlendMode: "screen",
-                      filter: selectedSkill.id === "unity" ? "invert(1)" : "none",
+                      filter: selectedSkill.id === "unity" ? "none" : "none",
                     }}
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wide leading-none">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#18181B] uppercase tracking-wide leading-none">
                     {selectedSkill.name}
                   </h3>
-                  <p className="text-xs sm:text-sm font-bold text-spider-yellow uppercase tracking-wider mt-1.5 flex items-center gap-1">
+                  <p className="text-xs sm:text-sm font-bold text-[#D9231E] uppercase tracking-wider mt-1.5 flex items-center gap-1">
                     <Zap size={14} />
                     <span>{selectedSkill.levelText}</span>
                   </p>
@@ -559,25 +558,25 @@ const SpiderSkillWeb = () => {
               </div>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed my-3 sm:my-4">
+              <p className="text-xs sm:text-sm text-[#3F3F46] leading-relaxed my-3 sm:my-4">
                 {selectedSkill.desc}
               </p>
 
               {/* Comic Lore / Fun Fact */}
-              <div className="bg-[#1A1A24] border-l-4 border-spider-red p-3 sm:p-3.5 rounded-r-xl">
-                <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-spider-red mb-0.5 flex items-center gap-1">
+              <div className="bg-[#F7F4EE] border-l-4 border-[#D9231E] p-3 sm:p-3.5 rounded-r-xl border border-[#18181B]">
+                <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#D9231E] mb-0.5 flex items-center gap-1">
                   <Sparkles size={13} />
                   <span>Spidey Lore / Dev Fact</span>
                 </div>
-                <p className="text-xs sm:text-sm text-zinc-300 italic font-medium leading-normal">
+                <p className="text-xs sm:text-sm text-[#27272A] italic font-medium leading-normal">
                   "{selectedSkill.fact}"
                 </p>
               </div>
 
               {/* Action hint */}
-              <div className="mt-4 sm:mt-5 pt-3 border-t border-zinc-800 flex items-center justify-between text-[10px] sm:text-xs font-mono text-zinc-500">
+              <div className="mt-4 sm:mt-5 pt-3 border-t border-[#E4E4E7] flex items-center justify-between text-[10px] sm:text-xs font-mono text-[#71717A]">
                 <span>Hover for slow-motion • Click to inspect</span>
-                <span className="text-spider-blue font-bold">Node #{selectedSkill.id}</span>
+                <span className="text-[#165DFF] font-bold">Node #{selectedSkill.id}</span>
               </div>
             </motion.div>
           )}
