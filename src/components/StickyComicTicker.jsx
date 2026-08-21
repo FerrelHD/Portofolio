@@ -80,7 +80,7 @@ const StickyComicTicker = () => {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-2 sm:py-2.5 select-none transition-colors duration-300 ease-in-out font-display font-black text-sm sm:text-base md:text-lg uppercase tracking-tighter ${colorStyles}`}
+      className={`fixed bottom-0 left-0 right-0 z-50 overflow-hidden py-2.5 sm:py-3 select-none transition-colors duration-300 ease-in-out font-display font-black text-base sm:text-lg md:text-xl uppercase tracking-tighter ${colorStyles}`}
       aria-label="Live Comic Ribbon Ticker"
     >
       <div className="animate-comic-marquee flex items-center gap-6 sm:gap-8 md:gap-9 whitespace-nowrap will-change-transform font-display">
@@ -90,7 +90,7 @@ const StickyComicTicker = () => {
             <img
               src={spiderEmblem}
               alt="Spider Emblem"
-              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 object-contain shrink-0 transition-all duration-300 mx-1"
+              className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 object-contain shrink-0 transition-all duration-300 mx-1"
               style={{ filter: emblemFilter }}
             />
           </React.Fragment>
