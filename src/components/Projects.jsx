@@ -512,10 +512,10 @@ const Projects = () => {
                   <div className="flex flex-col items-center gap-8">
                     <div className="tracker-radar" />
                     <div className="text-center max-w-md">
-                      <p className="text-comic-ink/60 text-xs sm:text-sm font-black uppercase tracking-[0.2em] mb-3">
+                      <p className="text-comic-ink font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-2">
                         Terminal Status: Locked
                       </p>
-                      <p className="text-comic-ink/40 text-[11px] sm:text-xs mb-8 tracking-wide">
+                      <p className="text-[#6B6661] text-[11px] sm:text-xs mb-8 tracking-wide font-medium">
                         Enter clearance key to display active mission archives
                       </p>
                       <button
@@ -600,9 +600,9 @@ const Projects = () => {
               <Radio
                 size={14}
                 strokeWidth={2.5}
-                className={isOpen ? "text-spider-yellow" : "text-comic-ink/30"}
+                className="text-spider-yellow flex-shrink-0"
               />
-              <span className="truncate">
+              <span className="truncate text-white font-bold tracking-wider">
                 {!isOpen
                   ? "SELECTED: None — Awaiting activation"
                   : hovered

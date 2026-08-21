@@ -762,7 +762,7 @@
 
 .tracker-inner-display {
   position: relative;
-  background: #EDEAE2;
+  background: #FFFFFF;
   min-height: 400px;
 }
 
@@ -771,9 +771,9 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(24, 24, 27, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(24, 24, 27, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(rgba(26, 26, 26, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 26, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
   pointer-events: none;
   z-index: 0;
 }
@@ -784,7 +784,7 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(22, 93, 255, 0.08) 50%,
+    rgba(211, 31, 31, 0.06) 50%,
     transparent 100%
   );
   height: 30%;
@@ -794,29 +794,29 @@
 }
 
 .tracker-open-btn {
-  background: linear-gradient(180deg, #165DFF 0%, #0a2463 100%);
-  border: 3px solid var(--color-ink-stroke);
-  color: var(--color-comic-ink);
-  padding: 20px 48px;
+  background: var(--color-spider-red);
+  border: 3.5px solid var(--color-ink-stroke);
+  color: #FFFFFF;
+  padding: 18px 44px;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 4px 4px 0 0 var(--color-ink-stroke), 0 0 30px rgba(22, 93, 255, 0.5);
+  box-shadow: 5px 5px 0 0 var(--color-ink-stroke);
   transition: all 0.15s ease;
 }
 
 .tracker-open-btn:hover {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 var(--color-ink-stroke), 0 0 50px rgba(22, 93, 255, 0.7);
-  background: linear-gradient(180deg, var(--color-spider-yellow) 0%, #c4a800 100%);
+  box-shadow: 2px 2px 0 0 var(--color-ink-stroke);
+  background: var(--color-spider-yellow);
   color: var(--color-spider-black);
 }
 
 .tracker-open-btn:active {
-  transform: translate(4px, 4px);
+  transform: translate(5px, 5px);
   box-shadow: 0 0 0 0 var(--color-ink-stroke);
 }
 
@@ -848,13 +848,13 @@
 
 .tracker-card {
   border: 3px solid var(--color-ink-stroke);
-  background: #0a1628;
-  box-shadow: 3px 3px 0 0 #0a2463;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 0 0 var(--color-ink-stroke);
   transition: all 0.25s ease;
 }
 
 .tracker-card:hover {
-  box-shadow: 3px 3px 0 0 var(--color-spider-yellow), 0 0 30px rgba(22, 93, 255, 0.4);
+  box-shadow: 5px 5px 0 0 var(--color-spider-red);
   transform: translate(-1px, -1px);
 }
 
@@ -874,7 +874,7 @@
 }
 
 .tracker-footer {
-  background: linear-gradient(180deg, #0a2463 0%, #081a42 100%);
+  background: var(--color-spider-red);
   border-top: 3px solid var(--color-ink-stroke);
   padding: 10px 18px;
   display: flex;
@@ -886,7 +886,7 @@
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-comic-ink);
+  color: #FFFFFF;
 }
 
 .tracker-close-btn {
