@@ -432,8 +432,11 @@ function renderSlideContent(slide) {
       return (
         <div className="space-y-3 sm:space-y-4">
           <div className="mb-2">
+            <div className="inline-block bg-spider-yellow text-black text-[10px] font-black uppercase px-2 py-0.5 border border-black shadow-[1px_1px_0_#000] mb-1">
+              CHAPTER 01 // ARSENAL
+            </div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-              Technical Arsenal & Core Stack
+              Technical Arsenal & Battle Toolchains
             </h2>
             <p className="text-xs sm:text-sm text-comic-ink/70">
               Modern full-stack toolchains tailored for rapid deployment, high performance, and fluid user experience.
@@ -442,78 +445,90 @@ function renderSlideContent(slide) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {/* Column 1: Frontend */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-yellow">
+              <div className="absolute -top-2.5 right-3 bg-spider-yellow text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rotate-2">
+                POW!
+              </div>
               <div>
                 <div className="flex items-center gap-2 text-spider-yellow font-black text-xs uppercase tracking-wider mb-2">
                   <Code2 size={16} />
                   <span>Frontend</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> React 19 & Next.js</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> TypeScript / Modern JS</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Tailwind CSS v4 & Vite</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Framer Motion (60 FPS)</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> React 19 & Next.js</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> TypeScript / Modern JS</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> Tailwind CSS v4 & Vite</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-yellow">★</span> Framer Motion (60 FPS)</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-yellow">
-                Fluid & Reactive Interfaces
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-yellow">
+                [FLUID REACTIVE UX]
               </div>
             </div>
 
             {/* Column 2: Backend */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-blue">
+              <div className="absolute -top-2.5 right-3 bg-spider-blue text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-2">
+                ZAP!
+              </div>
               <div>
                 <div className="flex items-center gap-2 text-spider-blue font-black text-xs uppercase tracking-wider mb-2">
                   <Cpu size={16} />
                   <span>Backend & Data</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">•</span> Laravel 11 & PHP</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">•</span> Filament Admin Panels</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">•</span> Supabase & PostgreSQL</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">•</span> REST APIs & Webhooks</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Laravel 11 & PHP</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Filament Admin Panels</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Supabase & PostgreSQL</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> REST APIs & Webhooks</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-blue">
-                Scalable Backend Logic
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-blue">
+                [SCALABLE CLOUD DATA]
               </div>
             </div>
 
             {/* Column 3: Game Dev */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-red">
+              <div className="absolute -top-2.5 right-3 bg-spider-red text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rotate-3">
+                BOOM!
+              </div>
               <div>
                 <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
                   <Gamepad2 size={16} />
-                  <span>Game Dev</span>
+                  <span>3D Game Systems</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Unity 3D & C# Scripting</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Rigidbody & Physics Engine</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Roblox Studio (Luau)</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">•</span> Gameplay Mechanics & UI</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Unity 3D & C# Scripting</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Rigidbody & Physics Engine</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Roblox Studio (Luau)</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> 60 FPS Mobile Optimization</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-red">
-                Interactive Simulation & Fun
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
+                [PHYSICS GAME LOOPS]
               </div>
             </div>
 
             {/* Column 4: Multimedia & Design */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-emerald-500">
+              <div className="absolute -top-2.5 right-3 bg-emerald-500 text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-1">
+                ACTION!
+              </div>
               <div>
                 <div className="flex items-center gap-2 text-emerald-400 font-black text-xs uppercase tracking-wider mb-2">
                   <Video size={16} />
                   <span>Multimedia & UI</span>
                 </div>
                 <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">•</span> Vegas Pro 18 Video Editing</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">•</span> Blender 3D Assets</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">•</span> Figma Design Systems</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">•</span> Agentic AI & Automations</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Vegas Pro 18 Video Editing</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Blender 3D Assets</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Figma Design Systems</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-400">★</span> Sound Design & FX Audio</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-emerald-400">
-                Cinematic Visual Storytelling
+              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-emerald-400">
+                [CINEMATIC STORYTELLING]
               </div>
             </div>
           </div>
