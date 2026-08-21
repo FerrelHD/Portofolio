@@ -52,25 +52,7 @@ const Hero = () => {
       animate="visible"
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12"
     >
-      {/* Watermark Background (Amazing Spider-Dev — 3 lines) */}
-      <div className="watermark-text whitespace-pre-line text-center leading-[0.9]">
-        AMAZING
-        <br />
-        SPIDER
-        <br />
-        DEV
-      </div>
 
-      {/* Fine grid halftone dot pattern */}
-      <div
-        className="absolute inset-0 z-[-1] opacity-[0.04]"
-        aria-hidden="true"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, #18181B 1.2px, transparent 1.2px)",
-          backgroundSize: "10px 10px",
-        }}
-      />
 
       {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Nicely Framed Inward */}
       <motion.div

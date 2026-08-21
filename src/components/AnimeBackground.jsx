@@ -3,11 +3,6 @@ import React from "react";
 const AnimeBackground = () => {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#F7F4EE]">
-      {/* Layer 1: Halftone Dot Pattern (Subtle Paper Texture) */}
-      <div
-        className="absolute inset-0 halftone-overlay opacity-20"
-        aria-hidden="true"
-      />
 
       {/* Layer 5: Subtle Comic Grain / Noise (SVG inline data) */}
       <svg
