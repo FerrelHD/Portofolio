@@ -284,12 +284,21 @@ const SpiderSkillWeb = () => {
         {/* Ambient Radial Web Halo Glow */}
         <div className="absolute inset-0 bg-spider-red/10 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Slow Motion Hint Badge (Appears subtly on hover) */}
-        {isHovered && (
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-spider-black/90 border border-spider-yellow/60 px-3 py-1 rounded-full text-[10px] font-black uppercase text-spider-yellow tracking-widest pointer-events-none shadow-[0_0_12px_rgba(255,213,0,0.3)] animate-pulse z-20">
-            ⚡ Slow-Motion Mode Active
-          </div>
-        )}
+        {/* Slow Motion Comic Badge (Appears on hover, positioned higher with comic pop style) */}
+        <AnimatePresence>
+          {isHovered && (
+            <motion.div
+              initial={{ opacity: 0, y: 8, scale: 0.9, rotate: -2 }}
+              animate={{ opacity: 1, y: 0, scale: 1, rotate: -1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.9, rotate: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className="absolute -top-7 sm:-top-9 left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 sm:border-3 border-black comic-chip px-3 sm:px-4 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest pointer-events-none shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] z-20 flex items-center gap-1.5 whitespace-nowrap"
+            >
+              <Zap size={13} className="text-spider-red fill-spider-red" />
+              <span>SLOW-MOTION MODE ACTIVATED!</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <svg viewBox="0 0 600 600" className="w-full h-full drop-shadow-[0_0_35px_rgba(22,93,255,0.25)] sm:drop-shadow-[0_0_50px_rgba(22,93,255,0.3)] overflow-visible">
           <defs>
