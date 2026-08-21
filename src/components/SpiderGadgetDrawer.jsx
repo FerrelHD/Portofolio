@@ -34,7 +34,7 @@ const SUITS = [
     id: "classic",
     name: "Classic Red & Blue",
     hero: "Peter Parker",
-    red: "#FF1E26",
+    red: "#D31F1F",
     blue: "#165DFF",
     tagline: "Your friendly neighborhood Spider-Man",
   },
@@ -42,37 +42,37 @@ const SUITS = [
     id: "miles",
     name: "Miles Morales",
     hero: "Brooklyn Cyber",
-    red: "#FF0033",
-    blue: "#141417",
-    tagline: "Matte black with neon red venom blast",
+    red: "#C41212",
+    blue: "#2B2D2F",
+    tagline: "Stealth charcoal with deep crimson venom blast",
   },
   {
     id: "gwen",
     name: "Ghost-Spider",
     hero: "Gwen Stacy",
-    red: "#FF007A",
-    blue: "#00F0FF",
-    tagline: "Vibrant cyan & magenta pop-art aesthetic",
+    red: "#E11D74",
+    blue: "#0284C7",
+    tagline: "Vibrant comic magenta & cyan pop-art",
   },
   {
     id: "2099",
     name: "Spider-Man 2099",
     hero: "Miguel O'Hara",
-    red: "#FF5500",
-    blue: "#0A1128",
-    tagline: "Futuristic deep navy & cyber orange glow",
+    red: "#EA580C",
+    blue: "#1E293B",
+    tagline: "Cyber crimson & nightfall slate navy",
   },
 ];
 
 // Map achievement IDs to sharp comic vector icons
 const ACHIEVEMENT_ICONS = {
   spider_sense: <Zap size={14} className="text-spider-red" />,
-  multiverse_traveler: <Sparkles size={14} className="text-purple-400" />,
+  multiverse_traveler: <Sparkles size={14} className="text-purple-600" />,
   terminal_hacker: <Terminal size={14} className="text-spider-blue" />,
   daily_bugle: <Newspaper size={14} className="text-spider-yellow" />,
-  bug_squasher: <Gamepad2 size={14} className="text-emerald-400" />,
-  comic_hero: <Flame size={14} className="text-amber-400" />,
-  true_believer: <ShieldCheck size={14} className="text-sky-400" />,
+  bug_squasher: <Gamepad2 size={14} className="text-emerald-600" />,
+  comic_hero: <Flame size={14} className="text-amber-600" />,
+  true_believer: <ShieldCheck size={14} className="text-sky-600" />,
 };
 
 const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) => {
@@ -209,7 +209,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
 
   return (
     <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 select-none">
-      {/* Hidden Native Audio Element (Deferred download to save 7.2MB bandwidth) */}
+      {/* Hidden Native Audio Element */}
       <audio
         ref={audioRef}
         src={backsoundAudio}
@@ -241,7 +241,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
               setIsOpen(true);
               soundFX.playThwip();
             }}
-            className="absolute -top-[42px] sm:-top-[46px] left-0 sm:left-0.5 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
+            className="absolute -top-[44px] left-0 cursor-pointer z-30 pointer-events-auto hover:scale-110 active:scale-95 transition-transform"
             title="Click Spidey to open Gadgets!"
           >
             <img
@@ -253,14 +253,14 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
         )}
       </AnimatePresence>
 
-      {/* DOCK TOGGLE BUTTON (Floating Comic Tab) */}
+      {/* DOCK TOGGLE BUTTON (Flush to screen edge with no gap) */}
       <button
         onClick={() => {
           setIsOpen(!isOpen);
           soundFX.playThwip();
         }}
         aria-label="Toggle Spider Control Dock"
-        className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-black py-2.5 px-2 rounded-r-2xl shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all hover:translate-x-1 active:translate-x-0"
+        className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-black py-3 pl-3 pr-3.5 rounded-r-2xl shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all hover:pr-5 active:pr-3.5"
       >
         <div className="flex flex-col items-center gap-1.5">
           <div className="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center p-0.5">
@@ -291,7 +291,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
               animate={{ x: "0%", opacity: 1 }}
               exit={{ x: "-100%", opacity: 0 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-[300px] xs:w-84 sm:w-92 max-w-[calc(100vw-3.5rem)] max-h-[88vh] overflow-y-auto bg-[#14141A] border-3 sm:border-4 border-black rounded-2xl p-4 sm:p-5 shadow-[6px_6px_0px_#FF1E26] text-white"
+              className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-[300px] xs:w-84 sm:w-92 max-w-[calc(100vw-3.5rem)] max-h-[88vh] overflow-y-auto bg-white border-3 sm:border-4 border-black rounded-2xl p-4 sm:p-5 shadow-[6px_6px_0px_#D31F1F] text-comic-ink"
             >
               {/* Header */}
               <div className="relative z-10 flex items-center justify-between border-b-2 border-black pb-3 mb-3.5">
@@ -299,20 +299,20 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   <div className="w-6 h-6 rounded-md bg-spider-yellow border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0_#000]">
                     <ShieldAlert size={14} className="text-spider-black" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-wider text-white">
+                  <span className="text-xs font-black uppercase tracking-wider text-comic-ink">
                     SPIDER CONTROL DOCK
                   </span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-7 h-7 rounded-lg bg-[#20202C] border-2 border-black flex items-center justify-center text-zinc-400 hover:text-white hover:bg-spider-red transition-all shadow-[2px_2px_0_#000]"
+                  className="w-7 h-7 rounded-lg bg-[#EDEAE2] border-2 border-black flex items-center justify-center text-comic-ink hover:text-white hover:bg-spider-red transition-all shadow-[2px_2px_0_#000]"
                 >
                   <X size={15} strokeWidth={3} />
                 </button>
               </div>
 
               {/* Tab Selector Buttons (Comic Segmented Control) */}
-              <div className="grid grid-cols-3 gap-1.5 bg-[#0D0D12] p-1.5 rounded-xl border-2 border-black mb-4 text-[10px] font-black uppercase shadow-[3px_3px_0_#000]">
+              <div className="grid grid-cols-3 gap-1.5 bg-[#EDEAE2] p-1.5 rounded-xl border-2 border-black mb-4 text-[10px] font-black uppercase shadow-[2px_2px_0_#000]">
                 <button
                   type="button"
                   onClick={() => {
@@ -322,7 +322,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   className={`py-2 rounded-lg transition-all border-2 ${
                     activeTab === "suits"
                       ? "bg-spider-red text-white border-black shadow-[2px_2px_0_#000]"
-                      : "border-transparent text-zinc-400 hover:text-white"
+                      : "border-transparent text-comic-ink/60 hover:text-comic-ink"
                   }`}
                 >
                   Suits
@@ -336,7 +336,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   className={`py-2 rounded-lg transition-all border-2 flex items-center justify-center gap-1 ${
                     activeTab === "trophies"
                       ? "bg-spider-yellow text-spider-black border-black shadow-[2px_2px_0_#000]"
-                      : "border-transparent text-zinc-400 hover:text-white"
+                      : "border-transparent text-comic-ink/60 hover:text-comic-ink"
                   }`}
                 >
                   <Trophy size={11} />
@@ -351,7 +351,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   className={`py-2 rounded-lg transition-all border-2 flex items-center justify-center gap-1 ${
                     activeTab === "arcade"
                       ? "bg-spider-blue text-white border-black shadow-[2px_2px_0_#000]"
-                      : "border-transparent text-zinc-400 hover:text-white"
+                      : "border-transparent text-comic-ink/60 hover:text-comic-ink"
                   }`}
                 >
                   <Gamepad2 size={11} />
@@ -363,7 +363,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
               {activeTab === "suits" && (
                 <div className="space-y-3 mb-4 animate-fade-in">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-spider-yellow flex items-center gap-1">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-spider-red flex items-center gap-1">
                       <Sparkles size={12} /> Multiverse Suits
                     </span>
                   </div>
@@ -378,12 +378,12 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                           className={`p-2.5 border-2 rounded-xl transition-all flex flex-col justify-between text-left ${
                             isActive
                               ? "bg-spider-red text-white border-black shadow-[3px_3px_0_#000]"
-                              : "bg-[#1A1A24] border-black text-zinc-300 hover:border-spider-yellow shadow-[2px_2px_0_#000]"
+                              : "bg-[#EDEAE2] border-black text-comic-ink hover:border-spider-yellow shadow-[2px_2px_0_#000]"
                           }`}
                         >
                           <div className="flex items-center justify-between gap-1 mb-1.5">
                             <span
-                              className="w-3 h-3 rounded-full border-2 border-black shrink-0"
+                              className="w-3.5 h-3.5 rounded-full border-2 border-black shrink-0"
                               style={{
                                 background: `linear-gradient(135deg, ${suit.red} 50%, ${suit.blue} 50%)`,
                               }}
@@ -408,7 +408,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
               {activeTab === "trophies" && (
                 <div className="space-y-2.5 mb-4 animate-fade-in max-h-56 overflow-y-auto pr-1 custom-scrollbar">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-spider-yellow flex items-center gap-1">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-spider-red flex items-center gap-1">
                       <Trophy size={12} /> Multiverse Badges ({unlockedCount}/7)
                     </span>
                   </div>
@@ -422,14 +422,14 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                         key={ach.id}
                         className={`p-2.5 rounded-xl border-2 border-black flex items-start gap-2.5 transition-all shadow-[2px_2px_0_#000] ${
                           isUnlocked
-                            ? "bg-[#1F1F2C] text-white"
-                            : "bg-[#121218] text-zinc-500 opacity-60"
+                            ? "bg-[#EDEAE2] text-comic-ink"
+                            : "bg-[#EDEAE2]/50 text-comic-ink/50 opacity-60"
                         }`}
                       >
                         {/* Comic Icon Box */}
                         <div
                           className={`w-7 h-7 rounded-lg border-2 border-black flex items-center justify-center shrink-0 ${
-                            isUnlocked ? "bg-[#2A2A3C] shadow-[1px_1px_0_#000]" : "bg-black/60"
+                            isUnlocked ? "bg-white shadow-[1px_1px_0_#000]" : "bg-black/20"
                           }`}
                         >
                           {iconEl}
@@ -445,12 +445,12 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                                 UNLOCKED
                               </span>
                             ) : (
-                              <span className="text-[8px] font-bold text-zinc-400 bg-zinc-800 border border-zinc-700 px-1.5 py-0.2 rounded">
+                              <span className="text-[8px] font-bold text-comic-ink/60 bg-white border border-black/30 px-1.5 py-0.2 rounded">
                                 LOCKED
                               </span>
                             )}
                           </div>
-                          <p className="text-[9px] leading-tight text-zinc-300 mt-1 font-medium">
+                          <p className="text-[9px] leading-tight text-comic-ink/80 mt-1 font-medium">
                             {ach.description}
                           </p>
                         </div>
@@ -464,16 +464,16 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
               {activeTab === "arcade" && (
                 <div className="space-y-3 mb-4 animate-fade-in">
                   {/* Bug Hunter Card */}
-                  <div className="bg-[#1A1A24] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#FF1E26]">
+                  <div className="bg-[#EDEAE2] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#D31F1F]">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-5 h-5 rounded bg-spider-red border border-black flex items-center justify-center text-white">
                         <Gamepad2 size={12} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-wide text-white">
+                      <span className="text-xs font-black uppercase tracking-wide text-comic-ink">
                         Spidey Bug Hunter
                       </span>
                     </div>
-                    <p className="text-[10px] text-zinc-300 mb-2.5 leading-relaxed font-medium">
+                    <p className="text-[10px] text-comic-ink/80 mb-2.5 leading-relaxed font-medium">
                       Canvas arcade 30 detik untuk menembakkan jaring ke runtime errors!
                     </p>
                     <button
@@ -482,7 +482,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                         setIsOpen(false);
                         if (onOpenBugHunter) onOpenBugHunter();
                       }}
-                      className="w-full py-2 bg-spider-red hover:bg-red-600 text-white font-black text-xs uppercase rounded-lg border-2 border-black shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all flex items-center justify-center gap-1.5"
+                      className="w-full py-2 bg-spider-red hover:bg-red-700 text-white font-black text-xs uppercase rounded-lg border-2 border-black shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all flex items-center justify-center gap-1.5"
                     >
                       <Play size={11} fill="white" />
                       <span>Launch Mini-Game</span>
@@ -490,16 +490,16 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   </div>
 
                   {/* Daily Bugle Press Card */}
-                  <div className="bg-[#1A1A24] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#FFD500]">
+                  <div className="bg-[#EDEAE2] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#FFD500]">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-5 h-5 rounded bg-spider-yellow border border-black flex items-center justify-center text-spider-black">
                         <Newspaper size={12} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-wide text-white">
+                      <span className="text-xs font-black uppercase tracking-wide text-comic-ink">
                         The Daily Bugle Press
                       </span>
                     </div>
-                    <p className="text-[10px] text-zinc-300 mb-2.5 leading-relaxed font-medium">
+                    <p className="text-[10px] text-comic-ink/80 mb-2.5 leading-relaxed font-medium">
                       Koran komik retro vintage berisi liputan investigasi sosok developer!
                     </p>
                     <button
@@ -515,16 +515,16 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   </div>
 
                   {/* PITCH DECK / EXPORT PDF CARD */}
-                  <div className="bg-[#1A1A24] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#FF1E26]">
+                  <div className="bg-[#EDEAE2] border-2 border-black p-3 rounded-xl shadow-[3px_3px_0_#D31F1F]">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-5 h-5 rounded bg-spider-red border border-black flex items-center justify-center text-white">
                         <Printer size={12} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-wide text-white">
+                      <span className="text-xs font-black uppercase tracking-wide text-comic-ink">
                         Portfolio Pitch Deck & PDF
                       </span>
                     </div>
-                    <p className="text-[10px] text-zinc-300 mb-2.5 leading-relaxed font-medium">
+                    <p className="text-[10px] text-comic-ink/80 mb-2.5 leading-relaxed font-medium">
                       Slide presentasi ringkas 5 halaman landscape untuk export PDF / pitching!
                     </p>
                     <button
@@ -533,14 +533,13 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                         setIsOpen(false);
                         if (onOpenDeck) onOpenDeck();
                       }}
-                      className="w-full py-2 bg-spider-red hover:bg-red-500 text-white font-black text-xs uppercase rounded-lg border-2 border-black shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all flex items-center justify-center gap-1.5"
+                      className="w-full py-2 bg-spider-red hover:bg-red-700 text-white font-black text-xs uppercase rounded-lg border-2 border-black shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all flex items-center justify-center gap-1.5"
                     >
                       <span>Open Pitch Deck & PDF (E)</span>
                     </button>
                   </div>
                 </div>
               )}
-
 
               {/* AUDIO & SFX SUITE SECTION */}
               <div className="relative z-10 space-y-2.5 border-t-2 border-black pt-3">
@@ -553,8 +552,8 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                     onClick={toggleSfx}
                     className={`flex items-center gap-1 px-2 py-0.5 rounded-md border-2 border-black text-[9px] font-black uppercase shadow-[1.5px_1.5px_0_#000] transition-all ${
                       sfxMuted
-                        ? "bg-red-500/20 text-red-400 border-red-500/50"
-                        : "bg-emerald-500/20 text-emerald-400 border-emerald-500/50"
+                        ? "bg-red-100 text-red-700 border-red-500"
+                        : "bg-emerald-100 text-emerald-800 border-emerald-500"
                     }`}
                     title="Toggle Web Audio Synthesizer SFX"
                   >
@@ -570,7 +569,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                     className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border-2 border-black text-xs font-black uppercase tracking-wider shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all ${
                       isPlaying
                         ? "bg-spider-yellow text-spider-black"
-                        : "bg-[#1E1E28] text-white hover:bg-spider-red hover:text-white"
+                        : "bg-[#EDEAE2] text-comic-ink hover:bg-spider-red hover:text-white"
                     }`}
                   >
                     {isPlaying ? <Pause size={12} strokeWidth={3} /> : <Play size={12} strokeWidth={3} />}
@@ -580,7 +579,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                   <button
                     onClick={toggleMute}
                     aria-label={isMuted ? "Unmute" : "Mute"}
-                    className="p-2 bg-[#1E1E28] rounded-xl border-2 border-black text-white hover:bg-spider-blue shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all"
+                    className="p-2 bg-[#EDEAE2] rounded-xl border-2 border-black text-comic-ink hover:bg-spider-blue hover:text-white shadow-[3px_3px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all"
                   >
                     {isMuted || volume === 0 ? (
                       <VolumeX size={15} strokeWidth={2.5} />
@@ -591,8 +590,8 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                 </div>
 
                 {/* Comic Volume Slider Row */}
-                <div className="flex items-center gap-2.5 bg-[#0D0D12] px-2.5 py-1.5 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
-                  <Volume2 size={13} className="text-spider-yellow shrink-0" />
+                <div className="flex items-center gap-2.5 bg-[#EDEAE2] px-2.5 py-1.5 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
+                  <Volume2 size={13} className="text-spider-red shrink-0" />
                   <input
                     type="range"
                     min="0"
@@ -605,9 +604,9 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
                       if (isMuted && newVol > 0) setIsMuted(false);
                     }}
                     aria-label="Volume Slider"
-                    className="w-full h-1.5 bg-[#20202C] rounded-lg appearance-none cursor-pointer accent-spider-yellow"
+                    className="w-full h-1.5 bg-white rounded-lg appearance-none cursor-pointer accent-spider-red border border-black"
                   />
-                  <span className="text-[10px] font-mono font-bold text-zinc-300 w-8 text-right shrink-0 tabular-nums">
+                  <span className="text-[10px] font-mono font-bold text-comic-ink w-8 text-right shrink-0 tabular-nums">
                     {isMuted ? "0%" : `${Math.round(volume * 100)}%`}
                   </span>
                 </div>
