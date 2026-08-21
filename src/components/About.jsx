@@ -378,26 +378,18 @@ const About = ({ onOpenDailyBugle }) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="py-16 md:py-28 relative overflow-hidden"
+      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white border-y-4 border-black"
     >
-      {/* Background halftone panel texture */}
-      <div
-        className="absolute inset-0 opacity-[0.015] pointer-events-none"
-        aria-hidden="true"
-      >
-        <div className="w-full h-full halftone-overlay" />
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* SECTION HEADER — No eyebrow (hero only punya eyebrow) */}
+        {/* SECTION HEADER */}
         <motion.div variants={fadeUp} className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase text-white">
             Beyond The{" "}
-            <span className="text-spider-red comic-stroke drop-shadow-[3px_3px_0_var(--color-ink-stroke)]">
+            <span className="text-spider-yellow drop-shadow-[3px_3px_0_#000] italic">
               Mask
             </span>
           </h2>
-          <p className="text-comic-ink/50 max-w-md mx-auto font-medium text-sm sm:text-base">
+          <p className="text-white/90 max-w-md mx-auto font-medium text-sm sm:text-base">
             The man behind the suit. Origins of a multidisciplinary digital creator.
           </p>
         </motion.div>
@@ -411,10 +403,10 @@ const About = ({ onOpenDailyBugle }) => {
           >
             <SecretIdentityCard />
             {/* Comic credit chip */}
-            <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-[0.18em] uppercase text-comic-ink/60">
-              <span className="w-2 h-2 bg-spider-red comic-chip" />
+            <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-[0.18em] uppercase text-white/90">
+              <span className="w-2.5 h-2.5 bg-spider-yellow border border-black inline-block rounded-full" />
               <span>Secret Identity Protocol — SHIELD Class A</span>
-              <span className="w-2 h-2 bg-spider-blue comic-chip" />
+              <span className="w-2.5 h-2.5 bg-white border border-black inline-block rounded-full" />
             </div>
           </motion.div>
 
@@ -425,22 +417,22 @@ const About = ({ onOpenDailyBugle }) => {
           >
             {/* Real Name chip */}
             <div>
-              <span className="inline-block bg-spider-blue comic-chip text-comic-ink px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase mb-5 sm:mb-6 pop-shadow-sm">
+              <span className="inline-block bg-spider-yellow border-2 border-black comic-chip text-spider-black px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase mb-5 sm:mb-6 shadow-[3px_3px_0_#000]">
                 Real Name - Ferrel Rashad Akeyla
               </span>
             </div>
 
             {/* Comic Caption Box */}
-            <div className="comic-caption p-5 sm:p-7 rounded-sm">
-              <p className="text-sm sm:text-lg text-comic-ink/85 mb-4 sm:mb-5 leading-relaxed font-medium">
-                Hi! I&apos;m <strong className="text-spider-yellow">Ferrel Rashad Akeyla</strong>,
+            <div className="comic-caption bg-white p-5 sm:p-7 rounded-sm border-3 border-black shadow-[6px_6px_0_#000]">
+              <p className="text-sm sm:text-lg text-comic-ink mb-4 sm:mb-5 leading-relaxed font-medium">
+                Hi! I&apos;m <strong className="text-spider-red font-black">Ferrel Rashad Akeyla</strong>,
                 a multidisciplinary digital creator based in Indonesia. With expertise spanning{" "}
-                <strong className="text-spider-red">
+                <strong className="text-spider-blue font-black">
                   Full Stack Web Development, Video Editing, 3D Modeling, and Game Development
                 </strong>
                 , I deliver creative solutions that blend visual aesthetics with technical excellence.
               </p>
-              <p className="text-sm sm:text-lg text-comic-ink/85 leading-relaxed font-medium">
+              <p className="text-sm sm:text-lg text-comic-ink leading-relaxed font-medium">
                 I believe every project is an opportunity to create unique and immersive experiences,
                 whether through responsive web applications, cinematic video storytelling,
                 detailed 3D models, or interactive gaming worlds.
@@ -449,17 +441,17 @@ const About = ({ onOpenDailyBugle }) => {
 
             {/* Small signature banner & Daily Bugle Newspaper Launcher */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <span className="inline-flex items-center gap-2 bg-spider-yellow comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
+              <span className="inline-flex items-center gap-2 bg-spider-yellow border-2 border-black comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase shadow-[2px_2px_0_#000]">
                 Alignment — Hero
               </span>
-              <span className="inline-flex items-center gap-2 bg-comic-panel comic-chip text-comic-ink px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase">
+              <span className="inline-flex items-center gap-2 bg-white border-2 border-black comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase shadow-[2px_2px_0_#000]">
                 Sector — West Java, Indonesia
               </span>
               {onOpenDailyBugle && (
                 <button
                   type="button"
                   onClick={onOpenDailyBugle}
-                  className="inline-flex items-center gap-2 bg-[#F4EBD9] text-black hover:bg-white comic-chip px-4 py-2 text-[10px] font-black tracking-[0.15em] uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-2 bg-[#F4EBD9] text-black border-2 border-black hover:bg-white comic-chip px-4 py-2 text-[10px] font-black tracking-[0.15em] uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95"
                 >
                   <span>📰 Read Daily Bugle Report</span>
                 </button>
@@ -473,30 +465,23 @@ const About = ({ onOpenDailyBugle }) => {
           variants={fadeUp}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
-          {stats.map((stat, i) => (
+          {stats.map((stat) => (
             <div
               key={stat.label}
-              className={`comic-panel p-5 sm:p-7 md:p-8 relative overflow-hidden border-t-4 ${stat.accent}`}
+              className={`bg-white text-comic-ink p-5 sm:p-7 md:p-8 relative overflow-hidden border-3 border-black shadow-[6px_6px_0_#000] ${stat.accent}`}
               style={{ borderRadius: "2px" }}
             >
-              {/* Small spider icon corner */}
-              <div className="absolute top-3 right-3 text-spider-red/30">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M12 5v2M12 17v2M5 12h2M17 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                </svg>
-              </div>
               {/* Halftone pattern bg inside card */}
               <div
-                className="absolute inset-0 opacity-30 pointer-events-none"
+                className="absolute inset-0 opacity-15 pointer-events-none"
                 aria-hidden="true"
               >
                 <div className="w-full h-full halftone-overlay-sm" />
               </div>
-              <p className="relative text-4xl sm:text-5xl font-black text-spider-yellow comic-stroke-thin mb-2">
+              <p className="relative text-4xl sm:text-5xl font-black text-spider-red mb-2">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="relative text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-comic-ink/70">
+              <p className="relative text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-comic-ink">
                 {stat.label}
               </p>
             </div>

@@ -14,6 +14,7 @@ import ScrollFX from "./components/ScrollFX";
 import SmoothScroll from "./components/SmoothScroll";
 import AchievementToast from "./components/AchievementToast";
 import ComicTicker from "./components/ComicTicker";
+import StickyComicTicker from "./components/StickyComicTicker";
 import { achievementManager } from "./lib/achievements";
 import { soundFX } from "./lib/soundFx";
 
@@ -298,6 +299,7 @@ function App() {
       </main>
 
       <Footer />
+      <StickyComicTicker />
       <BackToTop />
     </div>
   );

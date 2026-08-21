@@ -313,7 +313,7 @@ const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
                 whileHover={{ scale: 1.12, rotate: "3deg" }}
                 whileTap={{ scale: 0.92 }}
                 aria-label={`View ${project.title}`}
-                className="absolute top-4 right-4 z-[10] flex h-9 w-9 items-center justify-center comic-chip bg-spider-black text-comic-ink hover:bg-spider-yellow hover:text-spider-black transition-colors"
+                className="absolute top-4 right-4 z-[10] flex h-9 w-9 items-center justify-center comic-chip bg-white text-spider-black hover:bg-spider-yellow hover:text-spider-black transition-colors shadow-[2px_2px_0_#000]"
                 style={{ transform: "translateZ(60px)" }}
               >
                 {linkIcon}
@@ -322,7 +322,7 @@ const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
 
             {/* BOTTOM CONTENT ZONE */}
             <div
-              className="relative flex h-full flex-col justify-between p-5 sm:p-6 z-10 text-comic-ink"
+              className="relative flex h-full flex-col justify-between p-5 sm:p-6 z-10 text-white"
               style={{ borderRadius: "inherit" }}
             >
               <div />
@@ -333,7 +333,7 @@ const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="text-[9px] font-black uppercase tracking-[0.18em] text-comic-ink/90 bg-spider-black/70 backdrop-blur-sm px-2.5 py-1 comic-chip"
+                      className="text-[9px] font-black uppercase tracking-[0.18em] text-spider-black bg-white border-2 border-black shadow-[1.5px_1.5px_0_#000] px-2.5 py-0.5 rounded-sm"
                     >
                       {t}
                     </span>
@@ -341,7 +341,7 @@ const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
                 </div>
 
                 {/* PROJECT TITLE */}
-                <h3 className="text-xl sm:text-2xl font-black leading-[1.05] mb-4 comic-stroke-thin group-hover:text-spider-yellow transition-colors tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-black leading-[1.05] mb-4 text-white group-hover:text-spider-yellow transition-colors tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   {project.title}
                 </h3>
 
@@ -363,8 +363,8 @@ const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
                     whileTap={{ scale: 0.97 }}
                     className={`flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] comic-chip transition-colors ${
                       project.link
-                        ? "bg-spider-red text-comic-ink hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
-                        : "bg-comic-panel text-comic-ink/50 cursor-not-allowed"
+                        ? "bg-spider-red text-white hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
+                        : "bg-white text-spider-black/50 border-2 border-black/30 cursor-not-allowed"
                     }`}
                   >
                     {actionText}
@@ -442,7 +442,7 @@ const Projects = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      className="py-16 md:py-28 relative overflow-hidden bg-transparent"
+      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white border-y-4 border-black"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
@@ -450,13 +450,13 @@ const Projects = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6 md:gap-8">
           <motion.div variants={fadeUp}>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase text-comic-ink">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase text-white">
               Mission{" "}
-              <span className="text-spider-blue comic-stroke drop-shadow-[3px_3px_0_var(--color-ink-stroke)]">
+              <span className="text-spider-yellow drop-shadow-[3px_3px_0_#000] italic">
                 Archives
               </span>
             </h2>
-            <p className="text-comic-ink/70 max-w-md font-medium text-sm sm:text-base">
+            <p className="text-white/90 max-w-md font-medium text-sm sm:text-base">
               Curated missions across web development, video editing, 3D modeling, and game design.
             </p>
           </motion.div>
@@ -468,7 +468,7 @@ const Projects = () => {
           className={`tracker-frame ${justOpened ? "tracker-frame-on" : ""}`}
         >
           {/* TOP BAR */}
-          <div className="tracker-bar bg-spider-red text-white">
+          <div className="tracker-bar bg-[#1A1A1A] text-white">
             <div className="flex items-center gap-3 min-w-0">
               <Radio size={18} strokeWidth={2.5} className="text-spider-yellow flex-shrink-0" />
               <span className="font-black text-[11px] sm:text-xs tracking-[0.18em] uppercase text-white truncate">
@@ -548,13 +548,8 @@ const Projects = () => {
                           className={`px-4 sm:px-5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-black uppercase tracking-[0.18em] comic-chip transition-all ${
                             isActive
                               ? "bg-spider-yellow text-spider-black pop-shadow-sm hover:pop-shadow-active"
-                              : "bg-transparent text-comic-ink/60 hover:bg-spider-blue/20 hover:text-comic-ink border-spider-blue/40"
+                              : "bg-white text-spider-black hover:bg-spider-yellow border-2 border-black"
                           }`}
-                          style={
-                            !isActive
-                              ? { borderColor: "rgba(22,93,255,0.4)" }
-                              : undefined
-                          }
                         >
                           {cat}
                         </button>

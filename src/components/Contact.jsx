@@ -279,7 +279,7 @@ const Contact = () => {
   };
 
   const inputBase =
-    "w-full px-4 sm:px-5 py-3 sm:py-4 bg-[#F7F4EE] border-2 border-black comic-chip transition-all outline-none font-black text-sm text-comic-ink placeholder:text-comic-ink/40";
+    "w-full px-4 sm:px-5 py-3 sm:py-4 bg-[#EDEAE2] border-2 border-black comic-chip transition-all outline-none font-black text-sm text-comic-ink placeholder:text-comic-ink/50";
 
   return (
     <motion.section
@@ -288,7 +288,7 @@ const Contact = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.18 }}
-      className="py-16 md:py-28 relative overflow-hidden"
+      className="py-20 sm:py-28 relative overflow-hidden bg-spider-red text-white border-t-4 border-black"
     >
       {/* Success Modal */}
       <AnimatePresence>
@@ -301,24 +301,24 @@ const Contact = () => {
       </AnimatePresence>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* SECTION HEADER — Comic Sound Effect Style */}
+        {/* SECTION HEADER */}
         <motion.div
           variants={fadeUp}
           className="text-center mb-12 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase relative inline-block">
-            <span className="comic-stroke text-comic-ink">Activate The </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase relative inline-block text-white">
+            <span>Activate The </span>
             <span className="relative">
-              <span className="comic-stroke text-spider-red drop-shadow-[3px_3px_0_var(--color-ink-stroke)] italic">
+              <span className="text-spider-yellow drop-shadow-[3px_3px_0_#000] italic">
                 Spider-Signal
               </span>
-              <span className="absolute -top-3 -right-10 hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-2.5 py-1 text-[9px] font-black tracking-[0.18em] uppercase animate-pulse">
+              <span className="absolute -top-3 -right-10 hidden sm:inline-block bg-spider-yellow border border-black text-spider-black px-2.5 py-1 text-[9px] font-black tracking-[0.18em] uppercase shadow-[2px_2px_0_#000]">
                 POW!
               </span>
             </span>
-            <span className="comic-stroke text-comic-ink">!</span>
+            <span>!</span>
           </h2>
-          <p className="text-comic-ink/50 max-w-xl mx-auto font-medium text-sm sm:text-base">
+          <p className="text-white/90 max-w-xl mx-auto font-medium text-sm sm:text-base">
             Have a mission in mind? Fire the signal and let&apos;s build something amazing together.
           </p>
         </motion.div>
@@ -342,11 +342,11 @@ const Contact = () => {
 
             {/* Quick Status Chips under card */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 bg-comic-panel comic-chip text-comic-ink px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="inline-flex items-center gap-1.5 bg-white border-2 border-black comic-chip text-spider-black px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase shadow-[2px_2px_0_#000]">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
                 Response: &lt; 24 Hours
               </span>
-              <span className="inline-flex items-center gap-1.5 bg-spider-blue comic-chip text-comic-ink px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase">
+              <span className="inline-flex items-center gap-1.5 bg-spider-yellow border-2 border-black comic-chip text-spider-black px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase shadow-[2px_2px_0_#000]">
                 Freelance: Available
               </span>
             </div>
@@ -355,7 +355,7 @@ const Contact = () => {
           {/* ============= RIGHT: COMIC TRANSMISSION FORM (7 cols) ============= */}
           <motion.div
             variants={fadeUp}
-            className="lg:col-span-7 z-10 w-full comic-panel p-6 sm:p-8 md:p-9 relative overflow-hidden"
+            className="lg:col-span-7 z-10 w-full bg-white text-comic-ink border-4 border-black shadow-[8px_8px_0_#000] p-6 sm:p-8 md:p-9 relative overflow-hidden"
             style={{ borderRadius: "4px" }}
           >
             {/* Halftone Texture inside form container */}
@@ -491,7 +491,7 @@ const Contact = () => {
                   onClick={(e) => handleCopyCard(info, e)}
                   variants={fadeUp}
                   transition={{ delay: i * 0.05 }}
-                  className={`group relative comic-panel p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:pop-shadow-sm overflow-hidden cursor-pointer flex flex-col justify-between ${
+                  className={`group relative bg-white text-comic-ink border-3 border-black shadow-[4px_4px_0_#000] p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_#000] overflow-hidden cursor-pointer flex flex-col justify-between ${
                     isCopied ? "ring-2 ring-spider-yellow" : ""
                   }`}
                   style={{ borderRadius: "4px" }}

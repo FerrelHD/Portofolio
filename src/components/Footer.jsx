@@ -7,7 +7,8 @@ const Footer = () => {
   const [caseStudyOpen, setCaseStudyOpen] = useState(false);
   return (
     <footer
-      className="relative overflow-hidden py-8 sm:py-12 bg-spider-red text-white border-t-[3.5px] border-black"
+      id="footer"
+      className="relative overflow-hidden py-10 sm:py-14 bg-[#1A1A1A] text-white border-t-[3.5px] border-black"
     >
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* ============ MAIN FOOTER: 3 COLUMNS ============ */}

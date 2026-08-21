@@ -47,6 +47,7 @@ const Hero = () => {
 
   return (
     <motion.section
+      id="hero"
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
