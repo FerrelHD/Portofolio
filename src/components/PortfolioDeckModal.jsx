@@ -373,30 +373,55 @@ function renderSlideContent(slide) {
             </div>
           </div>
 
-          {/* Right Column: Big Handsome Spotlight Portrait */}
-          <div className="md:col-span-5 hidden md:flex flex-col items-center justify-center">
-            <div className="bg-comic-surface border-3 border-comic-ink p-3 comic-chip shadow-[6px_6px_0px_#FF1E26] w-full max-w-[260px] text-center">
-              <div className="w-full h-44 sm:h-52 border-2 border-spider-yellow overflow-hidden bg-black mb-2.5 shadow-[2px_2px_0_#000]">
-                <img
-                  src={ferrelPortrait}
-                  alt="Ferrel Portrait"
-                  className="w-full h-full object-cover object-top"
-                />
+          {/* Right Column: Comic Social Transmission Card Template */}
+          <div className="md:col-span-5 hidden md:flex flex-col items-center justify-center select-none">
+            <div className="bg-[#FEFAE8] text-[#212121] border-[3.5px] border-[#212121] rounded-2xl p-3 sm:p-4 shadow-[6px_6px_0_#212121] w-full max-w-[280px]">
+              {/* Header: Avatar + User Info */}
+              <div className="flex items-center gap-2.5 mb-2.5">
+                <div className="w-10 h-10 rounded-full border-2 border-[#212121] bg-[#165DFF] overflow-hidden shrink-0 shadow-[2px_2px_0_#000]">
+                  <img
+                    src={ferrelPortrait}
+                    alt="Ferrel Avatar"
+                    className="w-full h-full object-cover grayscale contrast-110"
+                  />
+                </div>
+                <div>
+                  <span className="inline-block bg-spider-yellow text-spider-black text-[11px] font-black uppercase px-2 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+                    Ferrel Rashad
+                  </span>
+                  <div className="font-mono text-[9px] font-bold text-[#212121]/80 tracking-wider mt-0.5">
+                    @FerrelHD • Spider-Dev
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center justify-between px-1 mb-1">
-                <span className="text-[9px] font-black text-spider-yellow uppercase tracking-wider block">
-                  AGENT DOSSIER #001
-                </span>
-                <span className="text-[8px] font-black bg-emerald-500 text-black px-1.5 py-0.5 uppercase tracking-wider rounded-xs">
-                  ACTIVE
-                </span>
+
+              {/* Broadcast Screen with LIVE badge */}
+              <div className="relative w-full h-24 rounded-lg border-2 border-[#212121] bg-[#165DFF] overflow-hidden shadow-[2px_2px_0_#000] mb-2.5 flex flex-col items-center justify-center p-2 text-center">
+                <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle,rgba(0,0,0,0.35)_1.5px,transparent_1.5px)] bg-[size:8px_8px] pointer-events-none" />
+                <div className="absolute top-1.5 right-1.5 bg-spider-red text-white text-[8px] font-black px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rounded-xs uppercase">
+                  LIVE ⚡
+                </div>
+                <div className="relative z-10">
+                  <span className="bg-[#0D0D11] text-spider-yellow text-[8px] font-black px-2 py-0.5 border border-black rounded-xs uppercase tracking-widest inline-block mb-1">
+                    SPIDER-DEV TRANSMISSION FEED
+                  </span>
+                  <div className="text-[11px] font-black text-white uppercase tracking-wider text-shadow">
+                    AVAILABLE FOR NEW MISSIONS
+                  </div>
+                </div>
               </div>
-              <span className="text-sm font-black text-comic-ink block uppercase">
-                Ferrel Rashad Akeyla
-              </span>
-              <span className="text-[10px] font-bold text-comic-ink/60 block mt-0.5">
-                Full-Stack & Game Systems Specialist
-              </span>
+
+              {/* Comic Speech Bubble */}
+              <div className="bg-[#FEFAE8] border-2 border-[#212121] rounded-lg p-2 text-[9px] font-extrabold text-[#212121] leading-tight mb-2.5 shadow-[1.5px_1.5px_0_#000]">
+                <span className="text-spider-red font-black">MEANWHILE...</span> READY TO BUILD HIGH-IMPACT WEB APPS, 3D GAME MECHANICS & CREATIVE DIGITAL SOLUTIONS!
+              </div>
+
+              {/* Bottom Buttons */}
+              <div className="flex justify-between gap-1.5 text-[8.5px] font-black uppercase">
+                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">♥ 128</span>
+                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">💬 TRANSMIT</span>
+                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">🔁 SHARE</span>
+              </div>
             </div>
           </div>
         </div>
