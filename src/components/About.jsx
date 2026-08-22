@@ -451,6 +451,155 @@ const SecretIdentityCard = () => {
   );
 };
 
+/* SPIDER SUIT HUD & DIAGNOSTICS WIDGET (WITH INTERACTIVE WEB-SHOOTER) */
+const SpiderSuitHUDWidget = () => {
+  const [fluidLevel, setFluidLevel] = useState(4); // 4 bars = 100%
+  const [isReloading, setIsReloading] = useState(false);
+  const [lastAction, setLastAction] = useState(null);
+
+  const handleShootWeb = (e) => {
+    e.stopPropagation();
+    if (isReloading) return;
+
+    if (fluidLevel > 1) {
+      const next = fluidLevel - 1;
+      setFluidLevel(next);
+      soundFX.playThwip();
+      setLastAction(`THWIP! -25%`);
+      setTimeout(() => setLastAction(null), 800);
+    } else {
+      // Last shot -> trigger reload
+      setFluidLevel(0);
+      soundFX.playThwip();
+      setIsReloading(true);
+      setLastAction(`EMPTY! RELOADING...`);
+
+      setTimeout(() => {
+        setFluidLevel(4);
+        setIsReloading(false);
+        setLastAction(`REFILLED 100% ⚡`);
+        soundFX.playBeep(440);
+        setTimeout(() => setLastAction(null), 1000);
+      }, 1200);
+    }
+  };
+
+  const getFluidPercent = () => {
+    if (isReloading) return "RELOAD";
+    return `${fluidLevel * 25}%`;
+  };
+
+  return (
+    <motion.div
+      variants={panelFadeSlideUp}
+      className="bg-[#FAF8F5] text-comic-ink p-3 sm:p-3.5 border-2 sm:border-3 border-black rounded-xl shadow-[4px_4px_0_#000] relative overflow-hidden select-none"
+    >
+      {/* Halftone subtle bg */}
+      <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+
+      {/* Top Header Strip */}
+      <div className="flex items-center justify-between gap-2 border-b-2 border-black/15 pb-1.5 mb-2 relative z-10">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[8px] xs:text-[9px] font-black uppercase tracking-[0.14em] text-comic-ink">
+            SUIT DIAGNOSTICS // HUD v2.6
+          </span>
+        </div>
+        <span className="bg-spider-yellow text-spider-black text-[7px] xs:text-[7.5px] font-black uppercase px-1.5 py-0.5 border border-black rounded shadow-[1px_1px_0_#000]">
+          {lastAction ? lastAction : "STARK-TECH"}
+        </span>
+      </div>
+
+      {/* 2x2 Diagnostics Grid */}
+      <div className="grid grid-cols-2 gap-2 relative z-10">
+        {/* Status 1: INTERACTIVE WEB FLUID CARTRIDGE (CLICK TO SHOOT) */}
+        <motion.div
+          whileHover={{ scale: 1.025 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={handleShootWeb}
+          className={`p-2 border-2 border-black rounded shadow-[2px_2px_0_#000] cursor-pointer transition-colors relative overflow-hidden ${
+            isReloading
+              ? "bg-spider-yellow/30 border-spider-red"
+              : "bg-white hover:bg-spider-blue/10"
+          }`}
+          title="Click to shoot web & test cartridge!"
+        >
+          <div className="flex items-center justify-between text-[7px] xs:text-[7.5px] font-black uppercase tracking-wider text-comic-ink mb-1">
+            <span className="flex items-center gap-1">
+              <span>🕸️</span>
+              <span className="text-spider-blue">SHOOT WEB</span>
+            </span>
+            <span
+              className={`font-black ${
+                fluidLevel <= 1 ? "text-spider-red animate-pulse" : "text-spider-blue"
+              }`}
+            >
+              {getFluidPercent()}
+            </span>
+          </div>
+
+          {/* 4-Segment Cartridge Battery Meter */}
+          <div className="w-full bg-black/15 h-2.5 rounded-sm overflow-hidden border border-black flex gap-0.5 p-0.5">
+            {[1, 2, 3, 4].map((bar) => {
+              const isFilled = bar <= fluidLevel;
+              return (
+                <div
+                  key={bar}
+                  className={`h-full flex-1 rounded-xs transition-all duration-200 ${
+                    isFilled
+                      ? fluidLevel === 1
+                        ? "bg-spider-red"
+                        : "bg-spider-blue"
+                      : "bg-transparent"
+                  }`}
+                />
+              );
+            })}
+          </div>
+
+          <p className="text-[6.5px] xs:text-[7px] font-black uppercase tracking-wider text-comic-ink/70 mt-1 text-center">
+            {isReloading ? "⚙️ AUTO-REFILL..." : "👆 TAP TO SHOOT"}
+          </p>
+        </motion.div>
+
+        {/* Status 2: Spider-Sense Sensitivity */}
+        <div className="bg-white p-2 border border-black rounded shadow-[1.5px_1.5px_0_#000] flex flex-col justify-between">
+          <div className="flex items-center justify-between text-[7px] xs:text-[7.5px] font-black uppercase tracking-wider text-comic-ink/80 mb-1">
+            <span>⚡ SPIDER-SENSE</span>
+            <span className="text-spider-red font-black">LVL 5</span>
+          </div>
+          <p className="text-[7.5px] xs:text-[8px] font-black uppercase tracking-tight text-emerald-600 truncate">
+            ● READY FOR ACTION
+          </p>
+          <div className="w-full bg-emerald-100 h-1.5 rounded-full overflow-hidden border border-black/30 mt-1">
+            <div className="bg-emerald-500 h-full w-full animate-pulse" />
+          </div>
+        </div>
+
+        {/* Status 3: Sector Coordinates */}
+        <div className="bg-white p-2 border border-black rounded shadow-[1.5px_1.5px_0_#000]">
+          <span className="text-[7px] xs:text-[7.5px] font-black uppercase tracking-wider text-comic-ink/70 block mb-0.5">
+            📍 SECTOR COORD
+          </span>
+          <p className="text-[7.5px] xs:text-[8px] font-black uppercase tracking-tight text-comic-ink truncate">
+            WEST JAVA, ID (-6.9°)
+          </p>
+        </div>
+
+        {/* Status 4: Mission Status */}
+        <div className="bg-white p-2 border border-black rounded shadow-[1.5px_1.5px_0_#000]">
+          <span className="text-[7px] xs:text-[7.5px] font-black uppercase tracking-wider text-comic-ink/70 block mb-0.5">
+            🚀 MISSION STATUS
+          </span>
+          <p className="text-[7.5px] xs:text-[8px] font-black uppercase tracking-tight text-spider-blue truncate">
+            CODE &amp; DEPLOY ACTIVE
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const About = ({ onOpenDailyBugle }) => {
   const reduce = useReducedMotion();
   const sectionRef = useRef(null);
@@ -518,12 +667,12 @@ const About = ({ onOpenDailyBugle }) => {
           </p>
         </motion.div>
 
-        {/* MAIN SPLIT LAYOUT: 5 Cols Left (Identity Card) vs 7 Cols Right (Authentic Comic Page) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start mb-12 sm:mb-16 md:mb-24">
-          {/* LEFT — SECRET IDENTITY CARD (SLIDES UP FROM BOTTOM WITH STICKY FLOAT) */}
+        {/* MAIN SPLIT LAYOUT: 5 Cols Left (Identity Card + Stats + HUD) vs 7 Cols Right (Authentic Comic Page) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start">
+          {/* LEFT — SECRET IDENTITY CARD + POWER STATS + SUIT HUD (PERFECTLY BALANCED HEIGHT) */}
           <div
             ref={leftStickyRef}
-            className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20"
+            className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20 flex flex-col gap-3 sm:gap-3.5"
           >
             <motion.div
               variants={comicFadeSlideUp}
@@ -533,12 +682,45 @@ const About = ({ onOpenDailyBugle }) => {
             >
               <SecretIdentityCard />
               {/* Comic credit chip */}
-              <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-[9px] xs:text-[10px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-white/90">
+              <div className="mt-3 sm:mt-3.5 flex items-center justify-center gap-2 text-[9px] xs:text-[10px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-white/90">
                 <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-spider-yellow border border-black inline-block rounded-full" />
                 <span>Secret Identity Protocol — SHIELD Class A</span>
                 <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white border border-black inline-block rounded-full" />
               </div>
             </motion.div>
+
+            {/* POWER STATS CARDS */}
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              className="grid grid-cols-3 gap-2 sm:gap-2.5"
+            >
+              {stats.map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  variants={comicFadeSlideUp}
+                  className={`bg-white text-comic-ink p-2.5 sm:p-3 relative overflow-hidden border-2 border-black rounded shadow-[3px_3px_0_#000] text-center ${stat.accent}`}
+                >
+                  <div
+                    className="absolute inset-0 opacity-15 pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <div className="w-full h-full halftone-overlay-sm" />
+                  </div>
+                  <p className="relative text-2xl sm:text-3xl font-black text-spider-red mb-0.5 leading-none">
+                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className="relative text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-wider text-comic-ink leading-tight">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* SPIDER SUIT HUD & DIAGNOSTICS WIDGET (IDE 1) */}
+            <SpiderSuitHUDWidget />
           </div>
 
           {/* RIGHT — AUTHENTIC COMIC BOOK PAGE STRIP */}
@@ -820,37 +1002,6 @@ const About = ({ onOpenDailyBugle }) => {
             </div>
           </motion.div>
         </div>
-
-        {/* BOTTOM: POWER STATS (RESPONSIVE GRID) */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 md:gap-8"
-        >
-          {stats.map((stat) => (
-            <motion.div
-              key={stat.label}
-              variants={comicFadeSlideUp}
-              className={`bg-white text-comic-ink p-4 xs:p-5 sm:p-7 md:p-8 relative overflow-hidden border-2 sm:border-3 border-black shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] ${stat.accent}`}
-              style={{ borderRadius: "2px" }}
-            >
-              <div
-                className="absolute inset-0 opacity-15 pointer-events-none"
-                aria-hidden="true"
-              >
-                <div className="w-full h-full halftone-overlay-sm" />
-              </div>
-              <p className="relative text-3xl xs:text-4xl sm:text-5xl font-black text-spider-red mb-1.5 sm:mb-2">
-                <AnimatedCounter target={stat.value} suffix={stat.suffix} />
-              </p>
-              <p className="relative text-[9px] xs:text-[10px] sm:text-xs font-black uppercase tracking-[0.16em] sm:tracking-[0.2em] text-comic-ink">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
     </section>
   );
