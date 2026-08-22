@@ -26,6 +26,7 @@ const CommandPalette = lazy(() => import("./components/CommandPalette"));
 const SpiderGadgetDrawer = lazy(() => import("./components/SpiderGadgetDrawer"));
 const ComicActionFX = lazy(() => import("./components/ComicActionFX"));
 const PortfolioDeckModal = lazy(() => import("./components/PortfolioDeckModal"));
+const KineticMenu = lazy(() => import("./components/KineticMenu"));
 
 
 // Skill Real Asset Icons
@@ -69,6 +70,7 @@ function App() {
   const [dailyBugleOpen, setDailyBugleOpen] = useState(false);
   const [bugHunterOpen, setBugHunterOpen] = useState(false);
   const [deckOpen, setDeckOpen] = useState(false);
+  const [kineticMenuOpen, setKineticMenuOpen] = useState(false);
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
@@ -276,7 +278,19 @@ function App() {
         Skip to Story!
       </a>
       <AnimeBackground />
-      <Navbar onOpenDeck={() => setDeckOpen(true)} />
+      <Navbar
+        onOpenDeck={() => setDeckOpen(true)}
+        onToggleMenu={() => setKineticMenuOpen((v) => !v)}
+        isMenuOpen={kineticMenuOpen}
+      />
+      <Suspense fallback={null}>
+        <KineticMenu
+          isOpen={kineticMenuOpen}
+          onClose={() => setKineticMenuOpen(false)}
+          onOpenDeck={() => { setKineticMenuOpen(false); setDeckOpen(true); }}
+          onOpenDailyBugle={() => { setKineticMenuOpen(false); setDailyBugleOpen(true); }}
+        />
+      </Suspense>
 
       <main>
         <Hero />
