@@ -200,13 +200,13 @@ const KineticMenu = ({ isOpen, onClose, onOpenDeck, onOpenDailyBugle }) => {
       <div className="kinetic-overlay absolute inset-0 bg-black/60 cursor-pointer" onClick={onClose} />
 
       {/* 3-Layer Backdrop */}
-      <div className="absolute inset-y-0 right-0 w-full sm:w-[85%] md:w-[70%] lg:w-[55%] xl:w-[45%] pointer-events-none">
+      <div className="absolute inset-y-0 right-0 w-full sm:w-[85%] md:w-[75%] lg:w-[60%] xl:w-[54%] 2xl:w-[48%] pointer-events-none">
         {/* Layer 1: Daily Bugle Gold */}
         <div className="kinetic-backdrop absolute inset-0 bg-[#FFD500] pointer-events-auto" />
         {/* Layer 2: Spider Red */}
         <div className="kinetic-backdrop absolute inset-0 bg-[#D31F1F] pointer-events-auto" />
         {/* Layer 3: Comic Newsprint Content */}
-        <div className="kinetic-backdrop absolute inset-0 bg-[#F7F4EE] border-l-4 border-[#1A1A1A] pointer-events-auto overflow-y-auto">
+        <div className="kinetic-backdrop absolute inset-0 bg-[#F7F4EE] border-l-0 sm:border-l-4 border-[#1A1A1A] pointer-events-auto overflow-y-auto overflow-x-hidden">
           {/* Halftone overlay */}
           <div className="absolute inset-0 halftone-overlay opacity-[0.06] pointer-events-none" />
 
@@ -222,20 +222,20 @@ const KineticMenu = ({ isOpen, onClose, onOpenDeck, onOpenDailyBugle }) => {
           </div>
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col justify-between min-h-full px-8 sm:px-12 md:px-16 py-20 sm:py-24">
+          <div className="relative z-10 flex flex-col justify-between min-h-full px-5 xs:px-7 sm:px-10 md:px-12 lg:px-14 py-12 xs:py-14 sm:py-16 md:py-20">
             {/* Close button top-right */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 sm:top-8 sm:right-8 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-[#1A1A1A] text-white border-2 border-[#1A1A1A] rounded-none hover:bg-[#D31F1F] transition-colors cursor-pointer shadow-[3px_3px_0_rgba(0,0,0,0.3)]"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 md:top-8 md:right-8 w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center bg-[#1A1A1A] text-white border-2 border-[#1A1A1A] rounded-none hover:bg-[#D31F1F] active:scale-95 transition-all cursor-pointer shadow-[2px_2px_0_#000] sm:shadow-[3px_3px_0_rgba(0,0,0,0.3)] z-20"
               aria-label="Close menu"
             >
-              <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" className="sm:w-[18px] sm:h-[18px]">
                 <path d="M3.17 3.17a.75.75 0 011.06 0L8 6.94l3.77-3.77a.75.75 0 111.06 1.06L9.06 8l3.77 3.77a.75.75 0 11-1.06 1.06L8 9.06l-3.77 3.77a.75.75 0 01-1.06-1.06L6.94 8 3.17 4.23a.75.75 0 010-1.06z" />
               </svg>
             </button>
 
             {/* Nav Links */}
-            <nav className="flex flex-col gap-1 sm:gap-2 mt-4 sm:mt-8">
+            <nav className="flex flex-col gap-0.5 sm:gap-1.5 md:gap-2 mt-4 sm:mt-6">
               {NAV_ITEMS.map((item, i) => (
                 <div key={item.href} className="overflow-hidden">
                   <a
@@ -243,20 +243,20 @@ const KineticMenu = ({ isOpen, onClose, onOpenDeck, onOpenDailyBugle }) => {
                     onClick={(e) => { e.preventDefault(); handleNav(item.href); }}
                     onMouseEnter={() => handleShapeEnter(item.shape)}
                     onMouseLeave={() => handleShapeLeave(item.shape)}
-                    className="kinetic-link group relative flex items-baseline gap-3 sm:gap-4 py-2 sm:py-3 cursor-pointer"
+                    className="kinetic-link group relative flex items-baseline gap-2.5 sm:gap-4 py-1.5 xs:py-2 sm:py-2.5 md:py-3 px-2 sm:px-3 cursor-pointer select-none"
                   >
                     {/* Red hover highlight bar */}
                     <span className="absolute inset-0 bg-[#D31F1F] origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-300 ease-out" />
-                    <span className="relative text-[10px] sm:text-xs font-body font-bold text-[#1A1A1A]/40 group-hover:text-[#FFD500] tracking-widest tabular-nums select-none transition-colors duration-300 z-10">
+                    <span className="relative text-[9px] xs:text-[10px] sm:text-xs font-body font-bold text-[#1A1A1A]/40 group-hover:text-[#FFD500] tracking-widest tabular-nums select-none transition-colors duration-300 z-10 shrink-0">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="relative z-10 overflow-hidden block">
+                    <span className="relative z-10 overflow-hidden block whitespace-nowrap">
                       {/* Default text — slides up & out on hover */}
-                      <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-[#1A1A1A] block group-hover:-translate-y-full transition-transform duration-300 ease-out leading-none">
+                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] uppercase tracking-tight text-[#1A1A1A] block group-hover:-translate-y-full transition-transform duration-300 ease-out leading-tight sm:leading-none whitespace-nowrap">
                         {item.label}
                       </span>
                       {/* Yellow duplicate — slides up from below on hover */}
-                      <span className="font-display font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-[#FFD500] absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out leading-none" aria-hidden="true">
+                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] uppercase tracking-tight text-[#FFD500] absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out leading-tight sm:leading-none whitespace-nowrap" aria-hidden="true">
                         {item.label}
                       </span>
                     </span>
@@ -266,27 +266,27 @@ const KineticMenu = ({ isOpen, onClose, onOpenDeck, onOpenDailyBugle }) => {
             </nav>
 
             {/* Quick Actions */}
-            <div className="flex flex-col gap-3 mt-10 sm:mt-14 pt-6 border-t-3 border-[#1A1A1A]/15">
+            <div className="flex flex-col gap-2.5 sm:gap-3 mt-8 sm:mt-12 pt-4 sm:pt-6 border-t-2 sm:border-t-3 border-[#1A1A1A]/15">
               <div className="flex flex-wrap items-center gap-2 sm:gap-3" data-fade>
                 {onOpenDeck && (
                   <button
                     onClick={() => { onClose(); onOpenDeck(); }}
-                    className="inline-flex items-center gap-2 bg-[#1A1A1A] text-white px-4 py-2.5 text-xs font-black uppercase tracking-wider border-2 border-[#1A1A1A] hover:bg-[#D31F1F] transition-colors cursor-pointer shadow-[3px_3px_0_rgba(0,0,0,0.2)]"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#1A1A1A] text-white px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-black uppercase tracking-wider border-2 border-[#1A1A1A] hover:bg-[#D31F1F] active:scale-95 transition-all cursor-pointer shadow-[2px_2px_0_rgba(0,0,0,0.2)] sm:shadow-[3px_3px_0_rgba(0,0,0,0.2)]"
                   >
-                    <Printer size={14} strokeWidth={2.5} />
+                    <Printer size={13} strokeWidth={2.5} className="sm:w-[14px] sm:h-[14px]" />
                     Pitch Deck
                   </button>
                 )}
                 {onOpenDailyBugle && (
                   <button
                     onClick={() => { onClose(); onOpenDailyBugle(); }}
-                    className="inline-flex items-center gap-2 bg-[#FFD500] text-[#1A1A1A] px-4 py-2.5 text-xs font-black uppercase tracking-wider border-2 border-[#1A1A1A] hover:bg-white transition-colors cursor-pointer shadow-[3px_3px_0_rgba(0,0,0,0.2)]"
+                    className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFD500] text-[#1A1A1A] px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-black uppercase tracking-wider border-2 border-[#1A1A1A] hover:bg-white active:scale-95 transition-all cursor-pointer shadow-[2px_2px_0_rgba(0,0,0,0.2)] sm:shadow-[3px_3px_0_rgba(0,0,0,0.2)]"
                   >
                     📰 Daily Bugle
                   </button>
                 )}
               </div>
-              <div data-fade>
+              <div data-fade className="mt-1">
                 <MotionToggle isMobile={true} />
               </div>
             </div>

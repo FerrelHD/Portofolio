@@ -199,10 +199,30 @@ const SpiderSkillWeb = () => {
   const [selectedSkill, setSelectedSkill] = useState(SKILLS_DATA[0]);
   const [isHovered, setIsHovered] = useState(false);
   const [isInView, setIsInView] = useState(true);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanBanner, setScanBanner] = useState(false);
   const [time, setTime] = useState(0);
   const reqRef = useRef(null);
-  const lastTimeRef = useRef(0);
+  const lastTimeRef = useRef(performance.now());
   const containerRef = useRef(null);
+
+  // Triggered when user clicks the center Spider-Man core
+  const handleScanAll = () => {
+    if (isScanning) return;
+    setIsScanning(true);
+    setScanBanner(true);
+    soundFX.playSenseBuzz();
+
+    // Fanfare sound on scan surge climax
+    setTimeout(() => {
+      soundFX.playFanfare();
+    }, 750);
+
+    setTimeout(() => {
+      setIsScanning(false);
+      setTimeout(() => setScanBanner(false), 2400);
+    }, 2000);
+  };
 
   // Center coordinate (expanded 600x600 canvas)
   const cx = 300;
@@ -301,6 +321,22 @@ const SpiderSkillWeb = () => {
           )}
         </AnimatePresence>
 
+        {/* Scan All Abilities Banner Pop-up */}
+        <AnimatePresence>
+          {scanBanner && (
+            <motion.div
+              initial={{ opacity: 0, y: -16, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 450, damping: 22 }}
+              className="absolute top-[-54px] sm:top-[-62px] left-1/2 -translate-x-1/2 bg-spider-red text-white border-2 sm:border-3 border-black comic-chip px-4 sm:px-5 py-1.5 text-[10.5px] sm:text-xs font-black uppercase tracking-widest shadow-[4px_4px_0_#000] z-30 flex items-center gap-2 whitespace-nowrap"
+            >
+              <span className="text-spider-yellow text-sm animate-spin">🕷️</span>
+              <span>ABILITY SCAN COMPLETE // ALL 10 NODES ACTIVE!</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <svg viewBox="0 0 600 600" className="w-full h-full overflow-visible">
           <defs>
             {/* Retro Comic Ink Halftone Pattern */}
@@ -310,10 +346,38 @@ const SpiderSkillWeb = () => {
 
             {/* Spider-Red Radar Scanner Gradient */}
             <linearGradient id="radarSweepGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#D31F1F" stopOpacity="0.26" />
-              <stop offset="60%" stopColor="#D31F1F" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="#D31F1F" stopOpacity={isScanning ? "0.45" : "0.26"} />
+              <stop offset="60%" stopColor="#D31F1F" stopOpacity={isScanning ? "0.15" : "0.05"} />
               <stop offset="100%" stopColor="transparent" stopOpacity="0" />
             </linearGradient>
+
+            {/* 3D Enamel Pin Metal Bevel Gradient */}
+            <linearGradient id="pinBevelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#4A4A4A" />
+              <stop offset="50%" stopColor="#1A1A1A" />
+              <stop offset="100%" stopColor="#080808" />
+            </linearGradient>
+
+            {/* 3D Enamel Pin Inner Face Dome */}
+            <radialGradient id="pinDomeGrad" cx="40%" cy="35%" r="65%">
+              <stop offset="0%" stopColor="#2A2A2A" />
+              <stop offset="60%" stopColor="#141414" />
+              <stop offset="100%" stopColor="#0A0A0A" />
+            </radialGradient>
+
+            {/* 3D Specular Gloss Curved Sheen */}
+            <linearGradient id="pinGlossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.65" />
+              <stop offset="60%" stopColor="#FFFFFF" stopOpacity="0.08" />
+              <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+            </linearGradient>
+
+            {/* Spider Core Glow Pulse Gradient */}
+            <radialGradient id="spiderCoreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#D31F1F" stopOpacity="0.8" />
+              <stop offset="60%" stopColor="#D31F1F" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="transparent" stopOpacity="0" />
+            </radialGradient>
 
             {/* Circular Clip Paths for Node Icons */}
             {SKILLS_DATA.map((node) => (
@@ -347,12 +411,12 @@ const SpiderSkillWeb = () => {
           {/* Halftone Texture Overlay */}
           <circle cx={cx} cy={cy} r="280" fill="url(#spiderHalftone)" />
 
-          {/* Rotating Comic Red Radar Scanner Sweep */}
+          {/* Rotating Comic Red Radar Scanner Sweep (Spins 10x faster during active scan) */}
           <g
             className="pointer-events-none"
             style={{
               transformOrigin: "300px 300px",
-              animation: "spin 16s linear infinite",
+              animation: isScanning ? "spin 1.4s linear infinite" : "spin 16s linear infinite",
             }}
           >
             <path
@@ -365,8 +429,8 @@ const SpiderSkillWeb = () => {
               x2={cx}
               y2={cy - 280}
               stroke="#D31F1F"
-              strokeWidth="2"
-              strokeDasharray="4 4"
+              strokeWidth={isScanning ? "3" : "2"}
+              strokeDasharray={isScanning ? "2 2" : "4 4"}
               opacity="0.85"
             />
           </g>
@@ -442,41 +506,97 @@ const SpiderSkillWeb = () => {
                 y1={cy}
                 x2={pos.x}
                 y2={pos.y}
-                stroke={isSelected ? "#D31F1F" : "transparent"}
-                strokeWidth={isSelected ? "3" : "0"}
+                stroke={isSelected || isScanning ? "#D31F1F" : "transparent"}
+                strokeWidth={isSelected || isScanning ? "3" : "0"}
                 className="transition-all duration-150"
               />
             );
           })}
 
-          {/* 5. CENTER HUB: SPIDER-MAN EMBLEM */}
-          <g transform={`translate(${cx}, ${cy})`} className="pointer-events-none">
-            {/* Outer Pulse */}
-            <circle r="34" fill="none" stroke="#D31F1F" strokeWidth="2" className="animate-ping opacity-40" />
-            {/* Base Hub Button */}
-            <circle r="30" fill="#1A1A1A" stroke="#D31F1F" strokeWidth="3" />
-            {/* Spider Emblem raster image with blend mode */}
+          {/* 5. CENTER HUB: INTERACTIVE PULSING SPIDER-MAN CORE */}
+          <g
+            transform={`translate(${cx}, ${cy})`}
+            className="cursor-pointer group/core"
+            onClick={handleScanAll}
+            title="Click to Scan All Abilities!"
+          >
+            {/* Touch/Click Hit Area */}
+            <circle r="44" fill="transparent" />
+
+            {/* Multi-Layer Breathing Spider-Sense Pulse Waves */}
+            <circle
+              r="40"
+              fill="none"
+              stroke="#D31F1F"
+              strokeWidth="2.5"
+              className={`origin-center ${isScanning ? "animate-ping opacity-90" : "animate-pulse opacity-50"}`}
+            />
+            <circle
+              r="34"
+              fill="url(#spiderCoreGlow)"
+              className={isScanning ? "animate-ping opacity-80" : "opacity-40 animate-pulse"}
+            />
+
+            {/* 3D Extruded Base Shadow */}
+            <circle cy="3.5" r="30" fill="#000000" />
+
+            {/* Beveled Metal Outer Ring */}
+            <circle
+              r="30"
+              fill="url(#pinBevelGrad)"
+              stroke={isScanning ? "#FFD500" : "#D31F1F"}
+              strokeWidth="3.5"
+              className="transition-all duration-300 group-hover/core:scale-110"
+            />
+
+            {/* Inner Face Dome */}
+            <circle
+              r="25"
+              fill="url(#pinDomeGrad)"
+              stroke="#000000"
+              strokeWidth="1.5"
+              className="transition-all duration-300 group-hover/core:scale-110"
+            />
+
+            {/* Specular Gloss Highlight Sheen */}
+            <path
+              d="M -18 -16 A 22 22 0 0 1 14 -16 A 25 12 0 0 0 -18 -16 Z"
+              fill="url(#pinGlossGrad)"
+              opacity="0.6"
+              className="pointer-events-none"
+            />
+
+            {/* Spider Emblem raster image */}
             <image
               href={spiderEmblem}
-              x="-20"
-              y="-20"
-              width="40"
-              height="40"
-              className="pointer-events-none"
+              x="-19"
+              y="-19"
+              width="38"
+              height="38"
+              className="pointer-events-none transition-all duration-300 group-hover/core:scale-110"
               style={{ mixBlendMode: "screen" }}
             />
+
+            {/* Tap to Scan mini pill hint */}
+            <g transform="translate(0, 42)" className="pointer-events-none opacity-0 group-hover/core:opacity-100 transition-opacity duration-200">
+              <rect x="-38" y="-8" width="76" height="16" rx="8" fill="#FFD500" stroke="#1A1A1A" strokeWidth="1.5" />
+              <text x="0" y="3.5" textAnchor="middle" fill="#1A1A1A" fontSize="8" fontWeight="900" fontFamily="'Montserrat', sans-serif">
+                SCAN RADAR
+              </text>
+            </g>
           </g>
 
-          {/* 6. INTERACTIVE ORBITING SKILL NODES (High contrast comic badges) */}
+          {/* 6. INTERACTIVE ORBITING SKILL NODES (3D Enamel Pin Badges) */}
           {SKILLS_DATA.map((node) => {
             const pos = getNodePos(node);
             const isSelected = selectedSkill?.id === node.id;
+            const isHighlighted = isSelected || isScanning;
 
             return (
               <g
                 key={node.id}
                 transform={`translate(${pos.x}, ${pos.y})`}
-                className="cursor-pointer group"
+                className="cursor-pointer group/pin"
                 onClick={() => {
                   setSelectedSkill(node);
                   soundFX.playBeep(440 + node.ring * 100);
@@ -489,36 +609,60 @@ const SpiderSkillWeb = () => {
                 {/* Touch Hit Area */}
                 <circle r="36" fill="transparent" />
 
-                {/* Node Outer Halo on Selection */}
-                {isSelected && (
+                {/* Sonar Ping Ring when selected or during scan */}
+                {isHighlighted && (
                   <circle
-                    r="29"
+                    r="32"
                     fill="none"
                     stroke={node.color}
                     strokeWidth="2.5"
-                    className="animate-ping opacity-75"
+                    className="animate-ping opacity-80"
                   />
                 )}
 
-                {/* Node Circle Background Badge */}
+                {/* 3D Coin Extrusion Drop-Shadow (gives palpable physical depth) */}
+                <circle
+                  cy="3.5"
+                  r={isSelected ? "25" : "22"}
+                  fill="#050505"
+                  className="transition-all duration-200 group-hover/pin:translate-y-1"
+                />
+
+                {/* 3D Beveled Outer Metal Rim Ring */}
                 <circle
                   r={isSelected ? "25" : "22"}
-                  fill="#1A1A1A"
-                  stroke={isSelected ? node.color : "#1A1A1A"}
-                  strokeWidth={isSelected ? "3.5" : "2"}
-                  className="transition-all duration-200 group-hover:scale-125 shadow-md"
+                  fill="url(#pinBevelGrad)"
+                  stroke={isHighlighted ? node.color : "#2C2C2C"}
+                  strokeWidth={isHighlighted ? "3.2" : "1.8"}
+                  className="transition-all duration-200 group-hover/pin:-translate-y-1 group-hover/pin:scale-115 shadow-lg"
+                />
+
+                {/* Inner Enamel Face Dome */}
+                <circle
+                  r={isSelected ? "21" : "18.5"}
+                  fill="url(#pinDomeGrad)"
+                  stroke="#000000"
+                  strokeWidth="1"
+                  className="transition-all duration-200 group-hover/pin:-translate-y-1 group-hover/pin:scale-115"
+                />
+
+                {/* 3D Specular Glossy Arc Sheen (Curved highlight reflection) */}
+                <path
+                  d={isSelected ? "M -15 -12 A 18 18 0 0 1 12 -12 A 20 10 0 0 0 -15 -12 Z" : "M -13 -10 A 15 15 0 0 1 10 -10 A 17 8 0 0 0 -13 -10 Z"}
+                  fill="url(#pinGlossGrad)"
+                  opacity={isSelected ? "0.65" : "0.45"}
+                  className="pointer-events-none transition-all duration-200 group-hover/pin:-translate-y-1 group-hover/pin:scale-115"
                 />
 
                 {/* Embedded Real Icon Image clipped within circle */}
-                <g clipPath={`url(#clip-${node.id})`} className="pointer-events-none">
+                <g clipPath={`url(#clip-${node.id})`} className="pointer-events-none transition-all duration-200 group-hover/pin:-translate-y-1 group-hover/pin:scale-115">
                   <image
                     href={node.iconImg}
-                    x={isSelected ? "-15" : "-13"}
-                    y={isSelected ? "-15" : "-13"}
-                    width={isSelected ? "30" : "26"}
-                    height={isSelected ? "30" : "26"}
+                    x={isSelected ? "-14" : "-12"}
+                    y={isSelected ? "-14" : "-12"}
+                    width={isSelected ? "28" : "24"}
+                    height={isSelected ? "28" : "24"}
                     preserveAspectRatio="xMidYMid meet"
-                    className="transition-all duration-200"
                     style={{
                       mixBlendMode: "screen",
                       filter: node.id === "unity" ? "invert(1)" : "none",
@@ -526,8 +670,18 @@ const SpiderSkillWeb = () => {
                   />
                 </g>
 
-                {/* Node Name Pill Badge (Crisp Comic High-Contrast Label) */}
+                {/* 3D Comic Label Pill */}
                 <g transform="translate(0, 34)" className="pointer-events-none">
+                  {/* Pill Bottom Shadow */}
+                  <rect
+                    x="-44"
+                    y="-7"
+                    width="88"
+                    height="18"
+                    rx="9"
+                    fill="#000000"
+                  />
+                  {/* Pill Face */}
                   <rect
                     x="-44"
                     y="-9"
@@ -535,9 +689,9 @@ const SpiderSkillWeb = () => {
                     height="18"
                     rx="9"
                     fill={isSelected ? node.color : "#1A1A1A"}
-                    stroke={isSelected ? "#1A1A1A" : "#1A1A1A"}
-                    strokeWidth={isSelected ? "2" : "1.2"}
-                    className="transition-all duration-200 shadow-md"
+                    stroke={isSelected ? "#1A1A1A" : "#333333"}
+                    strokeWidth="1.5"
+                    className="transition-all duration-200"
                   />
                   <text
                     x="0"

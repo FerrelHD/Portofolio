@@ -70,13 +70,13 @@ const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
       }}
       className="fixed top-0 left-0 right-0 z-50 border-b-solid"
     >
-      <div className="container mx-auto px-4 sm:px-6 relative flex items-center justify-between gap-2 lg:gap-4">
+      <div className="container mx-auto px-3 sm:px-6 relative flex items-center justify-between gap-1.5 sm:gap-4">
         {/* LOGO */}
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="text-base sm:text-lg lg:text-xl xl:text-2xl font-display font-black tracking-tighter shrink-0 select-none"
+          className="text-sm xs:text-base sm:text-lg lg:text-xl xl:text-2xl font-display font-black tracking-tighter shrink-0 select-none"
         >
           <span className="text-comic-ink comic-stroke-thin">FERREL RASHAD</span>
           <span className="text-spider-red drop-shadow-[1px_1px_0_var(--color-ink-stroke)]">
@@ -92,10 +92,10 @@ const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
               onClick={onOpenDeck}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center justify-center bg-spider-yellow text-spider-black comic-chip w-9 h-9 pop-shadow-sm hover:bg-white transition-all cursor-pointer"
+              className="inline-flex items-center justify-center bg-spider-yellow text-spider-black comic-chip w-8 h-8 sm:w-9 sm:h-9 pop-shadow-sm hover:bg-white active:scale-95 transition-all cursor-pointer"
               title="Open Portfolio Pitch Deck & PDF Export (Hotkey: E)"
             >
-              <Printer size={15} strokeWidth={2.5} />
+              <Printer size={14} strokeWidth={2.5} className="sm:w-[15px] sm:h-[15px]" />
             </motion.button>
           )}
 
@@ -117,9 +117,9 @@ const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
           <button
             onClick={onToggleMenu}
             aria-label="Toggle menu"
-            className="w-9 h-9 flex items-center justify-center bg-spider-yellow text-spider-black border-2 border-black comic-chip hover:bg-spider-red hover:text-white transition-all shadow-[2px_2px_0_#000] active:scale-95 cursor-pointer shrink-0"
+            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-spider-yellow text-spider-black border-2 border-black comic-chip hover:bg-spider-red hover:text-white transition-all shadow-[2px_2px_0_#000] active:scale-95 cursor-pointer shrink-0"
           >
-            {isMenuOpen ? <X size={18} strokeWidth={3} /> : <Menu size={18} strokeWidth={3} />}
+            {isMenuOpen ? <X size={16} strokeWidth={3} className="sm:w-[18px] sm:h-[18px]" /> : <Menu size={16} strokeWidth={3} className="sm:w-[18px] sm:h-[18px]" />}
           </button>
         </div>
       </div>
