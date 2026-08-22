@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Github, Code2, Zap, Gamepad2, Download, FolderKanban } from "lucide-react";
+import { Github, Code2, Zap, Gamepad2, Download, FolderKanban, Briefcase, Mail, MapPin, CheckCircle } from "lucide-react";
 import { fadeUp, slideUp, staggerContainer, comicStamp, comicPop } from "../lib/animation";
 import ComicDoodleButton from "./ComicDoodleButton";
 
-const Hero = () => {
+const Hero = ({ viewMode }) => {
   const reduce = useReducedMotion();
 
   // Multi-axis organic floating keyframe animations
@@ -53,7 +53,7 @@ const Hero = () => {
       {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Nicely Framed Inward */}
       <motion.div
         animate={floatAnim1}
-        className="absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
+        className="hero-floating-badge absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-red comic-chip p-2.5 sm:p-3 pop-shadow-sm text-white flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -70,7 +70,7 @@ const Hero = () => {
 
       <motion.div
         animate={floatAnim2}
-        className="absolute top-[20%] left-[6%] lg:left-[8%] xl:left-[12%] 2xl:left-[16%] z-[5] hidden lg:block"
+        className="hero-floating-badge absolute top-[20%] left-[6%] lg:left-[8%] xl:left-[12%] 2xl:left-[16%] z-[5] hidden lg:block"
       >
         <div className="bg-white comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -87,7 +87,7 @@ const Hero = () => {
 
       <motion.div
         animate={floatAnim3}
-        className="absolute bottom-[14%] left-[7%] lg:left-[9%] xl:left-[13%] 2xl:left-[17%] z-[5] hidden lg:block"
+        className="hero-floating-badge absolute bottom-[14%] left-[7%] lg:left-[9%] xl:left-[13%] 2xl:left-[17%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-blue comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -104,7 +104,7 @@ const Hero = () => {
 
       <motion.div
         animate={floatAnim4}
-        className="absolute bottom-[18%] right-[7%] lg:right-[9%] xl:right-[13%] 2xl:right-[17%] z-[5] hidden lg:block"
+        className="hero-floating-badge absolute bottom-[18%] right-[7%] lg:right-[9%] xl:right-[13%] 2xl:right-[17%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-yellow comic-chip p-2.5 sm:p-3 pop-shadow-sm text-spider-black flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
@@ -186,6 +186,63 @@ const Hero = () => {
           </motion.p>
 
           {/* CTA BUTTONS (Comic Doodle Multi-Layer Red & Blue Matching Buttons) */}
+
+          {/* EXECUTIVE QUICK-SCAN BAR — Only visible in Executive/Recruiter Mode */}
+          {viewMode === "executive" && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25, delay: 0.1 }}
+              className="mb-8 sm:mb-10 mx-auto max-w-xl w-full"
+            >
+              <div className="bg-white/95 backdrop-blur-sm border-2 border-black rounded-xl p-4 sm:p-5 shadow-[4px_4px_0_#165DFF] text-left space-y-3">
+                {/* Status */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold">
+                    <CheckCircle size={12} />
+                    Open to Work
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-comic-ink/60 font-medium">
+                    <MapPin size={11} /> Indonesia
+                  </span>
+                </div>
+
+                {/* Role + Stack */}
+                <div>
+                  <p className="font-black text-sm sm:text-base text-comic-ink">
+                    Full-Stack Web Developer
+                  </p>
+                  <p className="text-[10px] sm:text-xs text-comic-ink/60 font-medium mt-1">
+                    React • Next.js • TypeScript • Node.js • Tailwind • SQL
+                  </p>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <a
+                    href={`${import.meta.env.BASE_URL}cv.pdf`}
+                    download="CV_Ferrel_Rashad_Akeyla.pdf"
+                    className="inline-flex items-center gap-1.5 bg-spider-blue text-white px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold border-2 border-black shadow-[2px_2px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-transform"
+                  >
+                    <Download size={12} /> Download CV
+                  </a>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-1.5 bg-spider-red text-white px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold border-2 border-black shadow-[2px_2px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-transform"
+                  >
+                    <Mail size={12} /> Contact Me
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new CustomEvent("spidey:open-deck"))}
+                    className="inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold border-2 border-black shadow-[2px_2px_0_#000] hover:translate-x-0.5 hover:translate-y-0.5 transition-transform cursor-pointer"
+                  >
+                    <Briefcase size={12} /> Pitch Deck
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
           <motion.div
             variants={comicPop}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-3 sm:px-0 max-w-full mx-auto"

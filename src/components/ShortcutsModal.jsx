@@ -12,6 +12,7 @@ const ShortcutsModal = ({ open, onClose }) => {
     { key: "N", label: "Read The Daily Bugle Newspaper Report", accent: "bg-spider-yellow" },
     { key: "G", label: "Play Spidey Bug Hunter (30s Arcade Mini-Game)", accent: "bg-spider-red" },
     { key: "D", label: "Toggle Spider Gadget Dock & Multiverse Suits", accent: "bg-spider-yellow" },
+    { key: "T", label: "Open Parker Lab Terminal (Interactive CLI)", accent: "bg-emerald-600" },
     { key: "Ctrl+K", label: "Open Spider Terminal Command Palette", accent: "bg-spider-blue" },
     { key: "P", label: "Toggle Play / Pause BGM Song", accent: "bg-spider-red" },
     { key: "M", label: "Toggle Mute / Unmute Audio", accent: "bg-spider-yellow" },

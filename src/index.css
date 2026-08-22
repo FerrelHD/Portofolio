@@ -1807,3 +1807,77 @@ main>section:not(#hero) {
     overflow: hidden !important;
   }
 }
+
+/* ===================================================== */
+/* ============ PARKER LAB TERMINAL STYLES ============= */
+/* ===================================================== */
+
+.parker-terminal {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* CRT Scanline overlay */
+.parker-terminal-scanlines {
+  position: relative;
+}
+
+.parker-terminal-scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(16, 185, 129, 0.03) 2px,
+    rgba(16, 185, 129, 0.03) 4px
+  );
+  z-index: 1;
+}
+
+/* Terminal custom scrollbar */
+.parker-terminal-scanlines::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+.parker-terminal-scanlines::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.parker-terminal-scanlines::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.25);
+  border-radius: 3px;
+}
+
+/* ===================================================== */
+/* ========== EXECUTIVE / RECRUITER MODE =============== */
+/* ===================================================== */
+/* Subtle overrides when data-view-mode="executive"      */
+/* Tones down heavy comic animations for recruiter UX    */
+/* ===================================================== */
+
+body[data-view-mode="executive"] .comic-action-fx,
+body[data-view-mode="executive"] .spider-sense-active,
+body[data-view-mode="executive"] .anime-bg canvas {
+  opacity: 0.15 !important;
+  pointer-events: none;
+}
+
+/* Reduce motion intensity in executive mode */
+body[data-view-mode="executive"] .animate-ping {
+  animation: none !important;
+}
+
+/* Soften halftone / pop-art backgrounds */
+body[data-view-mode="executive"] .halftone-overlay,
+body[data-view-mode="executive"] .halftone-overlay-sm {
+  opacity: 0.3;
+}
+
+/* Soften floating pop badges on hero in exec mode for cleaner look */
+body[data-view-mode="executive"] .hero-floating-badge {
+  opacity: 0.3;
+  filter: grayscale(0.3);
+}

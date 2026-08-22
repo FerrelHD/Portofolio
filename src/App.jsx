@@ -27,6 +27,7 @@ const SpiderGadgetDrawer = lazy(() => import("./components/SpiderGadgetDrawer"))
 const ComicActionFX = lazy(() => import("./components/ComicActionFX"));
 const PortfolioDeckModal = lazy(() => import("./components/PortfolioDeckModal"));
 const KineticMenu = lazy(() => import("./components/KineticMenu"));
+const ParkerLabTerminal = lazy(() => import("./components/ParkerLabTerminal"));
 
 
 // Skill Real Asset Icons
@@ -71,6 +72,13 @@ function App() {
   const [bugHunterOpen, setBugHunterOpen] = useState(false);
   const [deckOpen, setDeckOpen] = useState(false);
   const [kineticMenuOpen, setKineticMenuOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("spidey-view-mode") || "hero";
+    }
+    return "hero";
+  });
   const senseTimer = useRef(null);
 
   const triggerSpiderSense = useCallback(() => {
@@ -107,6 +115,16 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Sync viewMode to body attribute & localStorage
+  useEffect(() => {
+    document.body.setAttribute("data-view-mode", viewMode);
+    localStorage.setItem("spidey-view-mode", viewMode);
+  }, [viewMode]);
+
+  const toggleViewMode = useCallback(() => {
+    setViewMode((prev) => (prev === "hero" ? "executive" : "hero"));
+  }, []);
+
   // Listen to custom spidey:open-deck event
   useEffect(() => {
     const onOpenDeck = () => setDeckOpen(true);
@@ -131,6 +149,7 @@ function App() {
         setDailyBugleOpen(false);
         setBugHunterOpen(false);
         setDeckOpen(false);
+        setTerminalOpen(false);
         return;
       }
 
@@ -199,6 +218,13 @@ function App() {
         return;
       }
 
+      // T = Toggle Parker Lab Terminal
+      if (!e.metaKey && !e.ctrlKey && !e.altKey && (e.key === "t" || e.key === "T")) {
+        e.preventDefault();
+        setTerminalOpen((prev) => !prev);
+        return;
+      }
+
       // Hotkey 1 - 6 untuk navigasi cepat antar section
       const sectionKeys = {
         "1": "#hero",
@@ -264,6 +290,9 @@ function App() {
             onOpenDailyBugle={() => setDailyBugleOpen(true)}
             onOpenBugHunter={() => setBugHunterOpen(true)}
             onOpenDeck={() => setDeckOpen(true)}
+            onOpenTerminal={() => { setCmdOpen(false); setTerminalOpen(true); }}
+            onToggleViewMode={toggleViewMode}
+            viewMode={viewMode}
             triggerSpiderSense={triggerSpiderSense}
           />
         )}
@@ -271,7 +300,11 @@ function App() {
           onOpenBugHunter={() => setBugHunterOpen(true)}
           onOpenDailyBugle={() => setDailyBugleOpen(true)}
           onOpenDeck={() => setDeckOpen(true)}
+          onOpenTerminal={() => setTerminalOpen(true)}
         />
+        {terminalOpen && (
+          <ParkerLabTerminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
+        )}
       </Suspense>
 
       <a href="#about" className="skip-link">
@@ -282,6 +315,8 @@ function App() {
         onOpenDeck={() => setDeckOpen(true)}
         onToggleMenu={() => setKineticMenuOpen((v) => !v)}
         isMenuOpen={kineticMenuOpen}
+        viewMode={viewMode}
+        onToggleViewMode={toggleViewMode}
       />
       <Suspense fallback={null}>
         <KineticMenu
@@ -293,7 +328,7 @@ function App() {
       </Suspense>
 
       <main>
-        <Hero />
+        <Hero viewMode={viewMode} />
         <ComicTicker
           items={HERO_TICKER_ITEMS}
           rotate="-rotate-1"

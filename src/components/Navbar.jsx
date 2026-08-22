@@ -2,11 +2,12 @@
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Menu, X, Printer } from "lucide-react";
+import ViewModeToggle from "./ViewModeToggle";
 
 
 const SECTION_IDS = ["about", "services", "projects", "skills", "contact"];
 
-const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
+const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen, viewMode, onToggleViewMode }) => {
 
   const { scrollY } = useScroll();
   const smoothScrollY = useSpring(scrollY, { stiffness: 300, damping: 40 });
@@ -86,6 +87,11 @@ const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
 
         {/* RIGHT: Deck Button + CTA + Menu Toggle */}
         <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0">
+          {/* View Mode Toggle */}
+          {onToggleViewMode && (
+            <ViewModeToggle viewMode={viewMode} onToggle={onToggleViewMode} />
+          )}
+
           {onOpenDeck && (
             <motion.button
               type="button"

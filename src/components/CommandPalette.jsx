@@ -13,6 +13,8 @@ import {
   Gamepad2,
   Volume2,
   Printer,
+  Terminal,
+  Briefcase,
 } from "lucide-react";
 
 import { achievementManager } from "../lib/achievements";
@@ -24,6 +26,9 @@ const CommandPalette = ({
   onOpenDailyBugle,
   onOpenBugHunter,
   onOpenDeck,
+  onOpenTerminal,
+  onToggleViewMode,
+  viewMode,
   triggerSpiderSense,
 }) => {
   const [query, setQuery] = useState("");
@@ -56,6 +61,23 @@ const CommandPalette = ({
       perform: () => {
         onClose();
         if (onOpenDeck) onOpenDeck();
+      },
+    },
+    {
+      id: "parker-terminal",
+      title: "Open Parker Lab Terminal [Hotkey: T]",
+      icon: <Terminal size={16} className="text-emerald-400" />,
+      perform: () => {
+        if (onOpenTerminal) onOpenTerminal();
+      },
+    },
+    {
+      id: "view-mode",
+      title: `Switch to ${viewMode === "hero" ? "Executive / Recruiter" : "Hero / Comic"} Mode`,
+      icon: <Briefcase size={16} className="text-sky-400" />,
+      perform: () => {
+        if (onToggleViewMode) onToggleViewMode();
+        onClose();
       },
     },
     {
