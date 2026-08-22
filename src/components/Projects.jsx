@@ -1,30 +1,27 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { useState, useRef } from "react";
 import {
   ArrowUpRight,
   Play,
   Gamepad2,
   Radio,
   MapPin,
-  X,
   Signal,
 } from "lucide-react";
-import { fadeUp, staggerContainer, comicPop } from "../lib/animation";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import VideoModal from "./VideoModal";
 import ProjectBriefModal from "./ProjectBriefModal";
+
 import finesserShop from "../assets/Shop.webp";
 import fersyaShop from "../assets/fersya-shop.webp";
 import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.png";
 import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
@@ -33,19 +30,21 @@ const projects = [
     category: "Web",
     image: fersyaShop,
     video: null,
-    tech: ["Laravel", "Filament", "Tailwind"],
+    tech: ["Laravel 11", "Filament", "Tailwind"],
     link: "https://github.com/FerrelHD/Fersya-Shop",
     github: "https://github.com/FerrelHD/Fersya-Shop",
     sfx: "ZAP!",
+    issueNumber: "ISSUE #08",
     brief: {
-      description: "E-commerce platform specializing in healthy foods, organic beverages, and body care products.",
+      description:
+        "E-commerce platform specializing in healthy foods, organic beverages, and body care products.",
       role: "Full-Stack Web Developer",
       highlights: [
         "Built custom Filament admin panels for real-time stock management and order webhooks in Laravel 11.",
         "Integrated responsive product showcase with tailored search and category filtering.",
-        "Designed mobile-first UI with custom Tailwind CSS utility tokens."
-      ]
-    }
+        "Designed mobile-first UI with custom Tailwind CSS utility tokens.",
+      ],
+    },
   },
   {
     id: 1,
@@ -53,19 +52,21 @@ const projects = [
     category: "Web",
     image: finesserShop,
     video: null,
-    tech: ["Laravel", "Bootstrap"],
+    tech: ["Laravel", "Bootstrap", "MySQL"],
     link: null,
     github: null,
     sfx: "BAM!",
+    issueNumber: "ISSUE #01",
     brief: {
-      description: "Digital asset storefront offering high-quality templates, graphics, and design resources.",
+      description:
+        "Digital asset storefront offering high-quality templates, graphics, and design resources.",
       role: "Full-Stack Web Developer",
       highlights: [
         "Architected digital asset storefront with fast product browsing and instant downloads.",
         "Structured Laravel backend data models for digital product licensing.",
-        "Implemented responsive UI layout using Bootstrap."
-      ]
-    }
+        "Implemented responsive UI layout using Bootstrap.",
+      ],
+    },
   },
   {
     id: 7,
@@ -73,19 +74,21 @@ const projects = [
     category: "Web",
     image: studentLife,
     video: null,
-    tech: ["React", "TypeScript", "Supabase"],
+    tech: ["React 19", "TypeScript", "Supabase"],
     link: "https://ferrelhd.github.io/Student-Life/",
     github: "https://github.com/FerrelHD/Student-Life",
     sfx: "WHAM!",
+    issueNumber: "ISSUE #07",
     brief: {
-      description: "Web application for student productivity, task management, and academic schedule tracking.",
+      description:
+        "Web application for student productivity, task management, and academic schedule tracking.",
       role: "Frontend Developer & UI Designer",
       highlights: [
         "Developed type-safe React 19 interface with TypeScript for seamless task tracking.",
         "Connected real-time task sync and user authentication with Supabase backend.",
-        "Designed clean progress dashboard with interactive calendar widgets."
-      ]
-    }
+        "Designed clean progress dashboard with interactive calendar widgets.",
+      ],
+    },
   },
   {
     id: 2,
@@ -93,19 +96,20 @@ const projects = [
     category: "Game",
     image: streetRush,
     video: null,
-    tech: ["Unity", "C#"],
+    tech: ["Unity", "C#", "Mobile 3D"],
     link: "https://github.com/FerrelHD/Street-Rush-Unity",
     github: null,
     sfx: "VROOOM!",
+    issueNumber: "ISSUE #02",
     brief: {
       description: "Fast-paced 3D arcade runner game engineered with Unity and C# physics.",
       role: "Game Developer & Physics Programmer",
       highlights: [
         "Optimized C# rigidbodies & obstacle spawner algorithms for mobile performance.",
         "Maintained steady 60 FPS frame rate on mobile devices.",
-        "Programmed responsive player controls, score multipliers, and dynamic camera movement."
-      ]
-    }
+        "Programmed responsive player controls, score multipliers, and dynamic camera movement.",
+      ],
+    },
   },
   {
     id: 3,
@@ -113,19 +117,21 @@ const projects = [
     category: "Video",
     image: "https://img.youtube.com/vi/WMrnRucy0qs/maxresdefault.jpg",
     video: null,
-    tech: ["Vegas Pro 18"],
+    tech: ["Vegas Pro 18", "Color Grading"],
     link: "https://youtu.be/WMrnRucy0qs?si=AUsYV0JtfbiurBRP",
     github: null,
     sfx: "SHWIP!",
+    issueNumber: "ISSUE #03",
     brief: {
-      description: "Cinematic anime music video edit synchronized with Frank Ocean's soundtrack.",
+      description:
+        "Cinematic anime music video edit synchronized with Frank Ocean's soundtrack.",
       role: "Video Editor & Motion Designer",
       highlights: [
         "Precision audio-visual beat matching and rhythmic cut timing.",
         "Custom speed ramping and motion blur transitions in Vegas Pro 18.",
-        "Tailored color grading for immersive anime atmosphere."
-      ]
-    }
+        "Tailored color grading for immersive anime atmosphere.",
+      ],
+    },
   },
   {
     id: 4,
@@ -133,47 +139,51 @@ const projects = [
     category: "Game",
     image: gunungGede,
     video: null,
-    tech: ["Luau", "Roblox Studio"],
+    tech: ["Luau", "Roblox Studio", "Terrain"],
     link: "https://www.roblox.com/games/125712163693709/Mount-Gede-Via-Gunung-Putri",
     github: null,
     isRoblox: true,
     sfx: "THWIP!",
+    issueNumber: "ISSUE #04",
     brief: {
-      description: "Immersive 3D hiking simulation game in Roblox Studio recreating Mount Gede's trail.",
+      description:
+        "Immersive 3D hiking simulation game in Roblox Studio recreating Mount Gede's trail.",
       role: "Game Designer & Luau Programmer",
       highlights: [
         "Modelled realistic mountain terrain and atmospheric weather effects.",
         "Programmed custom hiking stamina mechanics, checkpoints, and inventory system in Luau.",
-        "Published live on Roblox platform with active community player base."
-      ]
-    }
+        "Published live on Roblox platform with active community player base.",
+      ],
+    },
   },
   {
     id: 6,
-    title: "New Tank - Playboy Carti AMV",
+    title: "New Tank - Carti AMV",
     category: "Video",
     image: "https://img.youtube.com/vi/-3f378UHMZE/maxresdefault.jpg",
     video: null,
-    tech: ["Vegas Pro 18"],
+    tech: ["Vegas Pro 18", "Motion Graphics"],
     link: "https://youtu.be/-3f378UHMZE?si=n5UXtmRgw1766rHe",
     github: null,
     sfx: "KABOOM!",
+    issueNumber: "ISSUE #06",
     brief: {
-      description: "High-tempo anime music video with aggressive rhythm cuts and stylized motion graphics.",
+      description:
+        "High-tempo anime music video with aggressive rhythm cuts and stylized motion graphics.",
       role: "Video Editor & Sound Designer",
       highlights: [
         "Fast-paced frame timing matched to Playboi Carti's vocal cadence.",
         "Dynamic camera shakes, flash transitions, and custom sound design.",
-        "Rendered in full 1080p 60 FPS for maximum visual punch."
-      ]
-    }
+        "Rendered in full 1080p 60 FPS for maximum visual punch.",
+      ],
+    },
   },
 ];
 
 const CATEGORY_COLORS = {
   Web: { bg: "bg-spider-blue", text: "text-comic-ink", pin: "#165DFF" },
   Video: { bg: "bg-spider-yellow", text: "text-spider-black", pin: "#FFD500" },
-  Game: { bg: "bg-spider-red", text: "text-comic-ink", pin: "#FF1E26" },
+  Game: { bg: "bg-spider-red", text: "text-white", pin: "#FF1E26" },
 };
 
 const CATEGORY_ICONS = {
@@ -182,450 +192,291 @@ const CATEGORY_ICONS = {
   Game: <MapPin size={12} strokeWidth={2.5} />,
 };
 
-const ProjectCard = ({ project, onHover, onSelectVideo, onSelectBrief }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { damping: 15, stiffness: 150 };
-  const springX = useSpring(mouseX, springConfig);
-  const springY = useSpring(mouseY, springConfig);
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["9deg", "-9deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-9deg", "9deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const { width, height, left, top } = rect;
-    mouseX.set((e.clientX - left) / width - 0.5);
-    mouseY.set((e.clientY - top) / height - 0.5);
-    onHover && onHover(project.title);
-  };
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-    onHover && onHover(null);
-  };
-
-  const linkIcon =
-    project.category === "Video" ? (
-      <Play size={16} fill="currentColor" strokeWidth={2.5} />
-    ) : project.isRoblox ? (
-      <Gamepad2 size={16} strokeWidth={2.5} />
-    ) : (
-      <ArrowUpRight size={16} strokeWidth={2.5} />
-    );
-
-  const actionText = !project.link
-    ? "No Live Demo"
-    : project.category === "Video"
-    ? "Watch Video"
-    : project.category === "Game"
-    ? "Play Mission"
-    : "View Mission";
-
-  const catColor = CATEGORY_COLORS[project.category] || CATEGORY_COLORS.Web;
-
-  return (
-    <div style={{ perspective: "1000px" }} className="w-full flex justify-center p-2">
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative h-[380px] sm:h-[450px] w-full max-w-[360px] sm:max-w-none tracker-card rounded-sm"
-      >
-        <CardWrapper
-          project={project}
-          onSelectVideo={onSelectVideo}
-          href={project.link}
-          style={{ transformStyle: "preserve-3d" }}
-          className="absolute inset-0 block w-full h-full"
-        >
-          {/* TRACKER PIN MARKER */}
-          <div
-            className="tracker-pin"
-            style={{
-              backgroundColor: catColor.pin,
-              boxShadow: `0 0 12px ${catColor.pin}`,
-            }}
-          >
-            {CATEGORY_ICONS[project.category] || <MapPin size={12} />}
-          </div>
-
-          {/* SFX BUBBLE ON HOVER & TAP */}
-          {project.sfx && (
-            <div
-              className="sfx-bubble absolute top-3 right-14 z-[20] pointer-events-none scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 group-active:scale-100 group-active:opacity-100 transition-all duration-200 ease-out origin-bottom-left"
-              style={{ transform: "translateZ(75px) rotate(-6deg)" }}
-            >
-              <span className="inline-block bg-spider-yellow text-spider-black comic-chip px-2.5 py-1 text-[10px] sm:text-[11px] font-black italic tracking-widest uppercase pop-shadow-sm">
-                {project.sfx}
-              </span>
-            </div>
-          )}
-
-          <div
-            className="w-full h-full relative overflow-hidden"
-            style={{ borderRadius: "2px" }}
-          >
-            {/* IMAGE */}
-            <img
-              src={project.image}
-              alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-
-            {/* DARK GRADIENT OVERLAY */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.05) 40%, rgba(10,10,10,0.95) 100%)",
-              }}
-            />
-
-            {/* HALFTONE DOT OVERLAY */}
-            <div
-              className="absolute inset-0 mix-blend-overlay opacity-40 pointer-events-none"
-              style={{
-                backgroundImage:
-                  "radial-gradient(var(--color-ink-stroke) 1px, transparent 1px)",
-                backgroundSize: "6px 6px",
-              }}
-            />
-
-            {/* INNER BORDERS */}
-            <div
-              className="absolute inset-2 border-[1.5px] border-spider-black/70 pointer-events-none z-[7]"
-              style={{ borderRadius: "1px" }}
-            />
-
-            {/* TOP-LEFT: CATEGORY BADGE */}
-            <div className="absolute top-4 left-4 z-[10]">
-              <span
-                className={`inline-block px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] comic-chip ${catColor.bg} ${catColor.text}`}
-                style={{ transform: "translateZ(50px)" }}
-              >
-                {project.category}
-              </span>
-            </div>
-
-            {/* TOP-RIGHT: LINK ICON */}
-            {project.link && (
-              <motion.span
-                whileHover={{ scale: 1.12, rotate: "3deg" }}
-                whileTap={{ scale: 0.92 }}
-                aria-label={`View ${project.title}`}
-                className="absolute top-4 right-4 z-[10] flex h-9 w-9 items-center justify-center comic-chip bg-white text-spider-black hover:bg-spider-yellow hover:text-spider-black transition-colors shadow-[2px_2px_0_#000]"
-                style={{ transform: "translateZ(60px)" }}
-              >
-                {linkIcon}
-              </motion.span>
-            )}
-
-            {/* BOTTOM CONTENT ZONE */}
-            <div
-              className="relative flex h-full flex-col justify-between p-5 sm:p-6 z-10 text-white"
-              style={{ borderRadius: "inherit" }}
-            >
-              <div />
-
-              <div style={{ transform: "translateZ(30px)" }}>
-                {/* TECH STACK CHIPS */}
-                <div className="mb-3 sm:mb-4 flex flex-wrap gap-1.5">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[9px] font-black uppercase tracking-[0.18em] text-spider-black bg-white border-2 border-black shadow-[1.5px_1.5px_0_#000] px-2.5 py-0.5 rounded-sm"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* PROJECT TITLE */}
-                <h3 className="text-xl sm:text-2xl font-black leading-[1.05] mb-4 text-white group-hover:text-spider-yellow transition-colors tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-                  {project.title}
-                </h3>
-
-                {/* DUAL ACTION BUTTON ROW */}
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onSelectBrief(project);
-                    }}
-                    className="flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] comic-chip bg-spider-yellow text-spider-black pop-shadow-sm hover:pop-shadow-active transition-colors z-20"
-                  >
-                    MISSION BRIEF
-                  </button>
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] comic-chip transition-colors ${
-                      project.link
-                        ? "bg-spider-red text-white hover:bg-spider-yellow hover:text-spider-black pop-shadow-sm hover:pop-shadow-active"
-                        : "bg-white text-spider-black/50 border-2 border-black/30 cursor-not-allowed"
-                    }`}
-                  >
-                    {actionText}
-                  </motion.div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardWrapper>
-      </motion.div>
-    </div>
-  );
-};
-
-const CardWrapper = ({ project, onSelectVideo, children, ...props }) =>
-  project.category === "Video" ? (
-    <button
-      type="button"
-      onClick={(e) => {
-        e.preventDefault();
-        onSelectVideo(project);
-      }}
-      className="absolute inset-0 block w-full h-full text-left cursor-pointer"
-      {...props}
-    >
-      {children}
-    </button>
-  ) : project.link ? (
-    <a href={project.link} target="_blank" rel="noopener noreferrer" {...props}>
-      {children}
-    </a>
-  ) : (
-    <div {...props}>{children}</div>
-  );
-
-const Projects = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Projects() {
   const [filter, setFilter] = useState("All");
-  const [hovered, setHovered] = useState(null);
-  const [justOpened, setJustOpened] = useState(false);
   const [activeVideo, setActiveVideo] = useState(null);
   const [selectedBrief, setSelectedBrief] = useState(null);
-  const audioRef = useRef(null);
-  const categories = ["All", "Web", "Video", "Game"];
+  const [scrollProgress, setScrollProgress] = useState(0);
 
+  const containerRef = useRef(null);
+  const horizontalTrackRef = useRef(null);
+  const bgMarqueeRef = useRef(null);
+  const audioRef = useRef(null);
+
+  const categories = ["All", "Web", "Video", "Game"];
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
+
+  // CSS Sticky + GSAP Scroll Scrub (100% Snapping-Free & Silky Smooth)
+  useGSAP(
+    () => {
+      const track = horizontalTrackRef.current;
+      const container = containerRef.current;
+      if (!track || !container) return;
+
+      const getScrollDistance = () => track.scrollWidth - window.innerWidth + 140;
+
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        // Track horizontal glide
+        gsap.to(track, {
+          x: () => -getScrollDistance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: container,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1, // Smoothly tracks Lenis without layout jank
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              setScrollProgress(Math.round(self.progress * 100));
+            },
+          },
+        });
+
+        // Background Parallax Marquee
+        if (bgMarqueeRef.current) {
+          gsap.to(bgMarqueeRef.current, {
+            x: 240,
+            ease: "none",
+            scrollTrigger: {
+              trigger: container,
+              start: "top top",
+              end: "bottom bottom",
+              scrub: 1,
+            },
+          });
+        }
+      });
+
+      ScrollTrigger.refresh();
+
+      return () => mm.revert();
+    },
+    { scope: containerRef, dependencies: [filteredProjects] }
+  );
 
   const playSfx = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.volume = 0.6;
+      audioRef.current.volume = 0.5;
       audioRef.current.play().catch(() => {});
     }
   };
 
-  const handleOpen = () => {
-    playSfx();
-    setIsOpen(true);
-    setJustOpened(true);
-    setTimeout(() => setJustOpened(false), 600);
-  };
-
-  const handleClose = () => {
-    playSfx();
-    setIsOpen(false);
-  };
-
-  const activeCount = filteredProjects.length;
-
   return (
     <section
+      ref={containerRef}
       id="projects"
-      className="py-24 sm:py-32 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_0,100%_2.5vw,100%_100%,0_100%)]"
+      className="relative bg-spider-red text-white md:h-[300vh] h-auto select-none"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6 md:gap-8">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: "some" }}
+      {/* STICKY VIEWPORT CONTAINER (Native CSS Sticky for Zero-Snap Entry) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-8 md:py-12">
+        
+        {/* BACKGROUND GIANT MARQUEE */}
+        <div
+          ref={bgMarqueeRef}
+          className="absolute top-[25%] left-0 whitespace-nowrap pointer-events-none opacity-10 select-none z-0 will-change-transform"
+        >
+          <span
+            className="text-[22vw] font-black uppercase tracking-tighter text-white leading-none"
+            style={{ WebkitTextStroke: "3px #FFFFFF" }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-4 tracking-tighter uppercase text-white">
-              Mission{" "}
-              <span
-                className="text-spider-yellow italic inline-block px-1 select-none"
-                style={{
-                  textShadow:
-                    "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
-                }}
-              >
-                Archives
-              </span>
-            </h2>
-            <p className="text-white/90 max-w-md font-medium text-sm sm:text-base">
-              Curated missions across web development, video editing, 3D modeling, and game design.
-            </p>
-          </motion.div>
+            MISSION ARCHIVES • TOP CLEARANCE • 
+          </span>
         </div>
 
-        {/* SPIDEY TRACKER FRAME */}
-        <motion.div
-          variants={comicPop}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
-          className={`tracker-frame ${justOpened ? "tracker-frame-on" : ""}`}
-        >
-          {/* TOP BAR */}
-          <div className="tracker-bar bg-[#1A1A1A] text-white">
-            <div className="flex items-center gap-3 min-w-0">
-              <Radio size={18} strokeWidth={2.5} className="text-spider-yellow flex-shrink-0" />
-              <span className="font-black text-[11px] sm:text-xs tracking-[0.18em] uppercase text-white truncate">
-                Mission Archives Tracker
-              </span>
+        {/* TOP BAR: Header & Mission Controls */}
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b-2 border-white/25">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-spider-yellow text-spider-black px-3 py-1 border-2 border-black font-black text-[10px] uppercase tracking-[0.2em] shadow-[3px_3px_0_#000] mb-2 -rotate-1">
+                <Radio size={13} className="animate-pulse text-red-600" />
+                MISSION SHOWCASE
+              </div>
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
+                MISSION{" "}
+                <span
+                  className="text-spider-yellow italic inline-block px-1"
+                  style={{
+                    textShadow:
+                      "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 2px 4px 0 #165DFF, 4px 6px 0 #000",
+                  }}
+                >
+                  ARCHIVES
+                </span>
+              </h2>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="hidden sm:block font-black text-[10px] tracking-[0.18em] uppercase text-white/90">
-                {isOpen ? `Active: ${activeCount}` : "Terminal Locked"}
-              </span>
-              <div
-                className={`tracker-status-dot ${
-                  isOpen ? "tracker-status-online" : "tracker-status-offline"
-                }`}
-              />
-              <span
-                className={`font-black text-[10px] tracking-[0.18em] uppercase ${
-                  isOpen ? "text-spider-yellow" : "text-white/70"
-                }`}
-              >
-                {isOpen ? "ONLINE" : "OFFLINE"}
-              </span>
+
+            {/* Filter Chips & Radar Progress */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex gap-1.5 bg-black/40 p-1 border-2 border-black rounded-sm backdrop-blur-sm">
+                {categories.map((cat) => {
+                  const isActive = filter === cat;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        playSfx();
+                        setFilter(cat);
+                      }}
+                      className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                        isActive
+                          ? "bg-spider-yellow text-spider-black shadow-[2px_2px_0_#000]"
+                          : "text-white/80 hover:text-white"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Radar Scroll Gauge */}
+              <div className="hidden md:flex items-center gap-2 bg-white text-spider-black px-3 py-1.5 border-2 border-black shadow-[3px_3px_0_#000]">
+                <span className="text-[10px] font-black tracking-widest uppercase">
+                  RADAR: {scrollProgress}%
+                </span>
+                <div className="w-16 h-2 bg-gray-200 border border-black overflow-hidden">
+                  <div
+                    className="h-full bg-[#FF1E26] transition-all duration-75"
+                    style={{ width: `${scrollProgress}%` }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* INNER DISPLAY */}
-          <div className="tracker-inner-display p-4 sm:p-6 md:p-10">
-            {isOpen && <div className="tracker-sweep" />}
+        {/* HORIZONTAL CARDS TRACK */}
+        <div className="w-full relative z-10 my-auto py-2 sm:py-4 overflow-hidden">
+          <div
+            ref={horizontalTrackRef}
+            className="flex md:flex-row flex-col md:flex-nowrap gap-6 sm:gap-8 px-4 sm:px-12 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform"
+          >
+            {filteredProjects.map((project) => {
+              const catColor = CATEGORY_COLORS[project.category] || CATEGORY_COLORS.Web;
+              const linkIcon =
+                project.category === "Video" ? (
+                  <Play size={16} fill="currentColor" />
+                ) : project.isRoblox ? (
+                  <Gamepad2 size={16} />
+                ) : (
+                  <ArrowUpRight size={16} />
+                );
 
-            <AnimatePresence mode="wait">
-              {!isOpen ? (
-                /* STATE: OFFLINE — Open Button + Spidey menunjuk tombol */
-                <motion.div
-                  key="offline"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35 }}
-                  className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 py-16 sm:py-24 relative z-10"
+              return (
+                <div
+                  key={project.id}
+                  className="group relative w-full md:w-[380px] lg:w-[420px] shrink-0 h-[460px] sm:h-[500px] bg-comic-panel border-3 border-black shadow-[8px_8px_0_#000] hover:shadow-[12px_12px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-5"
                 >
-                  <div className="flex flex-col items-center gap-8">
-                    <div className="tracker-radar" />
-                    <div className="text-center max-w-md">
-                      <p className="text-comic-ink font-black text-xs sm:text-sm uppercase tracking-[0.2em] mb-2">
-                        Terminal Status: Locked
-                      </p>
-                      <p className="text-[#6B6661] text-[11px] sm:text-xs mb-8 tracking-wide font-medium">
-                        Enter clearance key to display active mission archives
-                      </p>
-                      <button
-                        onClick={handleOpen}
-                        className="tracker-open-btn"
+                  {/* Background Card Image with Halftone */}
+                  <div className="absolute inset-0 z-0 overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
+                    <div
+                      className="absolute inset-0 opacity-25 pointer-events-none"
+                      style={{
+                        backgroundImage: "radial-gradient(#000000 1px, transparent 1px)",
+                        backgroundSize: "6px 6px",
+                      }}
+                    />
+                  </div>
+
+                  {/* Card Top: Issue Badge & SFX Pop */}
+                  <div className="relative z-10 flex items-start justify-between">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="inline-block bg-black text-yellow-400 border-2 border-black px-2.5 py-0.5 text-[9px] font-black uppercase tracking-[0.2em] shadow-[2px_2px_0_#FFF]">
+                        {project.issueNumber}
+                      </span>
+                      <span
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider border-2 border-black ${catColor.bg} ${catColor.text} shadow-[2px_2px_0_#000]`}
                       >
-                        Activate Tracker
+                        {CATEGORY_ICONS[project.category]}
+                        {project.category}
+                      </span>
+                    </div>
+
+                    {project.sfx && (
+                      <span className="bg-spider-yellow text-spider-black px-2.5 py-1 text-[11px] font-black italic tracking-widest uppercase border-2 border-black shadow-[3px_3px_0_#000] -rotate-6 group-hover:scale-110 transition-transform">
+                        {project.sfx}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Card Bottom: Info & Action Buttons */}
+                  <div className="relative z-10">
+                    {/* Tech stack pills */}
+                    <div className="flex flex-wrap gap-1.5 mb-3">
+                      {project.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="text-[9px] font-black uppercase tracking-wider text-black bg-white border border-black px-2 py-0.5 shadow-[1.5px_1.5px_0_#000]"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight leading-none mb-4 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                      {project.title}
+                    </h3>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedBrief(project)}
+                        className="flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[3px_3px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                      >
+                        MISSION BRIEF
                       </button>
+
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2.5 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[3px_3px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[10px] font-black uppercase tracking-wider"
+                        >
+                          <span>LAUNCH</span>
+                          {linkIcon}
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setSelectedBrief(project)}
+                          className="px-3 py-2.5 bg-white/70 text-black border-2 border-black text-[10px] font-black uppercase cursor-pointer"
+                        >
+                          INFO
+                        </button>
+                      )}
                     </div>
                   </div>
-                </motion.div>
-              ) : (
-                /* STATE: ONLINE — Filter + Project Cards + Spidey pojok kiri atas */
-                <motion.div
-                  key="online"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative z-10"
-                >
-                  {/* Filter Chips */}
-                  <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-8 md:mb-10 justify-center">
-                    {categories.map((cat) => {
-                      const isActive = filter === cat;
-                      return (
-                        <button
-                          key={cat}
-                          onClick={() => setFilter(cat)}
-                          className={`px-4 sm:px-5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-black uppercase tracking-[0.18em] comic-chip transition-all ${
-                            isActive
-                              ? "bg-spider-yellow text-spider-black pop-shadow-sm hover:pop-shadow-active"
-                              : "bg-white text-spider-black hover:bg-spider-yellow border-2 border-black"
-                          }`}
-                        >
-                          {cat}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* PROJECT GRID */}
-                  <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 md:gap-10">
-                    <AnimatePresence mode="popLayout">
-                      {filteredProjects.map((project, idx) => (
-                        <motion.div
-                          key={project.id}
-                          layout
-                          initial={{ opacity: 0, scale: 0.9, y: 12 }}
-                          animate={{
-                            opacity: 1,
-                            scale: 1,
-                            y: 0,
-                            transition: { delay: idx * 0.06 },
-                          }}
-                          exit={{ opacity: 0, scale: 0.9, y: -8 }}
-                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <ProjectCard
-                            project={project}
-                            onHover={setHovered}
-                            onSelectVideo={setActiveVideo}
-                            onSelectBrief={setSelectedBrief}
-                          />
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
+        </div>
 
-          {/* FOOTER BAR */}
-          <div className="tracker-footer">
-            <div className="flex items-center gap-3 min-w-0 flex-1">
-              <Radio
-                size={14}
-                strokeWidth={2.5}
-                className="text-spider-yellow flex-shrink-0"
-              />
-              <span className="truncate text-white font-bold tracking-wider">
-                {!isOpen
-                  ? "SELECTED: None — Awaiting activation"
-                  : hovered
-                  ? `LOCKED: ${hovered}`
-                  : `Scanning ${activeCount} mission signatures...`}
-              </span>
-            </div>
-            {isOpen && (
-              <button
-                onClick={handleClose}
-                className="tracker-close-btn flex-shrink-0"
-                title="Close Tracker"
-              >
-                <X size={16} strokeWidth={3} />
-              </button>
-            )}
-          </div>
-        </motion.div>
+        {/* BOTTOM RADAR TICKER */}
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-3 border-t-2 border-white/20 flex flex-wrap items-center justify-between text-xs font-bold text-white/80 gap-2">
+          <span className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-ping inline-block" />
+            TERMINAL ONLINE: SCROLL TO TRAVERSE {filteredProjects.length} MISSIONS
+          </span>
+          <span className="font-mono text-[11px] text-yellow-300">
+            SEC_LEVEL_4 // STICKY_COMPOSITOR_ACCELERATED
+          </span>
+        </div>
       </div>
 
       {/* VIDEO MODAL PLAYER */}
@@ -635,6 +486,4 @@ const Projects = () => {
       <ProjectBriefModal project={selectedBrief} onClose={() => setSelectedBrief(null)} />
     </section>
   );
-};
-
-export default Projects;
+}
