@@ -270,7 +270,7 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck }) =
             soundFX.playThwip();
           }}
           aria-label="Toggle Spider Control Dock"
-          className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-black py-3 pl-3 pr-3.5 rounded-r-2xl shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all hover:pr-5 active:pr-3.5 pointer-events-auto"
+          className="group relative flex items-center bg-spider-yellow text-spider-black border-y-3 border-r-3 border-l-0 border-black py-3 pl-3 pr-3.5 rounded-r-2xl shadow-[0_4px_0_#000,4px_4px_0_#000,4px_0_0_#000] hover:bg-spider-red hover:text-white transition-all hover:pr-5 active:pr-3.5 pointer-events-auto cursor-pointer"
         >
           <div className="flex flex-col items-center gap-1.5">
             <div className="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center p-0.5">
