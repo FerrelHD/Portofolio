@@ -39,7 +39,7 @@ import blenderIcon from "./assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "./assets/unityicon.png";
 import figmaIcon from "./assets/figma-logo-png-svg.webp";
 import sqlIcon from "./assets/sql icon 2.png";
-import aiAgentIcon from "./assets/ai-agent-icon.webp";
+import aiAgentIcon from "./assets/ai-agent-removebg-preview.png";
 import spiderEmblem from "./assets/spideyicon.png";
 
 const HERO_TICKER_ITEMS = [

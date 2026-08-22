@@ -17,7 +17,7 @@ import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "../assets/unityicon.png";
 import figmaIcon from "../assets/figma-logo-png-svg.webp";
 import sqlIcon from "../assets/sql icon 2.png";
-import aiAgentIcon from "../assets/ai-agent-icon.webp";
+import aiAgentIcon from "../assets/ai-agent-removebg-preview.png";
 import spiderEmblem from "../assets/spideyicon.png";
 
 /* =========================================================================
@@ -273,17 +273,18 @@ const SpiderSkillWeb = () => {
       ref={containerRef}
       className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 lg:gap-14 justify-center w-full max-w-7xl mx-auto px-2 sm:px-4"
     >
-      {/* Interactive Web Constellation SVG with Orbital Motion */}
-      <div
+      {/* Interactive Spider-Radar Constellation SVG with Orbital Motion */}
+      <motion.div
+        initial={{ opacity: 0, y: 45, scale: 0.96 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ type: "spring", stiffness: 240, damping: 24 }}
         className="relative w-full max-w-[360px] xs:max-w-[420px] sm:max-w-[520px] lg:max-w-[600px] aspect-square flex items-center justify-center select-none touch-manipulation group/web"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onTouchStart={() => setIsHovered(true)}
         onTouchEnd={() => setTimeout(() => setIsHovered(false), 2500)}
       >
-        {/* Ambient Radial Web Halo Glow */}
-        <div className="absolute inset-0 bg-spider-red/10 rounded-full blur-3xl pointer-events-none" />
-
         {/* Slow Motion Comic Badge (Appears on hover, positioned higher with comic pop style) */}
         <AnimatePresence>
           {isHovered && (
@@ -292,7 +293,7 @@ const SpiderSkillWeb = () => {
               animate={{ opacity: 1, y: 0, scale: 1, rotate: -1 }}
               exit={{ opacity: 0, y: -6, scale: 0.9, rotate: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
-              className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 sm:border-3 border-black comic-chip px-3 sm:px-4 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest pointer-events-none shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] z-20 flex items-center gap-1.5 whitespace-nowrap"
+              className="absolute top-[-24px] sm:top-[-30px] md:top-[-34px] left-1/2 -translate-x-1/2 bg-spider-yellow text-spider-black border-2 sm:border-3 border-black comic-chip px-3 sm:px-4 py-1 text-[10px] sm:text-xs font-black uppercase tracking-widest pointer-events-none shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] z-20 flex items-center gap-1.5 whitespace-nowrap"
             >
               <Zap size={13} className="text-spider-red fill-spider-red" />
               <span>SLOW-MOTION MODE ACTIVATED!</span>
@@ -300,14 +301,19 @@ const SpiderSkillWeb = () => {
           )}
         </AnimatePresence>
 
-        <svg viewBox="0 0 600 600" className="w-full h-full drop-shadow-[0_0_35px_rgba(22,93,255,0.25)] sm:drop-shadow-[0_0_50px_rgba(22,93,255,0.3)] overflow-visible">
+        <svg viewBox="0 0 600 600" className="w-full h-full overflow-visible">
           <defs>
-            {/* Radial Web Center Glow */}
-            <radialGradient id="webCenterGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#FF1E26" stopOpacity="0.4" />
-              <stop offset="40%" stopColor="#165DFF" stopOpacity="0.18" />
+            {/* Retro Comic Ink Halftone Pattern */}
+            <pattern id="spiderHalftone" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+              <circle cx="2.5" cy="2.5" r="1.3" fill="#1A1A1A" opacity="0.07" />
+            </pattern>
+
+            {/* Spider-Red Radar Scanner Gradient */}
+            <linearGradient id="radarSweepGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#D31F1F" stopOpacity="0.26" />
+              <stop offset="60%" stopColor="#D31F1F" stopOpacity="0.05" />
               <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-            </radialGradient>
+            </linearGradient>
 
             {/* Circular Clip Paths for Node Icons */}
             {SKILLS_DATA.map((node) => (
@@ -317,31 +323,80 @@ const SpiderSkillWeb = () => {
             ))}
           </defs>
 
-          {/* Web Base Glow Background */}
-          <circle cx={cx} cy={cy} r="285" fill="url(#webCenterGlow)" />
+          {/* 1. AUTHENTIC COMIC NEWSPRINT SPIDER-RADAR HUD BASE (OPSI A) */}
+          {/* Outer Warm Comic Paper Backing Disk with Crisp Ink Border & Comic Shadow */}
+          <circle
+            cx={cx}
+            cy={cy}
+            r="285"
+            fill="#F7F4EE"
+            stroke="#1A1A1A"
+            strokeWidth="3.5"
+            className="shadow-[8px_8px_0_#1A1A1A]"
+          />
+          {/* Inner Red Accent Rim */}
+          <circle
+            cx={cx}
+            cy={cy}
+            r="280"
+            fill="none"
+            stroke="#D31F1F"
+            strokeWidth="2"
+            opacity="0.85"
+          />
+          {/* Halftone Texture Overlay */}
+          <circle cx={cx} cy={cy} r="280" fill="url(#spiderHalftone)" />
 
-          {/* 1. VISIBLE GEOMETRIC POLYGONAL COBWEB RINGS */}
-          {[75, 135, 185, 235, 280].map((r, i) => (
-            <polygon
-              key={`poly-${r}`}
-              points={getPolygonPoints(r, 12)}
-              fill="none"
-              stroke={r === 135 || r === 235 ? "#165DFF" : i % 2 === 1 ? "#525266" : "#38384A"}
-              strokeWidth={r === 135 || r === 235 ? "2" : "1.2"}
-              strokeDasharray={r === 135 || r === 235 ? "5 5" : "none"}
-              className="opacity-80 transition-all duration-300"
+          {/* Rotating Comic Red Radar Scanner Sweep */}
+          <g
+            className="pointer-events-none"
+            style={{
+              transformOrigin: "300px 300px",
+              animation: "spin 16s linear infinite",
+            }}
+          >
+            <path
+              d={`M ${cx} ${cy} L ${cx} ${cy - 280} A 280 280 0 0 1 ${cx + 195} ${cy - 200} Z`}
+              fill="url(#radarSweepGradient)"
             />
-          ))}
+            <line
+              x1={cx}
+              y1={cy}
+              x2={cx}
+              y2={cy - 280}
+              stroke="#D31F1F"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+              opacity="0.85"
+            />
+          </g>
 
-          {/* Glowing Circular Orbit Guides */}
+          {/* 2. CRISP GEOMETRIC POLYGONAL COBWEB RINGS */}
+          {[75, 135, 185, 235, 280].map((r) => {
+            const isRing1 = r === 135;
+            const isRing2 = r === 235;
+            return (
+              <polygon
+                key={`poly-${r}`}
+                points={getPolygonPoints(r, 12)}
+                fill="none"
+                stroke={isRing1 ? "#165DFF" : isRing2 ? "#D31F1F" : "#1A1A1A"}
+                strokeWidth={isRing1 || isRing2 ? "2" : "1.2"}
+                strokeDasharray={isRing1 || isRing2 ? "6 5" : "none"}
+                opacity={isRing1 || isRing2 ? 0.95 : 0.25}
+              />
+            );
+          })}
+
+          {/* Rotating Orbit Path Guides */}
           <circle
             cx={cx}
             cy={cy}
             r={ringRadius[1]}
             fill="none"
-            stroke="#00D8FF"
-            strokeWidth="1"
-            strokeDasharray="4 8"
+            stroke="#165DFF"
+            strokeWidth="1.2"
+            strokeDasharray="4 6"
             className="opacity-45 animate-spin"
             style={{ transformOrigin: "300px 300px", animationDuration: "45s" }}
           />
@@ -350,18 +405,18 @@ const SpiderSkillWeb = () => {
             cy={cy}
             r={ringRadius[2]}
             fill="none"
-            stroke="#FF1E26"
-            strokeWidth="1"
-            strokeDasharray="5 10"
+            stroke="#D31F1F"
+            strokeWidth="1.2"
+            strokeDasharray="5 8"
             className="opacity-45 animate-spin"
             style={{ transformOrigin: "300px 300px", animationDirection: "reverse", animationDuration: "65s" }}
           />
 
-          {/* 2. RADIAL WEB STRANDS (12 Principal Spokes) */}
+          {/* 3. RADIAL WEB STRANDS (12 Principal Spokes) */}
           {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
             const rad = (deg - 90) * (Math.PI / 180);
-            const x2 = cx + 275 * Math.cos(rad);
-            const y2 = cy + 275 * Math.sin(rad);
+            const x2 = cx + 280 * Math.cos(rad);
+            const y2 = cy + 280 * Math.sin(rad);
             return (
               <line
                 key={`spoke-${deg}`}
@@ -369,14 +424,14 @@ const SpiderSkillWeb = () => {
                 y1={cy}
                 x2={x2}
                 y2={y2}
-                stroke="#47475A"
-                strokeWidth="1.4"
-                className="opacity-75"
+                stroke="#1A1A1A"
+                strokeWidth="1.2"
+                opacity="0.28"
               />
             );
           })}
 
-          {/* 3. ACTIVE HIGHLIGHT CONNECTING WEB (Lights up to active node) */}
+          {/* 4. ACTIVE HIGHLIGHT CONNECTING WEB (Lights up to active node) */}
           {SKILLS_DATA.map((node) => {
             const pos = getNodePos(node);
             const isSelected = selectedSkill?.id === node.id;
@@ -387,19 +442,19 @@ const SpiderSkillWeb = () => {
                 y1={cy}
                 x2={pos.x}
                 y2={pos.y}
-                stroke={isSelected ? "#FF1E26" : "transparent"}
-                strokeWidth={isSelected ? "3.5" : "0"}
-                className="transition-all duration-150 drop-shadow-[0_0_12px_#FF1E26]"
+                stroke={isSelected ? "#D31F1F" : "transparent"}
+                strokeWidth={isSelected ? "3" : "0"}
+                className="transition-all duration-150"
               />
             );
           })}
 
-          {/* 4. CENTER HUB: SPIDER-MAN EMBLEM */}
+          {/* 5. CENTER HUB: SPIDER-MAN EMBLEM */}
           <g transform={`translate(${cx}, ${cy})`} className="pointer-events-none">
-            {/* Outer Pulsing Neon Red Ring */}
-            <circle r="34" fill="none" stroke="#FF1E26" strokeWidth="2.5" className="animate-ping opacity-40" />
+            {/* Outer Pulse */}
+            <circle r="34" fill="none" stroke="#D31F1F" strokeWidth="2" className="animate-ping opacity-40" />
             {/* Base Hub Button */}
-            <circle r="30" fill="#0A0A0E" stroke="#FF1E26" strokeWidth="3" className="shadow-2xl" />
+            <circle r="30" fill="#1A1A1A" stroke="#D31F1F" strokeWidth="3" />
             {/* Spider Emblem raster image with blend mode */}
             <image
               href={spiderEmblem}
@@ -412,7 +467,7 @@ const SpiderSkillWeb = () => {
             />
           </g>
 
-          {/* 5. INTERACTIVE ORBITING SKILL NODES (Scaled up + High contrast pill badges) */}
+          {/* 6. INTERACTIVE ORBITING SKILL NODES (High contrast comic badges) */}
           {SKILLS_DATA.map((node) => {
             const pos = getNodePos(node);
             const isSelected = selectedSkill?.id === node.id;
@@ -431,30 +486,30 @@ const SpiderSkillWeb = () => {
                   soundFX.playBeep(440 + node.ring * 100);
                 }}
               >
-                {/* Touch Hit Area (generous for easy clicking/tapping) */}
+                {/* Touch Hit Area */}
                 <circle r="36" fill="transparent" />
 
                 {/* Node Outer Halo on Selection */}
                 {isSelected && (
                   <circle
-                    r="30"
+                    r="29"
                     fill="none"
                     stroke={node.color}
-                    strokeWidth="3"
+                    strokeWidth="2.5"
                     className="animate-ping opacity-75"
                   />
                 )}
 
-                {/* Node Circle Background Badge (Bigger 44px - 50px diameter) */}
+                {/* Node Circle Background Badge */}
                 <circle
                   r={isSelected ? "25" : "22"}
-                  fill="#0E121A"
-                  stroke={isSelected ? node.color : "#4A4A5A"}
+                  fill="#1A1A1A"
+                  stroke={isSelected ? node.color : "#1A1A1A"}
                   strokeWidth={isSelected ? "3.5" : "2"}
-                  className="transition-all duration-200 group-hover:scale-125 shadow-2xl drop-shadow-[0_6px_16px_rgba(0,0,0,0.9)]"
+                  className="transition-all duration-200 group-hover:scale-125 shadow-md"
                 />
 
-                {/* Embedded Real Icon Image clipped within circle (28px - 32px) */}
+                {/* Embedded Real Icon Image clipped within circle */}
                 <g clipPath={`url(#clip-${node.id})`} className="pointer-events-none">
                   <image
                     href={node.iconImg}
@@ -471,7 +526,7 @@ const SpiderSkillWeb = () => {
                   />
                 </g>
 
-                {/* Node Name Pill Badge (Crisp, High-Contrast & Legible) */}
+                {/* Node Name Pill Badge (Crisp Comic High-Contrast Label) */}
                 <g transform="translate(0, 34)" className="pointer-events-none">
                   <rect
                     x="-44"
@@ -479,16 +534,22 @@ const SpiderSkillWeb = () => {
                     width="88"
                     height="18"
                     rx="9"
-                    fill={isSelected ? node.color : "#12141C"}
-                    stroke={isSelected ? "#FFFFFF" : "#38384A"}
-                    strokeWidth={isSelected ? "1.5" : "1"}
+                    fill={isSelected ? node.color : "#1A1A1A"}
+                    stroke={isSelected ? "#1A1A1A" : "#1A1A1A"}
+                    strokeWidth={isSelected ? "2" : "1.2"}
                     className="transition-all duration-200 shadow-md"
                   />
                   <text
                     x="0"
                     y="3.5"
                     textAnchor="middle"
-                    fill={isSelected ? (node.color === "#FFFFFF" || node.color === "#FFD500" || node.color === "#00D8FF" ? "#000000" : "#FFFFFF") : "#F0EDE3"}
+                    fill={
+                      isSelected
+                        ? node.color === "#FFFFFF" || node.color === "#FFD500" || node.color === "#00D8FF"
+                          ? "#000000"
+                          : "#FFFFFF"
+                        : "#F7F4EE"
+                    }
                     fontSize="9.5"
                     fontWeight="900"
                     letterSpacing="0.03em"
@@ -502,10 +563,16 @@ const SpiderSkillWeb = () => {
             );
           })}
         </svg>
-      </div>
+      </motion.div>
 
-      {/* Selected Skill Detail Comic Card */}
-      <div className="w-full max-w-md lg:max-w-lg">
+      {/* Selected Skill Detail Comic Card with Scroll Entrance */}
+      <motion.div
+        initial={{ opacity: 0, y: 45 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ type: "spring", stiffness: 220, damping: 22, delay: 0.12 }}
+        className="w-full max-w-md lg:max-w-lg"
+      >
         <AnimatePresence mode="wait">
           {selectedSkill && (
             <motion.div
@@ -581,7 +648,7 @@ const SpiderSkillWeb = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 };

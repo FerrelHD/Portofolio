@@ -297,12 +297,12 @@ const Contact = () => {
       </AnimatePresence>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* SECTION HEADER */}
+        {/* SECTION HEADER: Spider-Signal (Fade-Up on Scroll) */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
+          initial={{ opacity: 0, y: 48 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ type: "spring", stiffness: 220, damping: 22 }}
           className="text-center mb-12 md:mb-16 lg:mb-20"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase relative inline-block text-white">
@@ -329,16 +329,13 @@ const Contact = () => {
         </motion.div>
 
         {/* MAIN BALANCED 2-COLUMN SECTION: Comic Social Post (Left) vs Mission Form (Right) */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16">
           {/* ============= LEFT: SPIDEY COMIC SOCIAL CARD (5 cols) ============= */}
           <motion.div
-            variants={comicPop}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: "spring", stiffness: 220, damping: 22, delay: 0.1 }}
             className="lg:col-span-5 flex flex-col items-center justify-center w-full"
           >
             <ComicSocialCard
@@ -365,7 +362,10 @@ const Contact = () => {
 
           {/* ============= RIGHT: COMIC TRANSMISSION FORM (7 cols) ============= */}
           <motion.div
-            variants={comicPop}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: "spring", stiffness: 220, damping: 22, delay: 0.2 }}
             className="lg:col-span-7 z-10 w-full bg-white text-comic-ink border-4 border-black shadow-[8px_8px_0_#000] p-6 sm:p-8 md:p-9 relative overflow-hidden"
             style={{ borderRadius: "4px" }}
           >
@@ -478,7 +478,7 @@ const Contact = () => {
               </div>
             </form>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* ============= BOTTOM: DIRECT SIGNAL CHANNELS (4-COLUMN RELAY HUB) ============= */}
         <motion.div

@@ -712,7 +712,7 @@ const About = ({ onOpenDailyBugle }) => {
     <section
       ref={sectionRef}
       id="about"
-      className="py-20 sm:py-28 md:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_calc(100%-2.5vw),0_100%)]"
+      className="-mt-5 sm:-mt-7 md:-mt-8 pt-24 sm:pt-32 md:pt-36 pb-20 sm:pb-28 md:pb-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2vw,100%_0,100%_calc(100%-2vw),0_100%)]"
     >
       <div className="container mx-auto px-3.5 sm:px-6 relative z-10">
         {/* SECTION HEADER (SLIDE UP FROM BOTTOM WITH FADE) */}
