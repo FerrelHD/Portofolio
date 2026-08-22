@@ -108,7 +108,7 @@ const Navbar = ({ onOpenDeck, onToggleMenu, isMenuOpen }) => {
               transition: { type: "spring", stiffness: 400, damping: 10 },
             }}
             whileTap={{ scale: 0.96 }}
-            className="hidden sm:inline-block bg-spider-red border-2 border-black comic-chip text-white px-3 xl:px-4 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase shadow-[2px_2px_0_#000] hover:shadow-[3px_3px_0_#000] hover:bg-spider-yellow hover:text-spider-black transition-all whitespace-nowrap"
+            className="hidden md:inline-block bg-spider-red border-2 border-black comic-chip text-white px-3 xl:px-4 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase shadow-[2px_2px_0_#000] hover:shadow-[3px_3px_0_#000] hover:bg-spider-yellow hover:text-spider-black transition-all whitespace-nowrap"
           >
             Swing Into Action
           </motion.a>

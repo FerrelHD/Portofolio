@@ -120,13 +120,13 @@ const Services = () => {
           </motion.p>
         </motion.div>
 
-        {/* Services Grid (1-Col Mobile, 3-Col Desktop) */}
+        {/* Services Grid (1-Col on Mobile/Split-Screen/Tablet, 3-Col Desktop) */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: "some" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-lg lg:max-w-6xl mx-auto"
         >
           {services.map((service) => (
             <motion.div
