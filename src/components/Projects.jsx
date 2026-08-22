@@ -25,6 +25,28 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
   {
+    id: 0,
+    title: "Spider-Dev Portfolio",
+    category: "Web",
+    image: "/Portofolio/preview-v2.png",
+    video: null,
+    tech: ["React 19", "GSAP", "Tailwind", "Web Audio"],
+    link: "https://github.com/FerrelHD/Portofolio",
+    github: "https://github.com/FerrelHD/Portofolio",
+    sfx: "THWIP!",
+    issueNumber: "ISSUE #00",
+    brief: {
+      description:
+        "High-performance, immersive superhero developer portfolio blending Silver-Age Marvel comic aesthetics with 60 FPS hardware-accelerated parallax engineering.",
+      role: "Frontend Architect & Creative Technologist",
+      highlights: [
+        "Engineered silky-smooth horizontal parallax scrub using GSAP ScrollTrigger and native sticky composition.",
+        "Crafted authentic Marvel comic visual system with halftone Ben-Day dot matrices, multiverse suit switchers, and spider-HUD.",
+        "Built-in procedural 8-bit Web Audio API sound suite, Canvas 2D arcade mini-game, and exportable superhero pitch deck.",
+      ],
+    },
+  },
+  {
     id: 8,
     title: "Fersya Shop",
     category: "Web",
@@ -207,7 +229,7 @@ export default function Projects() {
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
-  // CSS Sticky + GSAP Scroll Scrub Parallax (Full Red Screen Entrance ➔ Smooth Horizontal Glide)
+  // CSS Sticky + GSAP Scroll Scrub Parallax on Desktop
   useGSAP(
     () => {
       const track = horizontalTrackRef.current;
@@ -281,12 +303,12 @@ export default function Projects() {
     <section
       ref={containerRef}
       id="projects"
-      className="relative bg-spider-red text-white md:h-[350vh] h-auto select-none"
+      className="relative bg-spider-red text-white md:h-[350vh] h-auto select-none py-10 md:py-0"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
-      {/* STICKY VIEWPORT CONTAINER (Native CSS Sticky for Zero-Snap Entry, Sized for All Laptops) */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 pb-3 sm:pb-4 md:pb-6">
+      {/* VIEWPORT CONTAINER (Sticky on Desktop, Clean Responsive Block on Mobile) */}
+      <div className="relative md:sticky md:top-0 md:h-screen w-full overflow-hidden flex flex-col justify-between pt-4 sm:pt-6 md:pt-20 lg:pt-24 pb-4 md:pb-6">
         
         {/* BACKGROUND GIANT MARQUEE */}
         <div
@@ -364,14 +386,24 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* HORIZONTAL CARDS TRACK (WITH PARALLAX ENTRANCE FROM RIGHT) */}
-        <div className="w-full relative z-10 my-auto py-1 sm:py-2 overflow-hidden">
+        {/* HORIZONTAL CARDS TRACK (WITH PARALLAX ENTRANCE ON DESKTOP & TOUCH-SWIPE ON MOBILE) */}
+        <div className="w-full relative z-10 my-auto py-2 sm:py-3 overflow-hidden">
           <div
             ref={horizontalTrackRef}
-            className="flex md:flex-row flex-col md:flex-nowrap gap-4 sm:gap-6 px-4 sm:px-12 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform"
+            onScroll={(e) => {
+              if (window.innerWidth < 768) {
+                const el = e.currentTarget;
+                const maxScroll = el.scrollWidth - el.clientWidth;
+                if (maxScroll > 0) {
+                  const progress = Math.round((el.scrollLeft / maxScroll) * 100);
+                  setScrollProgress(progress);
+                }
+              }
+            }}
+            className="flex flex-row flex-nowrap gap-4 sm:gap-6 px-4 sm:px-8 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform scrollbar-none snap-x snap-mandatory md:snap-none touch-pan-x"
           >
             {/* INITIAL RECON BRIEFING CARD (PIONEER STAGE) */}
-            <div className="hidden md:flex shrink-0 w-[260px] lg:w-[300px] h-[360px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex-col justify-between relative overflow-hidden">
+            <div className="shrink-0 w-[80vw] max-w-[280px] md:w-[260px] lg:w-[300px] h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex flex-col justify-between relative overflow-hidden snap-center md:snap-align-none select-none">
               <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
               <div className="relative z-10">
                 <span className="bg-spider-red text-white text-[8px] font-black uppercase px-2 py-0.5 border border-black rounded shadow-[1px_1px_0_#000] inline-block mb-2.5">
@@ -385,7 +417,7 @@ export default function Projects() {
                 </p>
                 <div className="bg-spider-yellow text-spider-black p-2.5 border-2 border-black rounded shadow-[2px_2px_0_#000]">
                   <p className="text-[9px] font-black uppercase tracking-wider">
-                    👉 SCROLL TO COMMENCE RECON
+                    👉 SWIPE / SCROLL TO COMMENCE RECON
                   </p>
                 </div>
               </div>
@@ -415,7 +447,7 @@ export default function Projects() {
                     playSfx();
                     setSelectedBrief(project);
                   }}
-                  className="group relative w-full md:w-[320px] lg:w-[360px] shrink-0 h-[360px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer"
+                  className="group relative w-[82vw] max-w-[310px] md:w-[320px] lg:w-[360px] shrink-0 h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer snap-center md:snap-align-none select-none"
                 >
                   {/* Background Card Image with Halftone */}
                   <div className="absolute inset-0 z-0 overflow-hidden">
