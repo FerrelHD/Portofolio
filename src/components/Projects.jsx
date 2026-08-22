@@ -207,46 +207,54 @@ export default function Projects() {
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
-  // CSS Sticky + GSAP Scroll Scrub (100% Snapping-Free & Silky Smooth)
+  // CSS Sticky + GSAP Scroll Scrub Parallax (Full Red Screen Entrance ➔ Smooth Horizontal Glide)
   useGSAP(
     () => {
       const track = horizontalTrackRef.current;
       const container = containerRef.current;
       if (!track || !container) return;
 
-      const getScrollDistance = () => track.scrollWidth - window.innerWidth + 140;
+      const getScrollDistance = () => track.scrollWidth - window.innerWidth + 200;
 
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 768px)", () => {
-        // Track horizontal glide
-        gsap.to(track, {
-          x: () => -getScrollDistance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: container,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1, // Smoothly tracks Lenis without layout jank
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              setScrollProgress(Math.round(self.progress * 100));
-            },
-          },
-        });
-
-        // Background Parallax Marquee
-        if (bgMarqueeRef.current) {
-          gsap.to(bgMarqueeRef.current, {
-            x: 240,
+        // Track horizontal parallax: Starts offscreen right (Full Red Screen) ➔ glides across
+        gsap.fromTo(
+          track,
+          { x: () => window.innerWidth * 0.85 },
+          {
+            x: () => -getScrollDistance(),
             ease: "none",
             scrollTrigger: {
               trigger: container,
               start: "top top",
               end: "bottom bottom",
-              scrub: 1,
+              scrub: 1.2, // Silky smooth parallax scrub
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                setScrollProgress(Math.round(self.progress * 100));
+              },
             },
-          });
+          }
+        );
+
+        // Background Parallax Marquee
+        if (bgMarqueeRef.current) {
+          gsap.fromTo(
+            bgMarqueeRef.current,
+            { x: -100 },
+            {
+              x: 300,
+              ease: "none",
+              scrollTrigger: {
+                trigger: container,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.2,
+              },
+            }
+          );
         }
       });
 
@@ -258,10 +266,14 @@ export default function Projects() {
   );
 
   const playSfx = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.volume = 0.5;
-      audioRef.current.play().catch(() => {});
+    try {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.volume = 0.65;
+        audioRef.current.play().catch(() => {});
+      }
+    } catch {
+      // Audio playback fallback
     }
   };
 
@@ -269,20 +281,20 @@ export default function Projects() {
     <section
       ref={containerRef}
       id="projects"
-      className="relative bg-spider-red text-white md:h-[300vh] h-auto select-none"
+      className="relative bg-spider-red text-white md:h-[350vh] h-auto select-none"
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
-      {/* STICKY VIEWPORT CONTAINER (Native CSS Sticky for Zero-Snap Entry) */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between py-8 md:py-12">
+      {/* STICKY VIEWPORT CONTAINER (Native CSS Sticky for Zero-Snap Entry, Sized for All Laptops) */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 pb-3 sm:pb-4 md:pb-6">
         
         {/* BACKGROUND GIANT MARQUEE */}
         <div
           ref={bgMarqueeRef}
-          className="absolute top-[25%] left-0 whitespace-nowrap pointer-events-none opacity-10 select-none z-0 will-change-transform"
+          className="absolute top-[28%] left-0 whitespace-nowrap pointer-events-none opacity-10 select-none z-0 will-change-transform"
         >
           <span
-            className="text-[22vw] font-black uppercase tracking-tighter text-white leading-none"
+            className="text-[20vw] font-black uppercase tracking-tighter text-white leading-none"
             style={{ WebkitTextStroke: "3px #FFFFFF" }}
           >
             MISSION ARCHIVES • TOP CLEARANCE • 
@@ -291,13 +303,13 @@ export default function Projects() {
 
         {/* TOP BAR: Header & Mission Controls */}
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b-2 border-white/25">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-3 border-b-2 border-white/25">
             <div>
-              <div className="inline-flex items-center gap-2 bg-spider-yellow text-spider-black px-3 py-1 border-2 border-black font-black text-[10px] uppercase tracking-[0.2em] shadow-[3px_3px_0_#000] mb-2 -rotate-1">
-                <Radio size={13} className="animate-pulse text-red-600" />
+              <div className="inline-flex items-center gap-1.5 bg-spider-yellow text-spider-black px-2.5 py-0.5 border-2 border-black font-black text-[9px] sm:text-[10px] uppercase tracking-[0.2em] shadow-[2px_2px_0_#000] mb-1.5 -rotate-1">
+                <Radio size={12} className="animate-pulse text-red-600" />
                 MISSION SHOWCASE
               </div>
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase text-white leading-none">
                 MISSION{" "}
                 <span
                   className="text-spider-yellow italic inline-block px-1"
@@ -312,18 +324,19 @@ export default function Projects() {
             </div>
 
             {/* Filter Chips & Radar Progress */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex gap-1.5 bg-black/40 p-1 border-2 border-black rounded-sm backdrop-blur-sm">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex gap-1 bg-black/40 p-1 border-2 border-black rounded-sm backdrop-blur-sm">
                 {categories.map((cat) => {
                   const isActive = filter === cat;
                   return (
                     <button
                       key={cat}
+                      type="button"
                       onClick={() => {
                         playSfx();
                         setFilter(cat);
                       }}
-                      className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                      className={`px-2.5 py-0.5 text-[9px] sm:text-[10px] font-black uppercase tracking-wider transition-all cursor-pointer ${
                         isActive
                           ? "bg-spider-yellow text-spider-black shadow-[2px_2px_0_#000]"
                           : "text-white/80 hover:text-white"
@@ -336,11 +349,11 @@ export default function Projects() {
               </div>
 
               {/* Radar Scroll Gauge */}
-              <div className="hidden md:flex items-center gap-2 bg-white text-spider-black px-3 py-1.5 border-2 border-black shadow-[3px_3px_0_#000]">
-                <span className="text-[10px] font-black tracking-widest uppercase">
+              <div className="hidden md:flex items-center gap-2 bg-white text-spider-black px-2.5 py-1 border-2 border-black shadow-[2px_2px_0_#000]">
+                <span className="text-[9px] font-black tracking-widest uppercase">
                   RADAR: {scrollProgress}%
                 </span>
-                <div className="w-16 h-2 bg-gray-200 border border-black overflow-hidden">
+                <div className="w-14 h-2 bg-gray-200 border border-black overflow-hidden">
                   <div
                     className="h-full bg-[#FF1E26] transition-all duration-75"
                     style={{ width: `${scrollProgress}%` }}
@@ -351,27 +364,58 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* HORIZONTAL CARDS TRACK */}
-        <div className="w-full relative z-10 my-auto py-2 sm:py-4 overflow-hidden">
+        {/* HORIZONTAL CARDS TRACK (WITH PARALLAX ENTRANCE FROM RIGHT) */}
+        <div className="w-full relative z-10 my-auto py-1 sm:py-2 overflow-hidden">
           <div
             ref={horizontalTrackRef}
-            className="flex md:flex-row flex-col md:flex-nowrap gap-6 sm:gap-8 px-4 sm:px-12 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform"
+            className="flex md:flex-row flex-col md:flex-nowrap gap-4 sm:gap-6 px-4 sm:px-12 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform"
           >
+            {/* INITIAL RECON BRIEFING CARD (PIONEER STAGE) */}
+            <div className="hidden md:flex shrink-0 w-[260px] lg:w-[300px] h-[360px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex-col justify-between relative overflow-hidden">
+              <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+              <div className="relative z-10">
+                <span className="bg-spider-red text-white text-[8px] font-black uppercase px-2 py-0.5 border border-black rounded shadow-[1px_1px_0_#000] inline-block mb-2.5">
+                  SECTOR RECON // ACTIVE
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-comic-ink mb-2">
+                  TOP-SECRET MISSION FILES
+                </h3>
+                <p className="text-[11px] sm:text-xs font-semibold leading-relaxed text-comic-ink/80 mb-3">
+                  Traverse classified deployments across Full Stack Web, Game Engineering, and Multimedia.
+                </p>
+                <div className="bg-spider-yellow text-spider-black p-2.5 border-2 border-black rounded shadow-[2px_2px_0_#000]">
+                  <p className="text-[9px] font-black uppercase tracking-wider">
+                    👉 SCROLL TO COMMENCE RECON
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative z-10 pt-3 border-t-2 border-black/15 flex items-center justify-between text-[8.5px] font-black text-comic-ink/70">
+                <span>{filteredProjects.length} DOSSIERS FOUND</span>
+                <span className="text-spider-red animate-pulse">● TRACKER ONLINE</span>
+              </div>
+            </div>
+
+            {/* PROJECT CARDS */}
             {filteredProjects.map((project) => {
               const catColor = CATEGORY_COLORS[project.category] || CATEGORY_COLORS.Web;
               const linkIcon =
                 project.category === "Video" ? (
-                  <Play size={16} fill="currentColor" />
+                  <Play size={14} fill="currentColor" />
                 ) : project.isRoblox ? (
-                  <Gamepad2 size={16} />
+                  <Gamepad2 size={14} />
                 ) : (
-                  <ArrowUpRight size={16} />
+                  <ArrowUpRight size={14} />
                 );
 
               return (
                 <div
                   key={project.id}
-                  className="group relative w-full md:w-[380px] lg:w-[420px] shrink-0 h-[460px] sm:h-[500px] bg-comic-panel border-3 border-black shadow-[8px_8px_0_#000] hover:shadow-[12px_12px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-5"
+                  onClick={() => {
+                    playSfx();
+                    setSelectedBrief(project);
+                  }}
+                  className="group relative w-full md:w-[320px] lg:w-[360px] shrink-0 h-[360px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer"
                 >
                   {/* Background Card Image with Halftone */}
                   <div className="absolute inset-0 z-0 overflow-hidden">
@@ -380,7 +424,7 @@ export default function Projects() {
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/20" />
                     <div
                       className="absolute inset-0 opacity-25 pointer-events-none"
                       style={{
@@ -392,12 +436,12 @@ export default function Projects() {
 
                   {/* Card Top: Issue Badge & SFX Pop */}
                   <div className="relative z-10 flex items-start justify-between">
-                    <div className="flex flex-col gap-1.5">
-                      <span className="inline-block bg-black text-yellow-400 border-2 border-black px-2.5 py-0.5 text-[9px] font-black uppercase tracking-[0.2em] shadow-[2px_2px_0_#FFF]">
+                    <div className="flex flex-col gap-1">
+                      <span className="inline-block bg-black text-yellow-400 border-2 border-black px-2 py-0.5 text-[8.5px] font-black uppercase tracking-[0.2em] shadow-[1.5px_1.5px_0_#FFF]">
                         {project.issueNumber}
                       </span>
                       <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 text-[9px] font-black uppercase tracking-wider border-2 border-black ${catColor.bg} ${catColor.text} shadow-[2px_2px_0_#000]`}
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 text-[8.5px] font-black uppercase tracking-wider border-2 border-black ${catColor.bg} ${catColor.text} shadow-[1.5px_1.5px_0_#000]`}
                       >
                         {CATEGORY_ICONS[project.category]}
                         {project.category}
@@ -405,7 +449,7 @@ export default function Projects() {
                     </div>
 
                     {project.sfx && (
-                      <span className="bg-spider-yellow text-spider-black px-2.5 py-1 text-[11px] font-black italic tracking-widest uppercase border-2 border-black shadow-[3px_3px_0_#000] -rotate-6 group-hover:scale-110 transition-transform">
+                      <span className="bg-spider-yellow text-spider-black px-2 py-0.5 text-[10px] font-black italic tracking-widest uppercase border-2 border-black shadow-[2px_2px_0_#000] -rotate-6 group-hover:scale-110 transition-transform">
                         {project.sfx}
                       </span>
                     )}
@@ -414,11 +458,11 @@ export default function Projects() {
                   {/* Card Bottom: Info & Action Buttons */}
                   <div className="relative z-10">
                     {/* Tech stack pills */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
+                    <div className="flex flex-wrap gap-1 mb-2">
                       {project.tech.map((t) => (
                         <span
                           key={t}
-                          className="text-[9px] font-black uppercase tracking-wider text-black bg-white border border-black px-2 py-0.5 shadow-[1.5px_1.5px_0_#000]"
+                          className="text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider text-black bg-white border border-black px-1.5 py-0.5 shadow-[1px_1px_0_#000]"
                         >
                           {t}
                         </span>
@@ -426,7 +470,7 @@ export default function Projects() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight leading-none mb-4 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-tight mb-2.5 sm:mb-3 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                       {project.title}
                     </h3>
 
@@ -434,8 +478,12 @@ export default function Projects() {
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => setSelectedBrief(project)}
-                        className="flex-1 py-2.5 text-center text-[10px] font-black uppercase tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[3px_3px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          playSfx();
+                          setSelectedBrief(project);
+                        }}
+                        className="flex-1 py-2 text-center text-[9px] sm:text-[9.5px] font-black uppercase tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                       >
                         MISSION BRIEF
                       </button>
@@ -445,7 +493,11 @@ export default function Projects() {
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-4 py-2.5 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[3px_3px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[10px] font-black uppercase tracking-wider"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            playSfx();
+                          }}
+                          className="px-3.5 py-2 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[9px] sm:text-[9.5px] font-black uppercase tracking-wider"
                         >
                           <span>LAUNCH</span>
                           {linkIcon}
@@ -453,8 +505,12 @@ export default function Projects() {
                       ) : (
                         <button
                           type="button"
-                          onClick={() => setSelectedBrief(project)}
-                          className="px-3 py-2.5 bg-white/70 text-black border-2 border-black text-[10px] font-black uppercase cursor-pointer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            playSfx();
+                            setSelectedBrief(project);
+                          }}
+                          className="px-3 py-2 bg-white/70 text-black border-2 border-black text-[9px] font-black uppercase cursor-pointer"
                         >
                           INFO
                         </button>
@@ -467,14 +523,11 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* BOTTOM RADAR TICKER */}
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-3 border-t-2 border-white/20 flex flex-wrap items-center justify-between text-xs font-bold text-white/80 gap-2">
+        {/* BOTTOM RADAR TICKER (ALIGNED TO RIGHT) */}
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-2 border-t-2 border-white/20 flex items-center justify-end text-[11px] font-bold text-white/80">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-ping inline-block" />
             TERMINAL ONLINE: SCROLL TO TRAVERSE {filteredProjects.length} MISSIONS
-          </span>
-          <span className="font-mono text-[11px] text-yellow-300">
-            SEC_LEVEL_4 // STICKY_COMPOSITOR_ACCELERATED
           </span>
         </div>
       </div>
