@@ -18,11 +18,58 @@ const SPIDER_SUIT_URL = new URL(
 const FERREL_PORTRAIT_URL = new URL("../assets/ferrel-portrait.jpg", import.meta.url)
   .href;
 
-/* BOLD FADE-IN SLIDE-UP BOTTOM-TO-TOP VARIANTS */
+/* PUNCHY COMIC SLIDE-IN VARIANTS (LEFT & RIGHT WITH DYNAMIC TILT & SPRING POP) */
+const leftComicSlide = {
+  hidden: {
+    opacity: 0,
+    x: -50,
+    y: 45,
+    rotate: -3,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      damping: 18,
+      stiffness: 170,
+      mass: 0.8,
+    },
+  },
+};
+
+const rightComicSlide = {
+  hidden: {
+    opacity: 0,
+    x: 50,
+    y: 45,
+    rotate: 3,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    rotate: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      damping: 18,
+      stiffness: 170,
+      mass: 0.8,
+      delay: 0.12,
+    },
+  },
+};
+
 const comicFadeSlideUp = {
   hidden: {
     opacity: 0,
-    y: 70,
+    y: 60,
     scale: 0.96,
   },
   visible: {
@@ -31,7 +78,7 @@ const comicFadeSlideUp = {
     scale: 1,
     transition: {
       type: "spring",
-      damping: 22,
+      damping: 20,
       stiffness: 190,
       mass: 0.8,
     },
@@ -41,7 +88,7 @@ const comicFadeSlideUp = {
 const panelFadeSlideUp = {
   hidden: {
     opacity: 0,
-    y: 50,
+    y: 40,
     scale: 0.97,
   },
   visible: {
@@ -604,6 +651,7 @@ const About = ({ onOpenDailyBugle }) => {
   const reduce = useReducedMotion();
   const sectionRef = useRef(null);
   const leftStickyRef = useRef(null);
+  const rightColRef = useRef(null);
 
   const stats = [
     { label: "Years Active", value: 1, suffix: "+", accent: "border-t-spider-red" },
@@ -611,25 +659,50 @@ const About = ({ onOpenDailyBugle }) => {
     { label: "Certifications", value: 2, suffix: "", accent: "border-t-spider-yellow" },
   ];
 
-  // GSAP Sticky Parallax Float
+  // GSAP Dual-Layer Continuous Parallax Float (GPU Compositor Accelerated)
   useEffect(() => {
-    if (reduce || !leftStickyRef.current || !sectionRef.current) return;
+    if (reduce || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        leftStickyRef.current,
-        { y: 35 },
-        {
-          y: -35,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        if (leftStickyRef.current) {
+          gsap.fromTo(
+            leftStickyRef.current,
+            { y: 40 },
+            {
+              y: -40,
+              ease: "none",
+              force3D: true,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.2,
+              },
+            }
+          );
         }
-      );
+
+        if (rightColRef.current) {
+          gsap.fromTo(
+            rightColRef.current,
+            { y: 20 },
+            {
+              y: -20,
+              ease: "none",
+              force3D: true,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.2,
+              },
+            }
+          );
+        }
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -647,7 +720,7 @@ const About = ({ onOpenDailyBugle }) => {
           variants={comicFadeSlideUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-10 sm:mb-14 md:mb-16"
         >
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-5 tracking-tighter uppercase text-white">
@@ -672,13 +745,13 @@ const About = ({ onOpenDailyBugle }) => {
           {/* LEFT — SECRET IDENTITY CARD + POWER STATS + SUIT HUD (PERFECTLY BALANCED HEIGHT) */}
           <div
             ref={leftStickyRef}
-            className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20 flex flex-col gap-3 sm:gap-3.5"
+            className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20 flex flex-col gap-3 sm:gap-3.5 will-change-transform"
           >
             <motion.div
-              variants={comicFadeSlideUp}
+              variants={leftComicSlide}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: true, amount: 0.25 }}
             >
               <SecretIdentityCard />
               {/* Comic credit chip */}
@@ -694,7 +767,7 @@ const About = ({ onOpenDailyBugle }) => {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
+              viewport={{ once: true, amount: 0.2 }}
               className="grid grid-cols-3 gap-2 sm:gap-2.5"
             >
               {stats.map((stat) => (
@@ -720,17 +793,25 @@ const About = ({ onOpenDailyBugle }) => {
             </motion.div>
 
             {/* SPIDER SUIT HUD & DIAGNOSTICS WIDGET (IDE 1) */}
-            <SpiderSuitHUDWidget />
+            <motion.div
+              variants={comicFadeSlideUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <SpiderSuitHUDWidget />
+            </motion.div>
           </div>
 
           {/* RIGHT — CLEAN MARVEL CAPTION CARD (KONSEP A: SIMPLE, SLEEK, ELEGANT) */}
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            className="lg:col-span-7 bg-white text-comic-ink p-5 xs:p-6 sm:p-8 md:p-9 border-3 sm:border-4 md:border-[5px] border-black rounded-xl shadow-[6px_6px_0_#000] sm:shadow-[10px_10px_0_#000] relative select-none flex flex-col justify-between"
-          >
+          <div ref={rightColRef} className="lg:col-span-7 will-change-transform">
+            <motion.div
+              variants={rightComicSlide}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+              className="w-full bg-white text-comic-ink p-5 xs:p-6 sm:p-8 md:p-9 border-3 sm:border-4 md:border-[5px] border-black rounded-xl shadow-[6px_6px_0_#000] sm:shadow-[10px_10px_0_#000] relative select-none flex flex-col justify-between"
+            >
             {/* Subtle Halftone Background */}
             <div className="absolute inset-0 halftone-overlay-sm opacity-10 pointer-events-none" />
 
@@ -853,42 +934,43 @@ const About = ({ onOpenDailyBugle }) => {
               </motion.div>
             </div>
 
-            {/* BOTTOM ACTION BAR */}
-            <motion.div
-              variants={panelFadeSlideUp}
-              className="mt-5 pt-3.5 border-t-2 sm:border-t-3 border-black/15 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10"
-            >
-              {/* Mission Readiness Status */}
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
-                <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-emerald-700">
-                  STATUS: STANDING BY FOR MISSIONS
-                </span>
-              </div>
+              {/* BOTTOM ACTION BAR */}
+              <motion.div
+                variants={panelFadeSlideUp}
+                className="mt-5 pt-3.5 border-t-2 sm:border-t-3 border-black/15 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 relative z-10"
+              >
+                {/* Mission Readiness Status */}
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+                  <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-emerald-700">
+                    STATUS: STANDING BY FOR MISSIONS
+                  </span>
+                </div>
 
-              {/* Action Buttons */}
-              <div className="flex items-center gap-2 justify-end">
-                {onOpenDailyBugle && (
-                  <button
-                    type="button"
-                    onClick={onOpenDailyBugle}
-                    className="inline-flex items-center justify-center gap-1.5 bg-[#F4EBD9] text-black border-2 border-black hover:bg-white comic-chip px-3.5 py-2 text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer"
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2 justify-end">
+                  {onOpenDailyBugle && (
+                    <button
+                      type="button"
+                      onClick={onOpenDailyBugle}
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#F4EBD9] text-black border-2 border-black hover:bg-white comic-chip px-3.5 py-2 text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer"
+                    >
+                      <Newspaper size={13} />
+                      <span>Daily Bugle</span>
+                    </button>
+                  )}
+                  <a
+                    href="#projects"
+                    onClick={() => soundFX.playPunch()}
+                    className="inline-flex items-center justify-center gap-1.5 bg-spider-yellow text-spider-black border-2 border-black hover:bg-spider-red hover:text-white comic-chip px-3.5 py-2 text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer"
                   >
-                    <Newspaper size={13} />
-                    <span>Daily Bugle</span>
-                  </button>
-                )}
-                <a
-                  href="#projects"
-                  onClick={() => soundFX.playPunch()}
-                  className="inline-flex items-center justify-center gap-1.5 bg-spider-yellow text-spider-black border-2 border-black hover:bg-spider-red hover:text-white comic-chip px-3.5 py-2 text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer"
-                >
-                  <span>View Missions</span>
-                  <ArrowRight size={13} strokeWidth={2.8} />
-                </a>
-              </div>
+                    <span>View Missions</span>
+                    <ArrowRight size={13} strokeWidth={2.8} />
+                  </a>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
