@@ -176,7 +176,7 @@ const Navbar = ({ onOpenDeck }) => {
               transition: { type: "spring", stiffness: 400, damping: 10 },
             }}
             whileTap={{ scale: 0.96 }}
-            className="hidden sm:inline-block bg-spider-red comic-chip text-comic-ink px-3 xl:px-4 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all active:pop-shadow-active whitespace-nowrap"
+            className="hidden sm:inline-block bg-spider-red border-2 border-black comic-chip text-white px-3 xl:px-4 py-1.5 text-[10px] xl:text-[11px] font-black tracking-[0.12em] uppercase shadow-[2px_2px_0_#000] hover:shadow-[3px_3px_0_#000] hover:bg-spider-yellow hover:text-spider-black transition-all whitespace-nowrap"
           >
             Swing Into Action
           </motion.a>
@@ -184,29 +184,26 @@ const Navbar = ({ onOpenDeck }) => {
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="lg:hidden p-1.5 text-comic-ink comic-chip bg-spider-black hover:bg-spider-red transition-colors shrink-0"
+            className="lg:hidden w-9 h-9 flex items-center justify-center bg-spider-yellow text-spider-black border-2 border-black comic-chip hover:bg-spider-red hover:text-white transition-all shadow-[2px_2px_0_#000] active:scale-95 cursor-pointer shrink-0"
           >
-            {isOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
+            {isOpen ? <X size={18} strokeWidth={3} /> : <Menu size={18} strokeWidth={3} />}
           </button>
         </div>
       </div>
 
-
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU DROPDOWN */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0, y: -8 }}
             animate={{ opacity: 1, height: "auto", y: 0 }}
             exit={{ opacity: 0, height: 0, y: -8 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="lg:hidden overflow-hidden bg-comic-surface border-t-2 border-spider-red"
+            transition={{ type: "spring", stiffness: 320, damping: 28 }}
+            className="lg:hidden overflow-hidden bg-[#FAF8F5] border-t-3 border-b-4 border-black shadow-[0_8px_0_rgba(0,0,0,0.4)]"
           >
-            <div
-              className="container mx-auto px-5 sm:px-6 py-6 flex flex-col gap-3 relative"
-            >
+            <div className="container mx-auto px-4 sm:px-6 py-5 flex flex-col gap-2.5 relative">
               {/* Halftone bg inside mobile menu */}
-              <div className="absolute inset-0 halftone-overlay opacity-30 pointer-events-none" />
+              <div className="absolute inset-0 halftone-overlay opacity-15 pointer-events-none" />
 
               {onOpenDeck && (
                 <button
@@ -215,35 +212,40 @@ const Navbar = ({ onOpenDeck }) => {
                     setIsOpen(false);
                     onOpenDeck();
                   }}
-                  className="relative z-10 text-center bg-spider-yellow text-spider-black comic-chip px-6 py-3 text-sm font-black tracking-[0.18em] uppercase pop-shadow-sm flex items-center justify-center gap-2"
+                  className="relative z-10 text-center bg-spider-yellow text-spider-black border-2 border-black comic-chip px-5 py-2.5 text-xs sm:text-sm font-black tracking-[0.16em] uppercase shadow-[3px_3px_0_#000] hover:bg-white flex items-center justify-center gap-2 transition-all active:scale-98"
                 >
-                  <Printer size={16} />
+                  <Printer size={16} strokeWidth={2.5} />
                   <span>Portfolio Pitch Deck / PDF</span>
                 </button>
               )}
 
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`relative z-10 text-sm font-black uppercase tracking-[0.18em] py-2.5 px-4 comic-chip ${activeId === link.id
-                      ? "bg-spider-yellow text-spider-black"
-                      : "bg-comic-panel text-comic-ink/90 hover:bg-spider-blue hover:text-comic-ink"
+              {navLinks.map((link) => {
+                const isActive = activeId === link.id;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`relative z-10 text-xs sm:text-sm font-black uppercase tracking-[0.16em] py-2.5 px-4 comic-chip border-2 border-black transition-all shadow-[2px_2px_0_#000] active:scale-98 ${
+                      isActive
+                        ? "bg-spider-yellow text-spider-black shadow-[3px_3px_0_#000]"
+                        : "bg-white text-comic-ink hover:bg-spider-blue hover:text-white"
                     }`}
-                >
-                  {link.name}
-                </a>
-              ))}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
+
               <a
                 href="#contact"
                 onClick={() => setIsOpen(false)}
-                className="relative z-10 mt-1 text-center bg-spider-red comic-chip text-comic-ink px-6 py-3.5 text-sm font-black tracking-[0.18em] uppercase pop-shadow-sm hover:pop-shadow-active transition-all"
+                className="relative z-10 mt-1 text-center bg-spider-red border-2 border-black comic-chip text-white px-5 py-3 text-xs sm:text-sm font-black tracking-[0.18em] uppercase shadow-[3px_3px_0_#000] hover:bg-spider-yellow hover:text-spider-black transition-all active:scale-98"
               >
                 Swing Into Action
               </a>
 
-              <div className="relative z-10 mt-2">
+              <div className="relative z-10 mt-1 pt-2 border-t-2 border-black/15">
                 <MotionToggle isMobile={true} />
               </div>
             </div>

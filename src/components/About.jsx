@@ -1,31 +1,105 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { Code2, Gamepad2, ArrowRight, Newspaper } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { staggerContainer } from "../lib/animation";
 import { soundFX } from "../lib/soundFx";
 import HangingSpidey from "./HangingSpidey";
 
-/* ================================================================
-   SECRET IDENTITY REVEAL CARD — OPSI A: DIAGONAL COMIC SLASH
-   ----------------------------------------------------------------
-   Mechanic:
-   - IDLE: 4 triangular pieces of Spider-Man suit cover the photo
-   - HOVER (desktop) / TAP (mobile): 4 triangles fly outward diagonally
-     + yellow slash wipes across + real photo revealed with glow
-   ================================================================= */
+gsap.registerPlugin(ScrollTrigger);
 
-const SPIDER_SUIT_URL =
-  "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=close%20up%20portrait%20of%20The%20Amazing%20Spider-Man%20wearing%20classic%20red%20and%20blue%20costume%2C%20cinematic%20comic%20book%20style%2C%20bold%20shadows%2C%20head%20and%20shoulders%20shot%2C%20looking%20at%20camera&image_size=portrait_4_3";
+const SPIDER_SUIT_URL = new URL(
+  "../assets/spidermancomicnew_Nero_AI_Image_Upscaler_Photo_Face.png",
+  import.meta.url
+).href;
 
-/* 
-  NOTE: Letakkan foto asli Ferrel di src/assets/ferrel-portrait.jpg
-  Jika belum ada, akan fallback ke Picsum seed placeholder.
-  (User sudah upload foto B&W profile, nanti kita save di step asset-prep)
-*/
 const FERREL_PORTRAIT_URL = new URL("../assets/ferrel-portrait.jpg", import.meta.url)
   .href;
 
-/* Animated Stat Counter: counts 0 → target when in view */
+/* BOLD FADE-IN SLIDE-UP BOTTOM-TO-TOP VARIANTS */
+const comicFadeSlideUp = {
+  hidden: {
+    opacity: 0,
+    y: 70,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      damping: 22,
+      stiffness: 190,
+      mass: 0.8,
+    },
+  },
+};
+
+const panelFadeSlideUp = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+    scale: 0.97,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      damping: 20,
+      stiffness: 220,
+      mass: 0.7,
+    },
+  },
+};
+
+const stampFadePop = {
+  hidden: {
+    opacity: 0,
+    scale: 0.4,
+    y: 15,
+    rotate: -10,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    rotate: 6,
+    transition: {
+      type: "spring",
+      damping: 14,
+      stiffness: 280,
+      delay: 0.15,
+    },
+  },
+};
+
+const stampFadePopLeft = {
+  hidden: {
+    opacity: 0,
+    scale: 0.4,
+    y: 15,
+    rotate: 10,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    rotate: -6,
+    transition: {
+      type: "spring",
+      damping: 14,
+      stiffness: 280,
+      delay: 0.15,
+    },
+  },
+};
+
+/* Animated Stat Counter */
 const AnimatedCounter = ({ target, suffix = "" }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px" });
@@ -55,6 +129,22 @@ const AnimatedCounter = ({ target, suffix = "" }) => {
     </span>
   );
 };
+
+/* PUFFY COMIC CLOUD SVG COMPONENT */
+const ComicCloud = ({ className = "" }) => (
+  <svg
+    viewBox="0 0 120 70"
+    className={`drop-shadow-[3px_3px_0_#000] pointer-events-none ${className}`}
+    fill="#FFFFFF"
+    stroke="#000000"
+    strokeWidth="3.5"
+    strokeLinejoin="round"
+  >
+    <path d="M 25,55 C 10,55 5,42 12,32 C 8,22 18,12 30,15 C 38,5 58,5 68,14 C 78,6 98,8 102,20 C 114,24 116,40 106,50 C 112,60 98,65 88,58 C 78,66 60,65 52,58 C 42,66 28,64 25,55 Z" />
+    <path d="M 20,38 Q 28,45 35,38" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" />
+    <path d="M 75,42 Q 82,48 90,40" fill="none" stroke="#000" strokeWidth="2.5" strokeLinecap="round" />
+  </svg>
+);
 
 const SHARDS = [
   {
@@ -152,7 +242,6 @@ const SecretIdentityCard = () => {
       const normY = (touch.clientY - rect.top) / rect.height - 0.5;
       setTilt({ x: normX * 18, y: -normY * 18 });
 
-      // Hitung progress drag kanan/kiri
       const progress = Math.min(Math.max(Math.abs(dx) / (rect.width * 0.35), 0), 1);
       setDragProgress(progress);
       if (progress > 0.15 && !isRevealed) {
@@ -176,7 +265,6 @@ const SecretIdentityCard = () => {
       setTilt({ x: 0, y: 0 });
       isDragging.current = false;
     } else {
-      // Single tap toggle
       handleTap();
     }
   };
@@ -208,10 +296,10 @@ const SecretIdentityCard = () => {
           scale: isRevealed ? 1.02 : 1,
         }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="group relative w-full aspect-[4/5] comic-panel overflow-hidden cursor-pointer select-none border-3 sm:border-4 border-black rounded-xl shadow-[8px_8px_0_#000] hover:shadow-[12px_12px_0_#FF1E26] transition-shadow duration-300"
+        className="group relative w-full aspect-[4/5] comic-panel overflow-hidden cursor-pointer select-none border-3 sm:border-4 border-black rounded-xl shadow-[6px_6px_0_#000] sm:shadow-[8px_8px_0_#000] hover:shadow-[10px_10px_0_#FFD500] transition-shadow duration-300"
       >
-        {/* HANGING SPIDEY (Attached right at top right) */}
-        <div className="absolute top-0 right-5 z-40 pointer-events-none">
+        {/* HANGING SPIDEY */}
+        <div className="absolute top-0 right-3 sm:right-5 z-40 pointer-events-none">
           <HangingSpidey />
         </div>
 
@@ -222,7 +310,7 @@ const SecretIdentityCard = () => {
           }`}
         />
 
-        {/* LAYER 1: BASE PHOTO (Ferrel's Portrait) */}
+        {/* LAYER 1: BASE PHOTO */}
         <div className="absolute inset-0 z-10 w-full h-full bg-black">
           <img
             src={FERREL_PORTRAIT_URL}
@@ -234,7 +322,6 @@ const SecretIdentityCard = () => {
             }}
           />
 
-          {/* Vignette overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -243,7 +330,6 @@ const SecretIdentityCard = () => {
             }}
           />
 
-          {/* Spider-Verse Chromatic Glitch lines */}
           <div
             className={`absolute inset-0 pointer-events-none transition-opacity duration-200 ${
               isRevealed ? "opacity-30 mix-blend-color-dodge bg-gradient-to-r from-cyan-500 via-transparent to-red-500" : "opacity-0"
@@ -280,7 +366,7 @@ const SecretIdentityCard = () => {
           />
         ))}
 
-        {/* SOLID IDLE COVER (Guarantees 100% seamless cover when idle with zero pixel gaps) */}
+        {/* SOLID IDLE COVER */}
         <motion.div
           animate={{ opacity: isRevealed ? 0 : 1 }}
           transition={{ duration: 0.15 }}
@@ -316,48 +402,48 @@ const SecretIdentityCard = () => {
           <div className="w-full h-full halftone-overlay-sm" />
         </div>
 
-        {/* ===== TOP LEFT BADGE: Identity Flip Badge ===== */}
-        <div className="absolute top-4 left-4 z-30 overflow-hidden h-[34px]">
+        {/* TOP LEFT BADGE (RESPONSIVE FONT & PADDING) */}
+        <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-30 overflow-hidden h-[30px] sm:h-[34px]">
           <motion.div
             animate={{ y: isRevealed ? -34 : 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
           >
-            <div className="h-[34px] flex items-center">
-              <span className="bg-spider-red text-white border-2 border-black px-3 py-1 text-[9.5px] sm:text-[10px] font-black tracking-[0.2em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+            <div className="h-[30px] sm:h-[34px] flex items-center">
+              <span className="bg-spider-red text-white border-2 border-black px-2 sm:px-3 py-0.5 sm:py-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-black tracking-[0.15em] sm:tracking-[0.2em] uppercase rounded-md shadow-[1.5px_1.5px_0_#000] sm:shadow-[2px_2px_0_#000]">
                 SPIDERMAN
               </span>
             </div>
-            <div className="h-[34px] flex items-center">
-              <span className="bg-spider-blue text-white border-2 border-black px-3 py-1 text-[9.5px] sm:text-[10px] font-black tracking-[0.2em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+            <div className="h-[30px] sm:h-[34px] flex items-center">
+              <span className="bg-spider-blue text-white border-2 border-black px-2 sm:px-3 py-0.5 sm:py-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-black tracking-[0.15em] sm:tracking-[0.2em] uppercase rounded-md shadow-[1.5px_1.5px_0_#000] sm:shadow-[2px_2px_0_#000]">
                 FERREL RASHAD
               </span>
             </div>
           </motion.div>
         </div>
 
-        {/* ===== BOTTOM RIGHT BADGE: Status Dossier ===== */}
-        <div className="absolute bottom-4 right-4 z-30 overflow-hidden h-[34px]">
+        {/* BOTTOM RIGHT BADGE */}
+        <div className="absolute bottom-2.5 right-2.5 sm:bottom-4 sm:right-4 z-30 overflow-hidden h-[30px] sm:h-[34px]">
           <motion.div
             animate={{ y: isRevealed ? -34 : 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
           >
-            <div className="h-[34px] flex items-center">
-              <span className="bg-spider-yellow text-spider-black border-2 border-black px-2.5 py-1 text-[9px] sm:text-[9.5px] font-black tracking-[0.18em] uppercase rounded-md shadow-[2px_2px_0_#000] blink-soft">
+            <div className="h-[30px] sm:h-[34px] flex items-center">
+              <span className="bg-spider-yellow text-spider-black border-2 border-black px-2 sm:px-2.5 py-0.5 sm:py-1 text-[8px] xs:text-[9px] sm:text-[9.5px] font-black tracking-[0.15em] sm:tracking-[0.18em] uppercase rounded-md shadow-[1.5px_1.5px_0_#000] sm:shadow-[2px_2px_0_#000] blink-soft">
                 CLASSIFIED
               </span>
             </div>
-            <div className="h-[34px] flex items-center">
-              <span className="bg-emerald-500 text-black border-2 border-black px-2.5 py-1 text-[9px] sm:text-[9.5px] font-black tracking-[0.18em] uppercase rounded-md shadow-[2px_2px_0_#000]">
+            <div className="h-[30px] sm:h-[34px] flex items-center">
+              <span className="bg-emerald-500 text-black border-2 border-black px-2 sm:px-2.5 py-0.5 sm:py-1 text-[8px] xs:text-[9px] sm:text-[9.5px] font-black tracking-[0.15em] sm:tracking-[0.18em] uppercase rounded-md shadow-[1.5px_1.5px_0_#000] sm:shadow-[2px_2px_0_#000]">
                 UNMASKED 100%
               </span>
             </div>
           </motion.div>
         </div>
 
-        {/* ===== BOTTOM LEFT CUE ===== */}
-        <div className="absolute bottom-4 left-4 z-30">
-          <p className="text-[8.5px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-white/90 drop-shadow-[0_1px_2px_#000]">
-            {isRevealed ? "[ IDENTITY UNLOCKED ]" : "[ 🖐️ SWIPE / TAP TO UNMASK ]"}
+        {/* BOTTOM LEFT CUE */}
+        <div className="absolute bottom-2.5 left-2.5 sm:bottom-4 sm:left-4 z-30 max-w-[55%] truncate">
+          <p className="text-[7.5px] xs:text-[8.5px] sm:text-[9px] font-black uppercase tracking-[0.12em] sm:tracking-[0.18em] text-white/90 drop-shadow-[0_1px_2px_#000]">
+            {isRevealed ? "[ IDENTITY UNLOCKED ]" : "[ 🖐️ TAP TO UNMASK ]"}
           </p>
         </div>
       </motion.div>
@@ -366,27 +452,56 @@ const SecretIdentityCard = () => {
 };
 
 const About = ({ onOpenDailyBugle }) => {
+  const reduce = useReducedMotion();
+  const sectionRef = useRef(null);
+  const leftStickyRef = useRef(null);
+
   const stats = [
     { label: "Years Active", value: 1, suffix: "+", accent: "border-t-spider-red" },
     { label: "Missions Done", value: 5, suffix: "+", accent: "border-t-spider-blue" },
     { label: "Certifications", value: 2, suffix: "", accent: "border-t-spider-yellow" },
   ];
 
+  // GSAP Sticky Parallax Float
+  useEffect(() => {
+    if (reduce || !leftStickyRef.current || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        leftStickyRef.current,
+        { y: 35 },
+        {
+          y: -35,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reduce]);
+
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="py-24 sm:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_calc(100%-2.5vw),0_100%)]"
+      className="py-20 sm:py-28 md:py-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2.5vw,100%_0,100%_calc(100%-2.5vw),0_100%)]"
     >
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* SECTION HEADER */}
+      <div className="container mx-auto px-3.5 sm:px-6 relative z-10">
+        {/* SECTION HEADER (SLIDE UP FROM BOTTOM WITH FADE) */}
         <motion.div
-          variants={fadeUp}
+          variants={comicFadeSlideUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: "some" }}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-10 sm:mb-14 md:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 sm:mb-5 tracking-tighter uppercase text-white">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-5 tracking-tighter uppercase text-white">
             Beyond The{" "}
             <span
               className="text-spider-yellow italic inline-block px-1 select-none"
@@ -398,109 +513,339 @@ const About = ({ onOpenDailyBugle }) => {
               Mask
             </span>
           </h2>
-          <p className="text-white/90 max-w-md mx-auto font-medium text-sm sm:text-base">
+          <p className="text-white/90 max-w-md mx-auto font-medium text-xs xs:text-sm sm:text-base px-2">
             The man behind the suit. Origins of a multidisciplinary digital creator.
           </p>
         </motion.div>
 
-        {/* MAIN SPLIT LAYOUT: 40% Identity Card / 60% Origin Text */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: "some" }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start mb-14 md:mb-20"
-        >
-          {/* LEFT — SECRET IDENTITY CARD WITH HANGING SPIDEY */}
-          <motion.div
-            variants={comicPop}
-            className="lg:col-span-5 max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-32 relative"
+        {/* MAIN SPLIT LAYOUT: 5 Cols Left (Identity Card) vs 7 Cols Right (Authentic Comic Page) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start mb-12 sm:mb-16 md:mb-24">
+          {/* LEFT — SECRET IDENTITY CARD (SLIDES UP FROM BOTTOM WITH STICKY FLOAT) */}
+          <div
+            ref={leftStickyRef}
+            className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20"
           >
-            <SecretIdentityCard />
-            {/* Comic credit chip */}
-            <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-black tracking-[0.18em] uppercase text-white/90">
-              <span className="w-2.5 h-2.5 bg-spider-yellow border border-black inline-block rounded-full" />
-              <span>Secret Identity Protocol — SHIELD Class A</span>
-              <span className="w-2.5 h-2.5 bg-white border border-black inline-block rounded-full" />
-            </div>
-          </motion.div>
+            <motion.div
+              variants={comicFadeSlideUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+            >
+              <SecretIdentityCard />
+              {/* Comic credit chip */}
+              <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-[9px] xs:text-[10px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-white/90">
+                <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-spider-yellow border border-black inline-block rounded-full" />
+                <span>Secret Identity Protocol — SHIELD Class A</span>
+                <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white border border-black inline-block rounded-full" />
+              </div>
+            </motion.div>
+          </div>
 
-          {/* RIGHT — ORIGIN STORY TEXT */}
+          {/* RIGHT — AUTHENTIC COMIC BOOK PAGE STRIP */}
           <motion.div
-            variants={fadeUp}
-            className="lg:col-span-7 space-y-5 sm:space-y-6"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="lg:col-span-7 bg-white text-comic-ink p-3.5 xs:p-4 sm:p-6 md:p-7 border-3 sm:border-4 md:border-[5px] border-black rounded-xl shadow-[6px_6px_0_#000] sm:shadow-[10px_10px_0_#000] relative select-none"
           >
-            {/* Real Name chip */}
-            <div>
-              <span className="inline-block bg-spider-yellow border-2 border-black comic-chip text-spider-black px-4 py-1.5 text-[10px] sm:text-xs font-black tracking-[0.2em] uppercase mb-5 sm:mb-6 shadow-[3px_3px_0_#000]">
-                Real Name - Ferrel Rashad Akeyla
-              </span>
-            </div>
+            {/* VINTAGE COMIC BOOK MASTHEAD HEADER */}
+            <motion.div
+              variants={panelFadeSlideUp}
+              className="flex items-center justify-between gap-1.5 sm:gap-2 border-b-[2.5px] sm:border-b-[3.5px] border-black pb-2.5 sm:pb-3 mb-3.5 sm:mb-5 bg-[#FAF8F5] p-2 sm:p-2.5 border-2 rounded"
+            >
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 bg-spider-red text-white border-2 border-black flex items-center justify-center font-black text-[10px] sm:text-xs shrink-0 shadow-[1px_1px_0_#000]">
+                  ★
+                </div>
+                <div className="min-w-0">
+                  <h4 className="text-[8.5px] xs:text-[10px] sm:text-xs font-black uppercase tracking-[0.12em] sm:tracking-[0.2em] text-comic-ink leading-tight truncate">
+                    SPIDER-DEV COMICS GROUP
+                  </h4>
+                  <p className="text-[7px] xs:text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-spider-red truncate">
+                    VOL. 1 // ISSUE #001 // ORIGIN OF THE CREATOR
+                  </p>
+                </div>
+              </div>
 
-            {/* Comic Caption Box — Pure White Container with High Contrast */}
-            <div className="bg-white text-comic-ink p-6 sm:p-8 rounded-sm border-3 border-black shadow-[6px_6px_0_#000]">
-              <p className="text-sm sm:text-base text-comic-ink mb-4 leading-relaxed font-semibold">
-                Hi! I&apos;m <strong className="text-spider-red font-black">Ferrel Rashad Akeyla</strong>,
-                a multidisciplinary digital creator based in Indonesia. With expertise spanning{" "}
-                <strong className="text-spider-blue font-black">
-                  Full Stack Web Development, Video Editing, 3D Modeling, and Game Development
-                </strong>
-                , I deliver creative solutions that blend visual aesthetics with technical excellence.
-              </p>
-              <p className="text-sm sm:text-base text-comic-ink leading-relaxed font-semibold">
-                I believe every project is an opportunity to create unique and immersive experiences,
-                whether through responsive web applications, cinematic video storytelling,
-                detailed 3D models, or interactive gaming worlds.
-              </p>
-            </div>
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <span className="hidden xs:inline-block text-[7.5px] sm:text-[8.5px] font-mono font-black uppercase tracking-wider px-1.5 sm:px-2 py-0.5 bg-spider-yellow border border-black text-black">
+                  AUG // 2026
+                </span>
+                <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 border-black bg-spider-yellow flex items-center justify-center font-black text-[8.5px] sm:text-[9.5px] shadow-[1px_1px_0_#000]">
+                  12¢
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Small signature banner & Daily Bugle Newspaper Launcher */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <span className="inline-flex items-center gap-2 bg-spider-yellow border-2 border-black comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase shadow-[2px_2px_0_#000]">
-                Alignment — Hero
-              </span>
-              <span className="inline-flex items-center gap-2 bg-white border-2 border-black comic-chip text-spider-black px-4 py-2 text-[10px] font-black tracking-[0.2em] uppercase shadow-[2px_2px_0_#000]">
-                Sector — West Java, Indonesia
-              </span>
-              {onOpenDailyBugle && (
-                <button
-                  type="button"
-                  onClick={onOpenDailyBugle}
-                  className="inline-flex items-center gap-2 bg-[#F4EBD9] text-black border-2 border-black hover:bg-white comic-chip px-4 py-2 text-[10px] font-black tracking-[0.15em] uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95"
+            {/* EASTER EGG: UNCLE BEN'S ETERNAL SLOGAN BANNER */}
+            <motion.div
+              variants={panelFadeSlideUp}
+              whileHover={{ scale: 1.015 }}
+              whileTap={{ scale: 0.985 }}
+              onClick={() => soundFX.playPunch()}
+              className="mb-4 sm:mb-6 bg-[#FFF9EE] border-2 border-black border-dashed hover:border-solid hover:border-spider-red p-2 xs:p-2.5 sm:p-3 rounded text-center cursor-pointer transition-all shadow-[2px_2px_0_#000] hover:shadow-[4px_4px_0_#FF1E26] group select-none"
+              title="Click for Easter Egg sound!"
+            >
+              <p className="text-[8px] xs:text-[9.5px] sm:text-[11px] font-black uppercase tracking-[0.1em] sm:tracking-[0.18em] text-comic-ink group-hover:text-spider-red transition-colors flex items-center justify-center gap-1.5 sm:gap-2 leading-tight">
+                <span className="text-spider-red animate-pulse">🕷️</span>
+                <span>&ldquo;WITH GREAT POWER COMES GREAT RESPONSIBILITY&rdquo;</span>
+                <span className="text-spider-red animate-pulse">🕷️</span>
+              </p>
+            </motion.div>
+
+            {/* COMIC PAGE PANELS CONTAINER */}
+            <div className="space-y-4 sm:space-y-6 md:space-y-7 relative">
+              {/* TIER 1: TOP SPLIT PANELS */}
+              <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {/* TOP LEFT PANEL (CLASSIC SPIDER-BLUE) */}
+                <motion.div
+                  variants={panelFadeSlideUp}
+                  className="relative bg-spider-blue text-white p-3.5 xs:p-4 sm:p-5 border-2 sm:border-[3px] border-black rounded-md shadow-[3px_3px_0_#000] overflow-hidden flex flex-col justify-between"
                 >
-                  <span>📰 Read Daily Bugle Report</span>
-                </button>
-              )}
+                  <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+                  <div className="relative z-10">
+                    <span className="bg-spider-yellow text-spider-black border border-black text-[8px] sm:text-[8.5px] font-black uppercase px-2 py-0.5 rounded shadow-[1px_1px_0_#000] inline-block mb-1.5 sm:mb-2">
+                      IDENTIFIER
+                    </span>
+                    <h4 className="text-xs xs:text-sm sm:text-base font-black uppercase tracking-tight text-white mb-1 sm:mb-1.5">
+                      Ferrel Rashad Akeyla
+                    </h4>
+                    <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-bold leading-relaxed text-white/95">
+                      Multidisciplinary creator engineering software, 3D graphics, and game systems from West Java.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* TOP RIGHT PANEL (WARM COMIC CREAM) */}
+                <motion.div
+                  variants={panelFadeSlideUp}
+                  className="relative bg-[#FFF8EB] text-comic-ink p-3.5 xs:p-4 sm:p-5 border-2 sm:border-[3px] border-black rounded-md shadow-[3px_3px_0_#000] overflow-hidden flex flex-col justify-between"
+                >
+                  <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+
+                  {/* Comic '!' Starburst Badge */}
+                  <div className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-5 h-5 sm:w-6 sm:h-6 bg-spider-yellow text-spider-black border-2 border-black rounded-full flex items-center justify-center font-black text-[10px] sm:text-xs shadow-[1.5px_1.5px_0_#000] rotate-12 z-20">
+                    !
+                  </div>
+
+                  <div className="relative z-10 pr-6">
+                    <span className="bg-spider-red text-white border border-black text-[8px] sm:text-[8.5px] font-black uppercase px-2 py-0.5 rounded shadow-[1px_1px_0_#000] inline-block mb-1.5 sm:mb-2">
+                      MISSION DIRECTIVE
+                    </span>
+                    <h4 className="text-xs xs:text-sm sm:text-base font-black uppercase tracking-tight text-comic-ink mb-1 sm:mb-1.5">
+                      Creative Code &amp; Motion
+                    </h4>
+                    <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-bold leading-relaxed text-comic-ink/90">
+                      Merging high-octane visual aesthetics with bulletproof modern technical architectures.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* TIER 2: MIDDLE FULL-WIDTH RED SUNBURST BANNER */}
+              <motion.div
+                variants={panelFadeSlideUp}
+                className="relative bg-spider-red text-white p-3.5 xs:p-4 sm:p-6 pt-6 xs:pt-7 sm:pt-8 border-2 sm:border-[3px] border-black rounded-md shadow-[4px_4px_0_#000]"
+              >
+                {/* Comic Sunburst Radial Lines */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-25 rounded-sm"
+                  style={{
+                    background:
+                      "repeating-conic-gradient(from 0deg, #000 0deg 15deg, transparent 15deg 30deg)",
+                  }}
+                />
+
+                {/* Corner Comic Clouds (Left & Right) */}
+                <ComicCloud className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-12 h-8 sm:w-16 sm:h-10 z-20" />
+                <ComicCloud className="absolute -bottom-3 -right-3 sm:-bottom-3.5 sm:-right-3.5 w-12 h-8 sm:w-16 sm:h-10 z-20" />
+
+                {/* ORIGIN! ⚡ ACTION STICKER */}
+                <motion.div
+                  variants={stampFadePop}
+                  className="absolute -top-3 right-2.5 sm:-top-3.5 sm:right-4 z-30 bg-spider-yellow text-spider-black border-2 border-black font-black text-[9px] xs:text-[10px] sm:text-xs tracking-wider sm:tracking-widest px-2 sm:px-3 py-0.5 sm:py-1 rounded shadow-[2px_2px_0_#000] sm:shadow-[3px_3px_0_#000] rotate-6"
+                >
+                  ORIGIN! ⚡
+                </motion.div>
+
+                {/* Inner Comic Caption Box */}
+                <div className="relative z-10 bg-white text-comic-ink p-3.5 sm:p-5 border-2 border-black rounded shadow-[2.5px_2.5px_0_#000] sm:shadow-[3px_3px_0_#000]">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+                    <span className="bg-spider-yellow text-spider-black px-1.5 sm:px-2 py-0.5 text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-wider border border-black">
+                      CAPTION #01
+                    </span>
+                    <span className="text-[8.5px] sm:text-[9.5px] font-mono font-black uppercase text-spider-red">
+                      THE MULTIDISCIPLINARY ARCHITECT
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] xs:text-xs sm:text-sm font-semibold leading-relaxed mb-1.5 sm:mb-2 text-comic-ink">
+                    Hi! I&apos;m <strong className="text-spider-red font-black">Ferrel Rashad Akeyla</strong>,
+                    a digital creator crafting solutions across{" "}
+                    <strong className="text-spider-blue font-black">
+                      Full Stack Web Development, Video Editing, 3D Modeling, and Game Development
+                    </strong>
+                    .
+                  </p>
+                  <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-semibold leading-relaxed text-comic-ink/85">
+                    Every project is treated as an opportunity to build memorable experiences, from responsive web platforms to cinematic 3D worlds.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* TIER 3: BOTTOM SPLIT PANELS (YELLOW ZAP! & BLUE ZOOM!) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {/* BOTTOM LEFT: SPIDER-YELLOW PANEL WITH ZAP! ⚡ */}
+                <motion.div
+                  variants={panelFadeSlideUp}
+                  className="relative bg-spider-yellow text-spider-black p-3.5 xs:p-4 sm:p-5 border-2 sm:border-[3px] border-black rounded-md shadow-[3px_3px_0_#000] flex flex-col justify-between"
+                >
+                  <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+
+                  {/* ZAP! ⚡ ACTION STICKER */}
+                  <motion.div
+                    variants={stampFadePopLeft}
+                    className="absolute -top-3 right-2.5 sm:-top-3.5 sm:right-3.5 z-30 bg-spider-red text-white border-2 border-black font-black text-[8px] xs:text-[9px] tracking-wider px-2 sm:px-2.5 py-0.5 rounded shadow-[2px_2px_0_#000] -rotate-6"
+                  >
+                    ZAP! ⚡
+                  </motion.div>
+
+                  <div className="relative z-10 pr-6 sm:pr-8">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 text-spider-black">
+                      <Code2 size={16} strokeWidth={2.8} className="shrink-0" />
+                      <h4 className="font-black text-xs xs:text-sm uppercase tracking-tight">
+                        Web &amp; 60 FPS Motion
+                      </h4>
+                    </div>
+
+                    <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-bold leading-relaxed mb-2.5 sm:mb-3 text-spider-black/90">
+                      React 19, Next.js, and TypeScript architectures paired with fluid Framer physics.
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 flex flex-wrap gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 border-t-2 border-black/15">
+                    {["React 19", "Next.js", "TypeScript", "Motion"].map((tech, i) => (
+                      <span
+                        key={i}
+                        className="text-[7.5px] xs:text-[8.5px] font-black px-1.5 sm:px-2 py-0.5 bg-white border border-black rounded shadow-[1px_1px_0_#000]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* BOTTOM RIGHT: SPIDER-BLUE PANEL WITH ZOOM! 🎮 */}
+                <motion.div
+                  variants={panelFadeSlideUp}
+                  className="relative bg-spider-blue text-white p-3.5 xs:p-4 sm:p-5 border-2 sm:border-[3px] border-black rounded-md shadow-[3px_3px_0_#000] flex flex-col justify-between"
+                >
+                  <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
+
+                  {/* ZOOM! 🎮 ACTION STICKER */}
+                  <motion.div
+                    variants={stampFadePop}
+                    className="absolute -top-3 right-2.5 sm:-top-3.5 sm:right-3.5 z-30 bg-spider-yellow text-spider-black border-2 border-black font-black text-[8px] xs:text-[9px] tracking-wider px-2 sm:px-2.5 py-0.5 rounded shadow-[2px_2px_0_#000] rotate-6"
+                  >
+                    ZOOM! 🎮
+                  </motion.div>
+
+                  <div className="relative z-10 pr-6 sm:pr-8">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 text-white">
+                      <Gamepad2 size={16} strokeWidth={2.8} className="shrink-0" />
+                      <h4 className="font-black text-xs xs:text-sm uppercase tracking-tight">
+                        Game Mechanics
+                      </h4>
+                    </div>
+
+                    <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-bold leading-relaxed mb-2.5 sm:mb-3 text-white/95">
+                      Blender 3D stylized modeling and Unity C# arcade combat game mechanics.
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 flex flex-wrap gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 border-t-2 border-white/20">
+                    {["Blender 3D", "Unity C#", "Video Pacing", "Physics"].map((tech, i) => (
+                      <span
+                        key={i}
+                        className="text-[7.5px] xs:text-[8.5px] font-black px-1.5 sm:px-2 py-0.5 bg-white text-comic-ink border border-black rounded shadow-[1px_1px_0_#000]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* TIER 4: DIALOGUE SPEECH BUBBLE & ACTION BUTTONS STRIP */}
+              <motion.div
+                variants={panelFadeSlideUp}
+                className="bg-[#FAF8F5] p-3 xs:p-3.5 sm:p-4 border-2 sm:border-[3px] border-black rounded-md shadow-[3px_3px_0_#000] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3"
+              >
+                {/* Comic Speech Bubble */}
+                <div className="relative bg-white border-2 border-black px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-2xl shadow-[2px_2px_0_#000] w-full sm:max-w-sm">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="text-[8px] sm:text-[8.5px] font-black uppercase tracking-wider text-emerald-700">
+                      STATUS: READY FOR MISSIONS
+                    </span>
+                  </div>
+                  <p className="text-[10.5px] xs:text-[11px] sm:text-xs font-black text-comic-ink leading-tight">
+                    &ldquo;Standing by for production web builds, interactive 3D media, or freelance contracts!&rdquo;
+                  </p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 w-full sm:w-auto justify-end">
+                  {onOpenDailyBugle && (
+                    <button
+                      type="button"
+                      onClick={onOpenDailyBugle}
+                      className="inline-flex items-center justify-center gap-1.5 bg-[#F4EBD9] text-black border-2 border-black hover:bg-white comic-chip px-3 py-2 text-[9px] xs:text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer w-full xs:w-auto"
+                    >
+                      <Newspaper size={13} />
+                      <span>Daily Bugle</span>
+                    </button>
+                  )}
+                  <a
+                    href="#projects"
+                    onClick={() => soundFX.playPunch()}
+                    className="inline-flex items-center justify-center gap-1.5 bg-spider-yellow text-spider-black border-2 border-black hover:bg-spider-red hover:text-white comic-chip px-3 py-2 text-[9px] xs:text-[9.5px] sm:text-[10px] font-black tracking-wider uppercase transition-all shadow-[2px_2px_0_#000] hover:scale-105 active:scale-95 cursor-pointer w-full xs:w-auto"
+                  >
+                    <span>View Missions</span>
+                    <ArrowRight size={13} strokeWidth={2.8} />
+                  </a>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        {/* BOTTOM: POWER STATS (3 Comic Stat Blocks) */}
+        {/* BOTTOM: POWER STATS (RESPONSIVE GRID) */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: "some" }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 md:gap-8"
         >
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
-              variants={comicPop}
-              className={`bg-white text-comic-ink p-5 sm:p-7 md:p-8 relative overflow-hidden border-3 border-black shadow-[6px_6px_0_#000] ${stat.accent}`}
+              variants={comicFadeSlideUp}
+              className={`bg-white text-comic-ink p-4 xs:p-5 sm:p-7 md:p-8 relative overflow-hidden border-2 sm:border-3 border-black shadow-[4px_4px_0_#000] sm:shadow-[6px_6px_0_#000] ${stat.accent}`}
               style={{ borderRadius: "2px" }}
             >
-              {/* Halftone pattern bg inside card */}
               <div
                 className="absolute inset-0 opacity-15 pointer-events-none"
                 aria-hidden="true"
               >
                 <div className="w-full h-full halftone-overlay-sm" />
               </div>
-              <p className="relative text-4xl sm:text-5xl font-black text-spider-red mb-2">
+              <p className="relative text-3xl xs:text-4xl sm:text-5xl font-black text-spider-red mb-1.5 sm:mb-2">
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} />
               </p>
-              <p className="relative text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-comic-ink">
+              <p className="relative text-[9px] xs:text-[10px] sm:text-xs font-black uppercase tracking-[0.16em] sm:tracking-[0.2em] text-comic-ink">
                 {stat.label}
               </p>
             </motion.div>
@@ -512,4 +857,3 @@ const About = ({ onOpenDailyBugle }) => {
 };
 
 export default About;
-
