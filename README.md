@@ -81,11 +81,23 @@ Inspired by classic Spider-Man comic books, the UI blends retro halftone Ben-Day
 - **Multiverse Achievement Badges**: Tracks 7 easter-egg milestones (Spider-Sense, Terminal Hacker, Suit Collector, Bug Squasher, etc.) with local storage persistence.
 - **Audio Suite**: Web Audio API synthesizer for retro 8-bit sound effects (SFX) + background ambient music player with real-time volume slider and mute controls.
 
-### ⌨️ 8. Web Terminal Command Palette (`CommandPalette.jsx`)
+### 💻 8. Peter Parker Lab Web Terminal (`ParkerLabTerminal.jsx`)
+- Interactive retro CLI terminal emulator accessible via <kbd>T</kbd> hotkey or navbar controls.
+- **Rich Command Suite**: Supports `help`, `skills`, `projects`, `contact`, `cat resume`, `whoami`, `sudo hire`, `theme [name]`, `neofetch`, `clear`, and `exit`.
+- **Keyboard Power Features**: Full `Tab` command autocompletion and `↑`/`↓` command history navigation.
+
+### 👔 9. Executive / Recruiter Mode (`ViewModeToggle.jsx`)
+- One-click toggle switch between the vibrant **Comic Hero Mode** and clean, distraction-free **Corporate / Executive Mode**.
+- Optimizes typography, contrast, and layout density for professional recruiters and hiring managers.
+
+### ⚡ 10. Kinetic Fullscreen Menu (`KineticMenu.jsx`)
+- Kinetic typography navigation overlay with smooth spring-physics entrance and real-time section jumps.
+
+### ⌨️ 11. Web Terminal Command Palette (`CommandPalette.jsx`)
 - Quick-access terminal drawer accessible via <kbd>Ctrl</kbd> + <kbd>K</kbd> or <kbd>Cmd</kbd> + <kbd>K</kbd>.
 - Navigate sections, switch multiverse themes, trigger Spider-Sense, or download CV instantly from your keyboard.
 
-### 🪟 9. React Portal Architecture (`ProjectBriefModal.jsx` & `VideoModal.jsx`)
+### 🪟 12. React Portal Architecture (`ProjectBriefModal.jsx` & `VideoModal.jsx`)
 - Modals mount directly to `document.body` via `createPortal` to prevent parent GSAP transform coordinate clipping.
 - Guaranteed 100% viewport centering with sticky headers, sticky actions, and smooth internal scrolling on all screen sizes and zoom levels.
 
@@ -95,7 +107,7 @@ Inspired by classic Spider-Man comic books, the UI blends retro halftone Ben-Day
 
 This application is engineered for maximum performance, minimal bundle weight, and smooth 60 FPS execution across desktop and mobile devices:
 
-- 🚀 **Dynamic Code-Splitting & Lazy Loading (`React.lazy`)**: Interactive overlays, modals, and heavy canvas components (`SpideyBugHunter`, `DailyBugleModal`, `CommandPalette`, `SpiderGadgetDrawer`, `PortfolioDeckModal`) are loaded dynamically, reducing initial JavaScript bundle size for rapid FCP & LCP.
+- 🚀 **Dynamic Code-Splitting & Lazy Loading (`React.lazy`)**: Interactive overlays, modals, and heavy canvas components (`SpideyBugHunter`, `DailyBugleModal`, `CommandPalette`, `SpiderGadgetDrawer`, `PortfolioDeckModal`, `ParkerLabTerminal`, `KineticMenu`) are loaded dynamically, reducing initial JavaScript bundle size for rapid FCP & LCP.
 - 📱 **Adaptive 60 FPS Mobile Touch Scroll**: Native `snap-x` momentum swipe on smartphones with lightweight scroll progress listeners.
 - 🔊 **Zero-Bloat Web Audio API Synthesizer**: Procedural Web Audio oscillators generate retro 8-bit sound effects directly in code without requiring external audio asset network downloads.
 - 🎨 **CSS Hardware Acceleration & DOM Scaffolding**: Utilizes `content-visibility: auto` on offscreen sections and GPU composite layers (`transform: translateZ(0)`) to eliminate frame drops during rapid scrolling.
@@ -138,7 +150,9 @@ Portofolio/
 │   │   ├── DailyBugleModal.jsx# Retro newspaper investigative modal
 │   │   ├── Footer.jsx         # Multiverse edition footer & spider emblem
 │   │   ├── Hero.jsx           # Superhero landing showcase
+│   │   ├── KineticMenu.jsx    # Kinetic typography fullscreen navigation
 │   │   ├── Navbar.jsx         # Top comic navigation & motion toggles
+│   │   ├── ParkerLabTerminal.jsx # Peter Parker retro CLI web terminal
 │   │   ├── PortfolioDeckModal.jsx # Fullscreen pitch deck & PDF export
 │   │   ├── ProjectBriefModal.jsx # React Portal classified mission modal
 │   │   ├── Projects.jsx       # GSAP horizontal parallax archives & mobile swipe
@@ -149,7 +163,8 @@ Portofolio/
 │   │   ├── SpiderSkillWeb.jsx # Dual-ring 60 FPS orbital web matrix
 │   │   ├── SpideyBugHunter.jsx# HTML5 Canvas 30s arcade mini-game
 │   │   ├── StickyComicTicker.jsx # Sticky bottom comic ribbon with color inversion
-│   │   └── VideoModal.jsx     # React Portal video player popup
+│   │   ├── VideoModal.jsx     # React Portal video player popup
+│   │   └── ViewModeToggle.jsx # Executive / Hero mode switcher
 │   ├── lib/
 │   │   ├── achievements.js    # LocalStorage gamified achievement tracker
 │   │   ├── animation.js       # Framer Motion spring presets & stagger variants
@@ -200,6 +215,7 @@ npm run preview
 ## 🎮 Keyboard Shortcuts
 
 - <kbd>Ctrl</kbd> + <kbd>K</kbd> / <kbd>Cmd</kbd> + <kbd>K</kbd> — Open Spider Terminal Command Palette
+- <kbd>T</kbd> — Open Peter Parker Lab Web Terminal
 - <kbd>E</kbd> — Open Portfolio Pitch Deck & PDF Export Modal
 - <kbd>S</kbd> — Trigger Spider-Sense Tingling Radar Glow
 - <kbd>G</kbd> — Launch Spidey Bug Hunter 30s Arcade Mini-Game
