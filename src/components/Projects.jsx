@@ -19,6 +19,7 @@ import fersyaShop from "../assets/fersya-shop.webp";
 import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.png";
+import stockPrediction from "../assets/stock-prediction.png";
 import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,6 +44,28 @@ const projects = [
         "Engineered silky-smooth horizontal parallax scrub using GSAP ScrollTrigger and native sticky composition.",
         "Crafted authentic Marvel comic visual system with halftone Ben-Day dot matrices, multiverse suit switchers, and spider-HUD.",
         "Built-in procedural 8-bit Web Audio API sound suite, Canvas 2D arcade mini-game, and exportable superhero pitch deck.",
+      ],
+    },
+  },
+  {
+    id: 9,
+    title: "Stock Prediction & Quant ML System",
+    category: "Web",
+    image: stockPrediction,
+    video: null,
+    tech: ["Python", "Streamlit", "XGBoost", "LightGBM", "Scikit-Learn"],
+    link: "https://github.com/FerrelHD/Stock-Prediction-System",
+    github: "https://github.com/FerrelHD/Stock-Prediction-System",
+    sfx: "POW!",
+    issueNumber: "ISSUE #09",
+    brief: {
+      description:
+        "End-to-end quantitative financial analytics and machine learning system for predicting directional stock movements (UP/DOWN) using strict point-in-time time-series modeling, walk-forward cross-validation, and realistic financial backtesting.",
+      role: "Quantitative ML Engineer & Streamlit Developer",
+      highlights: [
+        "Zero Lookahead Bias & Strict Anti-Leakage: Point-in-time calculation of 20+ technical indicators (RSI, MACD, BB, ATR, OBV) and chronological Train (70%) / Val (15%) / Test (15%) splits.",
+        "Multi-Model Benchmark & Calibration: Evaluated Logistic Regression baselines, Random Forest, XGBoost, and LightGBM with Platt probability calibration.",
+        "Institutional Backtest Engine & Streamlit Dashboard: Simulates transaction friction (0.15% fees, 0.05% slippage), Sharpe ratio, max drawdown, and dynamic Plotly interactive charts.",
       ],
     },
   },

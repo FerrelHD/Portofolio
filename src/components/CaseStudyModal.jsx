@@ -1,7 +1,5 @@
-"use client";
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, BookOpen, ArrowRight, ShoppingBag, Cpu, Gamepad2, Film, ShieldAlert } from "lucide-react";
+import { X, BookOpen, ArrowRight, ShoppingBag, Cpu, Gamepad2, Film, TrendingUp } from "lucide-react";
 
 const CaseStudyModal = ({ open, onClose }) => {
   if (!open) return null;
@@ -47,12 +45,31 @@ const CaseStudyModal = ({ open, onClose }) => {
                 Full-Stack & Multiverse Mission Logs
               </h3>
               <p className="text-comic-ink/60 text-xs mt-1 leading-relaxed">
-                Detailed breakdowns of web applications, e-commerce platforms, 3D game engines, and creative editing.
+                Detailed breakdowns of web applications, quantitative ML systems, e-commerce platforms, 3D game engines, and creative editing.
               </p>
             </div>
 
             {/* PROJECT LOG CARDS GRID */}
             <div className="space-y-3 sm:space-y-4">
+              {/* 0. Stock Prediction & Quant ML System */}
+              <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 comic-chip">
+                <div className="flex items-center gap-2 mb-1">
+                  <TrendingUp size={14} className="text-spider-red shrink-0" />
+                  <span className="text-[10px] font-black text-spider-red uppercase tracking-wider">
+                    MISSION 00: QUANTITATIVE STOCK PREDICTION & ML SYSTEM
+                  </span>
+                </div>
+                <p className="text-comic-ink/80 text-xs leading-relaxed">
+                  End-to-end quantitative financial ML terminal predicting directional market movements with zero lookahead bias, walk-forward validation, and realistic fee & slippage backtesting.
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <span className="text-[9px] font-bold bg-spider-red/20 text-spider-red px-2 py-0.5 comic-chip">Python 3.12</span>
+                  <span className="text-[9px] font-bold bg-spider-red/20 text-spider-red px-2 py-0.5 comic-chip">Streamlit</span>
+                  <span className="text-[9px] font-bold bg-spider-red/20 text-spider-red px-2 py-0.5 comic-chip">XGBoost & LightGBM</span>
+                  <span className="text-[9px] font-bold bg-spider-red/20 text-spider-red px-2 py-0.5 comic-chip">Backtesting Engine</span>
+                </div>
+              </div>
+
               {/* 1. Fersya Shop */}
               <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 comic-chip">
                 <div className="flex items-center gap-2 mb-1">
