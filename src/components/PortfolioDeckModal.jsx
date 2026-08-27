@@ -195,14 +195,16 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
                 "radial-gradient(circle at 10% 10%, rgba(211,31,31,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(22,93,255,0.05) 0%, transparent 40%)",
             }}
           >
-            {/* Slide Halftone Background Accent */}
-            <div
-              className="absolute inset-0 opacity-[0.07] pointer-events-none"
-              style={{
-                backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
-                backgroundSize: "14px 14px",
-              }}
-            />
+            {/* Slide Halftone Background Accent (Disabled for last 2 slides) */}
+            {currentSlide < 3 && (
+              <div
+                className="absolute inset-0 opacity-[0.07] pointer-events-none"
+                style={{
+                  backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                  backgroundSize: "14px 14px",
+                }}
+              />
+            )}
 
             {/* Slide Header Tag */}
             <div className="relative z-10 flex items-center justify-between border-b-2 border-comic-ink/20 pb-2.5 sm:pb-3">
@@ -296,8 +298,14 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
                 breakAfter: "page",
                 WebkitPrintColorAdjust: "exact",
                 printColorAdjust: "exact",
-                backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
-                backgroundSize: "18px 18px",
+                ...(index < 3
+                  ? {
+                      backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
+                      backgroundSize: "18px 18px",
+                    }
+                  : {
+                      backgroundImage: "none",
+                    }),
               }}
             >
               {/* Header */}
