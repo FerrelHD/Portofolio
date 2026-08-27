@@ -1762,8 +1762,8 @@ main>section:not(#hero) {
   body {
     width: 100% !important;
     height: auto !important;
-    background: #111318 !important;
-    color: #F0EDE3 !important;
+    background: #EDEAE2 !important;
+    color: #1A1A1A !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     overflow: visible !important;
@@ -1789,7 +1789,7 @@ main>section:not(#hero) {
     display: block !important;
     width: 100% !important;
     height: auto !important;
-    background: #111318 !important;
+    background: #EDEAE2 !important;
   }
 
   .print-slide-page {
@@ -1798,12 +1798,12 @@ main>section:not(#hero) {
     page-break-after: always !important;
     break-after: page !important;
     box-sizing: border-box !important;
-    padding: 32px 48px !important;
+    padding: 24px 36px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    background: #111318 !important;
-    color: #F0EDE3 !important;
+    background: #EDEAE2 !important;
+    color: #1A1A1A !important;
     overflow: hidden !important;
   }
 }

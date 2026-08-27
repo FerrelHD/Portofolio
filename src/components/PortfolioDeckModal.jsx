@@ -33,22 +33,22 @@ const SLIDES = [
     id: 1,
     category: "EXECUTIVE BRIEF",
     title: "Ferrel Rashad Akeyla",
-    subtitle: "Spider-Dev · Full-Stack Web Developer & Game Designer",
-    tagline: "Your Neighborhood Developer — Bridging cinematic storytelling with modern, high-performance software engineering.",
+    subtitle: "Full-Stack Web Developer · Quant ML Builder · Creative Technologist",
+    tagline: "Bridging modern web architectures, quantitative intelligence, and immersive digital experiences.",
     type: "cover",
   },
   {
     id: 2,
     category: "01 // CORE ARSENAL",
     title: "Technical Capabilities & Stack",
-    subtitle: "End-to-end engineering from reactive frontends to game physics & media pipelines.",
+    subtitle: "End-to-end engineering from reactive frontends & ML pipelines to robust backends & 3D systems.",
     type: "skills",
   },
   {
     id: 3,
-    category: "02 // WEB MISSIONS",
-    title: "Featured Web Applications",
-    subtitle: "Production-ready platforms built for performance, conversion, and fluid UX.",
+    category: "02 // FEATURED SYSTEMS",
+    title: "Featured Web & Quant Systems",
+    subtitle: "Production-ready platforms built for performance, business impact, and zero-latency UX.",
     type: "web-projects",
   },
   {
@@ -62,7 +62,7 @@ const SLIDES = [
     id: 5,
     category: "04 // CONTACT & DISPATCH",
     title: "Let's Build Something Great",
-    subtitle: "Available for full-stack web roles, freelance projects, and creative collaborations.",
+    subtitle: "Available for full-stack engineering roles, freelance software development, and client collaborations.",
     type: "contact",
   },
 ];
@@ -164,7 +164,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               title="Print Dialog"
             >
               <Printer size={14} />
-              <span>Print</span>
+              <span>Print / Save PDF</span>
             </button>
 
             {/* Close Button */}
@@ -177,8 +177,6 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
             </button>
           </div>
         </div>
-
-
 
         {/* MAIN SLIDE VIEW CONTAINER (Screen View) */}
         <div
@@ -213,7 +211,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
                   {SLIDES[currentSlide].category}
                 </span>
                 <span className="text-[10px] sm:text-xs font-bold text-comic-ink/50 uppercase tracking-wider hidden sm:inline">
-                  CONFIDENTIAL DOSSIER
+                  CONFIDENTIAL EXECUTIVE DOSSIER
                 </span>
               </div>
               <span className="text-xs sm:text-sm font-black text-spider-red">
@@ -273,7 +271,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
           {/* Next Button */}
           <button
             onClick={nextSlide}
-            className="flex items-center gap-1.5 bg-spider-yellow text-spider-black hover:bg-spider-red hover:text-comic-ink px-3 sm:px-4 py-1.5 text-xs font-black uppercase tracking-wider comic-chip transition-colors"
+            className="flex items-center gap-1.5 bg-spider-yellow text-spider-black hover:bg-spider-red hover:text-white px-3 sm:px-4 py-1.5 text-xs font-black uppercase tracking-wider comic-chip transition-colors"
           >
             <span className="hidden sm:inline">Next</span>
             <ChevronRight size={16} />
@@ -282,7 +280,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
 
         {/* =========================================================================
             DEDICATED FULL PRINT & AUTO-DOWNLOAD DECK CONTAINER
-            - Offscreen in normal viewport for instant html2pdf.js capturing
+            - Offscreen in normal viewport for instant capturing
             - Block & full-size in @media print
            ========================================================================= */}
         <div
@@ -292,7 +290,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
           {SLIDES.map((slide, index) => (
             <div
               key={`print-slide-${slide.id}`}
-              className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-10 box-border flex flex-col justify-between bg-[#EDEAE2] text-[#1A1A1A] relative"
+              className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-8 box-border flex flex-col justify-between bg-[#EDEAE2] text-[#1A1A1A] relative"
               style={{
                 pageBreakAfter: "always",
                 breakAfter: "page",
@@ -303,7 +301,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between border-b-2 border-[#1A1A1A]/20 pb-3">
+              <div className="flex items-center justify-between border-b-2 border-[#1A1A1A]/20 pb-2.5">
                 <div className="flex items-center gap-3">
                   <span className="bg-[#FFD500] text-[#1A1A1A] px-3 py-0.5 text-xs font-black uppercase tracking-widest rounded-sm border-2 border-[#1A1A1A]">
                     {slide.category}
@@ -318,12 +316,12 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               </div>
 
               {/* Main Slide Content */}
-              <div className="flex-1 flex flex-col justify-center my-6">
+              <div className="flex-1 flex flex-col justify-center my-4">
                 {renderSlideContent(slide)}
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between border-t-2 border-[#1A1A1A]/20 pt-3 text-xs font-bold text-[#1A1A1A]/60">
+              <div className="flex items-center justify-between border-t-2 border-[#1A1A1A]/20 pt-2.5 text-xs font-bold text-[#1A1A1A]/60">
                 <span>Ferrel Rashad Akeyla — Digital Portfolio Pitch Deck</span>
                 <span>West Java, Indonesia | 2026 Edition</span>
               </div>
@@ -332,55 +330,67 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
         </div>
       </div>
     </AnimatePresence>
-
   );
 };
 
 /* =========================================================================
-   HELPER: RENDER SLIDE CONTENT BY TYPE
+   HELPER: RENDER SLIDE CONTENT BY TYPE (OPTIMIZED FOR RECRUITERS & CLIENTS)
    ========================================================================= */
 function renderSlideContent(slide) {
   switch (slide.type) {
     case "cover":
       return (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
-          <div className="md:col-span-7 space-y-3 sm:space-y-4">
-            <div className="inline-block bg-spider-red text-white px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border-2 border-black rounded-sm shadow-[2px_2px_0_#000]">
-              MISSION BRIEF & EXECUTIVE DOSSIER
+          <div className="md:col-span-7 space-y-3 sm:space-y-3.5">
+            <div className="inline-flex items-center gap-2 bg-spider-red text-white px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border-2 border-black rounded-sm shadow-[2px_2px_0_#000]">
+              <span className="w-2 h-2 rounded-full bg-spider-yellow animate-ping" />
+              EXECUTIVE DOSSIER & PROFILE
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight text-comic-ink comic-stroke-thin leading-none">
               FERREL RASHAD <span className="text-spider-red">AKEYLA</span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg font-bold text-spider-red tracking-wide">
-              Spider-Dev · Full-Stack Web Developer & Game Designer
+              Full-Stack Web Developer · Quant ML Builder · Creative Technologist
             </p>
-            <p className="text-xs sm:text-sm text-comic-ink/80 max-w-2xl leading-relaxed">
-              Your Neighborhood Developer — crafting immersive web platforms, interactive game environments, and cinematic multimedia with high aesthetic fidelity and clean engineering.
+            <p className="text-xs sm:text-sm text-comic-ink/85 max-w-2xl leading-relaxed">
+              Transforming ambitious product ideas into high-converting web applications, automated business backoffices, and intelligent data systems. Proven record delivering full-stack software across React/Next.js, Laravel/Filament, Python/ML, and interactive 3D engines.
             </p>
+
+            {/* Strategic Value Pillars */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="bg-white/80 border border-black/20 p-2 rounded-sm shadow-[1px_1px_0_#000]">
+                <div className="text-[10px] font-black text-spider-red uppercase">01 // High Performance</div>
+                <div className="text-[10px] text-comic-ink/80 font-medium">60 FPS reactive UI & optimized server architecture</div>
+              </div>
+              <div className="bg-white/80 border border-black/20 p-2 rounded-sm shadow-[1px_1px_0_#000]">
+                <div className="text-[10px] font-black text-spider-blue uppercase">02 // Production Ready</div>
+                <div className="text-[10px] text-comic-ink/80 font-medium">End-to-end admin portals, webhooks & ML pipelines</div>
+              </div>
+            </div>
 
             {/* Quick Contact Badges */}
             <div className="flex flex-wrap gap-2 pt-1 text-[10px] sm:text-xs font-bold">
-              <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
-                <Mail size={13} className="text-spider-red" />
+              <span className="bg-comic-surface border border-comic-ink/20 px-2.5 py-1 rounded-sm flex items-center gap-1.5 shadow-[1px_1px_0_#000]">
+                <Mail size={12} className="text-spider-red" />
                 <span>ferrelrashadakeyla2014@gmail.com</span>
               </span>
-              <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
-                <Github size={13} className="text-spider-blue" />
+              <span className="bg-comic-surface border border-comic-ink/20 px-2.5 py-1 rounded-sm flex items-center gap-1.5 shadow-[1px_1px_0_#000]">
+                <Github size={12} className="text-spider-blue" />
                 <span>github.com/FerrelHD</span>
               </span>
-              <span className="bg-comic-surface border border-comic-ink/20 px-3 py-1.5 rounded-sm flex items-center gap-1.5">
-                <MapPin size={13} className="text-spider-red" />
+              <span className="bg-comic-surface border border-comic-ink/20 px-2.5 py-1 rounded-sm flex items-center gap-1.5 shadow-[1px_1px_0_#000]">
+                <MapPin size={12} className="text-spider-red" />
                 <span>West Java, Indonesia</span>
               </span>
             </div>
           </div>
 
-          {/* Right Column: Comic Social Transmission Card Template */}
+          {/* Right Column: Profile & Status Card */}
           <div className="md:col-span-5 hidden md:flex flex-col items-center justify-center select-none">
-            <div className="bg-[#FEFAE8] text-[#212121] border-[3.5px] border-[#212121] rounded-2xl p-3 sm:p-4 shadow-[6px_6px_0_#212121] w-full max-w-[280px]">
+            <div className="bg-[#FEFAE8] text-[#212121] border-[3.5px] border-[#212121] rounded-2xl p-3.5 shadow-[6px_6px_0_#212121] w-full max-w-[290px]">
               {/* Header: Avatar + User Info */}
               <div className="flex items-center gap-2.5 mb-2.5">
-                <div className="w-10 h-10 rounded-full border-2 border-[#212121] bg-[#165DFF] overflow-hidden shrink-0 shadow-[2px_2px_0_#000]">
+                <div className="w-11 h-11 rounded-full border-2 border-[#212121] bg-[#165DFF] overflow-hidden shrink-0 shadow-[2px_2px_0_#000]">
                   <img
                     src={ferrelPortrait}
                     alt="Ferrel Avatar"
@@ -391,146 +401,151 @@ function renderSlideContent(slide) {
                   <span className="inline-block bg-spider-yellow text-spider-black text-[11px] font-black uppercase px-2 py-0.5 border border-black shadow-[1px_1px_0_#000]">
                     Ferrel Rashad
                   </span>
-                  <div className="font-mono text-[9px] font-bold text-[#212121]/80 tracking-wider mt-0.5">
+                  <div className="font-mono text-[9.5px] font-bold text-[#212121]/80 tracking-wider mt-0.5">
                     @FerrelHD • Spider-Dev
                   </div>
                 </div>
               </div>
 
-              {/* Broadcast Screen with LIVE badge */}
-              <div className="relative w-full h-24 rounded-lg border-2 border-[#212121] bg-[#165DFF] overflow-hidden shadow-[2px_2px_0_#000] mb-2.5 flex flex-col items-center justify-center p-2 text-center">
+              {/* Status Banner */}
+              <div className="relative w-full h-22 rounded-lg border-2 border-[#212121] bg-[#165DFF] overflow-hidden shadow-[2px_2px_0_#000] mb-2 flex flex-col items-center justify-center p-2 text-center">
                 <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle,rgba(0,0,0,0.35)_1.5px,transparent_1.5px)] bg-[size:8px_8px] pointer-events-none" />
                 <div className="absolute top-1.5 right-1.5 bg-spider-red text-white text-[8px] font-black px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rounded-xs uppercase">
-                  LIVE ⚡
+                  OPEN ⚡
                 </div>
                 <div className="relative z-10">
                   <span className="bg-[#0D0D11] text-spider-yellow text-[8px] font-black px-2 py-0.5 border border-black rounded-xs uppercase tracking-widest inline-block mb-1">
-                    SPIDER-DEV TRANSMISSION FEED
+                    STATUS: AVAILABLE FOR HIRE
                   </span>
                   <div className="text-[11px] font-black text-white uppercase tracking-wider text-shadow">
-                    AVAILABLE FOR NEW MISSIONS
+                    FULL-STACK / FREELANCE / ROLES
                   </div>
                 </div>
               </div>
 
-              {/* Comic Speech Bubble */}
-              <div className="bg-[#FEFAE8] border-2 border-[#212121] rounded-lg p-2 text-[9px] font-extrabold text-[#212121] leading-tight mb-2.5 shadow-[1.5px_1.5px_0_#000]">
-                <span className="text-spider-red font-black">MEANWHILE...</span> READY TO BUILD HIGH-IMPACT WEB APPS, 3D GAME MECHANICS & CREATIVE DIGITAL SOLUTIONS!
+              {/* Pitch Highlight Box */}
+              <div className="bg-[#EDEAE2] border-2 border-[#212121] rounded-lg p-2 text-[9.5px] font-extrabold text-[#212121] leading-tight mb-2 shadow-[1.5px_1.5px_0_#000]">
+                <span className="text-spider-red font-black">EXECUTIVE SUMMARY:</span> Ready to architect responsive web apps, automated Laravel backoffices & applied machine learning dashboards.
               </div>
 
-              {/* Bottom Buttons */}
-              <div className="flex justify-between gap-1.5 text-[8.5px] font-black uppercase">
-                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">♥ 128</span>
-                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">💬 TRANSMIT</span>
-                <span className="bg-spider-yellow text-spider-black px-2 py-1 border border-[#212121] shadow-[1.5px_1.5px_0_#212121] rounded-xs">🔁 SHARE</span>
+              {/* Quick Metrics */}
+              <div className="grid grid-cols-3 gap-1 text-[8px] font-black uppercase text-center">
+                <div className="bg-spider-yellow text-spider-black py-1 border border-[#212121] shadow-[1px_1px_0_#000] rounded-xs">
+                  5+ SHIPPED
+                </div>
+                <div className="bg-white text-spider-black py-1 border border-[#212121] shadow-[1px_1px_0_#000] rounded-xs">
+                  60 FPS UX
+                </div>
+                <div className="bg-spider-red text-white py-1 border border-[#212121] shadow-[1px_1px_0_#000] rounded-xs">
+                  FULL-STACK
+                </div>
               </div>
             </div>
           </div>
         </div>
       );
 
-
     case "skills":
       return (
-        <div className="space-y-3 sm:space-y-4">
-          <div className="mb-2">
+        <div className="space-y-3">
+          <div className="mb-1">
             <div className="inline-block bg-spider-yellow text-black text-[10px] font-black uppercase px-2 py-0.5 border border-black shadow-[1px_1px_0_#000] mb-1">
-              CHAPTER 01 // ARSENAL
+              CHAPTER 01 // CORE COMPETENCIES
             </div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-              Technical Arsenal & Battle Toolchains
+              Technical Arsenal & Business Value Streams
             </h2>
-            <p className="text-xs sm:text-sm text-comic-ink/70">
-              Modern full-stack toolchains tailored for rapid deployment, high performance, and fluid user experience.
+            <p className="text-xs sm:text-sm text-comic-ink/75">
+              Production-tested tech stacks curated for rapid delivery, high performance, and measurable business ROI.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {/* Column 1: Frontend */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-yellow">
-              <div className="absolute -top-2.5 right-3 bg-spider-yellow text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rotate-2">
-                POW!
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+            {/* Column 1: Frontend Architecture */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-yellow shadow-[2px_2px_0_#000]">
+              <div className="absolute -top-2.5 right-2 bg-spider-yellow text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+                SPEED
               </div>
               <div>
-                <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center gap-1.5 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
                   <Code2 size={16} />
-                  <span>Frontend</span>
+                  <span>Frontend Architecture</span>
                 </div>
-                <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> React 19 & Next.js</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> TypeScript / Modern JS</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Tailwind CSS v4 & Vite</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Framer Motion (60 FPS)</li>
+                <ul className="space-y-1 text-[11px] text-comic-ink/85">
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> React 19 & Next.js</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> TypeScript / Modern JS</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> Tailwind CSS v4 & Vite</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> Framer Motion & GSAP</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
-                [FLUID REACTIVE UX]
+              <div className="mt-2.5 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-red">
+                → Ultra-fast, high-converting UX with 60 FPS animations.
               </div>
             </div>
 
-            {/* Column 2: Backend */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-blue">
-              <div className="absolute -top-2.5 right-3 bg-spider-blue text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-2">
-                ZAP!
+            {/* Column 2: Backend & Backoffice */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-blue shadow-[2px_2px_0_#000]">
+              <div className="absolute -top-2.5 right-2 bg-spider-blue text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+                ROBUST
               </div>
               <div>
-                <div className="flex items-center gap-2 text-spider-blue font-black text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center gap-1.5 text-spider-blue font-black text-xs uppercase tracking-wider mb-2">
                   <Cpu size={16} />
-                  <span>Backend & Data</span>
+                  <span>Backend & Backoffice</span>
                 </div>
-                <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Laravel 11 & PHP</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Filament Admin Panels</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> Supabase & PostgreSQL</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-blue">★</span> REST APIs & Webhooks</li>
+                <ul className="space-y-1 text-[11px] text-comic-ink/85">
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue font-bold">★</span> Laravel 11 & PHP</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue font-bold">★</span> Filament 3 Admin Panels</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue font-bold">★</span> Supabase & PostgreSQL</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-blue font-bold">★</span> REST APIs & Webhooks</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-blue">
-                [SCALABLE CLOUD DATA]
+              <div className="mt-2.5 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-blue">
+                → Automated operations, secure auth & admin suites.
               </div>
             </div>
 
-            {/* Column 3: Game Dev */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-red">
-              <div className="absolute -top-2.5 right-3 bg-spider-red text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] rotate-3">
-                BOOM!
+            {/* Column 3: Applied ML & Quant Analytics */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-red shadow-[2px_2px_0_#000]">
+              <div className="absolute -top-2.5 right-2 bg-spider-red text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+                DATA ML
               </div>
               <div>
-                <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
+                <div className="flex items-center gap-1.5 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
+                  <ShieldCheck size={16} />
+                  <span>Applied ML & Quant</span>
+                </div>
+                <ul className="space-y-1 text-[11px] text-comic-ink/85">
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> Python & Streamlit Apps</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> XGBoost & LightGBM</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> Time-Series & Backtesting</li>
+                  <li className="flex items-center gap-1.5"><span className="text-spider-red font-bold">★</span> Plotly Interactive Dashboards</li>
+                </ul>
+              </div>
+              <div className="mt-2.5 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-spider-red">
+                → Zero-leakage data modeling & actionable intelligence.
+              </div>
+            </div>
+
+            {/* Column 4: 3D Systems & Multimedia */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between relative border-t-4 border-t-emerald-600 shadow-[2px_2px_0_#000]">
+              <div className="absolute -top-2.5 right-2 bg-emerald-600 text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000]">
+                MEDIA
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 text-emerald-700 font-black text-xs uppercase tracking-wider mb-2">
                   <Gamepad2 size={16} />
-                  <span>3D Game Systems</span>
+                  <span>3D Games & Multimedia</span>
                 </div>
-                <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Unity 3D & C# Scripting</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Rigidbody & Physics Engine</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Roblox Studio (Luau)</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> 60 FPS Mobile Optimization</li>
+                <ul className="space-y-1 text-[11px] text-comic-ink/85">
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Unity 3D & C# Scripting</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Roblox Studio & Luau</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Vegas Pro 18 Video Editing</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Figma UI/UX Design</li>
                 </ul>
               </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
-                [PHYSICS GAME LOOPS]
-              </div>
-            </div>
-
-            {/* Column 4: Multimedia & Design */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3.5 sm:p-4 rounded-sm flex flex-col justify-between relative border-t-4 border-t-spider-yellow">
-              <div className="absolute -top-2.5 right-3 bg-spider-yellow text-black font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000] -rotate-1">
-                ACTION!
-              </div>
-              <div>
-                <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider mb-2">
-                  <Video size={16} />
-                  <span>Multimedia & UI</span>
-                </div>
-                <ul className="space-y-1.5 text-[11px] sm:text-xs text-comic-ink/80">
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Vegas Pro 18 Video Editing</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Blender 3D Assets</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Figma Design Systems</li>
-                  <li className="flex items-center gap-1.5"><span className="text-spider-red">★</span> Sound Design & FX Audio</li>
-                </ul>
-              </div>
-              <div className="mt-3 pt-2 border-t border-comic-ink/10 text-[9px] font-mono font-bold text-spider-red">
-                [CINEMATIC STORYTELLING]
+              <div className="mt-2.5 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-emerald-700">
+                → Gamified products, 60 FPS physics & motion media.
               </div>
             </div>
           </div>
@@ -539,158 +554,159 @@ function renderSlideContent(slide) {
 
     case "web-projects":
       return (
-        <div className="space-y-2 sm:space-y-2.5">
-          <div className="mb-1">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-              Featured Web & Quant Missions
-            </h2>
-            <p className="text-[11px] sm:text-xs text-comic-ink/70">
-              Quantitative ML analytics, robust e-commerce, real-time productivity platforms, and scalable digital storefronts.
-            </p>
+        <div className="space-y-2">
+          <div className="mb-1 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
+                Featured Web & Analytics Systems
+              </h2>
+              <p className="text-[11px] sm:text-xs text-comic-ink/75">
+                Structured case studies demonstrating end-to-end full-stack development, quantitative algorithms, and automated backoffices.
+              </p>
+            </div>
+            <span className="hidden sm:inline-block text-[10px] font-black uppercase bg-spider-yellow text-black px-2 py-0.5 border border-black">
+              STAR CASE STUDIES
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5">
             {/* Project 1: Stock Prediction System */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={stockPrediction}
                     alt="Stock Prediction System Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[8.5px] font-black bg-spider-red text-white px-1.5 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-red text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     Quant ML
                   </span>
-                  <span className="text-[8.5px] font-bold text-comic-ink/50">Python ML</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Python / Streamlit</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Stock ML System
+                  Stock ML Analytics
                 </h3>
-                <p className="text-[9.5px] text-comic-ink/80 mb-1.5 leading-tight line-clamp-2">
-                  Institutional-grade quant financial terminal with zero lookahead bias and fee-adjusted backtesting.
-                </p>
-                <div className="space-y-0.5 text-[9.5px] text-comic-ink/70 mb-1.5">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={11} className="text-spider-red shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">XGBoost, LightGBM & Walk-Forward.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Zero-leakage market direction forecasting & friction-adjusted backtesting.</p>
+                  <p><strong>Solution:</strong> 20+ technical indicators, XGBoost/LightGBM, and fee simulation (0.15%).</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Walk-forward validation & Sharpe metrics.</span>
                 </div>
               </div>
-              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap">
-                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.5 rounded-xs border border-black">Python</span>
-                <span className="text-[7.5px] font-black uppercase bg-[#FF4B4B] text-white px-1 py-0.5 rounded-xs border border-black">Streamlit</span>
-                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.5 rounded-xs border border-black">XGBoost</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">Python</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#FF4B4B] text-white px-1 py-0.2 rounded-xs border border-black">Streamlit</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">XGBoost</span>
               </div>
             </div>
 
             {/* Project 2: Fersya Shop */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={fersyaShop}
                     alt="Fersya Shop Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[8.5px] font-black bg-spider-red text-white px-1.5 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-blue text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     E-Commerce
                   </span>
-                  <span className="text-[8.5px] font-bold text-comic-ink/50">Full-Stack</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Laravel 11</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Fersya Shop
+                  Fersya Shop & Admin
                 </h3>
-                <p className="text-[9.5px] text-comic-ink/80 mb-1.5 leading-tight line-clamp-2">
-                  Modern e-commerce platform for healthy foods and organic body care products.
-                </p>
-                <div className="space-y-0.5 text-[9.5px] text-comic-ink/70 mb-1.5">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={11} className="text-spider-red shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">Filament admin panel for stock & webhooks.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Modern organic food storefront with streamlined non-tech admin controls.</p>
+                  <p><strong>Solution:</strong> Modular Laravel 11 platform with Filament 3 backend for live stock & orders.</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-blue flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Automated inventory & mobile checkout.</span>
                 </div>
               </div>
-              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap">
-                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.5 rounded-xs border border-black">Laravel 11</span>
-                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.5 rounded-xs border border-black">Filament 3</span>
-                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.5 rounded-xs border border-black">Tailwind</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.2 rounded-xs border border-black">Laravel 11</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">Filament 3</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Tailwind</span>
               </div>
             </div>
 
             {/* Project 3: Student Life */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={studentLife}
                     alt="Student Life Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[8.5px] font-black bg-spider-blue text-white px-1.5 py-0.5 uppercase tracking-wider rounded-sm">
-                    Productivity
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-emerald-600 text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
+                    Productivity SaaS
                   </span>
-                  <span className="text-[8.5px] font-bold text-comic-ink/50">React + Supabase</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">React 19</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Student Life
+                  Student Life App
                 </h3>
-                <p className="text-[9.5px] text-comic-ink/80 mb-1.5 leading-tight line-clamp-2">
-                  Task management and academic schedule tracking suite for high-efficiency students.
-                </p>
-                <div className="space-y-0.5 text-[9.5px] text-comic-ink/70 mb-1.5">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={11} className="text-spider-red shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">Real-time task sync & Supabase auth.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Academic task planner with real-time multi-device cloud synchronization.</p>
+                  <p><strong>Solution:</strong> Type-safe React 19 architecture with Supabase Auth, PostgreSQL & daily calendar.</p>
+                </div>
+                <div className="text-[9px] font-bold text-emerald-700 flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Zero-latency state sync & clean UX.</span>
                 </div>
               </div>
-              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap">
-                <span className="text-[7.5px] font-black uppercase bg-[#00D8FF] text-black px-1 py-0.5 rounded-xs border border-black">React 19</span>
-                <span className="text-[7.5px] font-black uppercase bg-[#3178C6] text-white px-1 py-0.5 rounded-xs border border-black">TypeScript</span>
-                <span className="text-[7.5px] font-black uppercase bg-[#10B981] text-black px-1 py-0.5 rounded-xs border border-black">Supabase</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-[#00D8FF] text-black px-1 py-0.2 rounded-xs border border-black">React 19</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#3178C6] text-white px-1 py-0.2 rounded-xs border border-black">TypeScript</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#10B981] text-white px-1 py-0.2 rounded-xs border border-black">Supabase</span>
               </div>
             </div>
 
-            {/* Project 4: Finesser Shop */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between">
+            {/* Project 4: Spider-Dev Portfolio Platform */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={finesserShop}
-                    alt="Finesser Shop Preview"
+                    alt="Spider-Dev Portfolio Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[8.5px] font-black bg-spider-yellow text-black px-1.5 py-0.5 uppercase tracking-wider rounded-sm">
-                    Storefront
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-yellow text-black px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
+                    Interactive Web
                   </span>
-                  <span className="text-[8.5px] font-bold text-comic-ink/50">Full-Stack</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Creative Tech</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Finesser Shop
+                  Spider-Dev Platform
                 </h3>
-                <p className="text-[9.5px] text-comic-ink/80 mb-1.5 leading-tight line-clamp-2">
-                  Digital asset marketplace offering templates, design kits, and creative tools.
-                </p>
-                <div className="space-y-0.5 text-[9.5px] text-comic-ink/70 mb-1.5">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={11} className="text-spider-red shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">Instant licensing delivery pipelines.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> High-impact developer portfolio showcasing creative and technical excellence.</p>
+                  <p><strong>Solution:</strong> GSAP ScrollTrigger 60 FPS parallax, procedural Web Audio sound, & recruiter modes.</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Hardware-accelerated web performance.</span>
                 </div>
               </div>
-              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap">
-                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.5 rounded-xs border border-black">Laravel</span>
-                <span className="text-[7.5px] font-black uppercase bg-[#00758F] text-white px-1 py-0.5 rounded-xs border border-black">MySQL</span>
-                <span className="text-[7.5px] font-black uppercase bg-[#A259FF] text-white px-1 py-0.5 rounded-xs border border-black">Bootstrap</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.2 rounded-xs border border-black">React 19</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">GSAP</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Web Audio</span>
               </div>
             </div>
           </div>
@@ -699,21 +715,21 @@ function renderSlideContent(slide) {
 
     case "game-projects":
       return (
-        <div className="space-y-2.5 sm:space-y-3">
+        <div className="space-y-2.5">
           <div className="mb-1">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-              Interactive Game Systems & Multimedia
+              Interactive 3D Game Systems & Multimedia
             </h2>
-            <p className="text-[11px] sm:text-xs text-comic-ink/70">
-              3D gameplay engineering, atmospheric trail simulations, and rhythmic motion video production.
+            <p className="text-[11px] sm:text-xs text-comic-ink/75">
+              Real-time physics engines, terrain simulation worlds, and precision audio-visual motion media.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3">
             {/* Item 1: Street Rush */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={streetRush}
                     alt="Street Rush Preview"
@@ -722,34 +738,34 @@ function renderSlideContent(slide) {
                 </div>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[9px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
-                    Unity 3D Game
+                    Unity 3D Engine
                   </span>
-                  <span className="text-[9px] font-bold text-comic-ink/50">C# Physics</span>
+                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">C# Physics</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
-                  Street Rush
+                  Street Rush (Mobile 3D)
                 </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
-                  Fast-paced 3D arcade runner game engineered with Unity and custom C# physics.
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
+                  Fast-paced 3D arcade runner with custom rigidbodies, dynamic obstacle spawner algorithms, and steady 60 FPS mobile performance.
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
                     <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Steady 60 FPS mobile performance.</span>
+                    <span>Optimized collision matrices & memory management.</span>
                   </div>
                 </div>
               </div>
               <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
                 <span className="text-[8.5px] font-black uppercase bg-white text-black px-1.5 py-0.5 rounded-xs border border-black">Unity Engine</span>
-                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">C# Physics</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">C# Scripts</span>
                 <span className="text-[8.5px] font-black uppercase bg-emerald-500 text-black px-1.5 py-0.5 rounded-xs border border-black">60 FPS</span>
               </div>
             </div>
 
             {/* Item 2: Gunung Gede Simulation */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={gunungGede}
                     alt="Gunung Gede Preview"
@@ -760,18 +776,18 @@ function renderSlideContent(slide) {
                   <span className="text-[9px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
                     Roblox Simulation
                   </span>
-                  <span className="text-[9px] font-bold text-comic-ink/50">Luau Code</span>
+                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">Luau Code</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
-                  Gunung Gede Trail
+                  Gunung Gede Trail (3D)
                 </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
-                  Immersive 3D hiking simulation recreating Mount Gede's Gunung Putri trail.
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
+                  Immersive 3D hiking simulation recreating Mount Gede's Gunung Putri trail with accurate elevation terrain and lighting cycles.
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
                     <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Realistic terrain & day/night lighting.</span>
+                    <span>Realistic terrain physics & stamina mechanics.</span>
                   </div>
                 </div>
               </div>
@@ -783,9 +799,9 @@ function renderSlideContent(slide) {
             </div>
 
             {/* Item 3: Cinematic Video Production */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between">
+            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[2px_2px_0_#000] bg-black">
+                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src="https://img.youtube.com/vi/WMrnRucy0qs/maxresdefault.jpg"
                     alt="Cinematic AMV Preview"
@@ -793,27 +809,27 @@ function renderSlideContent(slide) {
                   />
                 </div>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[9px] font-black bg-emerald-500 text-black px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                  <span className="text-[9px] font-black bg-emerald-600 text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
                     Video & Motion
                   </span>
-                  <span className="text-[9px] font-bold text-comic-ink/50">Vegas Pro</span>
+                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">Vegas Pro 18</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
-                  Cinematic AMVs
+                  Cinematic Motion & AMVs
                 </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed line-clamp-2">
-                  High-tempo anime music videos featuring precise audio-visual beat sync.
+                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
+                  High-tempo video edits featuring frame-accurate audio-visual beat sync, rhythm transitions, and stylized color grading.
                 </p>
                 <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
                   <div className="flex items-start gap-1">
                     <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Frank Ocean & Playboi Carti vocal sync.</span>
+                    <span>Microsecond beat synchronization & speed ramping.</span>
                   </div>
                 </div>
               </div>
               <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
-                <span className="text-[8.5px] font-black uppercase bg-emerald-500 text-black px-1.5 py-0.5 rounded-xs border border-black">Vegas Pro 18</span>
-                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Beat Timing</span>
+                <span className="text-[8.5px] font-black uppercase bg-emerald-600 text-white px-1.5 py-0.5 rounded-xs border border-black">Vegas Pro 18</span>
+                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Beat Sync</span>
                 <span className="text-[8.5px] font-black uppercase bg-spider-yellow text-black px-1.5 py-0.5 rounded-xs border border-black">Color Grade</span>
               </div>
             </div>
@@ -821,37 +837,48 @@ function renderSlideContent(slide) {
         </div>
       );
 
-
     case "contact":
       return (
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-          <div className="md:col-span-7 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+          <div className="md:col-span-7 space-y-3 sm:space-y-3.5">
             <div className="inline-block bg-spider-yellow text-spider-black px-3 py-1 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] border-2 border-black rounded-sm shadow-[2px_2px_0_#000]">
-              READY FOR DEPLOYMENT
+              COLLABORATION & DISPATCH
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase text-comic-ink tracking-tight leading-tight">
-              Let's Build Something <span className="text-spider-red">Extraordinary</span>
+              Ready to Build Something <span className="text-spider-red">Extraordinary</span>?
             </h2>
-            <p className="text-xs sm:text-sm text-comic-ink/80 leading-relaxed">
-              Whether you're looking for a dedicated Full-Stack Web Developer, a Game Programmer, or a Creative Technical Partner, I'm ready to bring your vision to life.
+            <p className="text-xs sm:text-sm text-comic-ink/85 leading-relaxed">
+              Whether you need a dedicated Full-Stack Web Developer, a Quantitative/ML Builder, or a Creative Technical Partner, I deliver clean architecture and high-converting products on schedule.
             </p>
 
+            {/* Why Hire Ferrel Grid */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="bg-white/80 border border-black/20 p-2 rounded-sm shadow-[1px_1px_0_#000]">
+                <div className="text-[10px] font-black text-spider-red uppercase">⚡ High Velocity & Ownership</div>
+                <div className="text-[10px] text-comic-ink/80">From wireframe & Figma to production backend & deployment.</div>
+              </div>
+              <div className="bg-white/80 border border-black/20 p-2 rounded-sm shadow-[1px_1px_0_#000]">
+                <div className="text-[10px] font-black text-spider-blue uppercase">🛡️ Clean, Modern Code</div>
+                <div className="text-[10px] text-comic-ink/80">Maintainable React 19, TypeScript, Laravel 11 & Python.</div>
+              </div>
+            </div>
+
             {/* Direct Contact List */}
-            <div className="space-y-2 pt-2">
-              <div className="flex items-center gap-3 text-xs sm:text-sm font-bold text-comic-ink">
-                <div className="w-7 h-7 bg-spider-yellow text-spider-black flex items-center justify-center rounded-sm font-black text-xs">
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-center gap-2.5 text-xs font-bold text-comic-ink">
+                <div className="w-6 h-6 bg-spider-yellow text-spider-black flex items-center justify-center rounded-sm font-black text-xs shadow-[1px_1px_0_#000]">
                   @
                 </div>
                 <span>ferrelrashadakeyla2014@gmail.com</span>
               </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm font-bold text-comic-ink">
-                <div className="w-7 h-7 bg-spider-blue text-white flex items-center justify-center rounded-sm font-black text-xs">
+              <div className="flex items-center gap-2.5 text-xs font-bold text-comic-ink">
+                <div className="w-6 h-6 bg-spider-blue text-white flex items-center justify-center rounded-sm font-black text-xs shadow-[1px_1px_0_#000]">
                   GH
                 </div>
                 <span>github.com/FerrelHD</span>
               </div>
-              <div className="flex items-center gap-3 text-xs sm:text-sm font-bold text-comic-ink">
-                <div className="w-7 h-7 bg-spider-red text-white flex items-center justify-center rounded-sm font-black text-xs">
+              <div className="flex items-center gap-2.5 text-xs font-bold text-comic-ink">
+                <div className="w-6 h-6 bg-spider-red text-white flex items-center justify-center rounded-sm font-black text-xs shadow-[1px_1px_0_#000]">
                   IN
                 </div>
                 <span>linkedin.com/in/ferrel-rashad-8a165514b/</span>
@@ -859,28 +886,32 @@ function renderSlideContent(slide) {
             </div>
           </div>
 
-          <div className="md:col-span-5 bg-comic-surface border-4 border-spider-black p-5 sm:p-6 comic-chip space-y-3">
+          <div className="md:col-span-5 bg-comic-surface border-4 border-spider-black p-4 sm:p-5 comic-chip space-y-2.5 shadow-[4px_4px_0_#000]">
             <div className="flex items-center gap-2 text-spider-red font-black text-xs uppercase tracking-wider">
               <ShieldCheck size={16} />
-              <span>Status: Open for Opportunities</span>
+              <span>Status: Open for New Missions</span>
             </div>
-            <div className="space-y-2 text-xs font-bold text-comic-ink/80">
+            <div className="space-y-1.5 text-xs font-bold text-comic-ink/85">
               <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
-                <span>Roles:</span>
-                <span className="text-spider-red">Full-Stack / Frontend / Game</span>
+                <span className="text-comic-ink/60">Target Roles:</span>
+                <span className="text-spider-red">Full-Stack / Frontend / ML</span>
               </div>
               <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
-                <span>Work Model:</span>
-                <span className="text-comic-ink">Remote / Hybrid / Full-Time</span>
+                <span className="text-comic-ink/60">Engagement:</span>
+                <span className="text-comic-ink">Full-Time / Contract / Freelance</span>
               </div>
               <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
-                <span>Timezone:</span>
-                <span className="text-comic-ink">WIB (UTC+7)</span>
+                <span className="text-comic-ink/60">Work Model:</span>
+                <span className="text-comic-ink">Remote / Hybrid / On-site</span>
+              </div>
+              <div className="flex items-center justify-between pb-1 border-b border-comic-ink/10">
+                <span className="text-comic-ink/60">Timezone:</span>
+                <span className="text-comic-ink">WIB (UTC+7) · Flexible Overlap</span>
               </div>
             </div>
-            <div className="pt-2 text-center">
-              <span className="text-[10px] font-black uppercase tracking-widest text-spider-red">
-                ⚡ FAST RESPONSE GUARANTEE
+            <div className="pt-1.5 text-center bg-[#FFD500] border-2 border-black p-1.5 rounded-sm shadow-[1px_1px_0_#000]">
+              <span className="text-[10px] font-black uppercase tracking-widest text-black">
+                ⚡ 24-HOUR RESPONSE GUARANTEE
               </span>
             </div>
           </div>
