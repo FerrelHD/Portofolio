@@ -1806,6 +1806,11 @@ main>section:not(#hero) {
     color: #1A1A1A !important;
     overflow: hidden !important;
   }
+
+  .print-slide-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
 }
 
 /* ===================================================== */

@@ -20,12 +20,12 @@ import finesserShop from "../assets/Shop.webp";
 import fersyaShop from "../assets/fersya-shop.webp";
 import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
-import studentLife from "../assets/student-life.png";
-import stockPrediction from "../assets/stock-prediction.png";
+import studentLife from "../assets/student-life.webp";
+import stockPrediction from "../assets/stock-prediction.webp";
 import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";
-import spideyDevPortfolio from "../assets/spidey-dev-portfolio.png";
-import seismicTracker from "../assets/nusantar seismic tracker.png";
-import leclercPreview from "../assets/leclerc-preview.png";
+import spideyDevPortfolio from "../assets/spidey-dev-portfolio.webp";
+import seismicTracker from "../assets/nusantar-seismic-tracker.webp";
+import leclercPreview from "../assets/leclerc-preview.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -449,8 +449,8 @@ export default function Projects() {
     >
       <audio ref={audioRef} src={trackerSfx} preload="auto" />
 
-      {/* VIEWPORT CONTAINER (Sticky on Desktop, Clean Responsive Block on Mobile) */}
-      <div className="relative md:sticky md:top-0 md:h-screen w-full overflow-hidden flex flex-col justify-between pt-4 sm:pt-6 md:pt-20 lg:pt-24 pb-4 md:pb-6">
+      {/* VIEWPORT CONTAINER (Sticky on Desktop, Clean Responsive Block on Mobile with clearance for StickyComicTicker) */}
+      <div className="relative md:sticky md:top-0 md:h-screen w-full overflow-hidden flex flex-col justify-between pt-4 sm:pt-6 md:pt-14 lg:pt-16 pb-14 sm:pb-16 md:pb-18">
 
 
         {/* BACKGROUND GIANT MARQUEE */}
@@ -538,7 +538,7 @@ export default function Projects() {
         </div>
 
         {/* HORIZONTAL CARDS TRACK (WITH PARALLAX ENTRANCE ON DESKTOP & TOUCH-SWIPE ON MOBILE) */}
-        <div className="w-full relative z-10 my-auto py-2 sm:py-3 overflow-hidden">
+        <div className="w-full relative z-10 flex-1 min-h-0 flex items-center py-1 sm:py-2 md:py-2.5 overflow-hidden">
           <div
             ref={horizontalTrackRef}
             onScroll={(e) => {
@@ -551,29 +551,29 @@ export default function Projects() {
                 }
               }
             }}
-            className="flex flex-row flex-nowrap gap-4 sm:gap-6 px-4 sm:px-8 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform scrollbar-none snap-x snap-mandatory md:snap-none touch-pan-x"
+            className="flex flex-row flex-nowrap gap-4 sm:gap-6 px-4 sm:px-8 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform scrollbar-none snap-x snap-mandatory md:snap-none touch-pan-x h-full max-h-[440px] py-1"
           >
             {/* INITIAL RECON BRIEFING CARD (PIONEER STAGE) */}
-            <div className="project-card shrink-0 w-[80vw] max-w-[280px] md:w-[260px] lg:w-[300px] h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex flex-col justify-between relative overflow-hidden snap-center md:snap-align-none select-none will-change-transform">
+            <div className="project-card shrink-0 w-[80vw] max-w-[280px] md:w-[260px] lg:w-[290px] h-[360px] sm:h-[380px] md:h-full md:min-h-[320px] md:max-h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-3.5 sm:p-4 md:p-5 rounded-sm flex flex-col justify-between relative overflow-hidden snap-center md:snap-align-none select-none will-change-transform">
               <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
               <div className="relative z-10">
-                <span className="bg-spider-red text-white text-[8px] font-black uppercase px-2 py-0.5 border border-black rounded shadow-[1px_1px_0_#000] inline-block mb-2.5">
+                <span className="bg-spider-red text-white text-[8px] font-black uppercase px-2 py-0.5 border border-black rounded shadow-[1px_1px_0_#000] inline-block mb-2">
                   SECTOR RECON // ACTIVE
                 </span>
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-comic-ink mb-2">
+                <h3 className="text-lg sm:text-xl font-black uppercase tracking-tight text-comic-ink mb-1.5 sm:mb-2">
                   TOP-SECRET MISSION FILES
                 </h3>
-                <p className="text-[11px] sm:text-xs font-semibold leading-relaxed text-comic-ink/80 mb-3">
+                <p className="text-[10.5px] sm:text-[11px] md:text-xs font-semibold leading-relaxed text-comic-ink/80 mb-2 sm:mb-3 line-clamp-3">
                   Traverse classified deployments across Full Stack Web, Game Engineering, and Multimedia.
                 </p>
-                <div className="bg-spider-yellow text-spider-black p-2.5 border-2 border-black rounded shadow-[2px_2px_0_#000]">
-                  <p className="text-[9px] font-black uppercase tracking-wider">
+                <div className="bg-spider-yellow text-spider-black p-2 sm:p-2.5 border-2 border-black rounded shadow-[2px_2px_0_#000]">
+                  <p className="text-[8.5px] sm:text-[9px] font-black uppercase tracking-wider">
                     👉 SWIPE / SCROLL TO COMMENCE RECON
                   </p>
                 </div>
               </div>
 
-              <div className="relative z-10 pt-3 border-t-2 border-black/15 flex items-center justify-between text-[8.5px] font-black text-comic-ink/70">
+              <div className="relative z-10 pt-2 sm:pt-3 border-t-2 border-black/15 flex items-center justify-between text-[8px] sm:text-[8.5px] font-black text-comic-ink/70">
                 <span>{filteredProjects.length} DOSSIERS FOUND</span>
                 <span className="text-spider-red animate-pulse">● TRACKER ONLINE</span>
               </div>
@@ -598,7 +598,7 @@ export default function Projects() {
                     playSfx();
                     setSelectedBrief(project);
                   }}
-                  className="project-card group relative w-[82vw] max-w-[310px] md:w-[320px] lg:w-[360px] shrink-0 h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer snap-center md:snap-align-none select-none will-change-transform"
+                  className="project-card group relative w-[82vw] max-w-[310px] md:w-[310px] lg:w-[340px] shrink-0 h-[360px] sm:h-[380px] md:h-full md:min-h-[320px] md:max-h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-3.5 sm:p-4 md:p-4.5 cursor-pointer snap-center md:snap-align-none select-none will-change-transform"
                 >
                   {/* Background Card Image with Halftone */}
                   <div className="absolute inset-0 z-0 overflow-hidden">
@@ -653,7 +653,7 @@ export default function Projects() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg sm:text-xl font-black uppercase text-white tracking-tight leading-tight mb-2.5 sm:mb-3 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] line-clamp-3">
+                    <h3 className="text-base sm:text-lg md:text-xl font-black uppercase text-white tracking-tight leading-tight mb-2 sm:mb-2.5 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] line-clamp-2">
                       {project.title}
                     </h3>
 
@@ -666,7 +666,7 @@ export default function Projects() {
                           playSfx();
                           setSelectedBrief(project);
                         }}
-                        className="flex-1 py-2 px-2 text-center text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer truncate"
+                        className="flex-1 py-1.5 sm:py-2 px-2 text-center text-[8px] sm:text-[9px] md:text-[9.5px] font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer truncate"
                       >
                         BRIEF
                       </button>
@@ -682,7 +682,7 @@ export default function Projects() {
                           }}
                           title="View Source Code on GitHub"
                           aria-label={`Source code for ${project.title}`}
-                          className="p-2 bg-white hover:bg-gray-100 text-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center shrink-0"
+                          className="p-1.5 sm:p-2 bg-white hover:bg-gray-100 text-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center shrink-0"
                         >
                           <Github size={13} />
                         </a>
@@ -697,7 +697,7 @@ export default function Projects() {
                             e.stopPropagation();
                             playSfx();
                           }}
-                          className="px-2.5 sm:px-3 py-2 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider shrink-0"
+                          className="px-2 sm:px-2.5 md:px-3 py-1.5 sm:py-2 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[8px] sm:text-[9px] md:text-[9.5px] font-black uppercase tracking-wider shrink-0"
                         >
                           <span>{project.liveDemo ? "DEMO" : "LAUNCH"}</span>
                           {linkIcon}
@@ -710,7 +710,7 @@ export default function Projects() {
                             playSfx();
                             setSelectedBrief(project);
                           }}
-                          className="px-3 py-2 bg-white/70 text-black border-2 border-black text-[9px] font-black uppercase cursor-pointer shrink-0"
+                          className="px-2.5 sm:px-3 py-1.5 sm:py-2 bg-white/70 text-black border-2 border-black text-[8.5px] sm:text-[9px] font-black uppercase cursor-pointer shrink-0"
                         >
                           INFO
                         </button>
@@ -724,7 +724,7 @@ export default function Projects() {
         </div>
 
         {/* BOTTOM RADAR TICKER (ALIGNED TO RIGHT) */}
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-2 border-t-2 border-white/20 flex items-center justify-end text-[11px] font-bold text-white/80">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-1.5 pb-1 border-t-2 border-white/20 flex items-center justify-end text-[9.5px] sm:text-[11px] font-bold text-white/80 shrink-0">
           <span className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-ping inline-block" />
             TERMINAL ONLINE: SCROLL TO TRAVERSE {filteredProjects.length} MISSIONS

@@ -11,7 +11,7 @@ import HangingSpidey from "./HangingSpidey";
 gsap.registerPlugin(ScrollTrigger);
 
 const SPIDER_SUIT_URL = new URL(
-  "../assets/spidermancomicnew_Nero_AI_Image_Upscaler_Photo_Face.png",
+  "../assets/spidermancomicnew_Nero_AI_Image_Upscaler_Photo_Face.webp",
   import.meta.url
 ).href;
 

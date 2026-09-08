@@ -21,11 +21,13 @@ import { soundFX } from "../lib/soundFx";
 
 import ferrelPortrait from "../assets/ferrel-portrait.jpg";
 import fersyaShop from "../assets/fersya-shop.webp";
-import studentLife from "../assets/student-life.png";
-import finesserShop from "../assets/Shop.webp";
-import stockPrediction from "../assets/stock-prediction.png";
+import studentLife from "../assets/student-life.webp";
+import stockPrediction from "../assets/stock-prediction.webp";
 import streetRush from "../assets/street-rush.webp";
 import gunungGede from "../assets/image-1784710274754.webp";
+import seismicTracker from "../assets/nusantar-seismic-tracker.webp";
+import leclercPreview from "../assets/leclerc-preview.webp";
+import spideyDevPortfolio from "../assets/spidey-dev-portfolio.webp";
 
 
 const SLIDES = [
@@ -46,16 +48,16 @@ const SLIDES = [
   },
   {
     id: 3,
-    category: "02 // FEATURED SYSTEMS",
-    title: "Featured Web & Quant Systems",
-    subtitle: "Production-ready platforms built for performance, business impact, and zero-latency UX.",
+    category: "02 // FLAGSHIP SYSTEMS",
+    title: "Flagship Web, Geospatial & Quant Systems",
+    subtitle: "Production-ready platforms engineered for raw performance, institutional telemetry, and 60 FPS UX.",
     type: "web-projects",
   },
   {
     id: 4,
-    category: "03 // INTERACTIVE & 3D",
-    title: "Game Systems & Multimedia",
-    subtitle: "Real-time physics engines, simulation worlds, and high-impact motion media.",
+    category: "03 // SAAS & 3D SYSTEMS",
+    title: "Production SaaS, Backoffices & 3D Games",
+    subtitle: "Full-stack cloud applications, automated business backoffices, and real-time physics engines.",
     type: "game-projects",
   },
   {
@@ -67,7 +69,7 @@ const SLIDES = [
   },
 ];
 
-const PortfolioDeckModal = ({ isOpen, onClose }) => {
+const PortfolioDeckModal = ({ isOpen, onClose, isPrintOnly = false }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -98,7 +100,7 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
 
   // Keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || isPrintOnly) return;
 
     const handleKeyDown = (e) => {
       if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
@@ -108,21 +110,66 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
         e.preventDefault();
         prevSlide();
       } else if (e.key === "Escape") {
-        onClose();
+        onClose?.();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, nextSlide, prevSlide, onClose]);
+  }, [isOpen, isPrintOnly, nextSlide, prevSlide, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen && !isPrintOnly) return null;
+
+  if (isPrintOnly) {
+    return (
+      <div id="pdf-deck-standalone" className="w-[1200px] mx-auto bg-[#EDEAE2] text-[#1A1A1A] print-deck-root">
+        {SLIDES.map((slide, index) => (
+          <div
+            key={`standalone-slide-${slide.id}`}
+            className="print-slide-page w-[1200px] h-[675px] p-8 box-border flex flex-col justify-between bg-[#EDEAE2] text-[#1A1A1A] relative"
+            style={{
+              pageBreakAfter: index === SLIDES.length - 1 ? "avoid" : "always",
+              breakAfter: index === SLIDES.length - 1 ? "avoid" : "page",
+              WebkitPrintColorAdjust: "exact",
+              printColorAdjust: "exact",
+            }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b-2 border-[#1A1A1A]/20 pb-2.5">
+              <div className="flex items-center gap-3">
+                <span className="bg-[#FFD500] text-[#1A1A1A] px-3 py-0.5 text-xs font-black uppercase tracking-widest rounded-sm border-2 border-[#1A1A1A]">
+                  {slide.category}
+                </span>
+                <span className="text-xs font-bold text-[#1A1A1A]/60 uppercase tracking-widest">
+                  MISSION BRIEF & PORTFOLIO DECK
+                </span>
+              </div>
+              <span className="text-sm font-black text-[#D31F1F]">
+                0{index + 1} / 0{SLIDES.length}
+              </span>
+            </div>
+
+            {/* Main Slide Content */}
+            <div className="flex-1 flex flex-col justify-center my-4">
+              {renderSlideContent(slide)}
+            </div>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between border-t-2 border-[#1A1A1A]/20 pt-2.5 text-xs font-bold text-[#1A1A1A]/60">
+              <span>Ferrel Rashad Akeyla — Digital Portfolio Pitch Deck</span>
+              <span>West Java, Indonesia | 2026 Edition</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <AnimatePresence>
       {/* MODAL WRAPPER */}
       <div
-        className="fixed inset-0 z-[9990] bg-[#0A0B0E]/95 backdrop-blur-md flex flex-col justify-between p-2 sm:p-4 md:p-6 overflow-hidden select-none"
+        className="fixed inset-0 z-[9990] bg-[#0A0B0E]/95 backdrop-blur-md flex flex-col justify-between p-2 sm:p-4 md:p-6 overflow-hidden select-none modal-wrapper-deck print:static print:p-0 print:m-0 print:overflow-visible print:bg-transparent"
         onClick={onClose}
       >
         {/* TOP BAR / CONTROLS (Hidden during print) */}
@@ -294,18 +341,11 @@ const PortfolioDeckModal = ({ isOpen, onClose }) => {
               key={`print-slide-${slide.id}`}
               className="pdf-slide-break print-slide-page w-[1200px] h-[675px] print:w-[100vw] print:h-[100vh] p-8 box-border flex flex-col justify-between bg-[#EDEAE2] text-[#1A1A1A] relative"
               style={{
-                pageBreakAfter: "always",
-                breakAfter: "page",
+                pageBreakAfter: index === SLIDES.length - 1 ? "avoid" : "always",
+                breakAfter: index === SLIDES.length - 1 ? "avoid" : "page",
                 WebkitPrintColorAdjust: "exact",
                 printColorAdjust: "exact",
-                ...(index < 3
-                  ? {
-                      backgroundImage: "radial-gradient(circle, #1A1A1A 1px, transparent 1px)",
-                      backgroundSize: "18px 18px",
-                    }
-                  : {
-                      backgroundImage: "none",
-                    }),
+                backgroundImage: "none",
               }}
             >
               {/* Header */}
@@ -535,25 +575,25 @@ function renderSlideContent(slide) {
               </div>
             </div>
 
-            {/* Column 4: 3D Systems & Multimedia */}
+            {/* Column 4: Interactive 3D & Creative Tech */}
             <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between relative border-t-4 border-t-emerald-600 shadow-[2px_2px_0_#000]">
               <div className="absolute -top-2.5 right-2 bg-emerald-600 text-white font-black text-[9px] px-1.5 py-0.5 border border-black shadow-[1px_1px_0_#000]">
-                MEDIA
+                3D & TECH
               </div>
               <div>
                 <div className="flex items-center gap-1.5 text-emerald-700 font-black text-xs uppercase tracking-wider mb-2">
                   <Gamepad2 size={16} />
-                  <span>3D Games & Multimedia</span>
+                  <span>Interactive 3D & Tech</span>
                 </div>
                 <ul className="space-y-1 text-[11px] text-comic-ink/85">
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Unity 3D & C# Scripting</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Roblox Studio & Luau</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Vegas Pro 18 Video Editing</li>
-                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Figma UI/UX Design</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Unity 3D & C# Physics</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Roblox Studio & Luau Scripts</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> HTML5 Canvas 2D / WebGL</li>
+                  <li className="flex items-center gap-1.5"><span className="text-emerald-700 font-bold">★</span> Figma UI/UX Design Systems</li>
                 </ul>
               </div>
               <div className="mt-2.5 pt-2 border-t border-comic-ink/10 text-[9px] font-bold text-emerald-700">
-                → Gamified products, 60 FPS physics & motion media.
+                → Real-time physics engines, simulation worlds & 60 FPS UX.
               </div>
             </div>
           </div>
@@ -566,19 +606,91 @@ function renderSlideContent(slide) {
           <div className="mb-1 flex items-center justify-between">
             <div>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-                Featured Web & Analytics Systems
+                Flagship Web, Geospatial & Quant Systems
               </h2>
               <p className="text-[11px] sm:text-xs text-comic-ink/75">
-                Structured case studies demonstrating end-to-end full-stack development, quantitative algorithms, and automated backoffices.
+                Research-grade observatories, high-performance motorsport showcases, and institutional-grade financial telemetry.
               </p>
             </div>
             <span className="hidden sm:inline-block text-[10px] font-black uppercase bg-spider-yellow text-black px-2 py-0.5 border border-black">
-              STAR CASE STUDIES
+              FLAGSHIP CASES
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5">
-            {/* Project 1: Stock Prediction System */}
+            {/* Project 1: Nusantara Crustal Observatory */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
+              <div>
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
+                  <img
+                    src={seismicTracker}
+                    alt="Nusantara Observatory Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-red text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
+                    Geospatial / Hazard
+                  </span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">React 19 / Canvas 2D</span>
+                </div>
+                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
+                  Nusantara Observatory
+                </h3>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Research-grade planetary hazard monitoring across Indonesia with sub-millimeter 2D Canvas vector cartography.</p>
+                  <p><strong>Solution:</strong> Multi-agency live pipelines (USGS, BMKG AutoGempa, NASA FIRMS thermal & PVMBG alerts).</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">60 FPS vector map, 4D replay & Haversine proximity.</span>
+                </div>
+              </div>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-[#00D8FF] text-black px-1 py-0.2 rounded-xs border border-black">React 19</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#3178C6] text-white px-1 py-0.2 rounded-xs border border-black">TypeScript</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#FF6F00] text-white px-1 py-0.2 rounded-xs border border-black">Canvas 2D</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#10B981] text-white px-1 py-0.2 rounded-xs border border-black">NASA FIRMS</span>
+              </div>
+            </div>
+
+            {/* Project 2: Charles Leclerc #16 Scuderia Ferrari */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
+              <div>
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
+                  <img
+                    src={leclercPreview}
+                    alt="Charles Leclerc Showcase Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-[#C41212] text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
+                    Luxury Web
+                  </span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">GSAP / Physics</span>
+                </div>
+                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
+                  Charles Leclerc #16
+                </h3>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Cinematic motorsport showcase celebrating F1 driver Charles Leclerc & Scuderia Ferrari HP.</p>
+                  <p><strong>Solution:</strong> Fluid Ribbon Trail velocity physics, Canvas 2D Simplex Noise, & Monaco GP telemetry HUD.</p>
+                </div>
+                <div className="text-[9px] font-bold text-[#C41212] flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Sub-step Bézier trail physics at 60–120 FPS.</span>
+                </div>
+              </div>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-[#00D8FF] text-black px-1 py-0.2 rounded-xs border border-black">React</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">GSAP</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Motion</span>
+                <span className="text-[7.5px] font-black uppercase bg-[#C41212] text-white px-1 py-0.2 rounded-xs border border-black">Telemetry</span>
+              </div>
+            </div>
+
+            {/* Project 3: Stock Prediction System */}
             <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
                 <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
@@ -598,7 +710,7 @@ function renderSlideContent(slide) {
                   Stock ML Analytics
                 </h3>
                 <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
-                  <p><strong>Goal:</strong> Zero-leakage market direction forecasting & friction-adjusted backtesting.</p>
+                  <p><strong>Goal:</strong> Zero-lookahead market direction forecasting & realistic financial friction backtesting.</p>
                   <p><strong>Solution:</strong> 20+ technical indicators, XGBoost/LightGBM, and fee simulation (0.15%).</p>
                 </div>
                 <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
@@ -610,10 +722,68 @@ function renderSlideContent(slide) {
                 <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">Python</span>
                 <span className="text-[7.5px] font-black uppercase bg-[#FF4B4B] text-white px-1 py-0.2 rounded-xs border border-black">Streamlit</span>
                 <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">XGBoost</span>
+                <span className="text-[7.5px] font-black uppercase bg-emerald-600 text-white px-1 py-0.2 rounded-xs border border-black">Scikit</span>
               </div>
             </div>
 
-            {/* Project 2: Fersya Shop */}
+            {/* Project 4: Spider-Dev Platform */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
+              <div>
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
+                  <img
+                    src={spideyDevPortfolio}
+                    alt="Spider-Dev Portfolio Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-yellow text-black px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
+                    Creative Tech
+                  </span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">React 19 / GSAP</span>
+                </div>
+                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
+                  Spider-Dev Platform
+                </h3>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> High-impact developer portfolio showcasing creative frontend and audio architectures.</p>
+                  <p><strong>Solution:</strong> GSAP ScrollTrigger 60 FPS parallax, procedural Web Audio sound & comic design system.</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Hardware-accelerated web performance.</span>
+                </div>
+              </div>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.2 rounded-xs border border-black">React 19</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">GSAP</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Web Audio</span>
+                <span className="text-[7.5px] font-black uppercase bg-emerald-600 text-white px-1 py-0.2 rounded-xs border border-black">Tailwind</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+    case "game-projects":
+      return (
+        <div className="space-y-2">
+          <div className="mb-1 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
+                Production SaaS, Backoffices & 3D Game Systems
+              </h2>
+              <p className="text-[11px] sm:text-xs text-comic-ink/75">
+                Full-stack cloud applications, automated business backoffices, and real-time physics simulation engines.
+              </p>
+            </div>
+            <span className="hidden sm:inline-block text-[10px] font-black uppercase bg-spider-blue text-white px-2 py-0.5 border border-black">
+              SAAS & 3D ENGINES
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-2.5">
+            {/* Project 1: Fersya Shop */}
             <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
                 <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
@@ -627,7 +797,7 @@ function renderSlideContent(slide) {
                   <span className="text-[8.5px] font-black bg-spider-blue text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     E-Commerce
                   </span>
-                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Laravel 11</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Laravel 11 / Filament</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
                   Fersya Shop & Admin
@@ -648,7 +818,7 @@ function renderSlideContent(slide) {
               </div>
             </div>
 
-            {/* Project 3: Student Life */}
+            {/* Project 2: Student Life */}
             <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
                 <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
@@ -662,10 +832,10 @@ function renderSlideContent(slide) {
                   <span className="text-[8.5px] font-black bg-emerald-600 text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     Productivity SaaS
                   </span>
-                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">React 19</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">React 19 / Supabase</span>
                 </div>
                 <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Student Life App
+                  Student Life SaaS
                 </h3>
                 <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
                   <p><strong>Goal:</strong> Academic task planner with real-time multi-device cloud synchronization.</p>
@@ -683,162 +853,73 @@ function renderSlideContent(slide) {
               </div>
             </div>
 
-            {/* Project 4: Spider-Dev Portfolio Platform */}
+            {/* Project 3: Street Rush */}
             <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
                 <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
-                  <img
-                    src={finesserShop}
-                    alt="Spider-Dev Portfolio Preview"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[8.5px] font-black bg-spider-yellow text-black px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
-                    Interactive Web
-                  </span>
-                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Creative Tech</span>
-                </div>
-                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
-                  Spider-Dev Platform
-                </h3>
-                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
-                  <p><strong>Goal:</strong> High-impact developer portfolio showcasing creative and technical excellence.</p>
-                  <p><strong>Solution:</strong> GSAP ScrollTrigger 60 FPS parallax, procedural Web Audio sound, & recruiter modes.</p>
-                </div>
-                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
-                  <CheckCircle2 size={11} className="shrink-0" />
-                  <span className="truncate">Hardware-accelerated web performance.</span>
-                </div>
-              </div>
-              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
-                <span className="text-[7.5px] font-black uppercase bg-spider-red text-white px-1 py-0.2 rounded-xs border border-black">React 19</span>
-                <span className="text-[7.5px] font-black uppercase bg-spider-yellow text-black px-1 py-0.2 rounded-xs border border-black">GSAP</span>
-                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Web Audio</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-
-    case "game-projects":
-      return (
-        <div className="space-y-2.5">
-          <div className="mb-1">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase text-comic-ink tracking-tight">
-              Interactive 3D Game Systems & Multimedia
-            </h2>
-            <p className="text-[11px] sm:text-xs text-comic-ink/75">
-              Real-time physics engines, terrain simulation worlds, and precision audio-visual motion media.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3">
-            {/* Item 1: Street Rush */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
-              <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={streetRush}
                     alt="Street Rush Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[9px] font-black bg-spider-red text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-red text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     Unity 3D Engine
                   </span>
-                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">C# Physics</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">C# Physics</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
-                  Street Rush (Mobile 3D)
+                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
+                  Street Rush (3D)
                 </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
-                  Fast-paced 3D arcade runner with custom rigidbodies, dynamic obstacle spawner algorithms, and steady 60 FPS mobile performance.
-                </p>
-                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Optimized collision matrices & memory management.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Fast-paced 3D arcade runner with custom rigidbodies & mobile physics.</p>
+                  <p><strong>Solution:</strong> Dynamic obstacle spawner algorithms, score multipliers, and steady 60 FPS mobile performance.</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-red flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Optimized collision matrices & 60 FPS.</span>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
-                <span className="text-[8.5px] font-black uppercase bg-white text-black px-1.5 py-0.5 rounded-xs border border-black">Unity Engine</span>
-                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">C# Scripts</span>
-                <span className="text-[8.5px] font-black uppercase bg-emerald-500 text-black px-1.5 py-0.5 rounded-xs border border-black">60 FPS</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-white text-black px-1 py-0.2 rounded-xs border border-black">Unity</span>
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">C# Scripts</span>
+                <span className="text-[7.5px] font-black uppercase bg-emerald-500 text-black px-1 py-0.2 rounded-xs border border-black">60 FPS</span>
               </div>
             </div>
 
-            {/* Item 2: Gunung Gede Simulation */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
+            {/* Project 4: Gunung Gede Simulation */}
+            <div className="bg-comic-surface border-2 border-comic-ink p-2.5 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
               <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
+                <div className="w-full h-18 sm:h-20 overflow-hidden border-2 border-black rounded-sm mb-1.5 shadow-[1px_1px_0_#000] bg-black">
                   <img
                     src={gunungGede}
                     alt="Gunung Gede Preview"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[9px] font-black bg-spider-blue text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[8.5px] font-black bg-spider-blue text-white px-1.5 py-0.2 uppercase tracking-wider rounded-sm">
                     Roblox Simulation
                   </span>
-                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">Luau Code</span>
+                  <span className="text-[8px] font-mono font-bold text-comic-ink/60">Luau Code</span>
                 </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
+                <h3 className="text-xs sm:text-sm font-black uppercase text-spider-red mb-0.5 truncate">
                   Gunung Gede Trail (3D)
                 </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
-                  Immersive 3D hiking simulation recreating Mount Gede's Gunung Putri trail with accurate elevation terrain and lighting cycles.
-                </p>
-                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Realistic terrain physics & stamina mechanics.</span>
-                  </div>
+                <div className="text-[9px] text-comic-ink/80 leading-tight space-y-1 mb-1.5">
+                  <p><strong>Goal:</strong> Immersive 3D hiking simulation recreating Mount Gede's Gunung Putri trail.</p>
+                  <p><strong>Solution:</strong> Modeled realistic elevation terrain, weather lighting cycles, and stamina mechanics in Luau.</p>
+                </div>
+                <div className="text-[9px] font-bold text-spider-blue flex items-center gap-1">
+                  <CheckCircle2 size={11} className="shrink-0" />
+                  <span className="truncate">Realistic terrain physics & stamina mechanics.</span>
                 </div>
               </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
-                <span className="text-[8.5px] font-black uppercase bg-spider-blue text-white px-1.5 py-0.5 rounded-xs border border-black">Roblox Studio</span>
-                <span className="text-[8.5px] font-black uppercase bg-sky-400 text-black px-1.5 py-0.5 rounded-xs border border-black">Luau Scripts</span>
-                <span className="text-[8.5px] font-black uppercase bg-amber-500 text-black px-1.5 py-0.5 rounded-xs border border-black">3D Terrain</span>
-              </div>
-            </div>
-
-            {/* Item 3: Cinematic Video Production */}
-            <div className="bg-comic-surface border-2 border-comic-ink p-3 rounded-sm flex flex-col justify-between shadow-[2px_2px_0_#000]">
-              <div>
-                <div className="w-full h-20 sm:h-24 overflow-hidden border-2 border-black rounded-sm mb-2 shadow-[1px_1px_0_#000] bg-black">
-                  <img
-                    src="https://img.youtube.com/vi/WMrnRucy0qs/maxresdefault.jpg"
-                    alt="Cinematic AMV Preview"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[9px] font-black bg-emerald-600 text-white px-2 py-0.5 uppercase tracking-wider rounded-sm">
-                    Video & Motion
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-comic-ink/60">Vegas Pro 18</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-black uppercase text-spider-red mb-0.5">
-                  Cinematic Motion & AMVs
-                </h3>
-                <p className="text-[10px] text-comic-ink/80 mb-2 leading-relaxed">
-                  High-tempo video edits featuring frame-accurate audio-visual beat sync, rhythm transitions, and stylized color grading.
-                </p>
-                <div className="space-y-1 text-[10px] text-comic-ink/70 mb-2">
-                  <div className="flex items-start gap-1">
-                    <CheckCircle2 size={12} className="text-spider-red shrink-0 mt-0.5" />
-                    <span>Microsecond beat synchronization & speed ramping.</span>
-                  </div>
-                </div>
-              </div>
-              <div className="pt-1.5 border-t border-comic-ink/10 flex items-center gap-1.5 flex-wrap">
-                <span className="text-[8.5px] font-black uppercase bg-emerald-600 text-white px-1.5 py-0.5 rounded-xs border border-black">Vegas Pro 18</span>
-                <span className="text-[8.5px] font-black uppercase bg-spider-red text-white px-1.5 py-0.5 rounded-xs border border-black">Beat Sync</span>
-                <span className="text-[8.5px] font-black uppercase bg-spider-yellow text-black px-1.5 py-0.5 rounded-xs border border-black">Color Grade</span>
+              <div className="pt-1 border-t border-comic-ink/10 flex items-center gap-1 flex-wrap mt-1">
+                <span className="text-[7.5px] font-black uppercase bg-spider-blue text-white px-1 py-0.2 rounded-xs border border-black">Roblox</span>
+                <span className="text-[7.5px] font-black uppercase bg-sky-400 text-black px-1 py-0.2 rounded-xs border border-black">Luau</span>
+                <span className="text-[7.5px] font-black uppercase bg-amber-500 text-black px-1 py-0.2 rounded-xs border border-black">3D Terrain</span>
               </div>
             </div>
           </div>

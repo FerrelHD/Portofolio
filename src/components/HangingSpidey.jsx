@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import spideyHangingGif from "../assets/spideyhanging.gif";
+import spideyHangingGif from "../assets/spideyhanging.webp";
 
 const HangingSpidey = () => {
   return (

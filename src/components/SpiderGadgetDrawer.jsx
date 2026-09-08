@@ -23,9 +23,9 @@ import {
   Printer,
 } from "lucide-react";
 
-import backsoundAudio from "../assets/backsound.mp3";
+import backsoundAudio from "../assets/backsound.m4a";
 import spideyEmblem from "../assets/spideyicon.png";
-import spideyGif from "../assets/spidey.gif";
+import spideyGif from "../assets/spidey.webp";
 import { achievementManager, ACHIEVEMENTS } from "../lib/achievements";
 import { soundFX } from "../lib/soundFx";
 

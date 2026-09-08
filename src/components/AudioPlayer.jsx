@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX, Play, Pause, Music } from "lucide-react";
-import backsoundAudio from "../assets/backsound.mp3";
+import backsoundAudio from "../assets/backsound.m4a";
 
 const AudioPlayer = () => {
   const audioRef = useRef(null);
@@ -83,7 +83,7 @@ const AudioPlayer = () => {
 
   return (
     <div className="relative">
-      <audio ref={audioRef} src={backsoundAudio} loop preload="auto" />
+      <audio ref={audioRef} src={backsoundAudio} loop preload="none" />
 
       <div className="relative flex items-center gap-2">
         {/* EXPANDED CONTROL PANEL POPOVER */}

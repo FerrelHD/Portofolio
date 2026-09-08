@@ -65,12 +65,30 @@ const TECH_TICKER_ITEMS = [
 ];
 
 function App() {
+  const isPrintDeckOnly =
+    typeof window !== "undefined" &&
+    (window.location.search.includes("print-deck=1") ||
+      window.location.search.includes("print-deck=true"));
+
+  if (isPrintDeckOnly) {
+    return (
+      <Suspense fallback={<div className="bg-[#EDEAE2] min-h-screen" />}>
+        <PortfolioDeckModal isOpen={true} isPrintOnly={true} />
+      </Suspense>
+    );
+  }
+
   const [spiderSense, setSpiderSense] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [dailyBugleOpen, setDailyBugleOpen] = useState(false);
   const [bugHunterOpen, setBugHunterOpen] = useState(false);
-  const [deckOpen, setDeckOpen] = useState(false);
+  const [deckOpen, setDeckOpen] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.location.search.includes("deck=true") || window.location.hash === "#deck";
+    }
+    return false;
+  });
   const [kineticMenuOpen, setKineticMenuOpen] = useState(false);
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [viewMode, setViewMode] = useState(() => {
