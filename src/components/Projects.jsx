@@ -7,6 +7,8 @@ import {
   Radio,
   MapPin,
   Signal,
+  Github,
+  ExternalLink,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,6 +23,9 @@ import gunungGede from "../assets/image-1784710274754.webp";
 import studentLife from "../assets/student-life.png";
 import stockPrediction from "../assets/stock-prediction.png";
 import trackerSfx from "../assets/spidey_tracker_notification_sound.mp3";
+import spideyDevPortfolio from "../assets/spidey-dev-portfolio.png";
+import seismicTracker from "../assets/nusantar seismic tracker.png";
+import leclercPreview from "../assets/leclerc-preview.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,10 +34,11 @@ const projects = [
     id: 0,
     title: "Spider-Dev Portfolio",
     category: "Web",
-    image: "/Portofolio/preview-v2.png",
+    image: spideyDevPortfolio,
     video: null,
     tech: ["React 19", "GSAP", "Tailwind", "Web Audio"],
-    link: "https://github.com/FerrelHD/Portofolio",
+    liveDemo: "https://spidey-portfolio-ferrel.vercel.app/",
+    link: "https://spidey-portfolio-ferrel.vercel.app/",
     github: "https://github.com/FerrelHD/Portofolio",
     sfx: "THWIP!",
     issueNumber: "ISSUE #00",
@@ -44,6 +50,52 @@ const projects = [
         "Engineered silky-smooth horizontal parallax scrub using GSAP ScrollTrigger and native sticky composition.",
         "Crafted authentic Marvel comic visual system with halftone Ben-Day dot matrices, multiverse suit switchers, and spider-HUD.",
         "Built-in procedural 8-bit Web Audio API sound suite, Canvas 2D arcade mini-game, and exportable superhero pitch deck.",
+      ],
+    },
+  },
+  {
+    id: 10,
+    title: "Nusantara Crustal Observatory",
+    category: "Web",
+    image: seismicTracker,
+    video: null,
+    tech: ["React 19", "TypeScript", "HTML5 Canvas", "Supabase", "NASA FIRMS"],
+    liveDemo: "https://nusantara-observatory.vercel.app/",
+    link: "https://nusantara-observatory.vercel.app/",
+    github: "https://github.com/FerrelHD/Global-Seismic-Tracker",
+    sfx: "RUMBLE!",
+    issueNumber: "ISSUE #10",
+    brief: {
+      description:
+        "Research-grade planetary hazard monitoring observatory combining real-time USGS & BMKG earthquake telemetry, NASA FIRMS wildfire satellite feeds, and PVMBG volcanic eruption intelligence into a high-fidelity interactive 2D Canvas web observatory.",
+      role: "Full-Stack Engineer & Geospatial Cartography Developer",
+      highlights: [
+        "Engineered sub-millimeter 2D Canvas vector cartography of the Nusantara archipelago at 60 FPS with kinetic momentum panning, pinch-to-zoom, and zero floating-drift anchored markers.",
+        "Integrated multi-agency real-time telemetry pipelines: USGS & BMKG AutoGempa earthquake feeds, NASA VIIRS NOAA-20 wildfire thermal anomalies, and PVMBG official volcanic alert levels (Siaga/Waspada).",
+        "Built a 4D time-lapse replay engine, virtual seismogram oscilloscope, Haversine geodesic proximity calculator, and a full bilingual (ID/EN) multi-hazard live ledger drawer.",
+      ],
+    },
+  },
+  {
+    id: 11,
+    title: "Charles Leclerc #16 — Scuderia Ferrari",
+    category: "Web",
+    image: leclercPreview,
+    video: null,
+    tech: ["React 18", "GSAP", "Framer Motion", "Canvas 2D", "Tailwind"],
+    liveDemo: "https://leclerc-redline.vercel.app/",
+    link: "https://leclerc-redline.vercel.app/",
+    github: "https://github.com/FerrelHD/leclerc-redline",
+    sfx: "VROOOM!",
+    issueNumber: "ISSUE #16",
+    brief: {
+      description:
+        "Ultra-luxury, high-performance motorsport digital showcase celebrating Formula 1 driver Charles Leclerc (#16) and Scuderia Ferrari HP with fluid ribbon physics and cinematic scroll choreography.",
+      role: "Creative Developer & UI Architect",
+      highlights: [
+        "Engineered Dynamic Fluid Ribbon Trail Mask Engine with velocity vectors and sub-step quadratic Bézier curves at 60–120 FPS.",
+        "Built GPU-accelerated Canvas 2D Simplex Noise wave field reacting organically to mouse velocity with zero CPU overhead when off-screen.",
+        "Crafted cinematic GSAP scroll choreography with real-time SVG animated signature drawing and 1:1 authentic Monaco GP race telemetry HUD.",
       ],
     },
   },
@@ -120,6 +172,7 @@ const projects = [
     image: studentLife,
     video: null,
     tech: ["React 19", "TypeScript", "Supabase"],
+    liveDemo: "https://ferrelhd.github.io/Student-Life/",
     link: "https://ferrelhd.github.io/Student-Life/",
     github: "https://github.com/FerrelHD/Student-Life",
     sfx: "WHAM!",
@@ -241,12 +294,14 @@ export default function Projects() {
   const [filter, setFilter] = useState("All");
   const [activeVideo, setActiveVideo] = useState(null);
   const [selectedBrief, setSelectedBrief] = useState(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   const containerRef = useRef(null);
   const horizontalTrackRef = useRef(null);
   const bgMarqueeRef = useRef(null);
   const audioRef = useRef(null);
+  const radarBarRef = useRef(null);   // direct DOM ref — avoids re-render per scroll frame
+  const radarLabelRef = useRef(null);
+  const headingRef = useRef(null);    // for split-text reveal
 
   const categories = ["All", "Web", "Video", "Game"];
   const filteredProjects =
@@ -264,7 +319,6 @@ export default function Projects() {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 768px)", () => {
-        // Track horizontal parallax: Starts offscreen right (Full Red Screen) ➔ glides across
         gsap.fromTo(
           track,
           { x: () => window.innerWidth * 0.85 },
@@ -275,16 +329,17 @@ export default function Projects() {
               trigger: container,
               start: "top top",
               end: "bottom bottom",
-              scrub: 1.2, // Silky smooth parallax scrub
+              scrub: 1.2,
               invalidateOnRefresh: true,
               onUpdate: (self) => {
-                setScrollProgress(Math.round(self.progress * 100));
+                const pct = Math.round(self.progress * 100);
+                if (radarBarRef.current) radarBarRef.current.style.width = `${pct}%`;
+                if (radarLabelRef.current) radarLabelRef.current.textContent = `RADAR: ${pct}%`;
               },
             },
           }
         );
 
-        // Background Parallax Marquee
         if (bgMarqueeRef.current) {
           gsap.fromTo(
             bgMarqueeRef.current,
@@ -301,7 +356,71 @@ export default function Projects() {
             }
           );
         }
+
+        const cards = track.querySelectorAll(".project-card");
+        if (cards?.length) {
+          gsap.fromTo(
+            cards,
+            { yPercent: 20, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 0.7,
+              ease: "power3.out",
+              stagger: 0.07,
+              scrollTrigger: {
+                trigger: container,
+                start: "top 80%",
+                toggleActions: "play none none none",
+                once: true,
+              },
+            }
+          );
+
+          cards.forEach((card, i) => {
+            const direction = i % 2 === 0 ? -1 : 1;
+            const scaleFrom = i % 2 === 0 ? 0.97 : 1.02;
+            const scaleTo = i % 2 === 0 ? 1.02 : 0.97;
+            gsap.fromTo(
+              card,
+              { y: direction * 16, scale: scaleFrom },
+              {
+                y: direction * -16,
+                scale: scaleTo,
+                ease: "none",
+                immediateRender: false,
+                force3D: true,
+                scrollTrigger: {
+                  trigger: container,
+                  start: "top top",
+                  end: "bottom bottom",
+                  scrub: 1.8,
+                },
+              }
+            );
+          });
+        }
       });
+
+      if (headingRef.current) {
+        const words = headingRef.current.querySelectorAll(".split-word");
+        gsap.fromTo(
+          words,
+          { y: "125%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            duration: 0.8,
+            ease: "power4.out",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: container,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
 
       ScrollTrigger.refresh();
 
@@ -332,7 +451,8 @@ export default function Projects() {
 
       {/* VIEWPORT CONTAINER (Sticky on Desktop, Clean Responsive Block on Mobile) */}
       <div className="relative md:sticky md:top-0 md:h-screen w-full overflow-hidden flex flex-col justify-between pt-4 sm:pt-6 md:pt-20 lg:pt-24 pb-4 md:pb-6">
-        
+
+
         {/* BACKGROUND GIANT MARQUEE */}
         <div
           ref={bgMarqueeRef}
@@ -354,16 +474,23 @@ export default function Projects() {
                 <Radio size={12} className="animate-pulse text-red-600" />
                 MISSION SHOWCASE
               </div>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase text-white leading-none">
-                MISSION{" "}
-                <span
-                  className="text-spider-yellow italic inline-block px-1"
-                  style={{
-                    textShadow:
-                      "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 2px 4px 0 #165DFF, 4px 6px 0 #000",
-                  }}
-                >
-                  ARCHIVES
+              <h2
+                ref={headingRef}
+                className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tighter uppercase text-white leading-tight"
+              >
+                <span className="inline-block overflow-hidden mr-[0.2em] py-1 -my-1">
+                  <span className="split-word inline-block">MISSION</span>
+                </span>
+                <span className="inline-block overflow-hidden pt-1 pb-3 px-2 -mt-1 -mb-3 -mx-2">
+                  <span
+                    className="split-word text-spider-yellow italic inline-block"
+                    style={{
+                      textShadow:
+                        "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 2px 4px 0 #165DFF, 4px 6px 0 #000",
+                    }}
+                  >
+                    ARCHIVES
+                  </span>
                 </span>
               </h2>
             </div>
@@ -395,13 +522,14 @@ export default function Projects() {
 
               {/* Radar Scroll Gauge */}
               <div className="hidden md:flex items-center gap-2 bg-white text-spider-black px-2.5 py-1 border-2 border-black shadow-[2px_2px_0_#000]">
-                <span className="text-[9px] font-black tracking-widest uppercase">
-                  RADAR: {scrollProgress}%
+                <span ref={radarLabelRef} className="text-[9px] font-black tracking-widest uppercase">
+                  RADAR: 0%
                 </span>
                 <div className="w-14 h-2 bg-gray-200 border border-black overflow-hidden">
                   <div
-                    className="h-full bg-[#FF1E26] transition-all duration-75"
-                    style={{ width: `${scrollProgress}%` }}
+                    ref={radarBarRef}
+                    className="h-full bg-[#FF1E26]"
+                    style={{ width: "0%" }}
                   />
                 </div>
               </div>
@@ -426,7 +554,7 @@ export default function Projects() {
             className="flex flex-row flex-nowrap gap-4 sm:gap-6 px-4 sm:px-8 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform scrollbar-none snap-x snap-mandatory md:snap-none touch-pan-x"
           >
             {/* INITIAL RECON BRIEFING CARD (PIONEER STAGE) */}
-            <div className="shrink-0 w-[80vw] max-w-[280px] md:w-[260px] lg:w-[300px] h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex flex-col justify-between relative overflow-hidden snap-center md:snap-align-none select-none">
+            <div className="project-card shrink-0 w-[80vw] max-w-[280px] md:w-[260px] lg:w-[300px] h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-[#FAF8F5] text-comic-ink border-3 border-black shadow-[6px_6px_0_#000] p-4 sm:p-5 rounded-sm flex flex-col justify-between relative overflow-hidden snap-center md:snap-align-none select-none will-change-transform">
               <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
               <div className="relative z-10">
                 <span className="bg-spider-red text-white text-[8px] font-black uppercase px-2 py-0.5 border border-black rounded shadow-[1px_1px_0_#000] inline-block mb-2.5">
@@ -470,7 +598,7 @@ export default function Projects() {
                     playSfx();
                     setSelectedBrief(project);
                   }}
-                  className="group relative w-[82vw] max-w-[310px] md:w-[320px] lg:w-[360px] shrink-0 h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer snap-center md:snap-align-none select-none"
+                  className="project-card group relative w-[82vw] max-w-[310px] md:w-[320px] lg:w-[360px] shrink-0 h-[370px] sm:h-[390px] md:h-[410px] lg:h-[430px] bg-comic-panel border-3 border-black shadow-[6px_6px_0_#000] hover:shadow-[10px_10px_0_#000] hover:-translate-y-1 transition-all duration-200 rounded-sm overflow-hidden flex flex-col justify-between p-4 sm:p-5 cursor-pointer snap-center md:snap-align-none select-none will-change-transform"
                 >
                   {/* Background Card Image with Halftone */}
                   <div className="absolute inset-0 z-0 overflow-hidden">
@@ -525,12 +653,12 @@ export default function Projects() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-tight mb-2.5 sm:mb-3 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                    <h3 className="text-lg sm:text-xl font-black uppercase text-white tracking-tight leading-tight mb-2.5 sm:mb-3 group-hover:text-yellow-300 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] line-clamp-3">
                       {project.title}
                     </h3>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -538,23 +666,40 @@ export default function Projects() {
                           playSfx();
                           setSelectedBrief(project);
                         }}
-                        className="flex-1 py-2 text-center text-[9px] sm:text-[9.5px] font-black uppercase tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                        className="flex-1 py-2 px-2 text-center text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-[0.12em] sm:tracking-[0.15em] bg-spider-yellow hover:bg-yellow-300 text-spider-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer truncate"
                       >
-                        MISSION BRIEF
+                        BRIEF
                       </button>
 
-                      {project.link ? (
+                      {project.github && (
                         <a
-                          href={project.link}
+                          href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => {
                             e.stopPropagation();
                             playSfx();
                           }}
-                          className="px-3.5 py-2 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[9px] sm:text-[9.5px] font-black uppercase tracking-wider"
+                          title="View Source Code on GitHub"
+                          aria-label={`Source code for ${project.title}`}
+                          className="p-2 bg-white hover:bg-gray-100 text-black border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center shrink-0"
                         >
-                          <span>LAUNCH</span>
+                          <Github size={13} />
+                        </a>
+                      )}
+
+                      {(project.liveDemo || project.link) ? (
+                        <a
+                          href={project.liveDemo || project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            playSfx();
+                          }}
+                          className="px-2.5 sm:px-3 py-2 bg-[#FF1E26] hover:bg-red-700 text-white border-2 border-black shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1 text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider shrink-0"
+                        >
+                          <span>{project.liveDemo ? "DEMO" : "LAUNCH"}</span>
                           {linkIcon}
                         </a>
                       ) : (
@@ -565,7 +710,7 @@ export default function Projects() {
                             playSfx();
                             setSelectedBrief(project);
                           }}
-                          className="px-3 py-2 bg-white/70 text-black border-2 border-black text-[9px] font-black uppercase cursor-pointer"
+                          className="px-3 py-2 bg-white/70 text-black border-2 border-black text-[9px] font-black uppercase cursor-pointer shrink-0"
                         >
                           INFO
                         </button>

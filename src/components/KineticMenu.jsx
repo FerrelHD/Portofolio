@@ -250,13 +250,13 @@ const KineticMenu = ({ isOpen, onClose, onOpenDeck, onOpenDailyBugle }) => {
                     <span className="relative text-[9px] xs:text-[10px] sm:text-xs font-body font-bold text-[#1A1A1A]/40 group-hover:text-[#FFD500] tracking-widest tabular-nums select-none transition-colors duration-300 z-10 shrink-0">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="relative z-10 overflow-hidden block whitespace-nowrap">
+                    <span className="relative z-10 overflow-hidden block">
                       {/* Default text — slides up & out on hover */}
-                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] uppercase tracking-tight text-[#1A1A1A] block group-hover:-translate-y-full transition-transform duration-300 ease-out leading-tight sm:leading-none whitespace-nowrap">
+                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.4rem] xl:text-[2.8rem] uppercase tracking-tight text-[#1A1A1A] block group-hover:-translate-y-full transition-transform duration-300 ease-out leading-tight sm:leading-none">
                         {item.label}
                       </span>
                       {/* Yellow duplicate — slides up from below on hover */}
-                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.5rem] xl:text-[3rem] uppercase tracking-tight text-[#FFD500] absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out leading-tight sm:leading-none whitespace-nowrap" aria-hidden="true">
+                      <span className="font-display font-black text-xl xs:text-2xl sm:text-3xl md:text-[2rem] lg:text-[2.4rem] xl:text-[2.8rem] uppercase tracking-tight text-[#FFD500] absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out leading-tight sm:leading-none" aria-hidden="true">
                         {item.label}
                       </span>
                     </span>

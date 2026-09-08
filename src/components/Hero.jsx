@@ -1,59 +1,49 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Github, Code2, Zap, Gamepad2, Download, FolderKanban, Briefcase, Mail, MapPin, CheckCircle } from "lucide-react";
 import { fadeUp, slideUp, staggerContainer, comicStamp, comicPop } from "../lib/animation";
 import ComicDoodleButton from "./ComicDoodleButton";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { useMagnetic } from "../lib/useMagnetic";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = ({ viewMode }) => {
   const reduce = useReducedMotion();
+  const heroRef = useRef(null);
+  const magneticExplore = useMagnetic(55, 40);
+  const magneticDownload = useMagnetic(55, 40);
 
-  // Multi-axis organic floating keyframe animations
-  const floatAnim1 = reduce
-    ? {}
-    : {
-        x: [0, 22, -18, 12, 0],
-        y: [0, -28, 16, -22, 0],
-        rotate: [0, 5, -4, 3, 0],
-        transition: { duration: 8.5, repeat: Infinity, ease: "easeInOut" },
-      };
+  // Hero scroll parallax: section scales down + fades as user scrolls away
+  useGSAP(() => {
+    if (reduce) return;
+    gsap.to(heroRef.current, {
+      scale: 0.92,
+      opacity: 0.55,
+      ease: "none",
+      force3D: true,
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1.2,
+      },
+    });
+  }, { scope: heroRef });
 
-  const floatAnim2 = reduce
-    ? {}
-    : {
-        x: [0, -26, 18, -12, 0],
-        y: [0, 22, -32, 18, 0],
-        rotate: [0, -6, 4, -2, 0],
-        transition: { duration: 9.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
-      };
-
-  const floatAnim3 = reduce
-    ? {}
-    : {
-        x: [0, 20, -24, 15, 0],
-        y: [0, -32, 22, -18, 0],
-        rotate: [0, 4, -5, 3, 0],
-        transition: { duration: 8.2, repeat: Infinity, ease: "easeInOut", delay: 1.2 },
-      };
-
-  const floatAnim4 = reduce
-    ? {}
-    : {
-        x: [0, -22, 28, -16, 0],
-        y: [0, 24, -20, 26, 0],
-        rotate: [0, -5, 6, -3, 0],
-        transition: { duration: 9.2, repeat: Infinity, ease: "easeInOut", delay: 1.8 },
-      };
 
   return (
     <section
+      ref={heroRef}
       id="hero"
-      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12 will-change-transform"
     >
       {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Nicely Framed Inward */}
       <motion.div
-        animate={floatAnim1}
-        className="hero-floating-badge absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
+        className="hero-floating-badge hero-float-1 absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-red comic-chip p-2.5 sm:p-3 pop-shadow-sm text-white flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -69,8 +59,7 @@ const Hero = ({ viewMode }) => {
       </motion.div>
 
       <motion.div
-        animate={floatAnim2}
-        className="hero-floating-badge absolute top-[20%] left-[6%] lg:left-[8%] xl:left-[12%] 2xl:left-[16%] z-[5] hidden lg:block"
+        className="hero-floating-badge hero-float-2 absolute top-[20%] left-[6%] lg:left-[8%] xl:left-[12%] 2xl:left-[16%] z-[5] hidden lg:block"
       >
         <div className="bg-white comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -86,8 +75,7 @@ const Hero = ({ viewMode }) => {
       </motion.div>
 
       <motion.div
-        animate={floatAnim3}
-        className="hero-floating-badge absolute bottom-[14%] left-[7%] lg:left-[9%] xl:left-[13%] 2xl:left-[17%] z-[5] hidden lg:block"
+        className="hero-floating-badge hero-float-3 absolute bottom-[14%] left-[7%] lg:left-[9%] xl:left-[13%] 2xl:left-[17%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-blue comic-chip p-2.5 sm:p-3 pop-shadow-sm text-comic-ink flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -103,8 +91,7 @@ const Hero = ({ viewMode }) => {
       </motion.div>
 
       <motion.div
-        animate={floatAnim4}
-        className="hero-floating-badge absolute bottom-[18%] right-[7%] lg:right-[9%] xl:right-[13%] 2xl:right-[17%] z-[5] hidden lg:block"
+        className="hero-floating-badge hero-float-4 absolute bottom-[18%] right-[7%] lg:right-[9%] xl:right-[13%] 2xl:right-[17%] z-[5] hidden lg:block"
       >
         <div className="bg-spider-yellow comic-chip p-2.5 sm:p-3 pop-shadow-sm text-spider-black flex items-center gap-3 select-none">
           <div className="w-9 h-9 bg-spider-red comic-chip flex items-center justify-center text-comic-ink">
@@ -247,21 +234,25 @@ const Hero = ({ viewMode }) => {
             variants={comicPop}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-3 sm:px-0 max-w-full mx-auto"
           >
-            <ComicDoodleButton
-              text="EXPLORE MISSIONS"
-              href="#projects"
-              variant="red"
-              icon="⚡"
-            />
-            <ComicDoodleButton
-              text="DOWNLOAD CV"
-              href={`${import.meta.env.BASE_URL}cv.pdf`}
-              download="CV_Ferrel_Rashad_Akeyla.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="blue"
-              icon="📥"
-            />
+            <div ref={magneticExplore}>
+              <ComicDoodleButton
+                text="EXPLORE MISSIONS"
+                href="#projects"
+                variant="red"
+                icon="⚡"
+              />
+            </div>
+            <div ref={magneticDownload}>
+              <ComicDoodleButton
+                text="DOWNLOAD CV"
+                href={`${import.meta.env.BASE_URL}cv.pdf`}
+                download="CV_Ferrel_Rashad_Akeyla.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="blue"
+                icon="📥"
+              />
+            </div>
           </motion.div>
 
           {/* MOBILE FEATURE STRIP (< lg displays) */}

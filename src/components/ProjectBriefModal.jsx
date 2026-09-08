@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, CheckCircle2, ShieldAlert, Sparkles } from "lucide-react";
+import { X, ExternalLink, CheckCircle2, ShieldAlert, Sparkles, Github } from "lucide-react";
 
 const ProjectBriefModal = ({ project, onClose }) => {
   const [mounted, setMounted] = useState(false);
@@ -142,17 +142,31 @@ const ProjectBriefModal = ({ project, onClose }) => {
                   Close Brief
                 </button>
 
-                {project.link && (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full xs:w-auto flex items-center justify-center gap-2 bg-spider-red hover:bg-red-700 text-white px-5 py-2 text-xs font-black uppercase tracking-wider rounded shadow-[2px_2px_0_#000] active:scale-95 transition-all text-center"
-                  >
-                    <span>Launch Live Mission</span>
-                    <ExternalLink size={14} />
-                  </a>
-                )}
+                <div className="flex flex-wrap items-center gap-2 w-full xs:w-auto justify-end">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 xs:flex-initial flex items-center justify-center gap-1.5 bg-[#181717] hover:bg-black text-white px-3.5 sm:px-4 py-2 text-xs font-black uppercase tracking-wider rounded border-2 border-black shadow-[2px_2px_0_#000] active:scale-95 transition-all text-center"
+                    >
+                      <Github size={14} />
+                      <span>Source Code</span>
+                    </a>
+                  )}
+
+                  {(project.liveDemo || project.link) && (
+                    <a
+                      href={project.liveDemo || project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 xs:flex-initial flex items-center justify-center gap-2 bg-spider-red hover:bg-red-700 text-white px-4 sm:px-5 py-2 text-xs font-black uppercase tracking-wider rounded border-2 border-black shadow-[2px_2px_0_#000] active:scale-95 transition-all text-center"
+                    >
+                      <span>{project.liveDemo ? "Live Demo" : "Launch Mission"}</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           </div>

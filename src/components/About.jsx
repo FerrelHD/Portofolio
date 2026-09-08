@@ -18,69 +18,82 @@ const SPIDER_SUIT_URL = new URL(
 const FERREL_PORTRAIT_URL = new URL("../assets/ferrel-portrait.jpg", import.meta.url)
   .href;
 
-/* PUNCHY COMIC SLIDE-IN VARIANTS (LEFT & RIGHT WITH DYNAMIC TILT & SPRING POP) */
-const leftComicSlide = {
+/* COMIC PANEL SLAM / STAMP ENTRANCE (PUNCHY TACTILE IMPACT, ZERO WOBBLE) */
+const comicPanelStampLeft = {
   hidden: {
     opacity: 0,
-    x: -50,
-    y: 45,
-    rotate: -3,
-    scale: 0.95,
+    scale: 0.94,
+    y: 24,
   },
   visible: {
     opacity: 1,
-    x: 0,
-    y: 0,
-    rotate: 0,
     scale: 1,
+    y: 0,
     transition: {
       type: "spring",
-      damping: 18,
-      stiffness: 170,
-      mass: 0.8,
+      damping: 24,
+      stiffness: 260,
+      mass: 0.7,
+      delay: 0.04,
     },
   },
 };
 
-const rightComicSlide = {
+const comicPanelStampRight = {
   hidden: {
     opacity: 0,
-    x: 50,
-    y: 45,
-    rotate: 3,
-    scale: 0.95,
+    scale: 0.94,
+    y: 24,
   },
   visible: {
     opacity: 1,
-    x: 0,
-    y: 0,
-    rotate: 0,
     scale: 1,
+    y: 0,
     transition: {
       type: "spring",
-      damping: 18,
-      stiffness: 170,
-      mass: 0.8,
-      delay: 0.12,
+      damping: 24,
+      stiffness: 260,
+      mass: 0.7,
+      delay: 0.14,
     },
   },
 };
 
-const comicFadeSlideUp = {
+const comicStatPop = {
   hidden: {
     opacity: 0,
-    y: 60,
-    scale: 0.96,
+    scale: 0.9,
+    y: 14,
   },
   visible: {
     opacity: 1,
-    y: 0,
     scale: 1,
+    y: 0,
     transition: {
       type: "spring",
-      damping: 20,
-      stiffness: 190,
-      mass: 0.8,
+      damping: 22,
+      stiffness: 280,
+      mass: 0.6,
+    },
+  },
+};
+
+const comicHudPop = {
+  hidden: {
+    opacity: 0,
+    scale: 0.95,
+    y: 16,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 22,
+      stiffness: 240,
+      mass: 0.7,
+      delay: 0.08,
     },
   },
 };
@@ -88,8 +101,8 @@ const comicFadeSlideUp = {
 const panelFadeSlideUp = {
   hidden: {
     opacity: 0,
-    y: 40,
-    scale: 0.97,
+    y: 18,
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
@@ -97,9 +110,9 @@ const panelFadeSlideUp = {
     scale: 1,
     transition: {
       type: "spring",
-      damping: 20,
-      stiffness: 220,
-      mass: 0.7,
+      damping: 22,
+      stiffness: 240,
+      mass: 0.6,
     },
   },
 };
@@ -441,13 +454,6 @@ const SecretIdentityCard = () => {
           }}
         />
 
-        {/* HALFTONE OVERLAY */}
-        <div
-          className="absolute inset-0 z-25 pointer-events-none opacity-25 mix-blend-overlay"
-          aria-hidden="true"
-        >
-          <div className="w-full h-full halftone-overlay-sm" />
-        </div>
 
         {/* TOP LEFT BADGE (RESPONSIVE FONT & PADDING) */}
         <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-30 overflow-hidden h-[30px] sm:h-[34px]">
@@ -541,8 +547,6 @@ const SpiderSuitHUDWidget = () => {
       variants={panelFadeSlideUp}
       className="bg-[#FAF8F5] text-comic-ink p-3 sm:p-3.5 border-2 sm:border-3 border-black rounded-xl shadow-[4px_4px_0_#000] relative overflow-hidden select-none"
     >
-      {/* Halftone subtle bg */}
-      <div className="absolute inset-0 halftone-overlay-sm opacity-15 pointer-events-none" />
 
       {/* Top Header Strip */}
       <div className="flex items-center justify-between gap-2 border-b-2 border-black/15 pb-1.5 mb-2 relative z-10">
@@ -652,6 +656,8 @@ const About = ({ onOpenDailyBugle }) => {
   const sectionRef = useRef(null);
   const leftStickyRef = useRef(null);
   const rightColRef = useRef(null);
+  const headingRef = useRef(null);
+  const subtitleRef = useRef(null);
 
   const stats = [
     { label: "Years Active", value: 1, suffix: "+", accent: "border-t-spider-red" },
@@ -670,14 +676,14 @@ const About = ({ onOpenDailyBugle }) => {
         if (leftStickyRef.current) {
           gsap.fromTo(
             leftStickyRef.current,
-            { y: 40 },
+            { y: 30 },
             {
-              y: -40,
+              y: -30,
               ease: "none",
               force3D: true,
               scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top bottom",
+                start: "top 60%",
                 end: "bottom top",
                 scrub: 1.2,
               },
@@ -688,14 +694,14 @@ const About = ({ onOpenDailyBugle }) => {
         if (rightColRef.current) {
           gsap.fromTo(
             rightColRef.current,
-            { y: 20 },
+            { y: 15 },
             {
-              y: -20,
+              y: -15,
               ease: "none",
               force3D: true,
               scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "top bottom",
+                start: "top 60%",
                 end: "bottom top",
                 scrub: 1.2,
               },
@@ -703,6 +709,48 @@ const About = ({ onOpenDailyBugle }) => {
           );
         }
       });
+
+      // Subtitle fade-out: gently fades + lifts as section exits viewport
+      // Safe: subtitle has no clip-path, so compositor can handle transform+opacity
+      if (subtitleRef.current) {
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 1, y: 0 },
+          {
+            opacity: 0,
+            y: -24,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "80% bottom",
+              end: "bottom top",
+              scrub: 1,
+            },
+          }
+        );
+      }
+
+      // Split Text Reveal: each word in heading slides up from below
+      if (headingRef.current) {
+        const words = headingRef.current.querySelectorAll(".split-word");
+        gsap.fromTo(
+          words,
+          { y: "125%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            duration: 0.9,
+            ease: "power4.out",
+            stagger: 0.08,
+            scrollTrigger: {
+              trigger: headingRef.current,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -715,30 +763,33 @@ const About = ({ onOpenDailyBugle }) => {
       className="-mt-5 sm:-mt-7 md:-mt-8 pt-24 sm:pt-32 md:pt-36 pb-20 sm:pb-28 md:pb-36 relative overflow-hidden bg-spider-red text-white [clip-path:polygon(0_2vw,100%_0,100%_calc(100%-2vw),0_100%)]"
     >
       <div className="container mx-auto px-3.5 sm:px-6 relative z-10">
-        {/* SECTION HEADER (SLIDE UP FROM BOTTOM WITH FADE) */}
-        <motion.div
-          variants={comicFadeSlideUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-10 sm:mb-14 md:mb-16"
-        >
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-5 tracking-tighter uppercase text-white">
-            Beyond The{" "}
-            <span
-              className="text-spider-yellow italic inline-block px-1 select-none"
-              style={{
-                textShadow:
-                  "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
-              }}
-            >
-              Mask
+        {/* SECTION HEADER (CLEAN WORD REVEAL + SUBTITLE PARALLAX) */}
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2
+            ref={headingRef}
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-6xl font-black mb-3 sm:mb-5 tracking-tighter uppercase text-white leading-tight"
+          >
+            {["Beyond", "The"].map((word) => (
+              <span key={word} className="inline-block overflow-hidden mr-[0.25em] last:mr-0 py-1 -my-1">
+                <span className="split-word inline-block">{word}</span>
+              </span>
+            ))}{" "}
+            <span className="inline-block overflow-hidden pt-1 pb-4 px-2 -mt-1 -mb-4 -mx-2">
+              <span
+                className="split-word text-spider-yellow italic inline-block select-none"
+                style={{
+                  textShadow:
+                    "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
+                }}
+              >
+                Mask
+              </span>
             </span>
           </h2>
-          <p className="text-white/90 max-w-md mx-auto font-medium text-xs xs:text-sm sm:text-base px-2">
+          <p ref={subtitleRef} className="text-white/90 max-w-md mx-auto font-medium text-xs xs:text-sm sm:text-base px-2 will-change-transform">
             The man behind the suit. Origins of a multidisciplinary digital creator.
           </p>
-        </motion.div>
+        </div>
 
         {/* MAIN SPLIT LAYOUT: 5 Cols Left (Identity Card + Stats + HUD) vs 7 Cols Right (Authentic Comic Page) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start">
@@ -748,10 +799,10 @@ const About = ({ onOpenDailyBugle }) => {
             className="lg:col-span-5 max-w-[380px] sm:max-w-[440px] mx-auto w-full lg:mx-0 lg:sticky lg:top-28 relative z-20 flex flex-col gap-3 sm:gap-3.5 will-change-transform"
           >
             <motion.div
-              variants={leftComicSlide}
+              variants={comicPanelStampLeft}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: true, amount: 0.15 }}
             >
               <SecretIdentityCard />
               {/* Comic credit chip */}
@@ -767,21 +818,15 @@ const About = ({ onOpenDailyBugle }) => {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.15 }}
               className="grid grid-cols-3 gap-2 sm:gap-2.5"
             >
               {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
-                  variants={comicFadeSlideUp}
+                  variants={comicStatPop}
                   className={`bg-white text-comic-ink p-2.5 sm:p-3 relative overflow-hidden border-2 border-black rounded shadow-[3px_3px_0_#000] text-center ${stat.accent}`}
                 >
-                  <div
-                    className="absolute inset-0 opacity-15 pointer-events-none"
-                    aria-hidden="true"
-                  >
-                    <div className="w-full h-full halftone-overlay-sm" />
-                  </div>
                   <p className="relative text-2xl sm:text-3xl font-black text-spider-red mb-0.5 leading-none">
                     <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   </p>
@@ -794,10 +839,10 @@ const About = ({ onOpenDailyBugle }) => {
 
             {/* SPIDER SUIT HUD & DIAGNOSTICS WIDGET (IDE 1) */}
             <motion.div
-              variants={comicFadeSlideUp}
+              variants={comicHudPop}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.15 }}
             >
               <SpiderSuitHUDWidget />
             </motion.div>
@@ -806,14 +851,12 @@ const About = ({ onOpenDailyBugle }) => {
           {/* RIGHT — CLEAN MARVEL CAPTION CARD (KONSEP A: SIMPLE, SLEEK, ELEGANT) */}
           <div ref={rightColRef} className="lg:col-span-7 will-change-transform">
             <motion.div
-              variants={rightComicSlide}
+              variants={comicPanelStampRight}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
+              viewport={{ once: true, amount: 0.15 }}
               className="w-full bg-white text-comic-ink p-5 xs:p-6 sm:p-8 md:p-9 border-3 sm:border-4 md:border-[5px] border-black rounded-xl shadow-[6px_6px_0_#000] sm:shadow-[10px_10px_0_#000] relative select-none flex flex-col justify-between"
             >
-            {/* Subtle Halftone Background */}
-            <div className="absolute inset-0 halftone-overlay-sm opacity-10 pointer-events-none" />
 
             <div className="relative z-10 space-y-4 sm:space-y-5">
               {/* VINTAGE COMIC HEADER STRIP */}
