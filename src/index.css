@@ -44,7 +44,7 @@
     font-family: var(--font-body);
     color: var(--color-comic-ink);
     background-color: var(--color-comic-surface);
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   h1,

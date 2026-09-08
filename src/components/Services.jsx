@@ -79,7 +79,7 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="py-20 sm:py-28 relative scroll-mt-20">
+    <section id="services" className="-mt-8 sm:-mt-12 md:-mt-14 pt-10 sm:pt-14 pb-20 sm:pb-28 relative scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <motion.div

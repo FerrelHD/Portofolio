@@ -346,13 +346,21 @@ function App() {
       </Suspense>
 
       <main>
-        <Hero viewMode={viewMode} />
-        <ComicTicker
-          items={HERO_TICKER_ITEMS}
-          rotate="-rotate-1"
-          variant="daily-bugle"
-        />
-        <About onOpenDailyBugle={() => setDailyBugleOpen(true)} />
+        {/* HERO PINNED ZONE: Exactly 200vh so Hero sticks for 100vh, then scrolls off-screen */}
+        <div id="hero-pinned-wrapper" className="relative h-[200vh]">
+          <Hero viewMode={viewMode} />
+        </div>
+
+        {/* OVERLAPPING CURTAIN: Starts at Y=100vh via -mt-[100vh], glides up over Hero */}
+        <div className="relative z-10 -mt-[100vh] drop-shadow-[0_-16px_30px_rgba(0,0,0,0.5)]">
+          <ComicTicker
+            items={HERO_TICKER_ITEMS}
+            rotate="-rotate-1"
+            variant="daily-bugle"
+          />
+          <About onOpenDailyBugle={() => setDailyBugleOpen(true)} />
+        </div>
+
         <Services />
         <Projects />
         <ComicTicker

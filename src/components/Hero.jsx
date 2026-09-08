@@ -14,21 +14,23 @@ gsap.registerPlugin(ScrollTrigger);
 const Hero = ({ viewMode }) => {
   const reduce = useReducedMotion();
   const heroRef = useRef(null);
+  const heroInnerRef = useRef(null);
   const magneticExplore = useMagnetic(55, 40);
   const magneticDownload = useMagnetic(55, 40);
 
-  // Hero scroll parallax: section scales down + fades as user scrolls away
+  // Hero scroll parallax: inner content scales down + fades, leaving sticky section untouched by transforms
   useGSAP(() => {
     if (reduce) return;
-    gsap.to(heroRef.current, {
-      scale: 0.92,
-      opacity: 0.55,
+    const parentContainer = heroRef.current?.closest("#hero-pinned-wrapper") || heroRef.current;
+    gsap.to(heroInnerRef.current, {
+      scale: 0.90,
+      opacity: 0.45,
       ease: "none",
       force3D: true,
       scrollTrigger: {
-        trigger: heroRef.current,
+        trigger: parentContainer,
         start: "top top",
-        end: "bottom top",
+        end: "center top",
         scrub: 1.2,
       },
     });
@@ -39,8 +41,12 @@ const Hero = ({ viewMode }) => {
     <section
       ref={heroRef}
       id="hero"
-      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-24 pb-12 will-change-transform"
+      className="sticky top-0 h-screen min-h-[620px] w-full overflow-hidden z-0 flex items-center justify-center"
     >
+      <div
+        ref={heroInnerRef}
+        className="w-full h-full flex items-center justify-center pt-20 sm:pt-24 pb-12 will-change-transform relative"
+      >
       {/* DYNAMIC FLOATING POP BADGES (DESKTOP / LAPTOP) — Nicely Framed Inward */}
       <motion.div
         className="hero-floating-badge hero-float-1 absolute top-[12%] right-[6%] lg:right-[8%] xl:right-[12%] 2xl:right-[16%] z-[5] hidden lg:block"
@@ -309,6 +315,7 @@ const Hero = ({ viewMode }) => {
             </div>
           </motion.div>
         </motion.div>
+      </div>
       </div>
     </section>
   );
