@@ -23,12 +23,16 @@ const SKILL_POWER_METRICS = {
   typescript: { power: 90, color: "#3178C6", label: "ADVANCED" },
   node: { power: 88, color: "#5FA04E", label: "PROFICIENT" },
   video: { power: 92, color: "#FF1E26", label: "CINEMATIC" },
-  motion: { power: 94, color: "#FF007A", label: "FLUID 60FPS" },
+  motion: { power: 96, color: "#0AE448", label: "SCROLLTRIGGER" },
   blender: { power: 78, color: "#EA7600", label: "MODELING" },
+  python: { power: 85, color: "#3776AB", label: "QUANT / ML" },
   unity: { power: 75, color: "#FFFFFF", label: "GAME LOOPS" },
-  figma: { power: 86, color: "#F24E1E", label: "UI / UX" },
-  sql: { power: 72, color: "#00758F", label: "QUERIES" },
-  ai: { power: 80, color: "#A855F7", label: "AGENTIC DX" },
+  uiux: { power: 86, color: "#A259FF", label: "UI / UX" },
+  figma: { power: 86, color: "#A259FF", label: "UI / UX" },
+  databases: { power: 84, color: "#3ECF8E", label: "POSTGRES / SUPABASE" },
+  sql: { power: 84, color: "#3ECF8E", label: "POSTGRES / SUPABASE" },
+  ai_tools: { power: 85, color: "#FFD500", label: "AGENTIC DX" },
+  ai: { power: 85, color: "#FFD500", label: "AGENTIC DX" },
 };
 
 const PROFICIENCY_GROUPS = [

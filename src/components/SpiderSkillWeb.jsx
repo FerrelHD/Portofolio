@@ -19,6 +19,8 @@ import figmaIcon from "../assets/figma-logo-png-svg.webp";
 import sqlIcon from "../assets/sql icon 2.png";
 import aiAgentIcon from "../assets/ai-agent-removebg-preview.png";
 import spiderEmblem from "../assets/spideyicon.png";
+import gsapIcon from "../assets/gsap-Photoroom.png";
+import pythonIcon from "../assets/Python-logo-notext.svg";
 
 /* =========================================================================
    SKILL NODES CONFIG (11 SKILLS)
@@ -103,21 +105,21 @@ export const SKILLS_DATA = [
   },
   {
     id: "motion",
-    name: "Framer Motion",
-    shortName: "Framer 60FPS",
+    name: "GSAP & Motion",
+    shortName: "GSAP / Motion",
     category: "Web Craft",
     level: "Proficient",
-    levelText: "Core Mastery • Interactive",
-    color: "#FF007A",
+    levelText: "Core Mastery • 60 FPS Scrollytelling",
+    color: "#0AE448",
     ring: 1,
     baseAngle: 300,
     speed: 0.32,
-    iconImg: framerIcon,
-    desc: "Physics springs, scroll triggers, gesture controls, and smooth interactive UI transitions.",
-    fact: "60 FPS interactions that make every click feel like a superhero action scene! 💥",
+    iconImg: gsapIcon,
+    desc: "GSAP ScrollTrigger, timeline choreography, fluid vector physics, and 60 FPS scrollytelling.",
+    fact: "Silky 60 FPS scrollytelling that gives users goosebumps like Spider-Sense! ⚡",
   },
 
-  // Ring 2 (Familiar & Exploring • Outer Orbit: radius 235, speed: -0.20)
+  // Ring 2 (Familiar & Exploring • Outer Orbit: radius 235, speed: -0.20, 60° step)
   {
     id: "blender",
     name: "3D Blender",
@@ -134,6 +136,21 @@ export const SKILLS_DATA = [
     fact: "Crafting 3D props and lighting for immersive comic multiverse atmospheres! 🧊",
   },
   {
+    id: "python",
+    name: "Python & Machine Learning",
+    shortName: "Python / ML",
+    category: "Web Craft",
+    level: "Familiar",
+    levelText: "Working Knowledge • Quant / ML",
+    color: "#3776AB",
+    ring: 2,
+    baseAngle: 60,
+    speed: -0.20,
+    iconImg: pythonIcon,
+    desc: "Time-series predictive modeling, XGBoost, LightGBM, financial backtesting, and data pipelines.",
+    fact: "Building predictive algorithms that anticipate market shifts before they occur! 📈",
+  },
+  {
     id: "unity",
     name: "Unity / C#",
     shortName: "Unity 3D",
@@ -142,7 +159,7 @@ export const SKILLS_DATA = [
     levelText: "Working Knowledge • Game Dev",
     color: "#FFFFFF",
     ring: 2,
-    baseAngle: 72,
+    baseAngle: 120,
     speed: -0.20,
     iconImg: unityIcon,
     desc: "Player controllers, collision physics, tilemapping, and arcade gameplay mechanics.",
@@ -157,7 +174,7 @@ export const SKILLS_DATA = [
     levelText: "Working Knowledge • Wireframes",
     color: "#A259FF",
     ring: 2,
-    baseAngle: 144,
+    baseAngle: 180,
     speed: -0.20,
     iconImg: figmaIcon,
     desc: "Figma design systems, wireframing, typography hierarchies, and mobile responsiveness.",
@@ -165,18 +182,18 @@ export const SKILLS_DATA = [
   },
   {
     id: "databases",
-    name: "SQL & Databases",
-    shortName: "SQL / DB",
+    name: "PostgreSQL & Supabase",
+    shortName: "PostgreSQL",
     category: "Web Craft",
     level: "Familiar",
-    levelText: "Working Knowledge • Schemas",
-    color: "#00E5FF",
+    levelText: "Working Knowledge • Realtime DB",
+    color: "#3ECF8E",
     ring: 2,
-    baseAngle: 216,
+    baseAngle: 240,
     speed: -0.20,
     iconImg: sqlIcon,
-    desc: "PostgreSQL, MongoDB, indexing, relational modeling, and query optimizations.",
-    fact: "Structuring clean databases so query responses fly at the speed of light! 🗄️",
+    desc: "PostgreSQL, Supabase real-time subscriptions, relational modeling, and query optimizations.",
+    fact: "Real-time telemetry databases responding at supersonic speeds! 🗄️",
   },
   {
     id: "ai_tools",
@@ -187,7 +204,7 @@ export const SKILLS_DATA = [
     levelText: "Exploring • Modern Workflows",
     color: "#FFD500",
     ring: 2,
-    baseAngle: 288,
+    baseAngle: 300,
     speed: -0.20,
     iconImg: aiAgentIcon,
     desc: "Prompt engineering, MCP integrations, agentic workflows, and automated DX pipelines.",
@@ -671,48 +688,55 @@ const SpiderSkillWeb = () => {
                 </g>
 
                 {/* 3D Comic Label Pill */}
-                <g transform="translate(0, 34)" className="pointer-events-none">
-                  {/* Pill Bottom Shadow */}
-                  <rect
-                    x="-44"
-                    y="-7"
-                    width="88"
-                    height="18"
-                    rx="9"
-                    fill="#000000"
-                  />
-                  {/* Pill Face */}
-                  <rect
-                    x="-44"
-                    y="-9"
-                    width="88"
-                    height="18"
-                    rx="9"
-                    fill={isSelected ? node.color : "#1A1A1A"}
-                    stroke={isSelected ? "#1A1A1A" : "#333333"}
-                    strokeWidth="1.5"
-                    className="transition-all duration-200"
-                  />
-                  <text
-                    x="0"
-                    y="3.5"
-                    textAnchor="middle"
-                    fill={
-                      isSelected
-                        ? node.color === "#FFFFFF" || node.color === "#FFD500" || node.color === "#00D8FF"
-                          ? "#000000"
-                          : "#FFFFFF"
-                        : "#F7F4EE"
-                    }
-                    fontSize="9.5"
-                    fontWeight="900"
-                    letterSpacing="0.03em"
-                    fontFamily="'Montserrat', sans-serif"
-                    className="transition-colors select-none"
-                  >
-                    {node.shortName || node.name}
-                  </text>
-                </g>
+                {(() => {
+                  const labelText = node.shortName || node.name;
+                  const pillW = Math.max(88, Math.round(labelText.length * 6.8 + 18));
+                  const pillX = -pillW / 2;
+                  return (
+                    <g transform="translate(0, 34)" className="pointer-events-none">
+                      {/* Pill Bottom Shadow */}
+                      <rect
+                        x={pillX}
+                        y="-7"
+                        width={pillW}
+                        height="18"
+                        rx="9"
+                        fill="#000000"
+                      />
+                      {/* Pill Face */}
+                      <rect
+                        x={pillX}
+                        y="-9"
+                        width={pillW}
+                        height="18"
+                        rx="9"
+                        fill={isSelected ? node.color : "#1A1A1A"}
+                        stroke={isSelected ? "#1A1A1A" : "#333333"}
+                        strokeWidth="1.5"
+                        className="transition-all duration-200"
+                      />
+                      <text
+                        x="0"
+                        y="3.5"
+                        textAnchor="middle"
+                        fill={
+                          isSelected
+                            ? node.color === "#FFFFFF" || node.color === "#FFD500" || node.color === "#00D8FF"
+                              ? "#000000"
+                              : "#FFFFFF"
+                            : "#F7F4EE"
+                        }
+                        fontSize="9.5"
+                        fontWeight="900"
+                        letterSpacing="0.03em"
+                        fontFamily="'Montserrat', sans-serif"
+                        className="transition-colors select-none"
+                      >
+                        {labelText}
+                      </text>
+                    </g>
+                  );
+                })()}
               </g>
             );
           })}
