@@ -1,22 +1,28 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Linkedin, Github, MapPin, Send, X, Check } from "lucide-react";
-import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";
+import { Mail, Linkedin, Github, MapPin, Send, X } from "lucide-react";
+import { staggerContainer, comicPop } from "../lib/animation";
 import ComicSocialCard from "./ComicSocialCard";
 import ComicDoodleButton from "./ComicDoodleButton";
+import { soundFX } from "../lib/soundFx";
 
-/* STATIC CLASS MAPPING (supaya Tailwind JIT tidak purge class dinamis) */
+const SPIDERMAN_EMBLEM_URL = new URL(
+  "../assets/spiderman-emblem.png",
+  import.meta.url
+).href;
+
+/* STATIC CLASS MAPPING */
 const ACCENT_MAP = {
   "spider-red": {
     accentBar: "bg-spider-red",
     iconBg: "bg-spider-red",
-    iconText: "text-comic-ink",
+    iconText: "text-white",
   },
   "spider-blue": {
     accentBar: "bg-spider-blue",
     iconBg: "bg-spider-blue",
-    iconText: "text-comic-ink",
+    iconText: "text-white",
   },
   "spider-yellow": {
     accentBar: "bg-spider-yellow",
@@ -26,7 +32,7 @@ const ACCENT_MAP = {
 };
 
 /* =========================================================
-   SUCCESS MODAL — Signal Received! (with confetti)
+   SUCCESS MODAL — SIGNAL RECEIVED WITH SPIDEY EMBLEM
    ========================================================= */
 const ConfettiPiece = ({ delay, left, color, rotate }) => (
   <motion.div
@@ -43,8 +49,8 @@ const ConfettiPiece = ({ delay, left, color, rotate }) => (
 
 const SuccessModal = ({ open, onClose }) => {
   if (!open) return null;
-  const confettiPieces = Array.from({ length: 36 }).map((_, i) => ({
-    delay: (i % 12) * 0.035,
+  const confettiPieces = Array.from({ length: 32 }).map((_, i) => ({
+    delay: (i % 10) * 0.04,
     left: 5 + Math.random() * 90,
     color: ["spider-red", "spider-blue", "spider-yellow", "comic-ink"][i % 4],
     rotate: Math.random() * 360,
@@ -52,100 +58,110 @@ const SuccessModal = ({ open, onClose }) => {
 
   return (
     <motion.div
-      className="modal-backdrop"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
-        className="modal-panel"
+        className="relative w-full max-w-md bg-white border-4 border-black shadow-[10px_10px_0_#000] overflow-hidden select-none"
+        style={{ borderRadius: "8px" }}
         onClick={(e) => e.stopPropagation()}
-        initial={{ opacity: 0, y: 40, scale: 0.9, rotate: -2 }}
+        initial={{ opacity: 0, y: 40, scale: 0.92, rotate: -1.5 }}
         animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-        exit={{ opacity: 0, y: 40, scale: 0.9, rotate: 2 }}
-        transition={{ type: "spring", stiffness: 280, damping: 22 }}
+        exit={{ opacity: 0, y: 30, scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 300, damping: 22 }}
       >
-        {/* Halftone overlay inside modal */}
-        <div className="modal-halftone halftone-overlay-sm" />
-
-        {/* Red accent bar at top */}
-        <div className="h-3 w-full bg-spider-red border-b-[3px] border-spider-black" />
+        {/* Top Accent Strip */}
+        <div className="h-3 w-full bg-spider-red border-b-3 border-black" />
 
         {/* Confetti */}
         {confettiPieces.map((p, i) => (
           <ConfettiPiece key={i} {...p} />
         ))}
 
-        <div className="relative p-6 sm:p-8 md:p-10 text-center">
-          {/* Close button */}
+        <div className="relative p-6 sm:p-8 text-center">
+          {/* Close Button */}
           <button
             onClick={onClose}
-            aria-label="Close notification"
-            className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-spider-red comic-chip text-comic-ink hover:bg-spider-yellow hover:text-spider-black transition-colors"
+            aria-label="Close modal"
+            className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-spider-yellow border-2 border-black text-black shadow-[2px_2px_0_#000] hover:bg-spider-red hover:text-white transition-all cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
           >
-            <X size={18} strokeWidth={2.8} />
+            <X size={18} strokeWidth={3} />
           </button>
 
-          {/* Big check mark bubble */}
+          {/* Spiderman Emblem Icon Badge */}
           <motion.div
-            initial={{ scale: 0, rotate: -40 }}
+            initial={{ scale: 0, rotate: -25 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 350, damping: 14, delay: 0.1 }}
-            className="mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-5 sm:mb-6 flex items-center justify-center bg-spider-yellow comic-chip"
-            style={{ borderRadius: "9999px" }}
+            transition={{ type: "spring", stiffness: 380, damping: 15, delay: 0.1 }}
+            className="mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-4 flex items-center justify-center bg-spider-yellow border-3 border-black rounded-full shadow-[4px_4px_0_#000] relative p-3"
           >
-            <Check size={40} strokeWidth={3.2} className="text-spider-black" />
+            <img
+              src={SPIDERMAN_EMBLEM_URL}
+              alt="Spider-Man Emblem"
+              className="w-full h-full object-contain filter drop-shadow-[1.5px_1.5px_0_#000]"
+            />
+            <span className="absolute -bottom-1 -right-1 bg-spider-red text-white text-[9px] font-black uppercase px-2 py-0.5 border-2 border-black rounded shadow-[1px_1px_0_#000]">
+              SENT!
+            </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Title */}
           <motion.h3
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight mb-3 sm:mb-4"
+            className="text-2xl sm:text-3xl font-black uppercase tracking-tight mb-2 leading-none"
           >
-            <span className="text-comic-ink comic-stroke">Signal </span>
-            <span className="text-spider-red comic-stroke italic">Received!</span>
+            <span className="text-comic-ink">SIGNAL </span>
+            <span
+              className="text-spider-red italic"
+              style={{
+                textShadow: "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+              }}
+            >
+              RECEIVED!
+            </span>
           </motion.h3>
 
-          {/* Subtitle */}
+          {/* High-Contrast Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-comic-ink/60 font-medium text-sm sm:text-base max-w-sm mx-auto mb-6 sm:mb-8 leading-relaxed"
+            className="text-comic-ink text-xs sm:text-sm font-semibold max-w-xs mx-auto mb-5 leading-relaxed"
           >
-            Mission brief successfully transmitted.
-            Spider-Sense is tingling — I&apos;ll get back to you within 24 hours!
+            Mission brief successfully transmitted. Spider-Sense is tingling — I&apos;ll get back to your inbox within <span className="text-spider-red font-black">24 hours</span>!
           </motion.p>
 
-          {/* Chips */}
+          {/* Unified Status HUD Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="inline-flex items-center gap-2 bg-[#FAF8F5] border-2 border-black px-3 py-1.5 rounded shadow-[2px_2px_0_#000] mb-6 text-[9.5px] font-black uppercase tracking-wider text-comic-ink"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>STATUS: QUEUED</span>
+            <span className="text-black/30">|</span>
+            <span className="text-spider-blue">ETA: &lt; 24H</span>
+          </motion.div>
+
+          {/* High-Contrast CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-7"
           >
-            <span className="inline-flex items-center gap-1.5 bg-spider-blue comic-chip text-comic-ink px-3 py-1.5 text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
-              <span className="w-1.5 h-1.5 bg-spider-yellow comic-chip animate-pulse" />
-              Status: Queued
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-spider-black comic-chip text-spider-yellow px-3 py-1.5 text-[9px] sm:text-[10px] font-black tracking-[0.2em] uppercase">
-              ETA: 24h
-            </span>
+            <button
+              onClick={onClose}
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-spider-yellow text-spider-black border-3 border-black px-8 py-3.5 font-black uppercase tracking-widest text-xs sm:text-sm shadow-[4px_4px_0_#000] hover:bg-spider-red hover:text-white transition-all cursor-pointer active:translate-x-1 active:translate-y-1 active:shadow-none"
+            >
+              AWESOME — THWIP!
+            </button>
           </motion.div>
-
-          {/* CTA close button */}
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            onClick={onClose}
-            className="w-full sm:w-auto inline-block bg-spider-red comic-chip text-comic-ink px-7 sm:px-9 py-3.5 sm:py-4 font-black uppercase tracking-[0.2em] text-sm sm:text-base pop-shadow-red hover:bg-spider-yellow hover:text-spider-black hover:pop-shadow-active active:pop-shadow-active transition-all"
-          >
-            Awesome — Thwip!
-          </motion.button>
         </div>
       </motion.div>
     </motion.div>
@@ -221,22 +237,16 @@ const Contact = () => {
   };
 
   const handleCopyCard = async (info, e) => {
-    // Location: open Google Maps instead of copy
-    if (info.label === "Location") {
-      return; // anchor href tetap default (buka di tab yang sama)
-    }
+    if (info.label === "Location") return;
     e.preventDefault();
     let textToCopy = info.value;
-    if (info.label === "Email") {
-      textToCopy = info.value;
-    } else if (info.label === "LinkedIn" || info.label === "GitHub") {
-      textToCopy = info.href;
-    }
+    if (info.label === "Email") textToCopy = info.value;
+    else if (info.label === "LinkedIn" || info.label === "GitHub") textToCopy = info.href;
+
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(textToCopy);
       } else {
-        // Fallback: textarea + execCommand
         const ta = document.createElement("textarea");
         ta.value = textToCopy;
         ta.style.position = "fixed";
@@ -254,11 +264,10 @@ const Contact = () => {
           return c;
         });
       }, 1500);
-    } catch (_) {
-      // No-op if copy fails silently
-    }
+    } catch (_) { }
   };
 
+  /* REAL WEB3FORMS SUBMISSION TO GMAIL */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
@@ -267,12 +276,32 @@ const Contact = () => {
 
     setSubmitting(true);
     try {
-      // Simulated async submit (~1.2s delay untuk efek loading comic)
-      // Nanti bisa ganti dengan fetch() ke Formspree / Web3Forms endpoint
-      await new Promise((r) => setTimeout(r, 1200));
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "fb40027c-161d-4ee9-be85-1d8a9803c059",
+          subject: `🕷️ Spider-Signal: Pesan Baru dari ${form.name}`,
+          from_name: form.name,
+          reply_to: form.email,
+          message: form.message,
+        }),
+      });
 
-      setShowSuccess(true);
-      setForm({ name: "", email: "", message: "" });
+      const result = await response.json();
+
+      if (result.success) {
+        soundFX?.playThwip?.();
+        setShowSuccess(true);
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        alert("Gagal mengirim transmisi. Silakan coba lagi atau kirim via email langsung!");
+      }
+    } catch (err) {
+      alert("Terjadi gangguan jaringan saat mengirim form.");
     } finally {
       setSubmitting(false);
     }
@@ -297,7 +326,7 @@ const Contact = () => {
       </AnimatePresence>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* SECTION HEADER: Spider-Signal (Fade-Up on Scroll) */}
+        {/* SECTION HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -312,7 +341,7 @@ const Contact = () => {
                 className="text-spider-yellow italic inline-block px-1 select-none"
                 style={{
                   textShadow:
-                    "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 0px -1.5px 0 #000, 0px 1.5px 0 #000, -1.5px 0px 0 #000, 1.5px 0px 0 #000, 1px 3px 0 #165DFF, 2px 4.5px 0 #165DFF, 2.5px 6px 0 #0C38A8, 3.5px 7.5px 0 #000000, 4px 10px 8px rgba(0,0,0,0.5)",
+                    "-1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000, 2px 4px 0 #165DFF, 3px 6px 0 #000",
                 }}
               >
                 Spider-Signal
@@ -328,9 +357,9 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        {/* MAIN BALANCED 2-COLUMN SECTION: Comic Social Post (Left) vs Mission Form (Right) */}
+        {/* 2-COLUMN: Social Post vs Mission Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center mb-12 sm:mb-16">
-          {/* ============= LEFT: SPIDEY COMIC SOCIAL CARD (5 cols) ============= */}
+          {/* SISI KIRI: Comic Social Card */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -348,7 +377,6 @@ const Contact = () => {
               }}
             />
 
-            {/* Quick Status Chips under card */}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
               <span className="inline-flex items-center gap-1.5 bg-white border-2 border-black comic-chip text-spider-black px-3 py-1.5 text-[9.5px] sm:text-[10px] font-black tracking-[0.18em] uppercase shadow-[2px_2px_0_#000]">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
@@ -360,7 +388,7 @@ const Contact = () => {
             </div>
           </motion.div>
 
-          {/* ============= RIGHT: COMIC TRANSMISSION FORM (7 cols) ============= */}
+          {/* SISI KANAN: Form Transmisi */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -369,7 +397,6 @@ const Contact = () => {
             className="lg:col-span-7 z-10 w-full bg-white text-comic-ink border-4 border-black shadow-[8px_8px_0_#000] p-6 sm:p-8 md:p-9 relative overflow-hidden"
             style={{ borderRadius: "4px" }}
           >
-            {/* Halftone Texture inside form container */}
             <div
               className="absolute inset-0 pointer-events-none opacity-20"
               style={{
@@ -378,7 +405,6 @@ const Contact = () => {
               }}
             />
 
-            {/* Comic Header Stamp */}
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-5 mb-5 border-b-2 border-comic-ink/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-spider-yellow comic-chip flex items-center justify-center text-spider-black">
@@ -394,11 +420,10 @@ const Contact = () => {
                 </div>
               </div>
               <span className="inline-block bg-spider-black comic-chip text-spider-yellow px-2.5 py-1 text-[9px] font-black tracking-[0.2em] uppercase">
-                256-Bit SSL
+                Direct to Gmail
               </span>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} noValidate className="relative z-10 space-y-4 sm:space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div className="space-y-1.5">
@@ -416,9 +441,8 @@ const Contact = () => {
                     value={form.name}
                     onChange={handleChange("name")}
                     placeholder="Peter Parker"
-                    className={`${inputBase} focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${
-                      errors.name ? "input-error" : ""
-                    }`}
+                    className={`${inputBase} focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${errors.name ? "input-error" : ""
+                      }`}
                     style={{ borderRadius: "2px" }}
                     disabled={submitting}
                   />
@@ -438,9 +462,8 @@ const Contact = () => {
                     value={form.email}
                     onChange={handleChange("email")}
                     placeholder="peter@dailybugle.com"
-                    className={`${inputBase} focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${
-                      errors.email ? "input-error" : ""
-                    }`}
+                    className={`${inputBase} focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${errors.email ? "input-error" : ""
+                      }`}
                     style={{ borderRadius: "2px" }}
                     disabled={submitting}
                   />
@@ -461,15 +484,13 @@ const Contact = () => {
                   value={form.message}
                   onChange={handleChange("message")}
                   placeholder="Tell me about your project goals, scope, and timeline..."
-                  className={`${inputBase} resize-none focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${
-                    errors.message ? "input-error" : ""
-                  }`}
+                  className={`${inputBase} resize-none focus:border-spider-red focus:ring-2 focus:ring-spider-yellow focus:ring-offset-2 focus:ring-offset-spider-black ${errors.message ? "input-error" : ""
+                    }`}
                   style={{ borderRadius: "2px" }}
                   disabled={submitting}
                 />
               </div>
 
-              {/* SUBMIT BUTTON: DOODLE MULTI-LAYER ACTION BUTTON */}
               <div className="pt-2 flex justify-center">
                 <ComicDoodleButton
                   text={submitting ? "TRANSMITTING..." : "FIRE THE SIGNAL"}
@@ -480,7 +501,7 @@ const Contact = () => {
           </motion.div>
         </div>
 
-        {/* ============= BOTTOM: DIRECT SIGNAL CHANNELS (4-COLUMN RELAY HUB) ============= */}
+        {/* BOTTOM RELAY HUB */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
@@ -507,17 +528,14 @@ const Contact = () => {
                   href={info.href}
                   onClick={(e) => handleCopyCard(info, e)}
                   variants={comicPop}
-                  className={`group relative bg-white text-comic-ink border-3 border-black shadow-[4px_4px_0_#000] p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_#000] overflow-hidden cursor-pointer flex flex-col justify-between ${
-                    isCopied ? "ring-2 ring-spider-yellow" : ""
-                  }`}
+                  className={`group relative bg-white text-comic-ink border-3 border-black shadow-[4px_4px_0_#000] p-4 sm:p-5 transition-all duration-250 hover:-translate-y-1.5 hover:shadow-[6px_6px_0_#000] overflow-hidden cursor-pointer flex flex-col justify-between ${isCopied ? "ring-2 ring-spider-yellow" : ""
+                    }`}
                   style={{ borderRadius: "4px" }}
                   target={info.href.startsWith("http") ? "_blank" : undefined}
                   rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 >
-                  {/* Colored accent bar at top-left corner */}
                   <div className={`absolute top-0 left-0 w-24 h-1.5 ${c.accentBar}`} />
 
-                  {/* Copied badge overlay */}
                   <AnimatePresence>
                     {isCopied && (
                       <motion.span
@@ -533,7 +551,6 @@ const Contact = () => {
                     )}
                   </AnimatePresence>
 
-                  {/* Icon & Label */}
                   <div>
                     <div
                       className={`mb-3 w-10 h-10 flex items-center justify-center comic-chip group-hover:scale-110 transition-transform origin-top-left ${c.iconBg} ${c.iconText}`}
@@ -555,7 +572,6 @@ const Contact = () => {
                     </p>
                   </div>
 
-                  {/* Value */}
                   <p className="font-black text-[12px] sm:text-xs leading-snug break-all mt-2 text-comic-ink/90">
                     {info.value}
                   </p>
