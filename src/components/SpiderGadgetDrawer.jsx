@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -19,7 +19,6 @@ import {
   Terminal,
   Flame,
   ShieldCheck,
-  SlidersHorizontal,
   Printer,
 } from "lucide-react";
 
@@ -79,8 +78,14 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck, onO
   const [isOpen, setIsOpen] = useState(false);
 
   const [activeTab, setActiveTab] = useState("suits"); // "suits" | "trophies" | "arcade"
-  const [activeSuit, setActiveSuit] = useState("classic");
-  const [unlockedCount, setUnlockedCount] = useState(0);
+  const [activeSuit, setActiveSuit] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("spidey-suit");
+      if (saved && SUITS.some((s) => s.id === saved)) return saved;
+    }
+    return "classic";
+  });
+  const [unlockedCount, setUnlockedCount] = useState(() => achievementManager.getUnlockedCount());
   const [sfxMuted, setSfxMuted] = useState(soundFX.isMuted());
 
   // Audio Player State
@@ -89,14 +94,34 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck, onO
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.03); // Fixed default 3%
 
-  useEffect(() => {
-    // Restore Saved Theme
-    const saved = localStorage.getItem("spidey-suit");
-    if (saved && SUITS.some((s) => s.id === saved)) {
-      applySuit(saved);
-    }
-    setUnlockedCount(achievementManager.getUnlockedCount());
+  const applySuit = useCallback((suitId) => {
+    setActiveSuit(suitId);
+    localStorage.setItem("spidey-suit", suitId);
+    achievementManager.trackSuit(suitId);
+    soundFX.playBeep(600);
+  }, []);
 
+  // Sync DOM root theme CSS variables when activeSuit changes
+  useEffect(() => {
+    const suit = SUITS.find((s) => s.id === activeSuit);
+    if (suit && typeof document !== "undefined") {
+      const root = document.documentElement;
+      root.style.setProperty("--color-spider-red", suit.red);
+      root.style.setProperty("--color-spider-blue", suit.blue);
+      root.style.setProperty("--color-glow-red", `${suit.red}66`);
+      root.style.setProperty("--color-glow-blue", `${suit.blue}66`);
+
+      document.body.classList.remove(
+        "theme-classic",
+        "theme-miles",
+        "theme-gwen",
+        "theme-2099"
+      );
+      document.body.classList.add(`theme-${activeSuit}`);
+    }
+  }, [activeSuit]);
+
+  useEffect(() => {
     const unsubscribe = achievementManager.subscribe(() => {
       setUnlockedCount(achievementManager.getUnlockedCount());
     });
@@ -161,30 +186,6 @@ const SpiderGadgetDrawer = ({ onOpenBugHunter, onOpenDailyBugle, onOpenDeck, onO
       window.removeEventListener("spidey:toggle-dock", handleToggleDock);
     };
   }, [isPlaying]);
-
-  const applySuit = (suitId) => {
-    setActiveSuit(suitId);
-    localStorage.setItem("spidey-suit", suitId);
-    achievementManager.trackSuit(suitId);
-    soundFX.playBeep(600);
-
-    const suit = SUITS.find((s) => s.id === suitId);
-    if (suit && typeof document !== "undefined") {
-      const root = document.documentElement;
-      root.style.setProperty("--color-spider-red", suit.red);
-      root.style.setProperty("--color-spider-blue", suit.blue);
-      root.style.setProperty("--color-glow-red", `${suit.red}66`);
-      root.style.setProperty("--color-glow-blue", `${suit.blue}66`);
-
-      document.body.classList.remove(
-        "theme-classic",
-        "theme-miles",
-        "theme-gwen",
-        "theme-2099"
-      );
-      document.body.classList.add(`theme-${suitId}`);
-    }
-  };
 
   const togglePlay = () => {
     if (!audioRef.current) return;

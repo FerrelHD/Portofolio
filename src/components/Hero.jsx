@@ -1,8 +1,8 @@
 "use client";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Github, Code2, Zap, Gamepad2, Download, FolderKanban, Briefcase, Mail, MapPin, CheckCircle } from "lucide-react";
-import { fadeUp, slideUp, staggerContainer, comicStamp, comicPop } from "../lib/animation";
+import { Github, Code2, Zap, Gamepad2, Download, Briefcase, Mail, MapPin, CheckCircle } from "lucide-react";
+import { fadeUp, staggerContainer, comicStamp, comicPop } from "../lib/animation";
 import ComicDoodleButton from "./ComicDoodleButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

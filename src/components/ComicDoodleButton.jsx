@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import { soundFX } from "../lib/soundFx";
 
 const ComicDoodleButton = ({
@@ -14,8 +13,6 @@ const ComicDoodleButton = ({
   icon = "⚡",
   submitted = false,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   const handleClick = (e) => {
     soundFX.playPunch();
     if (onClick) onClick(e);
@@ -28,10 +25,8 @@ const ComicDoodleButton = ({
       type={href ? "button" : "submit"}
       onClick={handleClick}
       onMouseEnter={() => {
-        setIsHovered(true);
         soundFX.playBeep(480);
       }}
-      onMouseLeave={() => setIsHovered(false)}
       className={`comic-doodle-btn comic-doodle-${variant} group relative select-none ${className}`}
     >
       {/* Flame Glow underneath */}

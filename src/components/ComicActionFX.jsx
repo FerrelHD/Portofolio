@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { soundFX } from "../lib/soundFx";
 import { achievementManager } from "../lib/achievements";
 
@@ -12,14 +12,6 @@ const COMIC_WORDS = [
   { text: "FIXED!", bg: "#D81B60", textCol: "#FFFFFF", rotate: 9 },
   { text: "ZAP!", bg: "#0288D1", textCol: "#FFFFFF", rotate: -10 },
 ];
-
-export const spawnComicBurst = (x, y, customText = null) => {
-  if (typeof window === "undefined") return;
-  const event = new CustomEvent("spawn-comic-burst", {
-    detail: { x, y, customText },
-  });
-  window.dispatchEvent(event);
-};
 
 const ComicActionFX = () => {
   const [bursts, setBursts] = useState([]);

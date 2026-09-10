@@ -1,15 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Film } from "lucide-react";
 
 const VideoModal = ({ video, onClose }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [mounted] = useState(() => typeof document !== "undefined");
 
   // ESC key listener
   useEffect(() => {

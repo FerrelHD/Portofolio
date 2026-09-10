@@ -64,21 +64,7 @@ const TECH_TICKER_ITEMS = [
   { text: "NEXT-GEN AGENTIC AI WORKFLOWS", icon: aiAgentIcon },
 ];
 
-function App() {
-  const isPrintDeckOnly =
-    typeof window !== "undefined" &&
-    (window.location.search.includes("print-deck=1") ||
-      window.location.search.includes("print-deck=true"));
-
-  if (isPrintDeckOnly) {
-    return (
-      <Suspense fallback={<div className="bg-[#EDEAE2] min-h-screen" />}>
-        <PortfolioDeckModal isOpen={true} isPrintOnly={true} />
-      </Suspense>
-    );
-  }
-
-  const [spiderSense, setSpiderSense] = useState(false);
+function MainPortfolio() {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [dailyBugleOpen, setDailyBugleOpen] = useState(false);
@@ -101,7 +87,6 @@ function App() {
 
   const triggerSpiderSense = useCallback(() => {
     if (senseTimer.current) return; // throttle: tidak trigger lagi sambil aktif
-    setSpiderSense(true);
     soundFX.playSenseBuzz();
     achievementManager.unlock("spider_sense");
 
@@ -110,7 +95,6 @@ function App() {
     }
     // Durasi: 6 x 0.35s = 2.1s (sesuai CSS animation-iteration-count: 6)
     senseTimer.current = setTimeout(() => {
-      setSpiderSense(false);
       if (typeof document !== "undefined") {
         document.body.classList.remove("spider-sense-active");
       }
@@ -378,6 +362,23 @@ function App() {
       <BackToTop />
     </div>
   );
+}
+
+function App() {
+  const isPrintDeckOnly =
+    typeof window !== "undefined" &&
+    (window.location.search.includes("print-deck=1") ||
+      window.location.search.includes("print-deck=true"));
+
+  if (isPrintDeckOnly) {
+    return (
+      <Suspense fallback={<div className="bg-[#EDEAE2] min-h-screen" />}>
+        <PortfolioDeckModal isOpen={true} isPrintOnly={true} />
+      </Suspense>
+    );
+  }
+
+  return <MainPortfolio />;
 }
 
 export default App;

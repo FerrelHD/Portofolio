@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight, Newspaper, Code2, Gamepad2, Cpu, Layers } from "lucide-react";
 import gsap from "gsap";
@@ -89,7 +89,9 @@ const SecretIdentityCard = () => {
     if (typeof window !== "undefined" && window.navigator && window.navigator.vibrate) {
       try {
         window.navigator.vibrate(ms);
-      } catch (_) { }
+      } catch {
+        // vibration not supported
+      }
     }
   };
 

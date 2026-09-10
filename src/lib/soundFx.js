@@ -8,7 +8,7 @@ class SoundFXEngine {
       try {
         const saved = localStorage.getItem("spidey_sfx_muted");
         this.muted = saved === "true";
-      } catch (e) {
+      } catch {
         this.muted = false;
       }
     }
@@ -33,7 +33,9 @@ class SoundFXEngine {
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem("spidey_sfx_muted", this.muted ? "true" : "false");
-      } catch (e) {}
+      } catch {
+        // ignore localStorage error
+      }
     }
   }
 
@@ -65,7 +67,9 @@ class SoundFXEngine {
 
       osc.start(now);
       osc.stop(now + 0.15);
-    } catch (e) {}
+    } catch {
+      // audio synthesis failed
+    }
   }
 
   // 2. Chiptune Beep / UI Navigation (8-bit square blip)
@@ -91,7 +95,9 @@ class SoundFXEngine {
 
       osc.start(now);
       osc.stop(now + 0.08);
-    } catch (e) {}
+    } catch {
+      // audio synthesis failed
+    }
   }
 
   // 3. Spider-Sense Buzz (Vibrating dual-oscillator frequency modulation)
@@ -127,7 +133,9 @@ class SoundFXEngine {
       osc2.start(now);
       osc1.stop(now + 0.55);
       osc2.stop(now + 0.55);
-    } catch (e) {}
+    } catch {
+      // audio synthesis failed
+    }
   }
 
   // 4. Comic Punch / Burst Sound
@@ -153,7 +161,9 @@ class SoundFXEngine {
 
       osc.start(now);
       osc.stop(now + 0.13);
-    } catch (e) {}
+    } catch {
+      // audio synthesis failed
+    }
   }
 
   // 5. Fanfare / Achievement Unlocked (3-note ascending victory chime)
@@ -181,7 +191,9 @@ class SoundFXEngine {
         osc.start(start);
         osc.stop(start + 0.23);
       });
-    } catch (e) {}
+    } catch {
+      // audio synthesis failed
+    }
   }
 }
 

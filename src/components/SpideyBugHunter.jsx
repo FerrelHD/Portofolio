@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Play, RotateCcw, Trophy, Gamepad2, Zap } from "lucide-react";
 import { soundFX } from "../lib/soundFx";
@@ -18,7 +18,17 @@ const SpideyBugHunter = ({ isOpen, onClose }) => {
   const [gameState, setGameState] = useState("start"); // "start" | "playing" | "gameover"
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
-  const [highScore, setHighScore] = useState(0);
+  const [highScore, setHighScore] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("spidey_high_score");
+        return saved ? parseInt(saved, 10) || 0 : 0;
+      } catch {
+        return 0;
+      }
+    }
+    return 0;
+  });
 
   // Game Engine Refs
   const engineRef = useRef({
@@ -32,13 +42,6 @@ const SpideyBugHunter = ({ isOpen, onClose }) => {
     score: 0,
     time: 30,
   });
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("spidey_high_score");
-      if (saved) setHighScore(parseInt(saved, 10) || 0);
-    } catch (e) {}
-  }, []);
 
   const startGame = useCallback(() => {
     setGameState("playing");
@@ -94,7 +97,9 @@ const SpideyBugHunter = ({ isOpen, onClose }) => {
             localStorage.setItem("spidey_high_score", eng.score.toString());
             setHighScore(eng.score);
           }
-        } catch (e) {}
+        } catch {
+          // ignore storage error
+        }
       }
     }, 1000);
 
@@ -116,11 +121,7 @@ const SpideyBugHunter = ({ isOpen, onClose }) => {
     window.addEventListener("keyup", handleKeyUp);
 
     // Render loop
-    let lastTime = performance.now();
     const render = (now) => {
-      const dt = now - lastTime;
-      lastTime = now;
-
       // Update Spidey movement
       if (eng.keys["left"]) eng.spideyX = Math.max(25, eng.spideyX - 6);
       if (eng.keys["right"]) eng.spideyX = Math.min(canvas.width - 25, eng.spideyX + 6);

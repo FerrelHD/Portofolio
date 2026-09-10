@@ -12,7 +12,6 @@ import tailwindIcon from "../assets/tailwind.svg";
 import typescriptIcon from "../assets/typescript-logo-png-svg.webp";
 import nodejsIcon from "../assets/nodejs.webp";
 import videoEditIcon from "../assets/video-editing-icon.webp";
-import framerIcon from "../assets/framer-motion-icon.png";
 import blenderIcon from "../assets/Blender_logo_no_text.svg.webp";
 import unityIcon from "../assets/unityicon.png";
 import figmaIcon from "../assets/figma-logo-png-svg.webp";
@@ -220,7 +219,7 @@ const SpiderSkillWeb = () => {
   const [scanBanner, setScanBanner] = useState(false);
   const [time, setTime] = useState(0);
   const reqRef = useRef(null);
-  const lastTimeRef = useRef(performance.now());
+  const lastTimeRef = useRef(0);
   const containerRef = useRef(null);
 
   // Triggered when user clicks the center Spider-Man core

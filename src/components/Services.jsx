@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { motion } from "framer-motion";
 import { Code2, Sparkles, Gamepad2, ArrowRight, ShieldCheck, Zap } from "lucide-react";
 import { fadeUp, staggerContainer, comicPop, comicStamp } from "../lib/animation";

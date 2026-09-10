@@ -83,7 +83,9 @@ class AchievementManager {
         if (savedClicks) {
           this.comicClicks = parseInt(savedClicks, 10) || 0;
         }
-      } catch (e) {}
+      } catch {
+        // ignore localStorage access issues
+      }
     }
   }
 
@@ -96,7 +98,9 @@ class AchievementManager {
     this.listeners.forEach((cb) => {
       try {
         cb(event, data);
-      } catch (e) {}
+      } catch {
+        // ignore subscriber listener errors
+      }
     });
   }
 
@@ -106,7 +110,9 @@ class AchievementManager {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(this.unlocked)));
       localStorage.setItem(SUITS_TRIED_KEY, JSON.stringify(Array.from(this.suitsTried)));
       localStorage.setItem(COMIC_CLICKS_KEY, this.comicClicks.toString());
-    } catch (e) {}
+    } catch {
+      // ignore localStorage quota/disabled issues
+    }
   }
 
   unlock(achievementId) {

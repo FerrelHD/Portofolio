@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Printer, Newspaper, Award, Code, Sparkles, ExternalLink } from "lucide-react";
+import { X, Printer, Award, Code, ExternalLink } from "lucide-react";
 import { achievementManager } from "../lib/achievements";
 import { soundFX } from "../lib/soundFx";
 

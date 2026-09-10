@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, Sparkles, X } from "lucide-react";
+import { Trophy, X } from "lucide-react";
 import { achievementManager } from "../lib/achievements";
 
 const AchievementToast = () => {

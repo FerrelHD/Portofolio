@@ -1,28 +1,31 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Command, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import spiderEmblem from "../assets/spiderman-emblem.png";
 
 const LOADER_SESSION_KEY = "comic_portfolio_shown_loader_v1";
 
 const PageLoader = ({ onDone }) => {
-  const [mounted, setMounted] = useState(true);
+  const [mounted, setMounted] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        return window.sessionStorage.getItem(LOADER_SESSION_KEY) !== "1";
+      } catch {
+        return true;
+      }
+    }
+    return true;
+  });
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let cancelled = false;
-    // Cek sessionStorage: hanya tampilkan per page load session (bukan tiap navigasi SPA mount)
-    try {
-      const shown = window.sessionStorage.getItem(LOADER_SESSION_KEY);
-      if (shown === "1") {
-        setMounted(false);
-        if (onDone) onDone();
-        return;
-      }
-    } catch (_) {
-      // ignore storage access errors
+    if (!mounted) {
+      if (onDone) onDone();
+      return;
     }
+
+    let cancelled = false;
 
     const start = performance.now();
     const minDuration = 1200;
@@ -51,7 +54,9 @@ const PageLoader = ({ onDone }) => {
           setMounted(false);
           try {
             window.sessionStorage.setItem(LOADER_SESSION_KEY, "1");
-          } catch (_) {}
+          } catch {
+            // ignore storage error
+          }
           if (onDone) onDone();
         }
       }, 500);
@@ -61,7 +66,7 @@ const PageLoader = ({ onDone }) => {
       cancelled = true;
       cancelAnimationFrame(rafId);
     };
-  }, [onDone]);
+  }, [mounted, onDone]);
 
   return (
     <AnimatePresence>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Linkedin, Github, MapPin, Send, X } from "lucide-react";
 import { staggerContainer, comicPop } from "../lib/animation";
@@ -31,6 +31,13 @@ const ACCENT_MAP = {
   },
 };
 
+const CONFETTI_PIECES = Array.from({ length: 32 }).map((_, i) => ({
+  delay: (i % 10) * 0.04,
+  left: 5 + ((i * 37 + 13) % 90),
+  color: ["spider-red", "spider-blue", "spider-yellow", "comic-ink"][i % 4],
+  rotate: (i * 47) % 360,
+}));
+
 /* =========================================================
    SUCCESS MODAL — SIGNAL RECEIVED WITH SPIDEY EMBLEM
    ========================================================= */
@@ -49,12 +56,6 @@ const ConfettiPiece = ({ delay, left, color, rotate }) => (
 
 const SuccessModal = ({ open, onClose }) => {
   if (!open) return null;
-  const confettiPieces = Array.from({ length: 32 }).map((_, i) => ({
-    delay: (i % 10) * 0.04,
-    left: 5 + Math.random() * 90,
-    color: ["spider-red", "spider-blue", "spider-yellow", "comic-ink"][i % 4],
-    rotate: Math.random() * 360,
-  }));
 
   return (
     <motion.div
@@ -77,7 +78,7 @@ const SuccessModal = ({ open, onClose }) => {
         <div className="h-3 w-full bg-spider-red border-b-3 border-black" />
 
         {/* Confetti */}
-        {confettiPieces.map((p, i) => (
+        {CONFETTI_PIECES.map((p, i) => (
           <ConfettiPiece key={i} {...p} />
         ))}
 
@@ -264,7 +265,9 @@ const Contact = () => {
           return c;
         });
       }, 1500);
-    } catch (_) { }
+    } catch {
+      // clipboard write failed silently
+    }
   };
 
   /* REAL WEB3FORMS SUBMISSION TO GMAIL */
@@ -300,7 +303,7 @@ const Contact = () => {
       } else {
         alert("Gagal mengirim transmisi. Silakan coba lagi atau kirim via email langsung!");
       }
-    } catch (err) {
+    } catch {
       alert("Terjadi gangguan jaringan saat mengirim form.");
     } finally {
       setSubmitting(false);

@@ -1,21 +1,23 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Zap, ZapOff } from "lucide-react";
 
 const MotionToggle = ({ isMobile = false }) => {
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("comic_motion_enabled");
+      return saved !== null ? saved === "1" : true;
+    }
+    return true;
+  });
 
   useEffect(() => {
-    const saved = localStorage.getItem("comic_motion_enabled");
-    const isMotionOn = saved !== null ? saved === "1" : true;
-    setEnabled(isMotionOn);
-
-    if (!isMotionOn) {
+    if (!enabled) {
       document.body.classList.add("user-reduce-motion");
     } else {
       document.body.classList.remove("user-reduce-motion");
     }
-  }, []);
+  }, [enabled]);
 
   const toggleMotion = () => {
     const nextState = !enabled;

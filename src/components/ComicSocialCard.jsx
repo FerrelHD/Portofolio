@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { soundFX } from "../lib/soundFx";
 import ferrelPortrait from "../assets/ferrel-portrait.jpg";
@@ -20,7 +20,9 @@ const ComicSocialCard = ({ onFocusContact }) => {
     if (typeof window !== "undefined" && window.navigator && window.navigator.vibrate) {
       try {
         window.navigator.vibrate(35);
-      } catch (_) {}
+      } catch {
+        // vibration not supported
+      }
     }
 
     if (next) {
@@ -53,7 +55,9 @@ const ComicSocialCard = ({ onFocusContact }) => {
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
-    } catch (_) {}
+    } catch {
+      // clipboard not allowed
+    }
   };
 
   return (
@@ -151,7 +155,7 @@ const ComicSocialCard = ({ onFocusContact }) => {
                 <motion.span
                   key={id}
                   initial={{ opacity: 1, y: 0, scale: 0.8 }}
-                  animate={{ opacity: 0, y: -45, scale: 1.4, rotate: (Math.random() - 0.5) * 30 }}
+                  animate={{ opacity: 0, y: -45, scale: 1.4, rotate: (id % 30) - 15 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
                   className="absolute -top-3 left-3 text-spider-red text-base pointer-events-none"

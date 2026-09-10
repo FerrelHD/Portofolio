@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CaseStudyModal from "./CaseStudyModal";
 import spiderEmblem from "../assets/spiderman-emblem.png";
 

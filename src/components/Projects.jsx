@@ -8,7 +8,6 @@ import {
   MapPin,
   Signal,
   Github,
-  ExternalLink,
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -541,16 +540,6 @@ export default function Projects() {
         <div className="w-full relative z-10 flex-1 min-h-0 flex items-center py-1 sm:py-2 md:py-2.5 overflow-hidden">
           <div
             ref={horizontalTrackRef}
-            onScroll={(e) => {
-              if (window.innerWidth < 768) {
-                const el = e.currentTarget;
-                const maxScroll = el.scrollWidth - el.clientWidth;
-                if (maxScroll > 0) {
-                  const progress = Math.round((el.scrollLeft / maxScroll) * 100);
-                  setScrollProgress(progress);
-                }
-              }
-            }}
             className="flex flex-row flex-nowrap gap-4 sm:gap-6 px-4 sm:px-8 md:px-16 w-full md:w-max overflow-x-auto md:overflow-visible items-stretch will-change-transform scrollbar-none snap-x snap-mandatory md:snap-none touch-pan-x h-full max-h-[440px] py-1"
           >
             {/* INITIAL RECON BRIEFING CARD (PIONEER STAGE) */}
